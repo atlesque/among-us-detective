@@ -1,8 +1,12 @@
 <template>
   <div class="flex flex-col justify-between h-screen p-2 lg:p-8">
     <div class="flex flex-row justify-between mb-2">
-      <PlayerSelector :currentColor="playerColor" @change="setPlayerColor" />
-      <button @click="initNewGame()" class="self-start button button-primary">
+      <PlayerSelector
+        :currentColor="playerColor"
+        @change="handleChangePlayerColor"
+      />
+      <CrewPool class="flex-1 mx-4" />
+      <button @click="initNewGame()" class="button button-primary">
         New game
       </button>
     </div>
@@ -23,11 +27,13 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import allColors from "@/config/playerColors.js";
 
 const PlayerSelector = () => import("@/components/PlayerSelector.vue");
 const CrewTracker = () => import("@/components/CrewTracker.vue");
 const CrewStats = () => import("@/components/CrewStats.vue");
+const CrewPool = () => import("@/components/CrewPool.vue");
 
 export default {
   name: "Home",
@@ -35,6 +41,7 @@ export default {
     PlayerSelector,
     CrewTracker,
     CrewStats,
+    CrewPool,
   },
   mounted() {
     this.initNewGame();
@@ -42,7 +49,7 @@ export default {
   data() {
     return {
       allColors,
-      playerColor: "yellow",
+      // playerColor: "yellow",
       crewMembers: {
         innocent: [],
         unknown: [],
@@ -53,6 +60,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("crew", ["playerColor"]),
     allCrewMembers() {
       return this.allColors.filter(color => color !== this.playerColor);
     },
@@ -63,6 +71,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("crew", ["setPlayerColor"]),
     initNewGame() {
       this.crewMembers = {
         innocent: [],
@@ -73,8 +82,9 @@ export default {
       // HACK: Forces reset of the component, easy way to reset the app
       this.crewStatsKey = (Math.random() * 1e8).toString(32);
     },
-    setPlayerColor(selectedColor) {
-      this.playerColor = selectedColor;
+    handleChangePlayerColor(selectedColor) {
+      // this.playerColor = selectedColor;
+      this.setPlayerColor({ color: selectedColor });
       this.initNewGame();
     },
     handleCrewChanged(crewChange) {

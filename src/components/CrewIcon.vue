@@ -1,12 +1,14 @@
 <template>
   <div
-    class="rounded"
+    class="flex items-center justify-center rounded"
     :class="[
       `bg-player-${color}`,
       autoWidth === true ? 'w-full' : 'w-8',
       autoHeight === true ? 'h-full' : 'h-8',
     ]"
-  ></div>
+  >
+    <span class="text-xs bg-white">{{ color }}</span>
+  </div>
 </template>
 <script>
 export default {

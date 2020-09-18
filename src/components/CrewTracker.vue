@@ -142,7 +142,7 @@ export default {
 };
 </script>
 
-style.<style lang="scss" scoped>
+<style lang="scss" scoped>
 table {
   td {
     height: 0; // HACK: Makes all <td> equal height
