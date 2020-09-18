@@ -8,7 +8,8 @@
       <CrewPool
         :crewMembers="inactiveCrewMembers"
         @changed="value => handleCrewChanged({ type: 'inactive', value })"
-        class="flex-1 mx-4 rounded"
+        @removed="member => handleMemberRemoved({ list: 'inactive', member })"
+        class="flex-1 mx-4 border rounded"
       />
       <button @click="initNewGame()" class="button button-primary">
         New game
@@ -21,9 +22,11 @@
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
       @changed="handleCrewChanged"
+      @removed="handleMemberRemoved"
       class="mb-2"
     />
     <CrewStats :crewMembers="activeCrewMembersWithoutPlayer" />
+    <!-- <pre>{{ crewMembersWithoutPlayer }}</pre> -->
   </div>
 </template>
 
@@ -82,6 +85,8 @@ export default {
       "setUnknownCrewMembers",
       "setSuspectedCrewMembers",
       "setDeadCrewMembers",
+      "setMemberAsUnknown",
+      "setMemberAsInactive",
     ]),
     initNewGame() {
       this.resetAllCrew();
@@ -106,6 +111,24 @@ export default {
         this.setSuspectedCrewMembers(crewChange.value);
       } else if (crewChange.type === "dead") {
         this.setDeadCrewMembers(crewChange.value);
+      }
+    },
+    handleMemberRemoved({ list, member }) {
+      if (list === "inactive") {
+        // this.setInactiveCrewMembers(member);
+        this.setMemberAsUnknown(member);
+      } else if (list === "innocent") {
+        // this.setProtectedCrewMembers(member);
+        this.setMemberAsUnknown(member);
+      } else if (list === "unknown") {
+        // this.setUnknownCrewMembers(member);
+        this.setMemberAsInactive(member);
+      } else if (list === "suspect") {
+        this.setMemberAsUnknown(member);
+        // this.setSuspectedCrewMembers(member);
+      } else if (list === "dead") {
+        this.setMemberAsUnknown(member);
+        // this.setDeadCrewMembers(member);
       }
     },
   },

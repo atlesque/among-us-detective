@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-full bg-theme-gray-extra-light">
+  <div class="flex w-full h-full">
     <Draggable
       v-model="crewMembersInPool"
       group="crewMembers"
@@ -10,6 +10,7 @@
         :key="member.color"
         :color="member.color"
         class="float-left mb-2 mr-2"
+        v-on:dblclick.native="removeMember(member)"
       />
     </Draggable>
   </div>
@@ -39,6 +40,15 @@ export default {
       set(value) {
         this.$emit("changed", value);
       },
+    },
+  },
+  methods: {
+    removeMember(memberToRemove) {
+      this.$emit("removed", memberToRemove);
+      /* console.log(memberToRemove);
+      this.crewMembersInPool = this.crewMembersInPool.filter(member => {
+        return member.color !== memberToRemove.color;
+      }); */
     },
   },
 };

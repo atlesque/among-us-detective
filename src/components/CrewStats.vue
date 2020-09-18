@@ -6,8 +6,8 @@
           <td>Color</td>
           <td>Tasks?</td>
           <td>Meeting?</td>
-          <td>Innocent</td>
-          <td>Suspect</td>
+          <td colspan="3">Innocent</td>
+          <td colspan="3">Suspect</td>
         </tr>
       </thead>
       <tbody>
@@ -17,13 +17,38 @@
           :class="{ 'is-dead': member.isDead === true }"
         >
           <td>
-            <div class="flex justify-between">
+            <div class="flex items-center justify-evenly">
               <CrewIcon :color="member.color" />
+              <span
+                v-show="member.isDead === false"
+                :class="getSuspectCounterClass(member.suspectedBy.length)"
+                >{{ member.suspectedBy.length }}</span
+              >
             </div>
           </td>
-          <td><Checkbox :isDisabled="member.isDead === true" /></td>
-          <td><Counter :isDisabled="member.isDead === true" /></td>
           <td>
+            <Checkbox
+              v-show="member.isDead === false"
+              :isDisabled="member.isDead === true"
+              class="justify-center"
+              :isChecked="member.isDoneWithTasks === true"
+              @changed="
+                value => setCrewMemberIsDoneWithTasks({ member, isDone: value })
+              "
+            />
+          </td>
+          <td>
+            <Counter
+              v-show="member.isDead === false"
+              :count="member.totalMeetingsHeld"
+              :isDisabled="member.isDead === true"
+              @changed="
+                value =>
+                  setCrewMemberTotalMeetings({ member, meetingsCount: value })
+              "
+            />
+          </td>
+          <td colspan="3">
             <CrewPool
               :crewMembers="getAllMembersProtectedBy(member)"
               @changed="
@@ -36,7 +61,7 @@
               class="td-min-height"
             />
           </td>
-          <td class="relative">
+          <td class="relative" colspan="3">
             <CrewPool
               :crewMembers="getAllMembersSuspectedBy(member)"
               @changed="
@@ -113,6 +138,8 @@ export default {
     ...mapActions("crew", [
       "linkSuspectsWithAccuser",
       "linkInnocentsWithProtector",
+      "setCrewMemberIsDoneWithTasks",
+      "setCrewMemberTotalMeetings",
     ]),
     getAllMembersSuspectedBy(accuser) {
       return this.crewMembersWithoutPlayer.filter(member => {
@@ -124,18 +151,24 @@ export default {
         return member.protectedBy.includes(protector.color) === true;
       });
     },
+    getSuspectCounterClass(suspectedByCount) {
+      if (suspectedByCount >= 2) {
+        return "font-bold text-player-red";
+      } else if (0 < suspectedByCount && suspectedByCount < 2) {
+        return "text-player-orange";
+      } else {
+        return "text-theme-gray-light";
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .is-dead {
-  @apply bg-theme-gray;
+  @apply bg-theme-gray-light;
 }
 table {
-  td {
-    // height: 0; // HACK: Makes all <td> equal height
-  }
   .td-min-height {
     min-height: 56px;
   }

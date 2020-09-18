@@ -3,84 +3,46 @@
     <table class="w-full table-fixed table-bordered">
       <thead>
         <tr>
-          <th>Innocent</th>
+          <th class="bg-theme-green-light">Innocent</th>
           <th>Unknown</th>
-          <th>Suspect</th>
-          <th>Dead</th>
+          <th class="bg-theme-yellow-light">Suspect</th>
+          <th class="text-theme-red-light bg-theme-gray-dark">Dead</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>
-            <!-- <Draggable
-              v-model="innocentList"
-              group="crewMembers"
-              class="draggable-wrapper"
-            >
-              <CrewIcon
-                v-for="crewMember in innocentList"
-                :key="crewMember.color"
-                :color="crewMember.color"
-                class="float-left mb-2 mr-2"
-              />
-            </Draggable> -->
             <CrewPool
               :crewMembers="innocentList"
               @changed="value => (innocentList = value)"
+              @removed="
+                member => handleRemoveMember({ list: 'innocent', member })
+              "
             />
           </td>
           <td>
-            <!-- <Draggable
-              v-model="unknownList"
-              group="crewMembers"
-              class="draggable-wrapper"
-            >
-              <CrewIcon
-                v-for="crewMember in unknownList"
-                :key="crewMember.color"
-                :color="crewMember.color"
-                class="float-left mb-2 mr-2"
-              />
-            </Draggable> -->
             <CrewPool
               :crewMembers="unknownList"
               @changed="value => (unknownList = value)"
+              @removed="
+                member => handleRemoveMember({ list: 'unknown', member })
+              "
             />
           </td>
           <td>
-            <!-- <Draggable
-              v-model="suspectList"
-              group="crewMembers"
-              class="draggable-wrapper"
-            >
-              <CrewIcon
-                v-for="crewMember in suspectList"
-                :key="crewMember.color"
-                :color="crewMember.color"
-                class="float-left mb-2 mr-2"
-              />
-            </Draggable> -->
             <CrewPool
               :crewMembers="suspectList"
               @changed="value => (suspectList = value)"
+              @removed="
+                member => handleRemoveMember({ list: 'suspect', member })
+              "
             />
           </td>
-          <td>
-            <!-- <Draggable
-              v-model="deadList"
-              group="crewMembers"
-              class="draggable-wrapper"
-            >
-              <CrewIcon
-                v-for="crewMember in deadList"
-                :key="crewMember.color"
-                :color="crewMember.color"
-                class="float-left mb-2 mr-2"
-              />
-            </Draggable> -->
+          <td class="bg-theme-gray-dark">
             <CrewPool
               :crewMembers="deadList"
               @changed="value => (deadList = value)"
+              @removed="member => handleRemoveMember({ list: 'dead', member })"
             />
           </td>
         </tr>
@@ -89,16 +51,11 @@
   </div>
 </template>
 <script>
-/* import Draggable from "vuedraggable";
-
-const CrewIcon = () => import("@/components/CrewIcon.vue"); */
 const CrewPool = () => import("@/components/CrewPool.vue");
 
 export default {
   name: "CrewTracker",
   components: {
-    /* Draggable,
-    CrewIcon, */
     CrewPool,
   },
   props: {
@@ -187,6 +144,11 @@ export default {
       set(value) {
         this.$emit("changed", { type: "dead", value });
       },
+    },
+  },
+  methods: {
+    handleRemoveMember({ list, member }) {
+      this.$emit("removed", { list, member });
     },
   },
 };

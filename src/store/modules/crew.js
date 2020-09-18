@@ -8,12 +8,16 @@ const types = {
   SET_DEAD_CREW_MEMBERS: "✔️ [Set] dead crew members",
   LINK_SUSPECTS_WITH_ACCUSER: "✔️ [Link] suspects with accuser",
   LINK_INNOCENTS_WITH_PROTECTOR: "✔️ [Link] innocents with protector",
+  SET_MEMBER_DONE_WITH_TASKS: "✔️ [Set] member done with tasks",
+  SET_MEMBER_MEETINGS_HELD: "✔️ [Set] member total meetings held",
+  SET_MEMBER_AS_UNKNOWN: "✔️ [Set] member as unknown",
+  SET_MEMBER_AS_INACTIVE: "✔️ [Set] member as inactive",
 };
 
 const defaultCrewMembers = [
   {
     color: "red",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -22,7 +26,7 @@ const defaultCrewMembers = [
   },
   {
     color: "blue",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -31,7 +35,7 @@ const defaultCrewMembers = [
   },
   {
     color: "green",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -40,7 +44,7 @@ const defaultCrewMembers = [
   },
   {
     color: "pink",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -49,7 +53,7 @@ const defaultCrewMembers = [
   },
   {
     color: "orange",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -58,7 +62,7 @@ const defaultCrewMembers = [
   },
   {
     color: "yellow",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -67,7 +71,7 @@ const defaultCrewMembers = [
   },
   {
     color: "black",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -76,7 +80,7 @@ const defaultCrewMembers = [
   },
   {
     color: "white",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -85,7 +89,7 @@ const defaultCrewMembers = [
   },
   {
     color: "purple",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -94,7 +98,7 @@ const defaultCrewMembers = [
   },
   {
     color: "brown",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -103,7 +107,7 @@ const defaultCrewMembers = [
   },
   {
     color: "cyan",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -112,7 +116,7 @@ const defaultCrewMembers = [
   },
   {
     color: "lime",
-    isActive: true,
+    isActive: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
@@ -143,7 +147,9 @@ const getters = {
     );
   },
   inactiveCrewMembers: state => {
-    return state.crewMembers.filter(member => member.isActive === false);
+    return state.crewMembers.filter(member => {
+      return member.color !== state.playerColor && member.isActive === false;
+    });
   },
   deadCrewMembers: state => {
     return state.crewMembers.filter(member => member.isDead === true);
@@ -347,7 +353,7 @@ const mutations = {
             .filter(color => color !== accuser.color)
             .includes(member.color) === true
         ) {
-          if (member.suspectedBy.includes(accuser) === false) {
+          if (member.suspectedBy.includes(accuser.color) === false) {
             member.suspectedBy = member.suspectedBy.concat(accuser.color);
           }
         }
@@ -364,12 +370,66 @@ const mutations = {
             .filter(color => color !== protector.color)
             .includes(member.color) === true
         ) {
-          if (member.protectedBy.includes(protector) === false) {
+          if (member.protectedBy.includes(protector.color) === false) {
             member.protectedBy = member.protectedBy.concat(protector.color);
           }
         }
         return member;
       });
+  },
+  [types.SET_MEMBER_DONE_WITH_TASKS](state, { member, isDone }) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === member.color) {
+        someMember.isDoneWithTasks = isDone;
+      }
+      return someMember;
+    });
+  },
+  [types.SET_MEMBER_MEETINGS_HELD](state, { member, meetingsCount }) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === member.color) {
+        someMember.totalMeetingsHeld = meetingsCount;
+      }
+      return someMember;
+    });
+  },
+  [types.SET_MEMBER_AS_UNKNOWN](state, member) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === member.color) {
+        someMember.isActive = true;
+        someMember.isDead = false;
+        if (someMember.protectedBy.includes(state.playerColor) === true) {
+          someMember.protectedBy = someMember.protectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+        if (someMember.suspectedBy.includes(state.playerColor) === true) {
+          someMember.suspectedBy = someMember.suspectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+      }
+      return someMember;
+    });
+  },
+  [types.SET_MEMBER_AS_INACTIVE](state, member) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === member.color) {
+        someMember.isActive = false;
+        someMember.isDead = false;
+        if (someMember.protectedBy.includes(state.playerColor) === true) {
+          someMember.protectedBy = someMember.protectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+        if (someMember.suspectedBy.includes(state.playerColor) === true) {
+          someMember.suspectedBy = someMember.suspectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+      }
+      return someMember;
+    });
   },
 };
 
@@ -400,6 +460,18 @@ const actions = {
   },
   async linkInnocentsWithProtector({ commit }, { innocents, protector }) {
     commit(types.LINK_INNOCENTS_WITH_PROTECTOR, { innocents, protector });
+  },
+  async setCrewMemberIsDoneWithTasks({ commit }, { member, isDone }) {
+    commit(types.SET_MEMBER_DONE_WITH_TASKS, { member, isDone });
+  },
+  async setCrewMemberTotalMeetings({ commit }, { member, meetingsCount }) {
+    commit(types.SET_MEMBER_MEETINGS_HELD, { member, meetingsCount });
+  },
+  async setMemberAsUnknown({ commit }, member) {
+    commit(types.SET_MEMBER_AS_UNKNOWN, member);
+  },
+  async setMemberAsInactive({ commit }, member) {
+    commit(types.SET_MEMBER_AS_INACTIVE, member);
   },
 };
 
