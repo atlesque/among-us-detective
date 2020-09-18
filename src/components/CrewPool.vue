@@ -1,14 +1,14 @@
 <template>
-  <div class="flex border border-black">
+  <div class="flex w-full h-full bg-theme-gray-extra-light">
     <Draggable
-      v-model="crewMembers"
+      v-model="crewMembersInPool"
       group="crewMembers"
       class="flex-1 px-2 pt-2"
     >
       <CrewIcon
-        v-for="color in crewMembers"
-        :key="color"
-        :color="color"
+        v-for="member in crewMembersInPool"
+        :key="member.color"
+        :color="member.color"
         class="float-left mb-2 mr-2"
       />
     </Draggable>
@@ -25,10 +25,21 @@ export default {
     Draggable,
     CrewIcon,
   },
-  data() {
-    return {
-      crewMembers: [],
-    };
+  props: {
+    crewMembers: {
+      type: Array,
+      required: true,
+    },
+  },
+  computed: {
+    crewMembersInPool: {
+      get() {
+        return this.crewMembers;
+      },
+      set(value) {
+        this.$emit("changed", value);
+      },
+    },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="w-full table-auto table-bordered">
+    <table class="w-full table-fixed table-bordered">
       <thead>
         <tr>
           <td>Color</td>
@@ -11,22 +11,44 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="color in activeCrew" :key="color">
+        <tr
+          v-for="member in sortedCrewMembers"
+          :key="member.color"
+          :class="{ 'is-dead': member.isDead === true }"
+        >
           <td>
             <div class="flex justify-between">
-              <CrewIcon :color="color" />
-              <!-- <button
-                class="flex items-center justify-center w-4 h-4 button-danger button-sm"
-                @click="removeColor(color)"
-              >
-                X
-              </button> -->
+              <CrewIcon :color="member.color" />
             </div>
           </td>
-          <td><Checkbox /></td>
-          <td><Counter /></td>
-          <td><CrewSelector :ownColor="color" /></td>
-          <td><CrewSelector :ownColor="color" /></td>
+          <td><Checkbox :isDisabled="member.isDead === true" /></td>
+          <td><Counter :isDisabled="member.isDead === true" /></td>
+          <td>
+            <CrewPool
+              :crewMembers="getAllMembersProtectedBy(member)"
+              @changed="
+                value =>
+                  linkInnocentsWithProtector({
+                    innocents: value,
+                    protector: member,
+                  })
+              "
+              class="td-min-height"
+            />
+          </td>
+          <td class="relative">
+            <CrewPool
+              :crewMembers="getAllMembersSuspectedBy(member)"
+              @changed="
+                value =>
+                  linkSuspectsWithAccuser({
+                    suspects: value,
+                    accuser: member,
+                  })
+              "
+              class="td-min-height"
+            />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -37,7 +59,9 @@
 const CrewIcon = () => import("@/components/CrewIcon.vue");
 const Checkbox = () => import("@/components/Checkbox.vue");
 const Counter = () => import("@/components/Counter.vue");
-const CrewSelector = () => import("@/components/CrewSelector.vue");
+const CrewPool = () => import("@/components/CrewPool.vue");
+
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CrewStats",
@@ -45,29 +69,75 @@ export default {
     CrewIcon,
     Checkbox,
     Counter,
-    CrewSelector,
+    CrewPool,
   },
   props: {
     crewMembers: {
       type: Array,
       required: true,
     },
-    deadMembers: {
-      type: Array,
-      required: true,
+  },
+  computed: {
+    ...mapGetters("crew", ["crewMembersWithoutPlayer"]),
+    sortedCrewMembers() {
+      // Use spread operator to avoid mutating original array
+      return (
+        [...this.crewMembers]
+          // Sort by name
+          .sort((a, b) => {
+            let result = 0;
+            if (a.color > b.color) {
+              result = 1;
+            } else if (a.color < b.color) {
+              result = -1;
+            }
+            return result;
+          })
+          // Then sort by alive > dead
+          .sort((a, b) => {
+            let result = 0;
+            if (a.isDead === true && b.isDead === false) {
+              result = 1;
+            } else if (a.isDead === false && b.isDead === true) {
+              result = -1;
+            }
+            return result;
+          })
+      );
     },
   },
   data() {
-    return {
-      activeCrew: JSON.parse(JSON.stringify(this.crewMembers)),
-    };
+    return {};
   },
   methods: {
-    /* removeColor(colorToRemove) {
-      this.activeCrew = this.activeCrew.filter(
-        color => color !== colorToRemove
-      );
-    }, */
+    ...mapActions("crew", [
+      "linkSuspectsWithAccuser",
+      "linkInnocentsWithProtector",
+    ]),
+    getAllMembersSuspectedBy(accuser) {
+      return this.crewMembersWithoutPlayer.filter(member => {
+        return member.suspectedBy.includes(accuser.color) === true;
+      });
+    },
+    getAllMembersProtectedBy(protector) {
+      return this.crewMembersWithoutPlayer.filter(member => {
+        return member.protectedBy.includes(protector.color) === true;
+      });
+    },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.is-dead {
+  @apply bg-theme-gray;
+}
+table {
+  td {
+    // height: 0; // HACK: Makes all <td> equal height
+  }
+  .td-min-height {
+    min-height: 56px;
+  }
+}
+</style>

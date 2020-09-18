@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-between">
     <span class="text-2xl">{{ currentCount }}</span>
-    <div class="flex">
+    <div class="flex" v-show="isDisabled === false">
       <button
         class="self-center mr-2 button-sm button-success"
         @click="increaseCount()"
@@ -20,6 +20,12 @@
 <script>
 export default {
   name: "Counter",
+  props: {
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       currentCount: 0,

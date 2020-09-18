@@ -12,60 +12,76 @@
       <tbody>
         <tr>
           <td>
-            <Draggable
+            <!-- <Draggable
               v-model="innocentList"
               group="crewMembers"
               class="draggable-wrapper"
             >
               <CrewIcon
-                v-for="color in innocent"
-                :key="color"
-                :color="color"
+                v-for="crewMember in innocentList"
+                :key="crewMember.color"
+                :color="crewMember.color"
                 class="float-left mb-2 mr-2"
               />
-            </Draggable>
+            </Draggable> -->
+            <CrewPool
+              :crewMembers="innocentList"
+              @changed="value => (innocentList = value)"
+            />
           </td>
           <td>
-            <Draggable
+            <!-- <Draggable
               v-model="unknownList"
               group="crewMembers"
               class="draggable-wrapper"
             >
               <CrewIcon
-                v-for="color in unknown"
-                :key="color"
-                :color="color"
+                v-for="crewMember in unknownList"
+                :key="crewMember.color"
+                :color="crewMember.color"
                 class="float-left mb-2 mr-2"
               />
-            </Draggable>
+            </Draggable> -->
+            <CrewPool
+              :crewMembers="unknownList"
+              @changed="value => (unknownList = value)"
+            />
           </td>
           <td>
-            <Draggable
+            <!-- <Draggable
               v-model="suspectList"
               group="crewMembers"
               class="draggable-wrapper"
             >
               <CrewIcon
-                v-for="color in suspect"
-                :key="color"
-                :color="color"
+                v-for="crewMember in suspectList"
+                :key="crewMember.color"
+                :color="crewMember.color"
                 class="float-left mb-2 mr-2"
               />
-            </Draggable>
+            </Draggable> -->
+            <CrewPool
+              :crewMembers="suspectList"
+              @changed="value => (suspectList = value)"
+            />
           </td>
           <td>
-            <Draggable
+            <!-- <Draggable
               v-model="deadList"
               group="crewMembers"
               class="draggable-wrapper"
             >
               <CrewIcon
-                v-for="color in dead"
-                :key="color"
-                :color="color"
+                v-for="crewMember in deadList"
+                :key="crewMember.color"
+                :color="crewMember.color"
                 class="float-left mb-2 mr-2"
               />
-            </Draggable>
+            </Draggable> -->
+            <CrewPool
+              :crewMembers="deadList"
+              @changed="value => (deadList = value)"
+            />
           </td>
         </tr>
       </tbody>
@@ -73,15 +89,17 @@
   </div>
 </template>
 <script>
-import Draggable from "vuedraggable";
+/* import Draggable from "vuedraggable";
 
-const CrewIcon = () => import("@/components/CrewIcon.vue");
+const CrewIcon = () => import("@/components/CrewIcon.vue"); */
+const CrewPool = () => import("@/components/CrewPool.vue");
 
 export default {
   name: "CrewTracker",
   components: {
-    CrewIcon,
-    Draggable,
+    /* Draggable,
+    CrewIcon, */
+    CrewPool,
   },
   props: {
     playerColor: {
@@ -108,7 +126,15 @@ export default {
   computed: {
     innocentList: {
       get() {
-        return this.innocent;
+        return [...this.innocent].sort((a, b) => {
+          let result = 0;
+          if (a.color > b.color) {
+            result = 1;
+          } else if (a.color < b.color) {
+            result = -1;
+          }
+          return result;
+        });
       },
       set(value) {
         this.$emit("changed", { type: "innocent", value });
@@ -116,7 +142,15 @@ export default {
     },
     unknownList: {
       get() {
-        return this.unknown;
+        return [...this.unknown].sort((a, b) => {
+          let result = 0;
+          if (a.color > b.color) {
+            result = 1;
+          } else if (a.color < b.color) {
+            result = -1;
+          }
+          return result;
+        });
       },
       set(value) {
         this.$emit("changed", { type: "unknown", value });
@@ -124,7 +158,15 @@ export default {
     },
     suspectList: {
       get() {
-        return this.suspect;
+        return [...this.suspect].sort((a, b) => {
+          let result = 0;
+          if (a.color > b.color) {
+            result = 1;
+          } else if (a.color < b.color) {
+            result = -1;
+          }
+          return result;
+        });
       },
       set(value) {
         this.$emit("changed", { type: "suspect", value });
@@ -132,7 +174,15 @@ export default {
     },
     deadList: {
       get() {
-        return this.dead;
+        return [...this.dead].sort((a, b) => {
+          let result = 0;
+          if (a.color > b.color) {
+            result = 1;
+          } else if (a.color < b.color) {
+            result = -1;
+          }
+          return result;
+        });
       },
       set(value) {
         this.$emit("changed", { type: "dead", value });

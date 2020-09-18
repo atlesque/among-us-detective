@@ -5,6 +5,10 @@
 
 // Use body to overwrite the CSS reset
 body {
+  * {
+    @apply select-none;
+  }
+
   hr {
     @apply border-2;
     @apply border-theme-gray-dark;

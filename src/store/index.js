@@ -15,14 +15,4 @@ const store = new Vuex.Store({
   },
 });
 
-if (module.hot) {
-  module.hot.accept(["./modules/crew"], () => {
-    store.hotUpdate({
-      modules: {
-        crew: require("./modules/crew").default,
-      },
-    });
-  });
-}
-
 export default store;

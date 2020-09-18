@@ -1,34 +1,35 @@
 <template>
-  <div class="flex flex-col justify-between h-screen p-2 lg:p-8">
+  <div class="flex flex-col h-screen p-2 lg:p-8">
     <div class="flex flex-row justify-between mb-2">
       <PlayerSelector
         :currentColor="playerColor"
         @change="handleChangePlayerColor"
       />
-      <CrewPool class="flex-1 mx-4" />
+      <CrewPool
+        :crewMembers="inactiveCrewMembers"
+        @changed="value => handleCrewChanged({ type: 'inactive', value })"
+        class="flex-1 mx-4 rounded"
+      />
       <button @click="initNewGame()" class="button button-primary">
         New game
       </button>
     </div>
     <CrewTracker
       :playerColor="playerColor"
-      :innocent="crewMembers.innocent"
-      :unknown="crewMembers.unknown"
-      :suspect="crewMembers.suspect"
-      :dead="crewMembers.dead"
+      :innocent="crewMembersProtectedByPlayer"
+      :unknown="unknownCrewMembersForPlayer"
+      :suspect="crewMembersSuspectedByPlayer"
+      :dead="deadCrewMembers"
       @changed="handleCrewChanged"
+      class="mb-2"
     />
-    <CrewStats
-      :key="crewStatsKey"
-      :crewMembers="allCrewMembers"
-      :deadMembers="deadCrewMembers"
-    />
+    <CrewStats :crewMembers="activeCrewMembersWithoutPlayer" />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import allColors from "@/config/playerColors.js";
+import { mapState, mapActions, mapGetters } from "vuex";
+// import allColors from "@/config/playerColors.js";
 
 const PlayerSelector = () => import("@/components/PlayerSelector.vue");
 const CrewTracker = () => import("@/components/CrewTracker.vue");
@@ -48,47 +49,64 @@ export default {
   },
   data() {
     return {
-      allColors,
+      // allColors,
       // playerColor: "yellow",
-      crewMembers: {
+      /* crewMembers: {
         innocent: [],
         unknown: [],
         suspect: [],
         dead: [],
-      },
-      crewStatsKey: (Math.random() * 1e8).toString(32),
+        inactive: [],
+      }, */
+      // crewStatsKey: (Math.random() * 1e8).toString(32),
     };
   },
   computed: {
     ...mapState("crew", ["playerColor"]),
-    allCrewMembers() {
-      return this.allColors.filter(color => color !== this.playerColor);
-    },
-    deadCrewMembers() {
-      return this.allCrewMembers.filter(
-        color => this.crewMembers.dead.includes(color) === false
-      );
-    },
+    ...mapGetters("crew", [
+      "crewMembersWithoutPlayer",
+      "activeCrewMembersWithoutPlayer",
+      "deadCrewMembers",
+      "inactiveCrewMembers",
+      "crewMembersProtectedByPlayer",
+      "unknownCrewMembersForPlayer",
+      "crewMembersSuspectedByPlayer",
+    ]),
   },
   methods: {
-    ...mapActions("crew", ["setPlayerColor"]),
+    ...mapActions("crew", [
+      "resetAllCrew",
+      "setPlayerColor",
+      "setInactiveCrewMembers",
+      "setProtectedCrewMembers",
+      "setUnknownCrewMembers",
+      "setSuspectedCrewMembers",
+      "setDeadCrewMembers",
+    ]),
     initNewGame() {
-      this.crewMembers = {
-        innocent: [],
-        unknown: this.allCrewMembers,
-        suspect: [],
-        dead: [],
-      };
+      this.resetAllCrew();
       // HACK: Forces reset of the component, easy way to reset the app
-      this.crewStatsKey = (Math.random() * 1e8).toString(32);
+      // this.crewStatsKey = (Math.random() * 1e8).toString(32);
     },
     handleChangePlayerColor(selectedColor) {
       // this.playerColor = selectedColor;
-      this.setPlayerColor({ color: selectedColor });
+      this.setPlayerColor(selectedColor);
       this.initNewGame();
     },
     handleCrewChanged(crewChange) {
-      this.crewMembers[crewChange.type] = crewChange.value;
+      // console.log(crewChange);
+      // this.crewMembers[crewChange.type] = crewChange.value;
+      if (crewChange.type === "inactive") {
+        this.setInactiveCrewMembers(crewChange.value);
+      } else if (crewChange.type === "innocent") {
+        this.setProtectedCrewMembers(crewChange.value);
+      } else if (crewChange.type === "unknown") {
+        this.setUnknownCrewMembers(crewChange.value);
+      } else if (crewChange.type === "suspect") {
+        this.setSuspectedCrewMembers(crewChange.value);
+      } else if (crewChange.type === "dead") {
+        this.setDeadCrewMembers(crewChange.value);
+      }
     },
   },
 };
