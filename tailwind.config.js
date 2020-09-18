@@ -1,0 +1,48 @@
+module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  purge: [],
+  theme: {
+    extend: {
+      colors: {
+        theme: {
+          "gray-extra-light": "#F5F6F7",
+          "gray-light": "#CED1D7",
+          gray: "#9CA3AE",
+          "gray-dark": "#4E5257",
+          "gray-extra-dark": "#101011",
+          "blue-light": "#A0C8E2",
+          blue: "#4191C4",
+          "blue-dark": "#214962",
+          "red-light": "#E8B9B9",
+          red: "#D17373",
+          "red-dark": "#693A3A",
+          "yellow-light": "#F6E4BF",
+          yellow: "#ECC87E",
+          "yellow-dark": "#76643F",
+          "green-light": "#C4E4D1",
+          green: "#88C9A2",
+          "green-dark": "#446551",
+        },
+        player: {
+          red: "#C61111",
+          blue: "#132ED2",
+          green: "#11802D",
+          pink: "#EE54BB",
+          orange: "#F07D0D",
+          yellow: "#F6F657",
+          black: "#3F474E",
+          white: "#D7E1F1",
+          purple: "#6B2FBC",
+          brown: "#71491E",
+          cyan: "#38FFDD",
+          lime: "#50F039",
+        },
+      },
+    },
+  },
+  variants: {},
+  plugins: [require("@tailwindcss/ui")],
+};

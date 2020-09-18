@@ -1,0 +1,91 @@
+.button {
+  @apply inline-block;
+  @apply text-center;
+  @apply rounded;
+  @apply cursor-pointer;
+  @apply px-4;
+  @apply py-2;
+  @apply text-white;
+  @apply bg-theme-gray;
+  @apply outline-none;
+  @apply transition-all;
+  @apply duration-100;
+  @apply flex;
+  @apply items-center;
+
+  &:hover,
+  &:focus {
+    @apply outline-none;
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-dark");
+  }
+}
+
+.button-sm {
+  @extend .button;
+  @apply px-2;
+  @apply py-0;
+}
+
+.button-primary {
+  @extend .button;
+  @apply bg-theme-blue;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.blue-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.blue-light");
+    @apply bg-theme-blue-dark;
+  }
+}
+
+.button-success {
+  @extend .button;
+  @apply bg-theme-green;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.green-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.green-light");
+    @apply bg-theme-green-dark;
+  }
+}
+
+.button-warning {
+  @extend .button;
+  @apply bg-theme-yellow;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.yellow-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.yellow-light");
+    @apply bg-theme-yellow-dark;
+  }
+}
+
+.button-danger {
+  @extend .button;
+  @apply bg-theme-red;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.red-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.red-light");
+    @apply bg-theme-red-dark;
+  }
+}

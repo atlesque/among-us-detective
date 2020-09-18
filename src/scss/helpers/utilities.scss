@@ -1,0 +1,67 @@
+// Utility classes
+.bg-position-top {
+  background-position: top !important;
+}
+
+.bg-position-center {
+  background-position: center !important;
+}
+
+.bg-position-bottom {
+  background-position: bottom !important;
+}
+
+.bg-image-cover {
+  @apply bg-no-repeat;
+  @apply bg-cover;
+}
+
+.bg-image-contain {
+  @apply bg-no-repeat;
+  @apply bg-contain;
+}
+
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
+
+.break-inside-avoid {
+  break-inside: avoid;
+}
+
+.col-span-all {
+  column-span: all;
+}
+
+.list-styled {
+  @apply list-inside;
+  @apply list-disc;
+}
+
+.table-bordered {
+  th,
+  td {
+    @apply border;
+    @apply border-solid;
+    @apply border-theme-gray-dark;
+    @apply p-2;
+  }
+}
+
+.filter-grayscale {
+  filter: grayscale(1);
+}
+
+.p-page {
+  @apply p-4;
+  @apply pb-10;
+
+  @screen sm {
+    @apply p-16;
+  }
+}
+
+.p-enclosed {
+  @apply max-w-6xl;
+  @apply mx-auto;
+}

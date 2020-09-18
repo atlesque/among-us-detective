@@ -1,0 +1,55 @@
+// Add custom font-faces here:
+@import "../fonts/inter.scss";
+
+html {
+  // Responsive typography
+  // Source: https://www.smashingmagazine.com/2016/05/fluid-typography/
+  font-size: calc(18px + (24 - 18) * (100vw - 320px) / (8192 - 320));
+}
+
+body {
+  font-family: "Inter";
+  @apply text-theme-gray-extra-dark;
+
+  h1 {
+    @apply text-2xl;
+    @apply mt-4;
+    @apply mb-2;
+  }
+
+  h2 {
+    @apply text-xl;
+    @apply mt-4;
+    @apply mb-2;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  h3 {
+    @apply font-bold;
+  }
+
+  p {
+    @apply mb-4;
+    @apply text-base;
+  }
+}
+
+.headline,
+.headline-xl {
+  @apply font-normal;
+}
+
+.headline-xl {
+  @apply text-5xl;
+}
+
+.headline {
+  @apply text-4xl;
+}
+
+.caption {
+  @apply text-sm;
+}

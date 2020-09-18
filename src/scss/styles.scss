@@ -1,0 +1,12 @@
+// Helpers
+@use "./helpers/reset.scss";
+@use "./helpers/default.scss";
+@use "./helpers/colors.scss";
+@use "./helpers/utilities.scss";
+@use "./helpers/typography.scss";
+@use "./helpers/buttons.scss";
+
+// Tailwind CSS
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

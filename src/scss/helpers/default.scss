@@ -1,0 +1,74 @@
+::selection {
+  @apply bg-theme-red;
+  @apply text-white;
+}
+
+// Use body to overwrite the CSS reset
+body {
+  hr {
+    @apply border-2;
+    @apply border-theme-gray-dark;
+    @apply my-3;
+  }
+
+  input,
+  select {
+    @apply rounded;
+    @apply bg-white;
+  }
+
+  textarea {
+    @apply rounded;
+
+    &:disabled {
+      @apply bg-theme-gray-dark;
+      @apply text-theme-gray-extra-dark;
+      @apply font-extrabold;
+    }
+  }
+
+  fieldset {
+    @apply mb-4;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply p-3;
+    @apply mb-4;
+    @apply shadow-lg;
+    @apply block;
+    @apply w-full;
+    @apply max-w-lg;
+    @apply transition;
+    @apply duration-150;
+    @apply ease-in-out;
+    &:focus {
+      @apply outline-none;
+      @apply shadow-outline;
+    }
+
+    &.input-p-sm {
+      @apply px-2;
+      @apply py-1;
+    }
+  }
+
+  label {
+    @apply block;
+    @apply mb-2;
+  }
+
+  a {
+    @apply font-bold;
+    &:hover {
+      @apply underline;
+    }
+  }
+
+  pre {
+    @apply bg-black;
+    @apply text-theme-yellow;
+    @apply p-1;
+  }
+}
