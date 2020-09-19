@@ -13,6 +13,8 @@ const types = {
   SET_MEMBER_MEETINGS_HELD: "✔️ [Set] member total meetings held",
   SET_MEMBER_AS_UNKNOWN: "✔️ [Set] member as unknown",
   SET_MEMBER_AS_INACTIVE: "✔️ [Set] member as inactive",
+  REMOVE_PROTECTED_FROM_PROTECTOR: "✔️ [Removed] protected from protector",
+  REMOVE_SUSPECT_FROM_ACCUSER: "✔️ [Removed] suspect from accuser",
 };
 
 const defaultCrewMembers = [
@@ -447,6 +449,33 @@ const mutations = {
       return someMember;
     });
   },
+  [types.REMOVE_PROTECTED_FROM_PROTECTOR](
+    state,
+    { protectedMember, protector }
+  ) {
+    state.crewMembers = state.crewMembers
+      .filter(member => member.color !== state.playerColor)
+      .map(member => {
+        if (member.color === protectedMember.color) {
+          member.protectedBy = member.protectedBy.filter(
+            memberColor => memberColor !== protector.color
+          );
+        }
+        return member;
+      });
+  },
+  [types.REMOVE_SUSPECT_FROM_ACCUSER](state, { suspect, accuser }) {
+    state.crewMembers = state.crewMembers
+      .filter(member => member.color !== state.playerColor)
+      .map(member => {
+        if (member.color === suspect.color) {
+          member.suspectedBy = member.suspectedBy.filter(
+            memberColor => memberColor !== accuser.color
+          );
+        }
+        return member;
+      });
+  },
 };
 
 const actions = {
@@ -491,6 +520,18 @@ const actions = {
   },
   async setMemberAsInactive({ commit }, member) {
     commit(types.SET_MEMBER_AS_INACTIVE, member);
+  },
+  async removeProtectedFromProtector(
+    { commit },
+    { protectedMember, protector }
+  ) {
+    commit(types.REMOVE_PROTECTED_FROM_PROTECTOR, {
+      protectedMember,
+      protector,
+    });
+  },
+  async removeSuspectFromAccuser({ commit }, { suspect, accuser }) {
+    commit(types.REMOVE_SUSPECT_FROM_ACCUSER, { suspect, accuser });
   },
 };
 

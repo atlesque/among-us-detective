@@ -58,6 +58,13 @@
                     protector: member,
                   })
               "
+              @removed="
+                value =>
+                  removeProtectedFromProtector({
+                    protectedMember: value,
+                    protector: member,
+                  })
+              "
               class="td-min-height"
             />
           </td>
@@ -70,6 +77,10 @@
                     suspects: value,
                     accuser: member,
                   })
+              "
+              @removed="
+                value =>
+                  removeSuspectFromAccuser({ suspect: value, accuser: member })
               "
               class="td-min-height"
             />
@@ -140,6 +151,8 @@ export default {
       "linkInnocentsWithProtector",
       "setCrewMemberIsDoneWithTasks",
       "setCrewMemberTotalMeetings",
+      "removeProtectedFromProtector",
+      "removeSuspectFromAccuser",
     ]),
     getAllMembersSuspectedBy(accuser) {
       return this.crewMembersWithoutPlayer.filter(member => {
