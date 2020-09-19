@@ -1,9 +1,12 @@
 <template>
   <div class="flex justify-between">
     <div class="flex items-center justify-center flex-1">
-      <span class="text-2xl" :class="numberClass" @dblclick="resetCount()">{{
-        currentCount
-      }}</span>
+      <span
+        class="p-1 text-2xl"
+        :class="numberClass"
+        @dblclick="resetCount()"
+        >{{ currentCount }}</span
+      >
     </div>
     <div class="flex flex-col" v-show="isDisabled === false">
       <button class="button-sm button-success" @click="increaseCount()">

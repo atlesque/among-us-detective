@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col h-screen p-2 lg:p-8">
-    <div class="flex flex-row justify-between mb-2">
+    <div class="flex flex-col-reverse justify-between mb-2 lg:flex-row">
       <PlayerSelector
+        class="hidden lg:block"
         :currentColor="playerColor"
         @change="handleChangePlayerColor"
       />
@@ -9,14 +10,21 @@
         :crewMembers="inactiveCrewMembers"
         @changed="value => handleCrewChanged({ type: 'inactive', value })"
         @removed="member => handleMemberRemoved({ list: 'inactive', member })"
-        class="flex-1 mx-4 border rounded"
+        class="flex-1 mb-2 border rounded lg:mb-0 lg:mx-4"
       />
-      <button @click="initNewRound()" class="mr-2 button button-success">
-        New round
-      </button>
-      <button @click="initNewGame()" class="button button-primary">
-        New game
-      </button>
+      <div class="flex justify-between mb-2">
+        <button @click="initNewRound()" class="mr-2 button button-success">
+          New round
+        </button>
+        <PlayerSelector
+          class="lg:hidden"
+          :currentColor="playerColor"
+          @change="handleChangePlayerColor"
+        />
+        <button @click="initNewGame()" class="button button-primary">
+          New game
+        </button>
+      </div>
     </div>
     <CrewTracker
       :playerColor="playerColor"
@@ -28,8 +36,8 @@
       @removed="handleMemberRemoved"
       class="mb-2"
     />
-    <CrewStats :crewMembers="activeCrewMembersWithoutPlayer" />
-    <!-- <pre>{{ crewMembersWithoutPlayer }}</pre> -->
+    <CrewStats :crewMembers="activeCrewMembersWithoutPlayer" class="mb-2" />
+    <Maps />
   </div>
 </template>
 
@@ -41,6 +49,7 @@ const PlayerSelector = () => import("@/components/PlayerSelector.vue");
 const CrewTracker = () => import("@/components/CrewTracker.vue");
 const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
+const Maps = () => import("@/components/Maps.vue");
 
 export default {
   name: "Home",
@@ -49,6 +58,7 @@ export default {
     CrewTracker,
     CrewStats,
     CrewPool,
+    Maps,
   },
   mounted() {
     this.initNewGame();

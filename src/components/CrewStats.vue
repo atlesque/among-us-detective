@@ -1,11 +1,11 @@
 <template>
   <div>
-    <table class="w-full table-fixed table-bordered">
+    <table class="w-full table-auto lg:table-fixed table-bordered">
       <thead>
         <tr>
-          <td>Color</td>
-          <td>Tasks?</td>
-          <td>Meeting?</td>
+          <td><span class="hidden lg:inline">Color</span></td>
+          <td><span class="hidden lg:inline">Tasks?</span></td>
+          <td><span class="hidden lg:inline">Meeting?</span></td>
           <td colspan="3">Innocent</td>
           <td colspan="3">Suspect</td>
         </tr>
@@ -17,16 +17,20 @@
           :class="{ 'is-dead': member.isDead === true }"
         >
           <td>
-            <div class="flex items-center justify-evenly">
+            <div
+              class="flex flex-col-reverse items-center py-1 lg:flex-row justify-evenly"
+            >
               <CrewIcon :color="member.color" />
-              <div v-show="member.isDead === false" class="flex flex-col">
+              <div v-show="member.isDead === false" class="flex lg:flex-col">
                 <span
                   v-show="member.suspectedBy.length > 0"
+                  class="px-1"
                   :class="getSuspectCounterClass(member.suspectedBy.length)"
                   >{{ member.suspectedBy.length }}</span
                 >
                 <span
                   v-show="member.protectedBy.length > 0"
+                  class="px-1"
                   :class="getProtectedCounterClass(member.protectedBy.length)"
                   >{{ member.protectedBy.length }}</span
                 >
