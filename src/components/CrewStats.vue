@@ -19,11 +19,18 @@
           <td>
             <div class="flex items-center justify-evenly">
               <CrewIcon :color="member.color" />
-              <span
-                v-show="member.isDead === false"
-                :class="getSuspectCounterClass(member.suspectedBy.length)"
-                >{{ member.suspectedBy.length }}</span
-              >
+              <div v-show="member.isDead === false" class="flex flex-col">
+                <span
+                  v-show="member.suspectedBy.length > 0"
+                  :class="getSuspectCounterClass(member.suspectedBy.length)"
+                  >{{ member.suspectedBy.length }}</span
+                >
+                <span
+                  v-show="member.protectedBy.length > 0"
+                  :class="getProtectedCounterClass(member.protectedBy.length)"
+                  >{{ member.protectedBy.length }}</span
+                >
+              </div>
             </div>
           </td>
           <td>
@@ -165,10 +172,15 @@ export default {
       });
     },
     getSuspectCounterClass(suspectedByCount) {
-      if (suspectedByCount >= 2) {
+      if (suspectedByCount >= 1) {
         return "font-bold text-player-red";
-      } else if (0 < suspectedByCount && suspectedByCount < 2) {
-        return "text-player-orange";
+      } else {
+        return "text-theme-gray-light";
+      }
+    },
+    getProtectedCounterClass(protectedByCount) {
+      if (protectedByCount >= 1) {
+        return "font-bold text-player-green";
       } else {
         return "text-theme-gray-light";
       }
