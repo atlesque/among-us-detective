@@ -11,6 +11,9 @@
         @removed="member => handleMemberRemoved({ list: 'inactive', member })"
         class="flex-1 mx-4 border rounded"
       />
+      <button @click="initNewRound()" class="mr-2 button button-success">
+        New round
+      </button>
       <button @click="initNewGame()" class="button button-primary">
         New game
       </button>
@@ -79,6 +82,7 @@ export default {
   methods: {
     ...mapActions("crew", [
       "resetAllCrew",
+      "resetActiveCrew",
       "setPlayerColor",
       "setInactiveCrewMembers",
       "setProtectedCrewMembers",
@@ -92,6 +96,9 @@ export default {
       this.resetAllCrew();
       // HACK: Forces reset of the component, easy way to reset the app
       // this.crewStatsKey = (Math.random() * 1e8).toString(32);
+    },
+    initNewRound() {
+      this.resetActiveCrew();
     },
     handleChangePlayerColor(selectedColor) {
       // this.playerColor = selectedColor;

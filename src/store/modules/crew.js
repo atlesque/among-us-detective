@@ -1,5 +1,6 @@
 const types = {
   RESET_ALL_CREW: "✨[Reset] all crew",
+  RESET_ACTIVE_CREW: "✨[Reset] active crew",
   SET_PLAYER_COLOR: "✔️ [Set] player color",
   SET_INACTIVE_CREW_MEMBERS: "✔️ [Set] inactive crew members",
   SET_PROTECTED_CREW_MEMBERS: "✔️ [Set] protected crew members",
@@ -229,6 +230,21 @@ const mutations = {
     state.crewMembers = JSON.parse(JSON.stringify(defaultCrewMembers));
     state.playerColor = JSON.parse(JSON.stringify(defaultPlayerColor));
   },
+  [types.RESET_ACTIVE_CREW](state) {
+    /* const activeMembers = state.crewMembers.filter(
+      member => member.isActive === true
+    ); */
+    state.crewMembers = state.crewMembers
+      .filter(member => member.color !== state.playerColor)
+      .map(member => {
+        member.isDead = false;
+        member.suspectedBy = [];
+        member.protectedBy = [];
+        member.isDoneWithTasks = false;
+        member.totalMeetingsHeld = 0;
+        return member;
+      });
+  },
   [types.SET_PLAYER_COLOR](state, color) {
     state.playerColor = color;
   },
@@ -436,6 +452,9 @@ const mutations = {
 const actions = {
   async resetAllCrew({ commit }) {
     commit(types.RESET_ALL_CREW);
+  },
+  async resetActiveCrew({ commit }) {
+    commit(types.RESET_ACTIVE_CREW);
   },
   async setPlayerColor({ commit }, color) {
     commit(types.SET_PLAYER_COLOR, color);
