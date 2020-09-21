@@ -53,6 +53,7 @@
       class="mb-2"
     />
     <Maps />
+    <CookieWarning />
   </div>
 </template>
 
@@ -64,6 +65,7 @@ const CrewTracker = () => import("@/components/CrewTracker.vue");
 const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
+const CookieWarning = () => import("@/components/CookieWarning.vue");
 
 export default {
   name: "Home",
@@ -73,6 +75,7 @@ export default {
     CrewStats,
     CrewPool,
     Maps,
+    CookieWarning,
   },
   mounted() {
     this.initNewGame();
