@@ -47,7 +47,11 @@
       @removed="handleMemberRemoved"
       class="mb-2"
     />
-    <CrewStats :crewMembers="activeCrewMembersWithoutPlayer" class="mb-2" />
+    <CrewStats
+      v-show="activeCrewMembersWithoutPlayer.length > 0"
+      :crewMembers="activeCrewMembersWithoutPlayer"
+      class="mb-2"
+    />
     <Maps />
   </div>
 </template>
