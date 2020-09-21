@@ -40,21 +40,52 @@
       </div>
     </div>
     <div v-show="isMapVisible">
-      <img
-        v-show="selectedMap === 'the-skeld'"
-        src="@/assets/images/maps/the-skeld.jpg"
-        alt="The Skeld Map"
-      />
-      <img
+      <picture v-show="selectedMap === 'the-skeld'">
+        <source
+          srcset="@/assets/images/maps/small/the-skeld.webp"
+          type="image/webp"
+        />
+        <source
+          srcset="@/assets/images/maps/small/the-skeld.jpg"
+          type="image/jpeg"
+        />
+        <img
+          src="@/assets/images/maps/small/the-skeld.jpg"
+          alt="The Skeld Map"
+        />
+      </picture>
+      <picture v-show="selectedMap === 'mira-hq'">
+        <source
+          srcset="@/assets/images/maps/small/mira-hq.webp"
+          type="image/webp"
+        />
+        <source
+          srcset="@/assets/images/maps/small/mira-hq.jpg"
+          type="image/jpeg"
+        />
+        <img src="@/assets/images/maps/small/mira-hq.jpg" alt="Mira HQ Map" />
+      </picture>
+      <picture v-show="selectedMap === 'polus'">
+        <source
+          srcset="@/assets/images/maps/small/polus.webp"
+          type="image/webp"
+        />
+        <source
+          srcset="@/assets/images/maps/small/polus.jpg"
+          type="image/jpeg"
+        />
+        <img src="@/assets/images/maps/small/polus.jpg" alt="Polus Map" />
+      </picture>
+      <!-- <img
         v-show="selectedMap === 'mira-hq'"
-        src="@/assets/images/maps/mira-hq.jpg"
+        src="@/assets/images/maps/small/mira-hq.webp"
         alt="Mira HQ Map"
       />
       <img
         v-show="selectedMap === 'polus'"
-        src="@/assets/images/maps/polus.jpg"
+        src="@/assets/images/maps/small/polus.webp"
         alt="Polus Map"
-      />
+      /> -->
     </div>
   </div>
 </template>
