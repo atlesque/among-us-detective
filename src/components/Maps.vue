@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex">
+    <div class="flex mb-2">
       <button
         v-show="isMapVisible === false"
         @click="isMapVisible = true"
@@ -16,13 +16,25 @@
         Hide map
       </button>
       <div v-show="isMapVisible === true" class="flex">
-        <button @click="selectedMap = 'the-skeld'" class="mr-2 button-sm">
+        <button
+          @click="selectedMap = 'the-skeld'"
+          class="mr-2 button-sm"
+          :class="{ 'font-bold': selectedMap === 'the-skeld' }"
+        >
           The Skeld
         </button>
-        <button @click="selectedMap = 'mira-hq'" class="mr-2 button-sm">
+        <button
+          @click="selectedMap = 'mira-hq'"
+          class="mr-2 button-sm"
+          :class="{ 'font-bold': selectedMap === 'mira-hq' }"
+        >
           Mira HQ
         </button>
-        <button @click="selectedMap = 'polus'" class="button-sm">
+        <button
+          @click="selectedMap = 'polus'"
+          class="button-sm"
+          :class="{ 'font-bold': selectedMap === 'polus' }"
+        >
           Polus
         </button>
       </div>
