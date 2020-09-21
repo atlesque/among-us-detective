@@ -32,16 +32,30 @@ export default {
       type: String,
       default: "yellow",
     },
+    isPickerOpen: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      isPlayerPickerOpen: false,
+      // isPlayerPickerOpen: false,
       playerColors: availableColors,
     };
   },
+  computed: {
+    isPlayerPickerOpen: {
+      get() {
+        return this.isPickerOpen;
+      },
+      set(value) {
+        this.$emit("pickerToggle", value);
+      },
+    },
+  },
   methods: {
     selectPlayerColor(selectedColor) {
-      this.$emit("change", selectedColor);
+      this.$emit("colorChanged", selectedColor);
       this.isPlayerPickerOpen = false;
     },
   },

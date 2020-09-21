@@ -1,4 +1,5 @@
 const types = {
+  SET_CREW: "✔️[Set] crew members",
   RESET_ALL_CREW: "✨[Reset] all crew",
   RESET_ACTIVE_CREW: "✨[Reset] active crew",
   SET_PLAYER_COLOR: "✔️ [Set] player color",
@@ -228,9 +229,12 @@ const getters = {
 };
 
 const mutations = {
+  [types.SET_CREW](state, newCrew) {
+    state.crewMembers = newCrew;
+  },
   [types.RESET_ALL_CREW](state) {
     state.crewMembers = JSON.parse(JSON.stringify(defaultCrewMembers));
-    state.playerColor = JSON.parse(JSON.stringify(defaultPlayerColor));
+    // state.playerColor = JSON.parse(JSON.stringify(defaultPlayerColor));
   },
   [types.RESET_ACTIVE_CREW](state) {
     /* const activeMembers = state.crewMembers.filter(
@@ -532,6 +536,20 @@ const actions = {
   },
   async removeSuspectFromAccuser({ commit }, { suspect, accuser }) {
     commit(types.REMOVE_SUSPECT_FROM_ACCUSER, { suspect, accuser });
+  },
+  async setAllMembersAsUnknown({ commit, state, getters }) {
+    const newCrew = getters.crewMembersWithoutPlayer.map(member => {
+      member.isActive = true;
+      member.isDead = false;
+      member.suspectedBy = member.suspectedBy.filter(
+        memberColor => memberColor !== state.playerColor
+      );
+      member.protectedBy = member.protectedBy.filter(
+        memberColor => memberColor !== state.playerColor
+      );
+      return member;
+    });
+    commit(types.SET_CREW, newCrew);
   },
 };
 

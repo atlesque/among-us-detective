@@ -6,6 +6,9 @@
 @use "./helpers/typography.scss";
 @use "./helpers/buttons.scss";
 
+// Icons
+@use "./icons/icomoon.scss";
+
 // Tailwind CSS
 @tailwind base;
 @tailwind components;
