@@ -157,7 +157,7 @@ export default {
 <style lang="scss" scoped>
 table {
   td {
-    height: 0; // HACK: Makes all <td> equal height
+    height: 3rem;
   }
 }
 .draggable-wrapper {
