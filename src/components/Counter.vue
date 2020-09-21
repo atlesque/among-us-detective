@@ -31,11 +31,6 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      // currentCount: 0,
-    };
-  },
   computed: {
     currentCount: {
       get() {

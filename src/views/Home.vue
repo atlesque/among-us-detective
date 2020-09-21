@@ -58,7 +58,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-// import allColors from "@/config/playerColors.js";
 
 const PlayerSelector = () => import("@/components/PlayerSelector.vue");
 const CrewTracker = () => import("@/components/CrewTracker.vue");
@@ -81,16 +80,6 @@ export default {
   data() {
     return {
       isPlayerPickerOpen: false,
-      // allColors,
-      // playerColor: "yellow",
-      /* crewMembers: {
-        innocent: [],
-        unknown: [],
-        suspect: [],
-        dead: [],
-        inactive: [],
-      }, */
-      // crewStatsKey: (Math.random() * 1e8).toString(32),
     };
   },
   computed: {
@@ -121,48 +110,76 @@ export default {
     ]),
     initNewGame() {
       this.resetAllCrew();
-      // HACK: Forces reset of the component, easy way to reset the app
-      // this.crewStatsKey = (Math.random() * 1e8).toString(32);
+      this.$gtag.event("init_new_game", {
+        event_category: "global_stats",
+      });
     },
     initNewRound() {
       this.resetActiveCrew();
+      this.$gtag.event("init_new_round", {
+        event_category: "global_stats",
+      });
     },
     handleChangePlayerColor(selectedColor) {
-      // this.playerColor = selectedColor;
       this.setPlayerColor(selectedColor);
       this.initNewGame();
+      this.$gtag.event("change_player_color", {
+        event_category: "player_stats",
+      });
     },
     handleCrewChanged(crewChange) {
-      // console.log(crewChange);
-      // this.crewMembers[crewChange.type] = crewChange.value;
       if (crewChange.type === "inactive") {
         this.setInactiveCrewMembers(crewChange.value);
       } else if (crewChange.type === "innocent") {
+        const newMemberProtectedByPlayer = crewChange.value.filter(
+          newMember =>
+            this.crewMembersProtectedByPlayer.includes(newMember) === false
+        )[0];
+        if (newMemberProtectedByPlayer != null) {
+          this.$gtag.event("marked_as_innocent", {
+            event_category: "player_stats",
+            value: newMemberProtectedByPlayer,
+          });
+        }
         this.setProtectedCrewMembers(crewChange.value);
       } else if (crewChange.type === "unknown") {
         this.setUnknownCrewMembers(crewChange.value);
       } else if (crewChange.type === "suspect") {
+        const newMemberSuspectedByPlayer = crewChange.value.filter(
+          newMember =>
+            this.crewMembersSuspectedByPlayer.includes(newMember) === false
+        )[0];
+        if (newMemberSuspectedByPlayer != null) {
+          this.$gtag.event("marked_as_suspect", {
+            event_category: "player_stats",
+            value: newMemberSuspectedByPlayer,
+          });
+        }
         this.setSuspectedCrewMembers(crewChange.value);
       } else if (crewChange.type === "dead") {
+        const newDeadMember = crewChange.value.filter(
+          newMember => this.deadCrewMembers.includes(newMember) === false
+        )[0];
+        if (newDeadMember != null) {
+          this.$gtag.event("marked_as_dead", {
+            event_category: "global_stats",
+            value: newDeadMember,
+          });
+        }
         this.setDeadCrewMembers(crewChange.value);
       }
     },
     handleMemberRemoved({ list, member }) {
       if (list === "inactive") {
-        // this.setInactiveCrewMembers(member);
         this.setMemberAsUnknown(member);
       } else if (list === "innocent") {
-        // this.setProtectedCrewMembers(member);
         this.setMemberAsUnknown(member);
       } else if (list === "unknown") {
-        // this.setUnknownCrewMembers(member);
         this.setMemberAsInactive(member);
       } else if (list === "suspect") {
         this.setMemberAsUnknown(member);
-        // this.setSuspectedCrewMembers(member);
       } else if (list === "dead") {
         this.setMemberAsUnknown(member);
-        // this.setDeadCrewMembers(member);
       }
     },
     handleTogglePlayerPicker(isOpen) {

@@ -17,7 +17,7 @@
       </button>
       <div v-show="isMapVisible === true" class="flex">
         <button
-          @click="selectedMap = 'the-skeld'"
+          @click="selectMap('the-skeld')"
           class="mr-2 button-sm"
           :class="{ 'font-bold': selectedMap === 'the-skeld' }"
         >
@@ -66,6 +66,15 @@ export default {
       isMapVisible: false,
       selectedMap: "the-skeld",
     };
+  },
+  methods: {
+    selectMap(newMap) {
+      this.selectedMap = newMap;
+      this.$gtag.event("change_map", {
+        event_category: "global_stats",
+        value: newMap,
+      });
+    },
   },
 };
 </script>

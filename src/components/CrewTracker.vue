@@ -3,9 +3,9 @@
     <table class="w-full table-fixed table-bordered">
       <thead>
         <tr>
-          <th class="bg-theme-green-light">Innocent</th>
+          <th class="bg-theme-green-light">My innocents</th>
           <th>Unknown</th>
-          <th class="bg-theme-yellow-light">Suspect</th>
+          <th class="bg-theme-yellow-light">My suspects</th>
           <th class="text-theme-red-light bg-theme-gray-dark">Dead</th>
         </tr>
       </thead>

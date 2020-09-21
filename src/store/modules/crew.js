@@ -234,12 +234,8 @@ const mutations = {
   },
   [types.RESET_ALL_CREW](state) {
     state.crewMembers = JSON.parse(JSON.stringify(defaultCrewMembers));
-    // state.playerColor = JSON.parse(JSON.stringify(defaultPlayerColor));
   },
   [types.RESET_ACTIVE_CREW](state) {
-    /* const activeMembers = state.crewMembers.filter(
-      member => member.isActive === true
-    ); */
     state.crewMembers = state.crewMembers
       .filter(member => member.color !== state.playerColor)
       .map(member => {
