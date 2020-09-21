@@ -3,9 +3,9 @@
     <table class="w-full table-auto lg:table-fixed table-bordered">
       <thead>
         <tr>
-          <td><span class="hidden lg:inline">Color</span></td>
-          <td><span class="hidden lg:inline">Tasks?</span></td>
-          <td><span class="hidden lg:inline">Meeting?</span></td>
+          <td>Color</td>
+          <td>Tasks?</td>
+          <td>Meeting?</td>
           <td colspan="3">Innocent</td>
           <td colspan="3">Suspect</td>
         </tr>
