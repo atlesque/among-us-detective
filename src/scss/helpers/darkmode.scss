@@ -1,0 +1,8 @@
+.dark-mode {
+  @apply bg-black;
+  @apply text-theme-gray-extra-light;
+
+  .dark--text-dark {
+    @apply text-theme-gray-extra-dark;
+  }
+}

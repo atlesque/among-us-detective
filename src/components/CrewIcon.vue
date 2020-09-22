@@ -7,9 +7,11 @@
       autoHeight === true ? 'h-full' : 'h-8',
     ]"
   >
-    <span v-if="showColorNames === true" class="text-xs bg-white">{{
-      color
-    }}</span>
+    <span
+      v-if="showColorNames === true"
+      class="text-xs bg-white dark--text-dark"
+      >{{ color }}</span
+    >
     <template v-else>
       <img
         :src="require(`@/assets/images/player/${color}-trans.png`)"

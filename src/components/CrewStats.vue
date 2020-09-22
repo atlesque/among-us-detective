@@ -200,9 +200,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.is-dead {
-  @apply bg-theme-gray-light;
-}
 table {
   .td-min-height {
     min-height: 56px;

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col h-screen p-2 lg:p-8">
+  <div
+    class="flex flex-col h-screen p-2 lg:p-8"
+    :class="{ 'dark-mode': isDarkMode === true }"
+  >
     <div class="flex flex-col-reverse justify-between mb-2 lg:flex-row">
       <PlayerSelector
         class="hidden lg:flex"
@@ -55,15 +58,15 @@
       :areColorNamesVisible="areColorNamesVisible"
       class="mb-2"
     />
-    <div class="relative">
-      <button
-        @click="toggleColorNames"
-        class="absolute right-0 text-xs button-sm"
-      >
+    <div class="fixed bottom-0 left-0 right-0 flex justify-end p-1">
+      <button @click="toggleColorNames" class="mr-2 text-xs button-sm">
         {{ toggleColorNamesButtonText }}
       </button>
-      <Maps />
+      <button @click="toggleDarkMode" class="text-xs button-sm">
+        {{ toggleDarkModeButtonText }}
+      </button>
     </div>
+    <Maps />
     <CookieWarning />
   </div>
 </template>
@@ -95,6 +98,7 @@ export default {
     return {
       isPlayerPickerOpen: false,
       areColorNamesVisible: false,
+      isDarkMode: false,
     };
   },
   computed: {
@@ -110,8 +114,11 @@ export default {
     ]),
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true
-        ? "Hide color names"
-        : "Show color names";
+        ? "Player icons"
+        : "Color names";
+    },
+    toggleDarkModeButtonText() {
+      return this.isDarkMode === true ? "Light" : "Dark";
     },
   },
   methods: {
@@ -207,6 +214,15 @@ export default {
       this.areColorNamesVisible = newValue;
       const eventName =
         newValue === true ? "show_color_names" : "hide_color_names";
+      this.$gtag.event(eventName, {
+        event_category: "global_stats",
+      });
+    },
+    toggleDarkMode() {
+      const newValue = !this.isDarkMode;
+      this.isDarkMode = newValue;
+      const eventName =
+        newValue === true ? "dark_mode_enabled" : "light_mode_enabled";
       this.$gtag.event(eventName, {
         event_category: "global_stats",
       });

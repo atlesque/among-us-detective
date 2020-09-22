@@ -64,3 +64,7 @@
   @apply max-w-6xl;
   @apply mx-auto;
 }
+
+.is-dead {
+  @apply bg-theme-gray-dark;
+}
