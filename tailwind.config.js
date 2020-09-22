@@ -41,6 +41,9 @@ module.exports = {
           lime: "#50F039",
         },
       },
+      minHeight: {
+        12: "3rem",
+      },
     },
   },
   variants: {},
