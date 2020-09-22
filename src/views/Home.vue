@@ -11,7 +11,7 @@
         @pickerToggle="handleTogglePlayerPicker"
         :isPickerOpen="isPlayerPickerOpen"
       />
-      <div class="flex items-center justify-center flex-1">
+      <div class="flex justify-center flex-1">
         <div class="flex flex-row flex-1 max-w-xl min-h-12">
           <CrewPool
             :crewMembers="inactiveCrewMembers"
