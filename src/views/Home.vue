@@ -126,7 +126,7 @@ export default {
     handleChangePlayerColor(selectedColor) {
       this.setPlayerColor(selectedColor);
       this.initNewGame();
-      this.$gtag.event("change_player_color", {
+      this.$gtag.event(`change_player_color_${selectedColor}`, {
         event_category: "player_stats",
       });
     },
@@ -139,9 +139,8 @@ export default {
             this.crewMembersProtectedByPlayer.includes(newMember) === false
         )[0];
         if (newMemberProtectedByPlayer != null) {
-          this.$gtag.event("marked_as_innocent", {
+          this.$gtag.event(`marked_as_innocent_${newMemberProtectedByPlayer}`, {
             event_category: "player_stats",
-            value: newMemberProtectedByPlayer,
           });
         }
         this.setProtectedCrewMembers(crewChange.value);
@@ -153,9 +152,8 @@ export default {
             this.crewMembersSuspectedByPlayer.includes(newMember) === false
         )[0];
         if (newMemberSuspectedByPlayer != null) {
-          this.$gtag.event("marked_as_suspect", {
+          this.$gtag.event(`marked_as_suspect_${newMemberSuspectedByPlayer}`, {
             event_category: "player_stats",
-            value: newMemberSuspectedByPlayer,
           });
         }
         this.setSuspectedCrewMembers(crewChange.value);
@@ -164,9 +162,8 @@ export default {
           newMember => this.deadCrewMembers.includes(newMember) === false
         )[0];
         if (newDeadMember != null) {
-          this.$gtag.event("marked_as_dead", {
+          this.$gtag.event(`marked_as_dead_${newDeadMember}`, {
             event_category: "global_stats",
-            value: newDeadMember,
           });
         }
         this.setDeadCrewMembers(crewChange.value);

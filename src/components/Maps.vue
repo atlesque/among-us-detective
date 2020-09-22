@@ -101,9 +101,8 @@ export default {
   methods: {
     selectMap(newMap) {
       this.selectedMap = newMap;
-      this.$gtag.event("change_map", {
+      this.$gtag.event(`change_map_${newMap}`, {
         event_category: "global_stats",
-        value: newMap,
       });
     },
   },
