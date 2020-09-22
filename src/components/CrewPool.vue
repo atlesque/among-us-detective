@@ -9,6 +9,7 @@
         v-for="member in crewMembersInPool"
         :key="member.color"
         :color="member.color"
+        :showColorNames="showColorNames"
         class="float-left mb-2 mr-2"
         v-on:dblclick.native="removeMember(member)"
       />
@@ -30,6 +31,10 @@ export default {
     crewMembers: {
       type: Array,
       required: true,
+    },
+    showColorNames: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

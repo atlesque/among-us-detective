@@ -1,13 +1,23 @@
 <template>
   <div
-    class="flex items-center justify-center rounded"
+    class="relative flex items-center justify-center rounded"
     :class="[
-      `bg-player-${color}`,
+      showColorNames === true ? `bg-player-${color}` : '',
       autoWidth === true ? 'w-full' : 'w-8',
       autoHeight === true ? 'h-full' : 'h-8',
     ]"
   >
-    <span class="text-xs bg-white">{{ color }}</span>
+    <span v-if="showColorNames === true" class="text-xs bg-white">{{
+      color
+    }}</span>
+    <template v-else>
+      <img
+        :src="require(`@/assets/images/player/${color}-trans.png`)"
+        :alt="color"
+        :title="color"
+        class="z-10"
+      />
+    </template>
   </div>
 </template>
 <script>
@@ -23,6 +33,10 @@ export default {
       default: false,
     },
     autoHeight: {
+      type: Boolean,
+      default: false,
+    },
+    showColorNames: {
       type: Boolean,
       default: false,
     },

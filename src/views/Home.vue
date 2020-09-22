@@ -10,6 +10,7 @@
       />
       <CrewPool
         :crewMembers="inactiveCrewMembers"
+        :showColorNames="areColorNamesVisible === true"
         @changed="value => handleCrewChanged({ type: 'inactive', value })"
         @removed="member => handleMemberRemoved({ list: 'inactive', member })"
         class="flex-1 mb-2 border rounded-l lg:mb-0 lg:ml-4"
@@ -43,6 +44,7 @@
       :unknown="unknownCrewMembersForPlayer"
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
+      :areColorNamesVisible="areColorNamesVisible"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
       class="mb-2"
@@ -50,9 +52,18 @@
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"
       :crewMembers="activeCrewMembersWithoutPlayer"
+      :areColorNamesVisible="areColorNamesVisible"
       class="mb-2"
     />
-    <Maps />
+    <div class="relative">
+      <button
+        @click="toggleColorNames"
+        class="absolute right-0 text-xs button-sm"
+      >
+        {{ toggleColorNamesButtonText }}
+      </button>
+      <Maps />
+    </div>
     <CookieWarning />
   </div>
 </template>
@@ -83,6 +94,7 @@ export default {
   data() {
     return {
       isPlayerPickerOpen: false,
+      areColorNamesVisible: false,
     };
   },
   computed: {
@@ -96,6 +108,11 @@ export default {
       "unknownCrewMembersForPlayer",
       "crewMembersSuspectedByPlayer",
     ]),
+    toggleColorNamesButtonText() {
+      return this.areColorNamesVisible === true
+        ? "Hide color names"
+        : "Show color names";
+    },
   },
   methods: {
     ...mapActions("crew", [
@@ -184,6 +201,15 @@ export default {
     },
     handleTogglePlayerPicker(isOpen) {
       this.isPlayerPickerOpen = isOpen;
+    },
+    toggleColorNames() {
+      const newValue = !this.areColorNamesVisible;
+      this.areColorNamesVisible = newValue;
+      const eventName =
+        newValue === true ? "show_color_names" : "hide_color_names";
+      this.$gtag.event(eventName, {
+        event_category: "global_stats",
+      });
     },
   },
 };

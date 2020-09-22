@@ -14,6 +14,7 @@
           <td>
             <CrewPool
               :crewMembers="innocentList"
+              :showColorNames="areColorNamesVisible === true"
               @changed="value => (innocentList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'innocent', member })
@@ -23,6 +24,7 @@
           <td>
             <CrewPool
               :crewMembers="unknownList"
+              :showColorNames="areColorNamesVisible === true"
               @changed="value => (unknownList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'unknown', member })
@@ -32,6 +34,7 @@
           <td>
             <CrewPool
               :crewMembers="suspectList"
+              :showColorNames="areColorNamesVisible === true"
               @changed="value => (suspectList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'suspect', member })
@@ -41,6 +44,7 @@
           <td class="bg-theme-gray-dark">
             <CrewPool
               :crewMembers="deadList"
+              :showColorNames="areColorNamesVisible === true"
               @changed="value => (deadList = value)"
               @removed="member => handleRemoveMember({ list: 'dead', member })"
             />
@@ -78,6 +82,10 @@ export default {
     dead: {
       type: Array,
       required: true,
+    },
+    areColorNamesVisible: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

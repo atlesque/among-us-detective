@@ -20,7 +20,10 @@
             <div
               class="flex flex-col-reverse items-center py-1 lg:flex-row justify-evenly"
             >
-              <CrewIcon :color="member.color" />
+              <CrewIcon
+                :color="member.color"
+                :showColorNames="areColorNamesVisible"
+              />
               <div v-show="member.isDead === false" class="flex lg:flex-col">
                 <span
                   v-show="member.suspectedBy.length > 0"
@@ -62,6 +65,7 @@
           <td colspan="3">
             <CrewPool
               :crewMembers="getAllMembersProtectedBy(member)"
+              :showColorNames="areColorNamesVisible === true"
               @changed="
                 value =>
                   linkInnocentsWithProtector({
@@ -82,6 +86,7 @@
           <td class="relative" colspan="3">
             <CrewPool
               :crewMembers="getAllMembersSuspectedBy(member)"
+              :showColorNames="areColorNamesVisible === true"
               @changed="
                 value =>
                   linkSuspectsWithAccuser({
@@ -123,6 +128,10 @@ export default {
       type: Array,
       required: true,
     },
+    areColorNamesVisible: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters("crew", ["crewMembersWithoutPlayer"]),
@@ -152,9 +161,6 @@ export default {
           })
       );
     },
-  },
-  data() {
-    return {};
   },
   methods: {
     ...mapActions("crew", [
