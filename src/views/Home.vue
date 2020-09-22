@@ -11,21 +11,25 @@
         @pickerToggle="handleTogglePlayerPicker"
         :isPickerOpen="isPlayerPickerOpen"
       />
-      <div class="flex flex-row flex-1 max-w-xl min-h-12">
-        <CrewPool
-          :crewMembers="inactiveCrewMembers"
-          :showColorNames="areColorNamesVisible === true"
-          @changed="value => handleCrewChanged({ type: 'inactive', value })"
-          @removed="member => handleMemberRemoved({ list: 'inactive', member })"
-          class="flex-1 border rounded-l lg:mb-0 lg:ml-4"
-        />
-        <button
-          :disabled="inactiveCrewMembers.length <= 0"
-          @click="setAllMembersAsUnknown"
-          class="mr-2 rounded-l-none button-sm"
-        >
-          <span class="icon-arrow-down2"></span>
-        </button>
+      <div class="flex items-center justify-center flex-1">
+        <div class="flex flex-row flex-1 max-w-xl min-h-12">
+          <CrewPool
+            :crewMembers="inactiveCrewMembers"
+            :showColorNames="areColorNamesVisible === true"
+            @changed="value => handleCrewChanged({ type: 'inactive', value })"
+            @removed="
+              member => handleMemberRemoved({ list: 'inactive', member })
+            "
+            class="flex-1 border rounded-l lg:mb-0 lg:ml-4"
+          />
+          <button
+            :disabled="inactiveCrewMembers.length <= 0"
+            @click="setAllMembersAsUnknown"
+            class="mr-2 rounded-l-none button-sm"
+          >
+            <span class="icon-arrow-down2"></span>
+          </button>
+        </div>
       </div>
       <div class="flex justify-between mb-2">
         <button
@@ -248,6 +252,9 @@ export default {
     },
     toggleHelpModal() {
       this.isHelpModalOpen = !this.isHelpModalOpen;
+      this.$gtag.event("open_help", {
+        event_category: "global_stats",
+      });
     },
   },
 };
