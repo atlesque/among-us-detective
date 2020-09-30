@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div class="round-notes-wrapper">
+    <div class="my-2 round-notes-wrapper">
       <div class="flex justify-between">
         <label
           for="round-notes"

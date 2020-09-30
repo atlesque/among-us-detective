@@ -7,7 +7,7 @@
         :key="index"
         class="mb-4 text-sm leading-5 text-theme-gray-dark"
       >
-        <span>{{ changelogItem.date }}</span>
+        <span class="text-xs font-bold">{{ changelogItem.date }}</span>
         <ul
           class="pl-4 list-disc"
           v-if="(changelogItem.changes || []).length > 0"
@@ -20,7 +20,7 @@
           </li>
         </ul>
       </div>
-      <div class="text-xs leading-5 text-theme-gray-dark">
+      <div class="mt-6 text-xs leading-5 text-theme-gray-dark">
         <p class="mb-0 text-xs">
           Made with ❤ by <a href="https://atlesque.com">Atlesque</a>
         </p>
@@ -45,6 +45,16 @@ export default {
           changes: [
             "Added Dark mode",
             "Show player icons by default. Color names can be enabled in footer",
+          ],
+        },
+        {
+          date: "2020-09-30",
+          changes: [
+            "Make table UI prettier",
+            "Move Changelog into separate modal",
+            "Improve 'Show map' button layout",
+            "Add Notes modal. You can now add notes per round and per game. Props to Greedlord and AshamedBrit on Reddit for the suggestion!",
+            "Improve mobile UI",
           ],
         },
       ],

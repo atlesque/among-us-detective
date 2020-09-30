@@ -203,8 +203,10 @@ export default {
 
 <style lang="scss" scoped>
 table {
-  .td-min-height {
-    min-height: 56px;
+  @screen md {
+    .td-min-height {
+      min-height: 56px;
+    }
   }
 
   thead {
