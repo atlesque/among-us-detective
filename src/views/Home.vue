@@ -83,12 +83,19 @@
       <button @click="toggleDarkMode" class="mr-2 text-xs button-sm">
         {{ toggleDarkModeButtonText }}
       </button>
-      <button @click="toggleHelpModal" class="text-xs button-sm">
+      <button @click="toggleHelpModal" class="mr-2 text-xs button-sm">
         Help
+      </button>
+      <button @click="toggleChangelogModal" class="text-xs button-sm">
+        About
       </button>
     </div>
     <Maps />
     <HelpModal v-if="isHelpModalOpen === true" @close="toggleHelpModal" />
+    <ChangelogModal
+      v-if="isChangelogModalOpen === true"
+      @close="toggleChangelogModal"
+    />
     <CookieWarning />
   </div>
 </template>
@@ -102,6 +109,7 @@ const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
 const HelpModal = () => import("@/components/HelpModal.vue");
+const ChangelogModal = () => import("@/components/ChangelogModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
 
 export default {
@@ -113,6 +121,7 @@ export default {
     CrewPool,
     Maps,
     HelpModal,
+    ChangelogModal,
     CookieWarning,
   },
   mounted() {
@@ -124,6 +133,7 @@ export default {
       areColorNamesVisible: false,
       isDarkMode: false,
       isHelpModalOpen: false,
+      isChangelogModalOpen: false,
     };
   },
   computed: {
@@ -259,6 +269,12 @@ export default {
     toggleHelpModal() {
       this.isHelpModalOpen = !this.isHelpModalOpen;
       this.$gtag.event("open_help", {
+        event_category: "global_stats",
+      });
+    },
+    toggleChangelogModal() {
+      this.isChangelogModalOpen = !this.isChangelogModalOpen;
+      this.$gtag.event("open_changelog", {
         event_category: "global_stats",
       });
     },
