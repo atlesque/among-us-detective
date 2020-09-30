@@ -149,6 +149,9 @@
                   Double-clicking on a color in <b>Innocent / Suspect</b> will
                   remove it from that list
                 </li>
+                <li>
+                  Double-clicking on the meeting counter will reset it
+                </li>
               </ul>
             </div>
             <hr class="mt-6 border-theme-gray-extra-light" />

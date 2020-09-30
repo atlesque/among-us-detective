@@ -1,16 +1,18 @@
 <template>
   <div>
-    <table class="w-full table-auto lg:table-fixed table-bordered">
+    <table
+      class="w-full overflow-hidden divide-y divide-gray-200 rounded shadow table-auto lg:table-fixed"
+    >
       <thead>
         <tr>
-          <td>Color</td>
-          <td>Tasks?</td>
-          <td>Meeting?</td>
-          <td colspan="3">Innocent</td>
-          <td colspan="3">Suspect</td>
+          <th>Color</th>
+          <th>Tasks?</th>
+          <th>Meeting?</th>
+          <th colspan="3">Innocent</th>
+          <th colspan="3">Suspect</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="divide-y divide-gray-200">
         <tr
           v-for="member in sortedCrewMembers"
           :key="member.color"
@@ -51,7 +53,7 @@
               "
             />
           </td>
-          <td>
+          <td class="px-1">
             <Counter
               v-show="member.isDead === false"
               :count="member.totalMeetingsHeld"
@@ -203,6 +205,21 @@ export default {
 table {
   .td-min-height {
     min-height: 56px;
+  }
+
+  thead {
+    th {
+      @apply py-1;
+      @apply px-3;
+
+      &:not(:last-of-type) {
+        @apply border-r;
+      }
+    }
+  }
+
+  td:not(:last-of-type) {
+    @apply border-r;
   }
 }
 </style>

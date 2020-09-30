@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="w-full overflow-hidden table-fixed table-bordered">
+    <table class="w-full overflow-hidden rounded shadow table-fixed">
       <thead>
         <tr>
           <th class="bg-theme-green-light dark--text-dark">My innocents</th>
@@ -164,6 +164,16 @@ export default {
 
 <style lang="scss" scoped>
 table {
+  thead {
+    th {
+      @apply p-1;
+    }
+  }
+
+  td {
+    @apply shadow-inner;
+  }
+
   td {
     height: 3rem;
   }

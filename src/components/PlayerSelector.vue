@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-32 h-12">
+  <div class="flex h-12 w-36">
     <button
       v-if="isPlayerPickerOpen === false"
       class="flex items-center justify-center w-full h-full rounded button"
@@ -16,6 +16,7 @@
         v-for="color in playerColors"
         :key="color"
         :class="`bg-player-${color}`"
+        class="rounded"
         @click="selectPlayerColor(color)"
       ></button>
     </div>

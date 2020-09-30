@@ -25,7 +25,7 @@
           <button
             :disabled="inactiveCrewMembers.length <= 0"
             @click="setAllMembersAsUnknown"
-            class="mr-2 rounded-l-none button-sm"
+            class="rounded-l-none lg:mr-2 button-sm"
           >
             <span class="icon-arrow-down2"></span>
           </button>
@@ -68,7 +68,7 @@
       :areColorNamesVisible="areColorNamesVisible"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
-      class="mb-2"
+      class="mb-2 lg:mb-4"
     />
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"

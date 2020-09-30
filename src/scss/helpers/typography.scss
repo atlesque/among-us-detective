@@ -4,7 +4,7 @@
 html {
   // Responsive typography
   // Source: https://www.smashingmagazine.com/2016/05/fluid-typography/
-  font-size: calc(18px + (24 - 18) * (100vw - 320px) / (8192 - 320));
+  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (8192 - 320));
 }
 
 body {

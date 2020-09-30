@@ -9,11 +9,17 @@
       >
     </div>
     <div class="flex flex-col" v-show="isDisabled === false">
-      <button class="button-sm button-success" @click="increaseCount()">
-        +
+      <button
+        class="flex items-center justify-center mb-1 shadow button-sm button-success"
+        @click="increaseCount()"
+      >
+        <span>+</span>
       </button>
-      <button class="button-sm button-danger" @click="decreaseCount()">
-        -
+      <button
+        class="flex items-center justify-center shadow button-sm button-danger"
+        @click="decreaseCount()"
+      >
+        <span>-</span>
       </button>
     </div>
   </div>
