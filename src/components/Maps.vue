@@ -24,14 +24,14 @@
           The Skeld
         </button>
         <button
-          @click="selectedMap = 'mira-hq'"
+          @click="selectMap('mira-hq')"
           class="mr-2 button-sm"
           :class="{ 'font-bold': selectedMap === 'mira-hq' }"
         >
           Mira HQ
         </button>
         <button
-          @click="selectedMap = 'polus'"
+          @click="selectMap('polus')"
           class="button-sm"
           :class="{ 'font-bold': selectedMap === 'polus' }"
         >

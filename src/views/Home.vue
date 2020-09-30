@@ -186,9 +186,12 @@ export default {
             this.crewMembersProtectedByPlayer.includes(newMember) === false
         )[0];
         if (newMemberProtectedByPlayer != null) {
-          this.$gtag.event(`marked_as_innocent_${newMemberProtectedByPlayer}`, {
-            event_category: "player_stats",
-          });
+          this.$gtag.event(
+            `marked_as_innocent_${newMemberProtectedByPlayer.color}`,
+            {
+              event_category: "player_stats",
+            }
+          );
         }
         this.setProtectedCrewMembers(crewChange.value);
       } else if (crewChange.type === "unknown") {
@@ -199,9 +202,12 @@ export default {
             this.crewMembersSuspectedByPlayer.includes(newMember) === false
         )[0];
         if (newMemberSuspectedByPlayer != null) {
-          this.$gtag.event(`marked_as_suspect_${newMemberSuspectedByPlayer}`, {
-            event_category: "player_stats",
-          });
+          this.$gtag.event(
+            `marked_as_suspect_${newMemberSuspectedByPlayer.color}`,
+            {
+              event_category: "player_stats",
+            }
+          );
         }
         this.setSuspectedCrewMembers(crewChange.value);
       } else if (crewChange.type === "dead") {
@@ -209,7 +215,7 @@ export default {
           newMember => this.deadCrewMembers.includes(newMember) === false
         )[0];
         if (newDeadMember != null) {
-          this.$gtag.event(`marked_as_dead_${newDeadMember}`, {
+          this.$gtag.event(`marked_as_dead_${newDeadMember.color}`, {
             event_category: "global_stats",
           });
         }
