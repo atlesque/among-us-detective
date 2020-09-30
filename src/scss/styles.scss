@@ -10,6 +10,9 @@
 // Icons
 @use "./icons/icomoon.scss";
 
+// 3rd party dependencies
+@use "./vendor/highlight-within-textarea.scss";
+
 // Tailwind CSS
 @tailwind base;
 @tailwind components;

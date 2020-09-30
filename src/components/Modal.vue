@@ -13,7 +13,7 @@
       <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
       >&#8203;
       <div
-        class="inline-block px-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
@@ -41,7 +41,7 @@
           </button>
         </div>
         <div class="sm:flex sm:items-start">
-          <div class="my-6 sm:my-0 sm:ml-4">
+          <div class="w-full my-6 sm:my-0">
             <h1
               class="text-lg font-medium leading-6 text-gray-900"
               id="modal-headline"

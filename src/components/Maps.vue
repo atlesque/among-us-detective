@@ -4,36 +4,39 @@
       <button
         v-show="isMapVisible === false"
         @click="isMapVisible = true"
-        class="button-sm"
+        class="py-1 button-sm"
       >
         Show map
       </button>
       <button
         v-show="isMapVisible === true"
         @click="isMapVisible = false"
-        class="mr-8 button-sm"
+        class="rounded-r-none button-sm"
       >
         Hide map
       </button>
-      <div v-show="isMapVisible === true" class="flex">
+      <div
+        v-show="isMapVisible === true"
+        class="flex p-1 rounded-r bg-theme-blue-dark"
+      >
         <button
           @click="selectMap('the-skeld')"
           class="mr-2 button-sm"
-          :class="{ 'font-bold': selectedMap === 'the-skeld' }"
+          :class="{ 'active button-success': selectedMap === 'the-skeld' }"
         >
           The Skeld
         </button>
         <button
           @click="selectMap('mira-hq')"
           class="mr-2 button-sm"
-          :class="{ 'font-bold': selectedMap === 'mira-hq' }"
+          :class="{ 'active button-success': selectedMap === 'mira-hq' }"
         >
           Mira HQ
         </button>
         <button
           @click="selectMap('polus')"
           class="button-sm"
-          :class="{ 'font-bold': selectedMap === 'polus' }"
+          :class="{ 'active button-success': selectedMap === 'polus' }"
         >
           Polus
         </button>
@@ -76,19 +79,10 @@
         />
         <img src="@/assets/images/maps/small/polus.jpg" alt="Polus Map" />
       </picture>
-      <!-- <img
-        v-show="selectedMap === 'mira-hq'"
-        src="@/assets/images/maps/small/mira-hq.webp"
-        alt="Mira HQ Map"
-      />
-      <img
-        v-show="selectedMap === 'polus'"
-        src="@/assets/images/maps/small/polus.webp"
-        alt="Polus Map"
-      /> -->
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "Maps",
@@ -108,3 +102,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+button {
+  &.active {
+    @apply font-bold;
+  }
+}
+</style>

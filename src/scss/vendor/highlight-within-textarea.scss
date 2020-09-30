@@ -1,0 +1,82 @@
+/*
+ * highlight-within-textarea
+ *
+ * @author        Will Boyd
+ * @github        https://github.com/lonekorean/highlight-within-textarea
+ * Current fork:  https://github.com/Blaked84/highlight-within-textarea
+ */
+
+.hwt-container {
+  display: inline-block;
+  position: relative;
+  // overflow: hidden !important;
+  -webkit-text-size-adjust: none !important;
+  width: 100%;
+}
+
+.hwt-backdrop {
+  position: absolute !important;
+  top: 0 !important;
+  right: -99px !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  padding-right: 99px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.hwt-highlights {
+  width: auto !important;
+  height: auto !important;
+  border-color: transparent !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  color: transparent !important;
+  overflow: hidden !important;
+}
+
+.hwt-input {
+  display: block !important;
+  position: relative !important;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  font: inherit;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.hwt-content {
+  border: 1px solid;
+  background: none transparent !important;
+  @apply p-4;
+  @apply block;
+  @apply w-full;
+  @apply text-sm;
+  @apply leading-5;
+  @screen lg {
+    @apply text-base;
+    @apply leading-normal;
+  }
+  appearance: none;
+  border-color: #d2d6dc;
+  border-width: 1px;
+  border-radius: 0.375rem;
+  padding-top: 0.5rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
+    border-color: #a4cafe;
+  }
+}
+
+.hwt-content mark {
+  padding: 0 !important;
+  color: inherit;
+}

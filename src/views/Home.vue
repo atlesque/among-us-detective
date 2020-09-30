@@ -90,7 +90,23 @@
         About
       </button>
     </div>
-    <Maps />
+    <div class="relative">
+      <Maps />
+      <button
+        @click="toggleNotesModal"
+        class="absolute top-0 right-0 button-sm"
+      >
+        Notes
+      </button>
+    </div>
+    <NotesModal
+      v-if="isNotesModalOpen === true"
+      @close="toggleNotesModal"
+      :round="roundNotes"
+      :game="gameNotes"
+      @roundNotesChanged="value => (roundNotes = value)"
+      @gameNotesChanged="value => (gameNotes = value)"
+    />
     <HelpModal v-if="isHelpModalOpen === true" @close="toggleHelpModal" />
     <ChangelogModal
       v-if="isChangelogModalOpen === true"
@@ -108,6 +124,7 @@ const CrewTracker = () => import("@/components/CrewTracker.vue");
 const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
+const NotesModal = () => import("@/components/NotesModal.vue");
 const HelpModal = () => import("@/components/HelpModal.vue");
 const ChangelogModal = () => import("@/components/ChangelogModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
@@ -120,6 +137,7 @@ export default {
     CrewStats,
     CrewPool,
     Maps,
+    NotesModal,
     HelpModal,
     ChangelogModal,
     CookieWarning,
@@ -134,6 +152,9 @@ export default {
       isDarkMode: false,
       isHelpModalOpen: false,
       isChangelogModalOpen: false,
+      isNotesModalOpen: false,
+      roundNotes: "",
+      gameNotes: "",
     };
   },
   computed: {
@@ -170,12 +191,15 @@ export default {
     ]),
     initNewGame() {
       this.resetAllCrew();
+      this.gameNotes = "";
+      this.roundNotes = "";
       this.$gtag.event("init_new_game", {
         event_category: "global_stats",
       });
     },
     initNewRound() {
       this.resetActiveCrew();
+      this.roundNotes = "";
       this.$gtag.event("init_new_round", {
         event_category: "global_stats",
       });
@@ -275,6 +299,12 @@ export default {
     toggleChangelogModal() {
       this.isChangelogModalOpen = !this.isChangelogModalOpen;
       this.$gtag.event("open_changelog", {
+        event_category: "global_stats",
+      });
+    },
+    toggleNotesModal() {
+      this.isNotesModalOpen = !this.isNotesModalOpen;
+      this.$gtag.event("open_notes", {
         event_category: "global_stats",
       });
     },
