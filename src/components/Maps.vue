@@ -1,23 +1,23 @@
 <template>
   <div>
-    <div class="flex mb-2">
+    <div class="flex flex-col mb-2 md:flex-row">
       <button
         v-show="isMapVisible === false"
         @click="isMapVisible = true"
-        class="py-1 button-sm"
+        class="self-start py-1 button-sm"
       >
         Show map
       </button>
       <button
         v-show="isMapVisible === true"
         @click="isMapVisible = false"
-        class="rounded-r-none button-sm"
+        class="self-start py-1 md:rounded-r-none button-sm"
       >
         Hide map
       </button>
       <div
         v-show="isMapVisible === true"
-        class="flex p-1 rounded-r bg-theme-blue-dark"
+        class="flex p-1 mt-2 rounded md:rounded-r bg-theme-blue-dark md:mt-0"
       >
         <button
           @click="selectMap('the-skeld')"

@@ -44,7 +44,7 @@
           New round
         </button>
         <PlayerSelector
-          class="lg:hidden"
+          class="mr-2 lg:hidden"
           :currentColor="playerColor"
           @colorChanged="handleChangePlayerColor"
           @pickerToggle="handleTogglePlayerPicker"
@@ -77,16 +77,16 @@
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 flex justify-end px-2 py-1">
-      <button @click="toggleColorNames" class="mr-2 text-xs button-sm">
+      <button @click="toggleColorNames" class="mr-2 text-sm button-sm">
         {{ toggleColorNamesButtonText }}
       </button>
-      <button @click="toggleDarkMode" class="mr-2 text-xs button-sm">
+      <button @click="toggleDarkMode" class="mr-2 text-sm button-sm">
         {{ toggleDarkModeButtonText }}
       </button>
-      <button @click="toggleHelpModal" class="mr-2 text-xs button-sm">
+      <button @click="toggleHelpModal" class="mr-2 text-sm button-sm">
         Help
       </button>
-      <button @click="toggleChangelogModal" class="text-xs button-sm">
+      <button @click="toggleChangelogModal" class="text-sm button-sm">
         About
       </button>
     </div>
@@ -94,7 +94,7 @@
       <Maps />
       <button
         @click="toggleNotesModal"
-        class="absolute top-0 right-0 button-sm"
+        class="absolute top-0 right-0 py-1 button-sm"
       >
         Notes
       </button>

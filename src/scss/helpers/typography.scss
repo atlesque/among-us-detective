@@ -4,7 +4,8 @@
 html {
   // Responsive typography
   // Source: https://www.smashingmagazine.com/2016/05/fluid-typography/
-  font-size: calc(16px + (24 - 16) * (100vw - 320px) / (8192 - 320));
+  // font-size: calc(14px + (24 - 14) * (100vw - 320px) / (8192 - 320));
+  font-size: calc(16px + (24 - 16) * (100vw - 400px) / (2048 - 400));
 }
 
 body {
@@ -34,6 +35,10 @@ body {
   p {
     @apply mb-4;
     @apply text-base;
+  }
+
+  textarea {
+    max-width: 100%;
   }
 }
 
