@@ -17,7 +17,7 @@
       </button>
       <div
         v-show="isMapVisible === true"
-        class="flex p-1 mt-2 rounded md:rounded-r bg-theme-blue-dark md:mt-0"
+        class="flex self-start p-1 mt-2 rounded md:rounded-l-none bg-theme-blue-dark md:mt-0"
       >
         <button
           @click="selectMap('the-skeld')"
