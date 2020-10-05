@@ -3,7 +3,7 @@
     <template slot="title">Changelog</template>
     <template slot="body">
       <div
-        v-for="(changelogItem, index) in changelog"
+        v-for="(changelogItem, index) in changelogNewestFirst"
         :key="index"
         class="mb-4 text-sm leading-5 text-theme-gray-dark"
       >
@@ -57,8 +57,17 @@ export default {
             "Improve mobile UI",
           ],
         },
+        {
+          date: "2020-10-05",
+          changes: ["Move Notes button to top button row for easier access"],
+        },
       ],
     };
+  },
+  computed: {
+    changelogNewestFirst() {
+      return [...this.changelog].reverse();
+    },
   },
   methods: {
     closeModal() {

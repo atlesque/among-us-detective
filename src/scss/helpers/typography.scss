@@ -8,8 +8,8 @@ html {
 
   font-size: calc(12px + (24 - 12) * (100vw - 400px) / (800 - 400));
 
-  @screen md {
-    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (2048 - 400));
+  @screen sm {
+    font-size: calc(16px + (24 - 16) * (100vw - 400px) / (4096 - 400));
   }
 }
 
