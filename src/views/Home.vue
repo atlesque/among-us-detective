@@ -108,7 +108,10 @@
       @roundNotesChanged="value => (roundNotes = value)"
       @gameNotesChanged="value => (gameNotes = value)"
     />
-    <HelpModal v-if="isHelpModalOpen === true" @close="toggleHelpModal" />
+    <HelpModalWithGifs
+      v-if="isHelpModalOpen === true"
+      @close="toggleHelpModal"
+    />
     <ChangelogModal
       v-if="isChangelogModalOpen === true"
       @close="toggleChangelogModal"
@@ -126,7 +129,7 @@ const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
 const NotesModal = () => import("@/components/NotesModal.vue");
-const HelpModal = () => import("@/components/HelpModal.vue");
+const HelpModalWithGifs = () => import("@/components/HelpModalWithGifs.vue");
 const ChangelogModal = () => import("@/components/ChangelogModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
 
@@ -139,7 +142,7 @@ export default {
     CrewPool,
     Maps,
     NotesModal,
-    HelpModal,
+    HelpModalWithGifs,
     ChangelogModal,
     CookieWarning,
   },

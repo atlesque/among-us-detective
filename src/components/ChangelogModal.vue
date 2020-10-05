@@ -59,7 +59,10 @@ export default {
         },
         {
           date: "2020-10-05",
-          changes: ["Move Notes button to top button row for easier access"],
+          changes: [
+            "Move Notes button to top button row for easier access",
+            "Reduce font-size on large screens",
+          ],
         },
       ],
     };
