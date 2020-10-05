@@ -3,7 +3,13 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: ["./src/**/*.html", "./src/**/*.vue"],
+  purge: {
+    content: ["./src/**/*.html", "./src/**/*.vue"],
+    options: {
+      // Uses PurgeCSS v2.x.x syntax
+      whitelistPatterns: [/^bg-player-.*/],
+    },
+  },
   theme: {
     extend: {
       colors: {
