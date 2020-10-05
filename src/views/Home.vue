@@ -11,7 +11,14 @@
         @pickerToggle="handleTogglePlayerPicker"
         :isPickerOpen="isPlayerPickerOpen"
       />
+
       <div class="flex justify-center flex-1">
+        <button
+          @click="toggleNotesModal"
+          class="py-1 rounded-r-none button-sm lg:ml-2"
+        >
+          Notes
+        </button>
         <div class="flex flex-row flex-1 max-w-xl min-h-12">
           <CrewPool
             :crewMembers="inactiveCrewMembers"
@@ -20,7 +27,7 @@
             @removed="
               member => handleMemberRemoved({ list: 'inactive', member })
             "
-            class="flex-1 border rounded-l lg:mb-0 lg:ml-4"
+            class="flex-1 border lg:mb-0 "
           />
           <button
             :disabled="inactiveCrewMembers.length <= 0"
@@ -92,12 +99,6 @@
     </div>
     <div class="relative">
       <Maps />
-      <button
-        @click="toggleNotesModal"
-        class="absolute top-0 right-0 py-1 button-sm"
-      >
-        Notes
-      </button>
     </div>
     <NotesModal
       v-if="isNotesModalOpen === true"
