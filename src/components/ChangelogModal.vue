@@ -20,10 +20,18 @@
           </li>
         </ul>
       </div>
-      <div class="mt-6 text-xs leading-5 text-theme-gray-dark">
-        <p class="mb-0 text-xs">
+      <div
+        class="flex justify-between mt-6 text-xs leading-5 text-theme-gray-dark"
+      >
+        <span class="mb-0 text-xs">
           Made with ❤ by <a href="https://atlesque.com">Atlesque</a>
-        </p>
+        </span>
+        <span class="text-xs">
+          <a
+            href="mailto:alexander@atlesque.com?subject=Among Us Detective Feedback"
+            >Give feedback</a
+          >
+        </span>
       </div>
     </template>
   </Modal>
@@ -62,6 +70,7 @@ export default {
           changes: [
             "Move Notes button to top button row for easier access",
             "Reduce font-size on large screens",
+            "Remake How to use into a GIF slideshow",
           ],
         },
       ],
