@@ -3,7 +3,7 @@
     <template slot="title">Changelog</template>
     <template slot="body">
       <div
-        v-for="(changelogItem, index) in changelogNewestFirst"
+        v-for="(changelogItem, index) in changelog"
         :key="index"
         class="mb-4 text-sm leading-5 text-theme-gray-dark"
       >
@@ -49,10 +49,15 @@ export default {
     return {
       changelog: [
         {
-          date: "2020-09-22",
+          date: "2020-10-06",
+          changes: ["Show Help modal for new players"],
+        },
+        {
+          date: "2020-10-05",
           changes: [
-            "Added Dark mode",
-            "Show player icons by default. Color names can be enabled in footer",
+            "Move Notes button to top button row for easier access",
+            "Reduce font-size on large screens",
+            "Remake How to use into a GIF slideshow",
           ],
         },
         {
@@ -66,20 +71,14 @@ export default {
           ],
         },
         {
-          date: "2020-10-05",
+          date: "2020-09-22",
           changes: [
-            "Move Notes button to top button row for easier access",
-            "Reduce font-size on large screens",
-            "Remake How to use into a GIF slideshow",
+            "Added Dark mode",
+            "Show player icons by default. Color names can be enabled in footer",
           ],
         },
       ],
     };
-  },
-  computed: {
-    changelogNewestFirst() {
-      return [...this.changelog].reverse();
-    },
   },
   methods: {
     closeModal() {
