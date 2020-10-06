@@ -15,9 +15,8 @@
           <li
             v-for="(changeNotes, index) in changelogItem.changes"
             :key="index"
-          >
-            {{ changeNotes }}
-          </li>
+            v-html="changeNotes"
+          ></li>
         </ul>
       </div>
       <div
@@ -50,7 +49,9 @@ export default {
       changelog: [
         {
           date: "2020-10-06",
-          changes: ["Show Help modal for new players"],
+          changes: [
+            "Show Help modal for new players <small>(Thx peasant-trip on Reddit!)</small>",
+          ],
         },
         {
           date: "2020-10-05",
@@ -66,7 +67,7 @@ export default {
             "Make table UI prettier",
             "Move Changelog into separate modal",
             "Improve 'Show map' button layout",
-            "Add Notes modal. You can now add notes per round and per game. Props to Greedlord and AshamedBrit on Reddit for the suggestion!",
+            "Add Notes modal. You can now add notes per round and per game. <small>(Props to Greedlord and AshamedBrit on Reddit for the suggestion!)</small>",
             "Improve mobile UI",
           ],
         },
