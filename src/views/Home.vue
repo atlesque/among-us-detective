@@ -148,6 +148,10 @@ export default {
   },
   mounted() {
     this.initNewGame();
+    if (JSON.parse(localStorage.getItem("returningPlayer")) !== true) {
+      this.isHelpModalOpen = true;
+      localStorage.setItem("returningPlayer", JSON.stringify(true));
+    }
   },
   data() {
     return {

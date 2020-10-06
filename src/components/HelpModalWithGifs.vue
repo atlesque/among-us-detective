@@ -30,8 +30,16 @@
           @click="currentStep++"
           class="button"
           :disabled="currentStep >= steps.length - 1"
+          v-show="currentStep < steps.length - 1"
         >
           Next
+        </button>
+        <button
+          @click="closeModal"
+          class="button"
+          v-show="currentStep >= steps.length - 1"
+        >
+          Close
         </button>
       </div>
     </template>
