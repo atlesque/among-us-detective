@@ -152,6 +152,25 @@ export default {
           </ul>
           `,
         },
+        {
+          description: `
+          <span class="block font-bold text-left">The bottom of the screen contains some settings:</span>
+          <ul class="pl-4 text-left list-disc">
+            <li>
+              <b>Names/Icons</b>: Toggles showing color names instead of player icons
+            </li>
+            <li>
+              <b>Light/Dark</b>: Toggles showing Light/Dark mode
+            </li>
+            <li>
+              <b>Help</b>: Shows this Help menu
+            </li>
+            <li>
+              <b>About</b>: Shows development information about this app
+            </li>
+          </ul>
+          `,
+        },
       ],
     };
   },

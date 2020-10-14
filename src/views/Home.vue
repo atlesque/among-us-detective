@@ -84,16 +84,16 @@
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 flex justify-end px-2 py-1">
-      <button @click="toggleColorNames" class="mr-2 text-sm button-sm">
+      <button @click="toggleColorNames" class="mr-2 button-sm">
         {{ toggleColorNamesButtonText }}
       </button>
-      <button @click="toggleDarkMode" class="mr-2 text-sm button-sm">
+      <button @click="toggleDarkMode" class="mr-2 button-sm">
         {{ toggleDarkModeButtonText }}
       </button>
-      <button @click="toggleHelpModal" class="mr-2 text-sm button-sm">
+      <button @click="toggleHelpModal" class="mr-2 button-sm">
         Help
       </button>
-      <button @click="toggleChangelogModal" class="text-sm button-sm">
+      <button @click="toggleChangelogModal" class="button-sm">
         About
       </button>
     </div>

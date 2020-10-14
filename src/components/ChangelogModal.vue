@@ -52,6 +52,7 @@ export default {
           changes: [
             "Update maps with better versions <small>(Thx Ezzelin!)</small>",
             "Auto-detect dark mode",
+            "Make bottom buttons larger and mention them in Help",
           ],
         },
         {
