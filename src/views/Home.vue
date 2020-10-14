@@ -83,7 +83,7 @@
       :areColorNamesVisible="areColorNamesVisible"
       class="mb-2"
     />
-    <div class="fixed bottom-0 left-0 right-0 flex justify-end px-2 py-1">
+    <div class="fixed bottom-0 left-0 right-0 z-50 flex justify-end px-2 py-1">
       <button @click="toggleColorNames" class="mr-2 button-sm">
         {{ toggleColorNamesButtonText }}
       </button>
