@@ -51,6 +51,7 @@ export default {
           date: "2020-10-14",
           changes: [
             "Update maps with better versions <small>(Thx Ezzelin!)</small>",
+            "Auto-detect dark mode",
           ],
         },
         {

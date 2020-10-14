@@ -152,6 +152,12 @@ export default {
       this.isHelpModalOpen = true;
       localStorage.setItem("returningPlayer", JSON.stringify(true));
     }
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches === true
+    ) {
+      this.isDarkMode = true;
+    }
   },
   data() {
     return {
