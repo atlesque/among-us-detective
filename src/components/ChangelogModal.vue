@@ -48,6 +48,12 @@ export default {
     return {
       changelog: [
         {
+          date: "2020-10-14",
+          changes: [
+            "Update maps with better versions <small>(Thx Ezzelin!)</small>",
+          ],
+        },
+        {
           date: "2020-10-06",
           changes: [
             "Show Help modal for new players <small>(Thx peasant-trip on Reddit!)</small>",

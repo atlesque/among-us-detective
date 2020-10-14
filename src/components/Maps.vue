@@ -45,39 +45,21 @@
     <div v-show="isMapVisible">
       <picture v-show="selectedMap === 'the-skeld'">
         <source
-          srcset="@/assets/images/maps/small/the-skeld.webp"
+          srcset="@/assets/images/maps/the-skeld.webp"
           type="image/webp"
         />
-        <source
-          srcset="@/assets/images/maps/small/the-skeld.jpg"
-          type="image/jpeg"
-        />
-        <img
-          src="@/assets/images/maps/small/the-skeld.jpg"
-          alt="The Skeld Map"
-        />
+        <source srcset="@/assets/images/maps/the-skeld.png" type="image/jpeg" />
+        <img src="@/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
       </picture>
       <picture v-show="selectedMap === 'mira-hq'">
-        <source
-          srcset="@/assets/images/maps/small/mira-hq.webp"
-          type="image/webp"
-        />
-        <source
-          srcset="@/assets/images/maps/small/mira-hq.jpg"
-          type="image/jpeg"
-        />
-        <img src="@/assets/images/maps/small/mira-hq.jpg" alt="Mira HQ Map" />
+        <source srcset="@/assets/images/maps/mira-hq.webp" type="image/webp" />
+        <source srcset="@/assets/images/maps/mira-hq.png" type="image/jpeg" />
+        <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
       </picture>
       <picture v-show="selectedMap === 'polus'">
-        <source
-          srcset="@/assets/images/maps/small/polus.webp"
-          type="image/webp"
-        />
-        <source
-          srcset="@/assets/images/maps/small/polus.jpg"
-          type="image/jpeg"
-        />
-        <img src="@/assets/images/maps/small/polus.jpg" alt="Polus Map" />
+        <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
+        <source srcset="@/assets/images/maps/polus.png" type="image/jpeg" />
+        <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
       </picture>
     </div>
   </div>
