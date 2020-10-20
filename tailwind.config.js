@@ -7,7 +7,7 @@ module.exports = {
     content: ["./src/**/*.html", "./src/**/*.vue"],
     options: {
       // Uses PurgeCSS v2.x.x syntax
-      whitelistPatterns: [/^bg-player-.*/],
+      whitelistPatterns: [/^bg-player-.*/, /^text-player-.*/],
     },
   },
   theme: {
