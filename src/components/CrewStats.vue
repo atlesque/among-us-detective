@@ -1,7 +1,7 @@
 <template>
   <div>
     <table
-      class="w-full overflow-hidden divide-y divide-gray-200 rounded shadow table-auto lg:table-fixed"
+      class="w-full overflow-hidden divide-y divide-gray-200 rounded shadow table-auto crew-stats lg:table-fixed"
     >
       <thead>
         <tr>

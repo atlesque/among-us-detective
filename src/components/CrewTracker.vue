@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="crew-tracker">
     <table class="w-full overflow-hidden rounded shadow table-fixed">
       <thead>
         <tr>
           <th class="bg-theme-green-light dark--text-dark">My innocents</th>
-          <th>Unknown</th>
+          <th class="unknown-column">Unknown</th>
           <th class="bg-theme-yellow-light dark--text-dark">My suspects</th>
           <th class="text-theme-red-light bg-theme-gray-dark">Dead</th>
         </tr>

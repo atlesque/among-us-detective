@@ -5,4 +5,20 @@
   .dark--text-dark {
     @apply text-theme-gray-extra-dark;
   }
+
+  .crewpool {
+    @apply bg-gray-900;
+  }
+
+  .crew-tracker {
+    .unknown-column {
+      @apply bg-gray-800;
+    }
+  }
+
+  .crew-stats {
+    tr {
+      @apply bg-gray-800;
+    }
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-full">
+  <div class="flex w-full h-full crewpool">
     <Draggable
       v-model="crewMembersInPool"
       group="crewMembers"
