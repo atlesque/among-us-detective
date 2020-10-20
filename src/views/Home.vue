@@ -93,7 +93,7 @@
       <button @click="toggleHelpModal" class="mr-2 button-sm">
         Help
       </button>
-      <button @click="toggleChangelogModal" class="button-sm">
+      <button @click="toggleAboutModal" class="button-sm">
         About
       </button>
     </div>
@@ -113,10 +113,7 @@
       v-if="isHelpModalOpen === true"
       @close="toggleHelpModal"
     />
-    <ChangelogModal
-      v-if="isChangelogModalOpen === true"
-      @close="toggleChangelogModal"
-    />
+    <AboutModal v-if="isAboutModalOpen === true" @close="toggleAboutModal" />
     <CookieWarning />
   </div>
 </template>
@@ -131,7 +128,7 @@ const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
 const NotesModal = () => import("@/components/NotesModal.vue");
 const HelpModalWithGifs = () => import("@/components/HelpModalWithGifs.vue");
-const ChangelogModal = () => import("@/components/ChangelogModal.vue");
+const AboutModal = () => import("@/components/AboutModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
 
 export default {
@@ -144,7 +141,7 @@ export default {
     Maps,
     NotesModal,
     HelpModalWithGifs,
-    ChangelogModal,
+    AboutModal,
     CookieWarning,
   },
   mounted() {
@@ -159,7 +156,7 @@ export default {
       isPlayerPickerOpen: false,
       areColorNamesVisible: false,
       isHelpModalOpen: false,
-      isChangelogModalOpen: false,
+      isAboutModalOpen: false,
       isNotesModalOpen: false,
       roundNotes: "",
       gameNotes: "",
@@ -306,8 +303,8 @@ export default {
         event_category: "global_stats",
       });
     },
-    toggleChangelogModal() {
-      this.isChangelogModalOpen = !this.isChangelogModalOpen;
+    toggleAboutModal() {
+      this.isAboutModalOpen = !this.isAboutModalOpen;
       this.$gtag.event("open_changelog", {
         event_category: "global_stats",
       });

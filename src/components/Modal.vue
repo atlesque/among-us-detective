@@ -6,8 +6,11 @@
       <div class="fixed inset-0 transition-opacity">
         <div
           @click="closeModal"
-          :class="[isDarkMode === true ? 'bg-black' : 'bg-gray-500']"
-          class="absolute inset-0 opacity-75"
+          :class="[
+            isDarkMode === true ? 'bg-black' : 'bg-gray-500',
+            isTransparent === true ? 'opacity-0' : 'opacity-75',
+          ]"
+          class="absolute inset-0"
         ></div>
       </div>
       <!-- This element is to trick the browser into centering the modal contents. -->
@@ -65,6 +68,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "Modal",
+  props: {
+    isTransparent: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     ...mapState("darkMode", ["isDarkMode"]),
   },
