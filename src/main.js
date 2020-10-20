@@ -12,9 +12,15 @@ Vue.config.productionTip = false;
   Third-party dependencies
 */
 import VueGtag from "vue-gtag";
+
 Vue.use(VueGtag, {
   config: { id: "UA-114452911-9" },
 });
+
+/* 
+  Enable PWA support
+*/
+import "./registerServiceWorker";
 
 /*
   Initialize the app
