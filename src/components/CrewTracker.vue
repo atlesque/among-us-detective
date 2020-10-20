@@ -13,6 +13,7 @@
         <tr>
           <td>
             <CrewPool
+              class="pool--innocent"
               :crewMembers="innocentList"
               :showColorNames="areColorNamesVisible === true"
               @changed="value => (innocentList = value)"
@@ -23,6 +24,7 @@
           </td>
           <td>
             <CrewPool
+              class="pool--unknown"
               :crewMembers="unknownList"
               :showColorNames="areColorNamesVisible === true"
               @changed="value => (unknownList = value)"
@@ -33,6 +35,7 @@
           </td>
           <td>
             <CrewPool
+              class="pool--suspect"
               :crewMembers="suspectList"
               :showColorNames="areColorNamesVisible === true"
               @changed="value => (suspectList = value)"
@@ -43,6 +46,7 @@
           </td>
           <td class="bg-theme-gray-dark">
             <CrewPool
+              class="pool--dead"
               :crewMembers="deadList"
               :showColorNames="areColorNamesVisible === true"
               @changed="value => (deadList = value)"

@@ -6,7 +6,7 @@
     @apply text-theme-gray-extra-dark;
   }
 
-  .crewpool {
+  .crewpool:not(.pool--dead) {
     @apply bg-gray-900;
   }
 
