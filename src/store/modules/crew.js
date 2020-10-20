@@ -373,6 +373,7 @@ const mutations = {
         ) {
           if (member.suspectedBy.includes(accuser.color) === false) {
             member.suspectedBy = member.suspectedBy.concat(accuser.color);
+            member.isActive = true;
           }
         }
         return member;
@@ -390,6 +391,7 @@ const mutations = {
         ) {
           if (member.protectedBy.includes(protector.color) === false) {
             member.protectedBy = member.protectedBy.concat(protector.color);
+            member.isActive = true;
           }
         }
         return member;
