@@ -3,6 +3,11 @@
   @apply text-white;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 // Use body to overwrite the CSS reset
 body {
   * {

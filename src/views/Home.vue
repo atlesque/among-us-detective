@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col h-screen p-2 lg:p-8"
+    class="flex flex-col p-2 lg:p-8"
     :class="{ 'dark-mode': isDarkMode === true }"
   >
     <div class="flex flex-col-reverse justify-between mb-2 lg:flex-row">
@@ -153,19 +153,11 @@ export default {
       this.isHelpModalOpen = true;
       localStorage.setItem("returningPlayer", JSON.stringify(true));
     }
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches === true
-    ) {
-      // this.isDarkMode = true;
-      this.setDarkMode(true);
-    }
   },
   data() {
     return {
       isPlayerPickerOpen: false,
       areColorNamesVisible: false,
-      // isDarkMode: false,
       isHelpModalOpen: false,
       isChangelogModalOpen: false,
       isNotesModalOpen: false,
@@ -301,7 +293,6 @@ export default {
     },
     toggleDarkMode() {
       const newValue = !this.isDarkMode;
-      // this.isDarkMode = newValue;
       this.setDarkMode(newValue);
       const eventName =
         newValue === true ? "dark_mode_enabled" : "light_mode_enabled";

@@ -1,24 +1,35 @@
 <template>
   <Modal @close="closeModal">
-    <template slot="title">Changelog</template>
+    <template slot="title">About</template>
     <template slot="body">
-      <div
-        v-for="(changelogItem, index) in changelog"
-        :key="index"
-        class="mb-4 text-sm leading-5 text-theme-gray-dark"
-      >
-        <span class="text-xs font-bold">{{ changelogItem.date }}</span>
-        <ul
-          class="pl-4 list-disc"
-          v-if="(changelogItem.changes || []).length > 0"
+      <p>📝 Among Us Detective is digital notebook for Among Us</p>
+      <p>🙈 This tool is <b>not</b> a hack</p>
+      <p>
+        ✅ It is 100% legal and safe to use
+        <router-link to="/disclaimer" class="text-xs"
+          >(Read the disclaimer here)</router-link
         >
-          <li
-            v-for="(changeNotes, index) in changelogItem.changes"
-            :key="index"
-            v-html="changeNotes"
-          ></li>
-        </ul>
-      </div>
+      </p>
+      <h2 class="text-base font-bold">Changelog</h2>
+      <section class="p-2 overflow-y-scroll bg-gray-100 rounded max-h-64">
+        <div
+          v-for="(changelogItem, index) in changelog"
+          :key="index"
+          class="mb-4 text-sm leading-5 text-theme-gray-dark "
+        >
+          <span class="text-xs font-bold">{{ changelogItem.date }}</span>
+          <ul
+            class="pl-4 list-disc"
+            v-if="(changelogItem.changes || []).length > 0"
+          >
+            <li
+              v-for="(changeNotes, index) in changelogItem.changes"
+              :key="index"
+              v-html="changeNotes"
+            ></li>
+          </ul>
+        </div>
+      </section>
       <div
         class="flex justify-between mt-6 text-xs leading-5 text-theme-gray-dark"
       >
