@@ -2,7 +2,7 @@
   <div class="flex w-full h-full crewpool">
     <Draggable
       v-model="crewMembersInPool"
-      group="crewMembers"
+      :group="{ name: 'crewMembers', pull: 'clone' }"
       class="flex-1 px-2 pt-2"
     >
       <CrewIcon
