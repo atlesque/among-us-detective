@@ -2,11 +2,22 @@
   <div class="flex flex-col">
     <div class="my-2 round-notes-wrapper">
       <div class="flex justify-between">
-        <label
-          for="round-notes"
-          class="block text-sm font-medium leading-5 text-gray-700"
-          >This round</label
-        >
+        <div class="flex items-center justify-center ">
+          <label
+            for="round-notes"
+            class="block mr-1 text-sm font-medium leading-5 text-gray-700"
+            >This round
+          </label>
+          <!-- <button
+            class="flex items-center justify-center w-8 h-8"
+            @click="toggleRecordRoundNotes"
+            :class="{
+              'text-player-green': isRecordingRoundNotes === true,
+            }"
+          >
+            <span class="icon-mic"></span>
+          </button> -->
+        </div>
         <span class="text-xs leading-5 text-gray-500">Cleared each round</span>
       </div>
       <div class="relative mt-1 rounded-md">
@@ -69,18 +80,29 @@ export default {
   data() {
     return {
       allColors,
+      isRecordingRoundNotes: false,
+      speechRecognition: null,
+      roundNotesHighlighter: null,
+      gameNotesHighlighter: null,
     };
   },
   mounted() {
     const playerHighlightColors = this.allColors.map(color => {
       return { highlight: color, className: `bg-player-${color}-light` };
     });
-    new HighlightWithinTextarea(this.$refs["input-round-notes"], {
-      highlight: playerHighlightColors,
-    });
-    new HighlightWithinTextarea(this.$refs["input-game-notes"], {
-      highlight: playerHighlightColors,
-    });
+    this.roundNotesHighlighter = new HighlightWithinTextarea(
+      this.$refs["input-round-notes"],
+      {
+        highlight: playerHighlightColors,
+      }
+    );
+    this.gameNotesHighlighter = new HighlightWithinTextarea(
+      this.$refs["input-game-notes"],
+      {
+        highlight: playerHighlightColors,
+      }
+    );
+    this.initSpeechRecording();
   },
   computed: {
     roundNotes: {
@@ -89,6 +111,7 @@ export default {
       },
       set(value) {
         this.$emit("roundNotesChanged", value);
+        this.roundNotesHighlighter.handleInput();
       },
     },
     gameNotes: {
@@ -97,7 +120,61 @@ export default {
       },
       set(value) {
         this.$emit("gameNotesChanged", value);
+        this.gameNotesHighlighter.handleInput();
       },
+    },
+  },
+  methods: {
+    initSpeechRecording() {
+      /*global webkitSpeechRecognition */
+      this.speechRecognition = new webkitSpeechRecognition();
+      this.speechRecognition.continuous = true;
+      this.speechRecognition.interimResults = true;
+      this.speechRecognition.maxAlternatives = 1;
+      this.speechRecognition.lang = "en-US";
+      this.speechRecognition.onstart = () => {
+        console.log("Started speech recognition");
+      };
+      this.speechRecognition.onresult = event => {
+        /* eslint-disable-next-line */
+        var interim_transcript = "";
+        var final_transcript = "";
+        if (typeof event.results == "undefined") {
+          this.speechRecognition.onend = null;
+          this.speechRecognition.stop();
+          return;
+        }
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            final_transcript += event.results[i][0].transcript;
+          } else {
+            interim_transcript += event.results[i][0].transcript;
+          }
+        }
+
+        this.roundNotes += final_transcript;
+
+        // const recognizedSpeechTranscript = event.results[0][0].transcript;
+        const recognizedSpeechTranscript = final_transcript;
+        console.log(`Recognized speech: ${recognizedSpeechTranscript}`);
+      };
+    },
+    toggleRecordRoundNotes() {
+      const newValue = !this.isRecordingRoundNotes;
+      this.isRecordingRoundNotes = newValue;
+      if (newValue === true) {
+        this.enableRecordingNotes({ noteType: "round" });
+      } else {
+        this.disableRecordingNotes({ noteType: "round" });
+      }
+    },
+    enableRecordingNotes({ noteType }) {
+      console.log(`Started recording [${noteType}]`);
+      this.speechRecognition.start();
+    },
+    disableRecordingNotes({ noteType }) {
+      console.log(`Stopped recording [${noteType}]`);
+      this.speechRecognition.stop();
     },
   },
 };
