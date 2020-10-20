@@ -6,14 +6,16 @@
       <div class="fixed inset-0 transition-opacity">
         <div
           @click="closeModal"
-          class="absolute inset-0 bg-gray-500 opacity-75"
+          :class="[isDarkMode === true ? 'bg-black' : 'bg-gray-500']"
+          class="absolute inset-0 opacity-75"
         ></div>
       </div>
       <!-- This element is to trick the browser into centering the modal contents. -->
       <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
       >&#8203;
       <div
-        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+        :class="[isDarkMode === true ? 'bg-gray-200 text-black' : 'bg-white']"
+        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
@@ -59,8 +61,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Modal",
+  computed: {
+    ...mapState("darkMode", ["isDarkMode"]),
+  },
   methods: {
     closeModal() {
       this.$emit("close");

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 // Main data stores
 import crew from "./modules/crew";
+import darkMode from "./modules/darkmode";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ const store = new Vuex.Store({
   actions: {},
   modules: {
     crew,
+    darkMode,
   },
 });
 

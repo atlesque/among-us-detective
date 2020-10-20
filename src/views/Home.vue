@@ -102,11 +102,12 @@
     </div>
     <NotesModal
       v-if="isNotesModalOpen === true"
-      @close="toggleNotesModal"
       :round="roundNotes"
       :game="gameNotes"
+      :isDarkMode="isDarkMode === true"
       @roundNotesChanged="value => (roundNotes = value)"
       @gameNotesChanged="value => (gameNotes = value)"
+      @close="toggleNotesModal"
     />
     <HelpModalWithGifs
       v-if="isHelpModalOpen === true"
@@ -156,14 +157,15 @@ export default {
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches === true
     ) {
-      this.isDarkMode = true;
+      // this.isDarkMode = true;
+      this.setDarkMode(true);
     }
   },
   data() {
     return {
       isPlayerPickerOpen: false,
       areColorNamesVisible: false,
-      isDarkMode: false,
+      // isDarkMode: false,
       isHelpModalOpen: false,
       isChangelogModalOpen: false,
       isNotesModalOpen: false,
@@ -182,6 +184,7 @@ export default {
       "unknownCrewMembersForPlayer",
       "crewMembersSuspectedByPlayer",
     ]),
+    ...mapState("darkMode", ["isDarkMode"]),
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Icons" : "Names";
     },
@@ -203,6 +206,7 @@ export default {
       "setMemberAsInactive",
       "setAllMembersAsUnknown",
     ]),
+    ...mapActions("darkMode", ["setDarkMode"]),
     initNewGame() {
       this.resetAllCrew();
       this.gameNotes = "";
@@ -297,7 +301,8 @@ export default {
     },
     toggleDarkMode() {
       const newValue = !this.isDarkMode;
-      this.isDarkMode = newValue;
+      // this.isDarkMode = newValue;
+      this.setDarkMode(newValue);
       const eventName =
         newValue === true ? "dark_mode_enabled" : "light_mode_enabled";
       this.$gtag.event(eventName, {
