@@ -48,17 +48,17 @@
           srcset="@/assets/images/maps/the-skeld.webp"
           type="image/webp"
         />
-        <source srcset="@/assets/images/maps/the-skeld.png" type="image/jpeg" />
+        <source srcset="@/assets/images/maps/the-skeld.png" type="image/png" />
         <img src="@/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
       </picture>
       <picture v-show="selectedMap === 'mira-hq'">
         <source srcset="@/assets/images/maps/mira-hq.webp" type="image/webp" />
-        <source srcset="@/assets/images/maps/mira-hq.png" type="image/jpeg" />
+        <source srcset="@/assets/images/maps/mira-hq.png" type="image/png" />
         <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
       </picture>
       <picture v-show="selectedMap === 'polus'">
         <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
-        <source srcset="@/assets/images/maps/polus.png" type="image/jpeg" />
+        <source srcset="@/assets/images/maps/polus.png" type="image/png" />
         <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
       </picture>
     </div>
