@@ -93,6 +93,17 @@ export default {
     return {
       changelog: [
         {
+          date: "2020-10-20",
+          changes: [
+            "Moving inactive crew will make them active",
+            "Add feedback form",
+            "Add PWA support for adding to mobile home screen",
+            "Improve crew icon quality",
+            "Fix crew icons disappearing while moving",
+            "Misc. Dark mode fixes",
+          ],
+        },
+        {
           date: "2020-10-14",
           changes: [
             "Update maps with better versions <small>(Thx Ezzelin!)</small>",
