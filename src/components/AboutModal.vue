@@ -59,25 +59,6 @@
         </template>
       </template>
     </Modal>
-    <!-- <Modal
-      class="flex-1"
-      @close="toggleFeedbackScreen"
-      v-if="isFeedbackScreenOpen === true"
-      :isTransparent="true"
-    >
-      <template slot="title">Feedback</template>
-      <template slot="body">
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSda7OlGq68xKkVyx3GsZZntwrGN_CZZJRidgCl5J6R1QIyB2g/viewform?embedded=true"
-          width="100%"
-          height="520"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          >Loading…</iframe
-        >
-      </template>
-    </Modal> -->
   </div>
 </template>
 
@@ -92,6 +73,12 @@ export default {
   data() {
     return {
       changelog: [
+        {
+          date: "2020-10-21",
+          changes: [
+            "Add Speech-to-Text for transcribing notes by voice <small>(Thx CadeFromSales on Reddit!)</small>",
+          ],
+        },
         {
           date: "2020-10-20",
           changes: [
