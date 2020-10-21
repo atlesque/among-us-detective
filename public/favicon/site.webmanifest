@@ -2,6 +2,7 @@
   "name": "Among Us Detective",
   "short_name": "Detective",
   "description": "Tool to help track innocents and suspects in Among Us",
+  "start_url": "/",
   "icons": [
     {
       "src": "/favicon/android-chrome-192x192.png",
@@ -15,12 +16,12 @@
     },
     {
       "src": "/favicon/maskable_icon.png",
-      "sizes": "512x512",
+      "sizes": "787x787",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#161E2E",
+  "background_color": "#161E2E",
   "display": "standalone"
 }

@@ -4,8 +4,8 @@
     <transition name="fade">
       <AppInstallationPrompt
         v-if="isAppInstallationPromptVisible === true"
-        @confirm="handleAppInstallation"
-        @cancel="isAppInstallationPromptVisible = false"
+        @confirm="handleAppInstallationConfirmed"
+        @cancel="handleAppInstallationDismissed"
       />
     </transition>
   </div>
@@ -34,26 +34,49 @@ export default {
     ) {
       this.setDarkMode(true);
     }
-    // Trigger PWA installation prompt on Chrome mobile
-    window.addEventListener("beforeinstallprompt", function(event) {
-      this.pwaInstallEvent = event;
-      this.isAppInstallationPromptVisible = true;
-    });
+    const hasDismissedAppInstallation = JSON.parse(
+      localStorage.getItem("appInstallationDismissed")
+    );
+    if (
+      hasDismissedAppInstallation == null ||
+      hasDismissedAppInstallation === false
+    ) {
+      // Trigger PWA installation prompt on Chrome mobile
+      window.addEventListener(
+        "beforeinstallprompt",
+        this.handleBeforeAppInstallPrompt
+      );
+      window.addEventListener("appinstalled", () => {
+        this.isAppInstallationPromptVisible = false;
+      });
+    }
   },
   computed: {
     ...mapState("darkMode", ["isDarkMode"]),
   },
   methods: {
     ...mapActions("darkMode", ["setDarkMode"]),
-    handleAppInstallation() {
+    handleBeforeAppInstallPrompt(event) {
+      this.pwaInstallEvent = event;
+      this.pwaInstallEvent.userChoice.then(() => {
+        this.isAppInstallationPromptVisible = false;
+        window.removeEventListener(
+          "beforeinstallprompt",
+          this.handleBeforeAppInstallPrompt
+        );
+      });
+      this.isAppInstallationPromptVisible = true;
+    },
+    handleAppInstallationConfirmed() {
       if (this.pwaInstallEvent != null) {
         this.pwaInstallEvent.prompt();
-        this.pwaInstallEvent.userChoice.then(() => {
-          this.isAppInstallationPromptVisible = false;
-        });
       } else {
         this.isAppInstallationPromptVisible = false;
       }
+    },
+    handleAppInstallationDismissed() {
+      this.isAppInstallationPromptVisible = false;
+      localStorage.setItem("appInstallationDismissed", true);
     },
   },
 };
