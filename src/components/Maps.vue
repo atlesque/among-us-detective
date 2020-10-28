@@ -66,11 +66,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Maps",
   mounted() {
     document.addEventListener("keyup", e => {
-      if (e.code === "KeyM") {
+      if (e.code === "KeyM" && this.areNotesOpen === false) {
         this.isMapVisible = !this.isMapVisible;
       }
     });
@@ -80,6 +82,9 @@ export default {
       isMapVisible: false,
       selectedMap: "the-skeld",
     };
+  },
+  computed: {
+    ...mapState("notes", ["areNotesOpen"]),
   },
   methods: {
     selectMap(newMap) {

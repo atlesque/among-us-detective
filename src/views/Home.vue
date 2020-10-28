@@ -151,8 +151,10 @@ export default {
       localStorage.setItem("returningPlayer", JSON.stringify(true));
     }
     document.addEventListener("keyup", e => {
-      if (e.code === "KeyN") {
-        this.isNotesModalOpen = !this.isNotesModalOpen;
+      if (e.code === "KeyN" && this.isNotesModalOpen === false) {
+        this.isNotesModalOpen = true;
+      } else if (e.code === "Escape" && this.isNotesModalOpen === true) {
+        this.isNotesModalOpen = false;
       }
     });
   },
@@ -162,7 +164,7 @@ export default {
       areColorNamesVisible: false,
       isHelpModalOpen: false,
       isAboutModalOpen: false,
-      isNotesModalOpen: false,
+      // isNotesModalOpen: false,
       roundNotes: "",
       gameNotes: "",
     };
@@ -179,11 +181,20 @@ export default {
       "crewMembersSuspectedByPlayer",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
+    ...mapState("notes", ["areNotesOpen"]),
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Icons" : "Names";
     },
     toggleDarkModeButtonText() {
       return this.isDarkMode === true ? "Light" : "Dark";
+    },
+    isNotesModalOpen: {
+      get() {
+        return this.areNotesOpen;
+      },
+      set(value) {
+        this.setNotesOpenState(value);
+      },
     },
   },
   methods: {
@@ -201,6 +212,7 @@ export default {
       "setAllMembersAsUnknown",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
+    ...mapActions("notes", ["setNotesOpenState"]),
     initNewGame() {
       this.resetAllCrew();
       this.gameNotes = "";
