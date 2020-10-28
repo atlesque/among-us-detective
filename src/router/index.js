@@ -1,7 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Disclaimer from "../views/Disclaimer.vue";
 
 Vue.use(VueRouter);
 
@@ -9,12 +7,24 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
   },
   {
     path: "/disclaimer",
     name: "Disclaimer",
-    component: Disclaimer,
+    component: () =>
+      import(/* webpackChunkName: "pageNotFound" */ "@/views/Disclaimer.vue"),
+  },
+  {
+    path: "/404-not-found",
+    name: "404",
+    component: () =>
+      import(/* webpackChunkName: "pageNotFound" */ "@/views/PageNotFound.vue"),
+  },
+  {
+    path: "*",
+    component: () =>
+      import(/* webpackChunkName: "pageNotFound" */ "@/views/PageNotFound.vue"),
   },
 ];
 
