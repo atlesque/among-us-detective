@@ -71,7 +71,7 @@ export default {
       currentStep: 0,
       steps: [
         {
-          description: "Select your color by clicking on <b>Player</b>",
+          description: "Select your color by clicking on <b>My color</b>",
           media: {
             type: "video",
             webm: "changing-player-color.webm",

@@ -6,7 +6,7 @@
       :class="`bg-player-${currentColor}`"
       @click="isPlayerPickerOpen = true"
     >
-      <span class="px-1 text-black bg-white rounded">Player</span>
+      <span class="px-1 text-black bg-white rounded">My color</span>
     </button>
     <div
       v-else
