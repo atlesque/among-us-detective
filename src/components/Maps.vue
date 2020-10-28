@@ -68,6 +68,13 @@
 <script>
 export default {
   name: "Maps",
+  mounted() {
+    document.addEventListener("keyup", e => {
+      if (e.code === "KeyM") {
+        this.isMapVisible = !this.isMapVisible;
+      }
+    });
+  },
   data() {
     return {
       isMapVisible: false,

@@ -150,6 +150,11 @@ export default {
       this.isHelpModalOpen = true;
       localStorage.setItem("returningPlayer", JSON.stringify(true));
     }
+    document.addEventListener("keyup", e => {
+      if (e.code === "KeyN") {
+        this.isNotesModalOpen = !this.isNotesModalOpen;
+      }
+    });
   },
   data() {
     return {

@@ -198,6 +198,12 @@ export default {
           <span class="block font-bold text-left">A few handy shortcuts:</span>
           <ul class="pl-4 text-left list-disc">
             <li>
+              Press <b>N</b> to toggle Notes
+            </li>
+            <li>
+              Press <b>M</b> to toggle Map
+            </li>
+            <li>
               Double-clicking on a color in
               <b>My innocents / My suspects</b> will move it back to
               <b>Unknown</b>

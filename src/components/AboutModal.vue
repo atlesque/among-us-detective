@@ -77,6 +77,7 @@ export default {
           date: "2020-10-28",
           changes: [
             "Rename <b>Player</b> to <b>My color</b> to clarify color picker use <small>(Thx Elle and lustle on Reddit!)</small>",
+            "Add hotkeys 'M' to toggle map and 'N' to toggle notes <small>(ThxCadeFromSales on Reddit!)</small>",
           ],
         },
         {

@@ -114,6 +114,7 @@ export default {
       }
     );
     this.initSpeechRecording();
+    this.$refs["input-round-notes"].focus();
   },
   computed: {
     roundNotes: {
