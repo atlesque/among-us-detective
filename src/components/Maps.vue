@@ -35,10 +35,17 @@
         </button>
         <button
           @click="selectMap('polus')"
-          class="button-sm"
+          class="mr-2 button-sm"
           :class="{ 'active button-success': selectedMap === 'polus' }"
         >
           Polus
+        </button>
+        <button
+          @click="selectMap('airship')"
+          class="button-sm"
+          :class="{ 'active button-success': selectedMap === 'airship' }"
+        >
+          Airship
         </button>
       </div>
     </div>
@@ -60,6 +67,11 @@
         <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
         <source srcset="@/assets/images/maps/polus.png" type="image/png" />
         <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
+      </picture>
+      <picture v-show="selectedMap === 'airship'">
+        <source srcset="@/assets/images/maps/airship.webp" type="image/webp" />
+        <source srcset="@/assets/images/maps/airship.png" type="image/png" />
+        <img src="@/assets/images/maps/airship.png" alt="Airship Map" />
       </picture>
     </div>
   </div>

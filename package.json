@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tailwindcss/ui": "^0.6.2",
+    "caniuse-lite": "^1.0.30001205",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
     "tailwindcss": "^1.8.10",
