@@ -8,7 +8,7 @@
           <th>Color</th>
           <th v-if="showImposterCheckbox === true">Imp?</th>
           <th v-if="showTasksCheckbox === true">Tasks?</th>
-          <th>Meeting?</th>
+          <th v-if="showMeetingsCount === true">Meeting?</th>
           <th colspan="3">Innocent</th>
           <th colspan="3">Suspect</th>
         </tr>
@@ -64,7 +64,7 @@
               "
             />
           </td>
-          <td class="px-1">
+          <td class="px-1" v-if="showMeetingsCount === true">
             <Counter
               v-show="member.isDead === false"
               :count="member.totalMeetingsHeld"
@@ -148,7 +148,11 @@ export default {
   },
   computed: {
     ...mapGetters("crew", ["crewMembersWithoutPlayer"]),
-    ...mapState("settings", ["showImposterCheckbox", "showTasksCheckbox"]),
+    ...mapState("settings", [
+      "showImposterCheckbox",
+      "showTasksCheckbox",
+      "showMeetingsCount",
+    ]),
     sortedCrewMembers() {
       // Use spread operator to avoid mutating original array
       return (

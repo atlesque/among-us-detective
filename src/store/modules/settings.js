@@ -2,12 +2,14 @@ const types = {
   SET_SHOW_COLOR_NAMES: "✔️[Set] show color names",
   SET_SHOW_IMPOSTER_CHECKBOX: "✔️[Set] show imposter checkbox",
   SET_SHOW_TASKS_CHECKBOX: "✔️[Set] show tasks checkbox",
+  SET_SHOW_MEETINGS_COUNT: "✔️[Set] show meetings count",
 };
 
 const state = {
   showColorNames: false,
   showImposterCheckbox: true,
   showTasksCheckbox: true,
+  showMeetingsCount: true,
 };
 
 const getters = {};
@@ -22,6 +24,9 @@ const mutations = {
   [types.SET_SHOW_TASKS_CHECKBOX](state, value) {
     state.showTasksCheckbox = value;
   },
+  [types.SET_SHOW_MEETINGS_COUNT](state, value) {
+    state.showMeetingsCount = value;
+  },
 };
 
 const actions = {
@@ -33,6 +38,9 @@ const actions = {
   },
   async setShowTasksCheckbox({ commit }, value) {
     commit(types.SET_SHOW_TASKS_CHECKBOX, value);
+  },
+  async setShowMeetingsCount({ commit }, value) {
+    commit(types.SET_SHOW_MEETINGS_COUNT, value);
   },
 };
 

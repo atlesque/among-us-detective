@@ -39,6 +39,15 @@
                 />
               </td>
             </tr>
+            <tr>
+              <td>Show Meetings count:</td>
+              <td>
+                <Checkbox
+                  :isChecked="isShowMeetingsCountVisible"
+                  @changed="value => (isShowMeetingsCountVisible = value)"
+                />
+              </td>
+            </tr>
           </tbody>
         </table>
       </template>
@@ -67,6 +76,7 @@ export default {
       "showColorNames",
       "showImposterCheckbox",
       "showTasksCheckbox",
+      "showMeetingsCount",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     areColorNamesVisible: {
@@ -93,6 +103,14 @@ export default {
         this.setShowTasksCheckbox(value);
       },
     },
+    isShowMeetingsCountVisible: {
+      get() {
+        return this.showMeetingsCount;
+      },
+      set(value) {
+        this.setShowMeetingsCount(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Names" : "Icons";
     },
@@ -105,6 +123,7 @@ export default {
       "setShowColorNames",
       "setShowImposterCheckbox",
       "setShowTasksCheckbox",
+      "setShowMeetingsCount",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     closeModal() {
