@@ -6,7 +6,7 @@
       <thead>
         <tr>
           <th>Color</th>
-          <th>Imp?</th>
+          <th v-if="showImposterCheckbox === true">Imp?</th>
           <th>Tasks?</th>
           <th>Meeting?</th>
           <th colspan="3">Innocent</th>
@@ -44,7 +44,7 @@
               </div>
             </div>
           </td>
-          <td>
+          <td v-if="showImposterCheckbox === true">
             <Checkbox
               class="justify-center"
               :isChecked="member.isImposter === true"
@@ -126,7 +126,7 @@ const Checkbox = () => import("@/components/Checkbox.vue");
 const Counter = () => import("@/components/Counter.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
   name: "CrewStats",
@@ -148,6 +148,7 @@ export default {
   },
   computed: {
     ...mapGetters("crew", ["crewMembersWithoutPlayer"]),
+    ...mapState("settings", ["showImposterCheckbox"]),
     sortedCrewMembers() {
       // Use spread operator to avoid mutating original array
       return (

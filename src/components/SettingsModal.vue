@@ -21,6 +21,15 @@
                 </button>
               </td>
             </tr>
+            <tr>
+              <td>Show Imposter checkbox:</td>
+              <td>
+                <Checkbox
+                  :isChecked="isImposterCheckboxVisible"
+                  @changed="value => (isImposterCheckboxVisible = value)"
+                />
+              </td>
+            </tr>
           </tbody>
         </table>
       </template>
@@ -31,11 +40,13 @@
 <script>
 import { mapState, mapActions } from "vuex";
 const Modal = () => import("@/components/Modal.vue");
+const Checkbox = () => import("@/components/Checkbox.vue");
 
 export default {
   name: "SettingsModal",
   components: {
     Modal,
+    Checkbox,
   },
   data() {
     return {
@@ -43,7 +54,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("settings", ["showColorNames"]),
+    ...mapState("settings", ["showColorNames", "showImposterCheckbox"]),
     ...mapState("darkMode", ["isDarkMode"]),
     areColorNamesVisible: {
       get() {
@@ -51,6 +62,14 @@ export default {
       },
       set(value) {
         this.setShowColorNames(value);
+      },
+    },
+    isImposterCheckboxVisible: {
+      get() {
+        return this.showImposterCheckbox;
+      },
+      set(value) {
+        this.setShowImposterCheckbox(value);
       },
     },
     toggleColorNamesButtonText() {
@@ -61,7 +80,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("settings", ["setShowColorNames"]),
+    ...mapActions("settings", ["setShowColorNames", "setShowImposterCheckbox"]),
     ...mapActions("darkMode", ["setDarkMode"]),
     closeModal() {
       this.$emit("close");
