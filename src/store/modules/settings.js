@@ -3,6 +3,8 @@ const types = {
   SET_SHOW_IMPOSTER_CHECKBOX: "✔️[Set] show imposter checkbox",
   SET_SHOW_TASKS_CHECKBOX: "✔️[Set] show tasks checkbox",
   SET_SHOW_MEETINGS_COUNT: "✔️[Set] show meetings count",
+  SET_SHOW_PLAYER_NAMES: "✔️[Set] show player names",
+  SET_SETTING_MODAL_OPEN_STATE: "✔️[Set] settings modal open state",
 };
 
 const state = {
@@ -10,6 +12,8 @@ const state = {
   showImposterCheckbox: true,
   showTasksCheckbox: true,
   showMeetingsCount: true,
+  showPlayerNames: false,
+  settingsModalOpenState: false,
 };
 
 const getters = {};
@@ -27,6 +31,12 @@ const mutations = {
   [types.SET_SHOW_MEETINGS_COUNT](state, value) {
     state.showMeetingsCount = value;
   },
+  [types.SET_SHOW_PLAYER_NAMES](state, value) {
+    state.showPlayerNames = value;
+  },
+  [types.SET_SETTING_MODAL_OPEN_STATE](state, value) {
+    state.settingsModalOpenState = value;
+  },
 };
 
 const actions = {
@@ -41,6 +51,12 @@ const actions = {
   },
   async setShowMeetingsCount({ commit }, value) {
     commit(types.SET_SHOW_MEETINGS_COUNT, value);
+  },
+  async setShowPlayerNames({ commit }, value) {
+    commit(types.SET_SHOW_PLAYER_NAMES, value);
+  },
+  async setSettingsModalOpenState({ commit }, value) {
+    commit(types.SET_SETTING_MODAL_OPEN_STATE, value);
   },
 };
 

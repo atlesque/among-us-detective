@@ -25,8 +25,10 @@
             >
               <CrewIcon
                 :color="member.color"
-                :showColorNames="showColorNames === true"
+                :showColorName="showColorNames === true"
+                :showPlayerName="showPlayerNames === true"
                 :is-imposter="member.isImposter"
+                :player-name="member.playerName"
               />
               <div v-show="member.isDead === false" class="flex lg:flex-col">
                 <span
@@ -78,7 +80,8 @@
           <td colspan="3">
             <CrewPool
               :crewMembers="getAllMembersProtectedBy(member)"
-              :showColorNames="showColorNames === true"
+              :showColorName="showColorNames === true"
+              :showPlayerName="showPlayerNames === true"
               @changed="
                 value =>
                   linkInnocentsWithProtector({
@@ -99,7 +102,8 @@
           <td class="relative" colspan="3">
             <CrewPool
               :crewMembers="getAllMembersSuspectedBy(member)"
-              :showColorNames="showColorNames === true"
+              :showColorName="showColorNames === true"
+              :showPlayerName="showPlayerNames === true"
               @changed="
                 value =>
                   linkSuspectsWithAccuser({
@@ -142,6 +146,10 @@ export default {
       required: true,
     },
     showColorNames: {
+      type: Boolean,
+      default: false,
+    },
+    showPlayerNames: {
       type: Boolean,
       default: false,
     },
@@ -234,6 +242,13 @@ table {
       &:not(:last-of-type) {
         @apply border-r;
       }
+    }
+  }
+
+  tr {
+    &.is-dead {
+      @apply bg-theme-gray-dark;
+      @apply text-theme-gray-extra-light;
     }
   }
 

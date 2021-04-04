@@ -1,74 +1,137 @@
 <template>
   <div class="flex">
-    <Modal @close="closeModal">
-      <template slot="title">Settings</template>
-      <template slot="body">
-        <table class="w-full table-fixed settings-list">
-          <tbody>
-            <tr>
-              <td>Show players as:</td>
-              <td>
-                <button @click="toggleColorNames" class="button-sm">
-                  {{ toggleColorNamesButtonText }}
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Interface theme:</td>
-              <td>
-                <button @click="toggleDarkMode" class="button-sm">
-                  {{ toggleDarkModeButtonText }}
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>Show Imposter checkbox:</td>
-              <td>
-                <Checkbox
-                  :isChecked="isImposterCheckboxVisible"
-                  @changed="value => (isImposterCheckboxVisible = value)"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Show Tasks checkbox:</td>
-              <td>
-                <Checkbox
-                  :isChecked="isTasksCheckboxVisible"
-                  @changed="value => (isTasksCheckboxVisible = value)"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>Show Meetings count:</td>
-              <td>
-                <Checkbox
-                  :isChecked="isShowMeetingsCountVisible"
-                  @changed="value => (isShowMeetingsCountVisible = value)"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <Modal @close="handleCloseEvent">
+      <template v-if="isEditingPlayerNames === true">
+        <template slot="title">Player names</template>
+        <template slot="body">
+          <div class="flex justify-between my-4">
+            <!-- <button class="button-sm button-success" @click="handleCloseEvent">
+              Save & return
+            </button> -->
+            <button
+              class="button-sm button-danger"
+              @click="resetAllPlayerNames"
+            >
+              Reset all
+            </button>
+          </div>
+          <table class="w-full table-auto settings-list">
+            <tbody>
+              <tr v-for="(color, index) in playerColors" :key="index">
+                <td>
+                  <div class="flex items-center">
+                    <CrewIcon :color="color" class="mr-2" />
+                    <span class="capitalize">{{ color }}</span>
+                  </div>
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="p-2 mb-0 text-xs"
+                    :placeholder="color"
+                    :value="getPlayerName(color)"
+                    @input="setPlayerName(color, $event.target.value)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
+      </template>
+      <template v-else>
+        <template slot="title">Settings</template>
+        <template slot="body">
+          <table class="w-full table-fixed settings-list">
+            <tbody>
+              <tr>
+                <td>Show players as:</td>
+                <td>
+                  <button @click="toggleColorNames" class="button-sm">
+                    {{ toggleColorNamesButtonText }}
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Interface theme:</td>
+                <td>
+                  <button @click="toggleDarkMode" class="button-sm">
+                    {{ toggleDarkModeButtonText }}
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Show Imposter checkbox:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="isImposterCheckboxVisible"
+                    @changed="value => (isImposterCheckboxVisible = value)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Show Tasks checkbox:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="isTasksCheckboxVisible"
+                    @changed="value => (isTasksCheckboxVisible = value)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Show Meetings count:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="isMeetingsCountVisible"
+                    @changed="value => (isMeetingsCountVisible = value)"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>Show player names:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="arePlayerNamesVisible"
+                    @changed="value => (arePlayerNamesVisible = value)"
+                  />
+                </td>
+              </tr>
+              <tr v-if="arePlayerNamesVisible === true">
+                <td></td>
+                <td>
+                  <button
+                    @click="isEditingPlayerNames = true"
+                    class="button-sm"
+                  >
+                    Edit names
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </template>
       </template>
     </Modal>
   </div>
 </template>
 
 <script>
+import playerColors from "@/config/playerColors.js";
 import { mapState, mapActions } from "vuex";
 const Modal = () => import("@/components/Modal.vue");
 const Checkbox = () => import("@/components/Checkbox.vue");
+const CrewIcon = () => import("@/components/CrewIcon.vue");
 
 export default {
   name: "SettingsModal",
   components: {
     Modal,
     Checkbox,
+    CrewIcon,
   },
   data() {
     return {
-      // TODO
+      isEditingPlayerNames: false,
+      playerColors,
     };
   },
   computed: {
@@ -77,8 +140,10 @@ export default {
       "showImposterCheckbox",
       "showTasksCheckbox",
       "showMeetingsCount",
+      "showPlayerNames",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
+    ...mapState("crew", ["crewMembers"]),
     areColorNamesVisible: {
       get() {
         return this.showColorNames;
@@ -103,12 +168,20 @@ export default {
         this.setShowTasksCheckbox(value);
       },
     },
-    isShowMeetingsCountVisible: {
+    isMeetingsCountVisible: {
       get() {
         return this.showMeetingsCount;
       },
       set(value) {
         this.setShowMeetingsCount(value);
+      },
+    },
+    arePlayerNamesVisible: {
+      get() {
+        return this.showPlayerNames;
+      },
+      set(value) {
+        this.setShowPlayerNames(value);
       },
     },
     toggleColorNamesButtonText() {
@@ -124,8 +197,17 @@ export default {
       "setShowImposterCheckbox",
       "setShowTasksCheckbox",
       "setShowMeetingsCount",
+      "setShowPlayerNames",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
+    ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),
+    handleCloseEvent() {
+      if (this.isEditingPlayerNames === true) {
+        this.isEditingPlayerNames = false;
+      } else {
+        this.closeModal();
+      }
+    },
     closeModal() {
       this.$emit("close");
     },
@@ -147,14 +229,25 @@ export default {
         event_category: "global_stats",
       });
     },
+    getPlayerName(color) {
+      return this.crewMembers.find(member => member.color === color).playerName;
+    },
+    setPlayerName(color, playerName) {
+      this.setCrewMemberPlayerName({ color, playerName });
+    },
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .settings-list {
   td {
     @apply pr-2;
     @apply py-1;
+  }
+  .crew-icon svg {
+    position: relative;
+    max-height: 100%;
+    top: -5px;
   }
 }
 </style>

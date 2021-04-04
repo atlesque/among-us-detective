@@ -19,11 +19,13 @@ const types = {
   SET_MEMBER_AS_INACTIVE: "✔️ [Set] member as inactive",
   REMOVE_PROTECTED_FROM_PROTECTOR: "✔️ [Removed] protected from protector",
   REMOVE_SUSPECT_FROM_ACCUSER: "✔️ [Removed] suspect from accuser",
+  SET_MEMBER_PLAYER_NAME: "✔️ [Set] crew member player name",
 };
 
 const defaultCrewMembers = allColors.map(colorName => {
   return {
     color: colorName,
+    playerName: "",
     isActive: false,
     isImposter: false,
     isDead: false,
@@ -138,172 +140,173 @@ const mutations = {
     state.crewMembers = newCrew;
   },
   [types.RESET_ALL_CREW](state) {
-    state.crewMembers = JSON.parse(JSON.stringify(defaultCrewMembers));
+    const defaultCrew = JSON.parse(JSON.stringify(defaultCrewMembers));
+    // Preserve player names on reset
+    state.crewMembers = defaultCrew.map(defaultMember => {
+      const playerName = state.crewMembers.find(
+        originalMember => originalMember.color === defaultMember.color
+      ).playerName;
+      defaultMember.playerName = playerName;
+      return defaultMember;
+    });
   },
   [types.RESET_ACTIVE_CREW](state) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
+    state.crewMembers = state.crewMembers.map(member => {
+      if (member.color !== state.playerColor) {
         member.isDead = false;
         member.isImposter = false;
         member.suspectedBy = [];
         member.protectedBy = [];
         member.isDoneWithTasks = false;
         member.totalMeetingsHeld = 0;
-        return member;
-      });
+      }
+      return member;
+    });
   },
   [types.SET_PLAYER_COLOR](state, color) {
     state.playerColor = color;
   },
   [types.SET_INACTIVE_CREW_MEMBERS](state, inactiveMembers) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          inactiveMembers
-            .map(inactiveMember => inactiveMember.color)
-            .includes(member.color) === true
-        ) {
-          member.isActive = false;
-          member.isDead = false;
-          member.suspectedBy = [];
-          member.protectedBy = [];
-        }
-        return member;
-      });
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        inactiveMembers
+          .map(inactiveMember => inactiveMember.color)
+          .includes(member.color) === true
+      ) {
+        member.isActive = false;
+        member.isDead = false;
+        member.suspectedBy = [];
+        member.protectedBy = [];
+      }
+      return member;
+    });
   },
   [types.SET_PROTECTED_CREW_MEMBERS](state, protectedMembers) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          protectedMembers
-            .map(protectedMember => protectedMember.color)
-            .includes(member.color) === true
-        ) {
-          member.isActive = true;
-          member.isDead = false;
-          member.isImposter = false;
-          if (member.protectedBy.includes(state.playerColor) === false) {
-            member.protectedBy = member.protectedBy.concat(state.playerColor);
-          }
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        protectedMembers
+          .map(protectedMember => protectedMember.color)
+          .includes(member.color) === true
+      ) {
+        member.isActive = true;
+        member.isDead = false;
+        member.isImposter = false;
+        if (member.protectedBy.includes(state.playerColor) === false) {
+          member.protectedBy = member.protectedBy.concat(state.playerColor);
+        }
+        member.suspectedBy = member.suspectedBy.filter(
+          memberColor => memberColor !== state.playerColor
+        );
+      }
+      return member;
+    });
+  },
+  [types.SET_UNKNOWN_CREW_MEMBERS](state, unknownMembers) {
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        unknownMembers
+          .map(unknownMember => unknownMember.color)
+          .includes(member.color) === true
+      ) {
+        member.isActive = true;
+        member.isDead = false;
+        member.isImposter = false;
+        if (member.protectedBy.includes(state.playerColor) === true) {
+          member.protectedBy = member.protectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+        if (member.suspectedBy.includes(state.playerColor) === true) {
           member.suspectedBy = member.suspectedBy.filter(
             memberColor => memberColor !== state.playerColor
           );
         }
-        return member;
-      });
-  },
-  [types.SET_UNKNOWN_CREW_MEMBERS](state, unknownMembers) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          unknownMembers
-            .map(unknownMember => unknownMember.color)
-            .includes(member.color) === true
-        ) {
-          member.isActive = true;
-          member.isDead = false;
-          member.isImposter = false;
-          if (member.protectedBy.includes(state.playerColor) === true) {
-            member.protectedBy = member.protectedBy.filter(
-              memberColor => memberColor !== state.playerColor
-            );
-          }
-          if (member.suspectedBy.includes(state.playerColor) === true) {
-            member.suspectedBy = member.suspectedBy.filter(
-              memberColor => memberColor !== state.playerColor
-            );
-          }
-        }
-        return member;
-      });
+      }
+      return member;
+    });
   },
   [types.SET_SUSPECTED_CREW_MEMBERS](state, suspectedMembers) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          suspectedMembers
-            .map(suspectedMember => suspectedMember.color)
-            .includes(member.color) === true
-        ) {
-          member.isActive = true;
-          member.isDead = false;
-          if (member.protectedBy.includes(state.playerColor) === true) {
-            member.protectedBy = member.protectedBy.filter(
-              memberColor => memberColor !== state.playerColor
-            );
-          }
-          if (member.suspectedBy.includes(state.playerColor) === false) {
-            member.suspectedBy = member.suspectedBy.concat(state.playerColor);
-          }
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        suspectedMembers
+          .map(suspectedMember => suspectedMember.color)
+          .includes(member.color) === true
+      ) {
+        member.isActive = true;
+        member.isDead = false;
+        if (member.protectedBy.includes(state.playerColor) === true) {
+          member.protectedBy = member.protectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
         }
-        return member;
-      });
+        if (member.suspectedBy.includes(state.playerColor) === false) {
+          member.suspectedBy = member.suspectedBy.concat(state.playerColor);
+        }
+      }
+      return member;
+    });
   },
   [types.SET_DEAD_CREW_MEMBERS](state, deadMembers) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          deadMembers
-            .map(deadMember => deadMember.color)
-            .includes(member.color) === true
-        ) {
-          member.isActive = true;
-          member.isDead = true;
-          if (member.protectedBy.includes(state.playerColor) === true) {
-            member.protectedBy = member.protectedBy.filter(
-              memberColor => memberColor !== state.playerColor
-            );
-          }
-          if (member.suspectedBy.includes(state.playerColor) === true) {
-            member.suspectedBy = member.suspectedBy.filter(
-              memberColor => memberColor !== state.playerColor
-            );
-          }
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        deadMembers
+          .map(deadMember => deadMember.color)
+          .includes(member.color) === true
+      ) {
+        member.isActive = true;
+        member.isDead = true;
+        if (member.protectedBy.includes(state.playerColor) === true) {
+          member.protectedBy = member.protectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
         }
-        return member;
-      });
+        if (member.suspectedBy.includes(state.playerColor) === true) {
+          member.suspectedBy = member.suspectedBy.filter(
+            memberColor => memberColor !== state.playerColor
+          );
+        }
+      }
+      return member;
+    });
   },
   [types.LINK_SUSPECTS_WITH_ACCUSER](state, { suspects, accuser }) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          suspects
-            .map(suspectedMember => suspectedMember.color)
-            .filter(color => color !== accuser.color)
-            .includes(member.color) === true
-        ) {
-          if (member.suspectedBy.includes(accuser.color) === false) {
-            member.suspectedBy = member.suspectedBy.concat(accuser.color);
-            member.isActive = true;
-          }
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        suspects
+          .map(suspectedMember => suspectedMember.color)
+          .filter(color => color !== accuser.color)
+          .includes(member.color) === true
+      ) {
+        if (member.suspectedBy.includes(accuser.color) === false) {
+          member.suspectedBy = member.suspectedBy.concat(accuser.color);
+          member.isActive = true;
         }
-        return member;
-      });
+      }
+      return member;
+    });
   },
   [types.LINK_INNOCENTS_WITH_PROTECTOR](state, { innocents, protector }) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (
-          innocents
-            .map(protectedMember => protectedMember.color)
-            .filter(color => color !== protector.color)
-            .includes(member.color) === true
-        ) {
-          if (member.protectedBy.includes(protector.color) === false) {
-            member.protectedBy = member.protectedBy.concat(protector.color);
-            member.isActive = true;
-          }
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        innocents
+          .map(protectedMember => protectedMember.color)
+          .filter(color => color !== protector.color)
+          .includes(member.color) === true
+      ) {
+        if (member.protectedBy.includes(protector.color) === false) {
+          member.protectedBy = member.protectedBy.concat(protector.color);
+          member.isActive = true;
         }
-        return member;
-      });
+      }
+      return member;
+    });
   },
   [types.SET_MEMBER_DONE_WITH_TASKS](state, { member, isDone }) {
     state.crewMembers = state.crewMembers.map(someMember => {
@@ -380,28 +383,38 @@ const mutations = {
     state,
     { protectedMember, protector }
   ) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (member.color === protectedMember.color) {
-          member.protectedBy = member.protectedBy.filter(
-            memberColor => memberColor !== protector.color
-          );
-        }
-        return member;
-      });
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        member.color === protectedMember.color
+      ) {
+        member.protectedBy = member.protectedBy.filter(
+          memberColor => memberColor !== protector.color
+        );
+      }
+      return member;
+    });
   },
   [types.REMOVE_SUSPECT_FROM_ACCUSER](state, { suspect, accuser }) {
-    state.crewMembers = state.crewMembers
-      .filter(member => member.color !== state.playerColor)
-      .map(member => {
-        if (member.color === suspect.color) {
-          member.suspectedBy = member.suspectedBy.filter(
-            memberColor => memberColor !== accuser.color
-          );
-        }
-        return member;
-      });
+    state.crewMembers = state.crewMembers.map(member => {
+      if (
+        member.color !== state.playerColor &&
+        member.color === suspect.color
+      ) {
+        member.suspectedBy = member.suspectedBy.filter(
+          memberColor => memberColor !== accuser.color
+        );
+      }
+      return member;
+    });
+  },
+  [types.SET_MEMBER_PLAYER_NAME](state, { color, playerName }) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === color) {
+        someMember.playerName = playerName;
+      }
+      return someMember;
+    });
   },
 };
 
@@ -463,19 +476,32 @@ const actions = {
   async removeSuspectFromAccuser({ commit }, { suspect, accuser }) {
     commit(types.REMOVE_SUSPECT_FROM_ACCUSER, { suspect, accuser });
   },
-  async setAllMembersAsUnknown({ commit, state, getters }) {
-    const newCrew = getters.crewMembersWithoutPlayer.map(member => {
-      member.isActive = true;
-      member.isDead = false;
-      member.suspectedBy = member.suspectedBy.filter(
-        memberColor => memberColor !== state.playerColor
-      );
-      member.protectedBy = member.protectedBy.filter(
-        memberColor => memberColor !== state.playerColor
-      );
+  async setAllMembersAsUnknown({ commit, state }) {
+    const newCrew = state.crewMembers.map(member => {
+      if (member.color !== state.playerColor) {
+        member.isActive = true;
+        member.isDead = false;
+        member.suspectedBy = member.suspectedBy.filter(
+          memberColor => memberColor !== state.playerColor
+        );
+        member.protectedBy = member.protectedBy.filter(
+          memberColor => memberColor !== state.playerColor
+        );
+      }
       return member;
     });
     commit(types.SET_CREW, newCrew);
+  },
+  setCrewMemberPlayerName({ commit }, { color, playerName }) {
+    commit(types.SET_MEMBER_PLAYER_NAME, { color, playerName });
+  },
+  resetAllPlayerNames({ commit }) {
+    for (let i = 0; i < allColors.length; i++) {
+      commit(types.SET_MEMBER_PLAYER_NAME, {
+        color: allColors[i],
+        playerName: "",
+      });
+    }
   },
 };
 

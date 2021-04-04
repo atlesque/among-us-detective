@@ -6,12 +6,12 @@
     @apply text-theme-gray-extra-dark;
   }
 
-  .crewpool:not(.pool--dead) {
-    @apply bg-gray-900;
-  }
-
   .crew-tracker {
     .unknown-column {
+      @apply bg-gray-800;
+    }
+
+    .crewpool:not(.pool--dead) {
       @apply bg-gray-800;
     }
   }
@@ -20,6 +20,10 @@
     tr {
       @apply bg-gray-800;
     }
+  }
+
+  .pool--inactive {
+    @apply bg-gray-800;
   }
 
   .cookie-warning {

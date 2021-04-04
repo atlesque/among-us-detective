@@ -16,6 +16,7 @@
               class="pool--innocent"
               :crewMembers="innocentList"
               :showColorNames="showColorNames === true"
+              :showPlayerNames="showPlayerNames === true"
               @changed="value => (innocentList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'innocent', member })
@@ -27,6 +28,7 @@
               class="pool--unknown"
               :crewMembers="unknownList"
               :showColorNames="showColorNames === true"
+              :showPlayerNames="showPlayerNames === true"
               @changed="value => (unknownList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'unknown', member })
@@ -38,6 +40,7 @@
               class="pool--suspect"
               :crewMembers="suspectList"
               :showColorNames="showColorNames === true"
+              :showPlayerNames="showPlayerNames === true"
               @changed="value => (suspectList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'suspect', member })
@@ -49,6 +52,7 @@
               class="pool--dead"
               :crewMembers="deadList"
               :showColorNames="showColorNames === true"
+              :showPlayerNames="showPlayerNames === true"
               @changed="value => (deadList = value)"
               @removed="member => handleRemoveMember({ list: 'dead', member })"
             />
@@ -88,6 +92,10 @@ export default {
       required: true,
     },
     showColorNames: {
+      type: Boolean,
+      default: false,
+    },
+    showPlayerNames: {
       type: Boolean,
       default: false,
     },

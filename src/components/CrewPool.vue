@@ -9,8 +9,10 @@
         v-for="member in crewMembersInPool"
         :key="member.color"
         :color="member.color"
-        :showColorNames="showColorNames === true"
+        :showColorName="showColorNames === true"
+        :showPlayerName="showPlayerNames === true"
         :is-imposter="member.isImposter"
+        :player-name="member.playerName"
         class="float-left mb-2 mr-2"
         v-on:dblclick.native="removeMember(member)"
       />
@@ -37,6 +39,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    showPlayerNames: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     crewMembersInPool: {
@@ -59,3 +65,12 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.crewpool {
+  &.pool--dead {
+    .player-name {
+      @apply text-theme-gray-extra-light;
+    }
+  }
+}
+</style>

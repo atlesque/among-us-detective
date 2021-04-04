@@ -4,15 +4,19 @@
     :class="[
       {
         'is-imposter': isImposter === true,
+        'crew-icon--with-name': showPlayerName === true,
       },
       autoWidth === true ? 'w-full' : 'w-10',
       autoHeight === true ? 'h-full' : 'h-8',
-      showColorNames === true ? `bg-player-${color}` : '',
+      showColorName === true ? `bg-player-${color}` : '',
     ]"
   >
     <span v-if="isImposter === true" class="is-imposter-text">IMP</span>
+    <span v-if="showPlayerName === true" class="player-name">{{
+      playerName
+    }}</span>
     <span
-      v-if="showColorNames === true"
+      v-if="showColorName === true"
       :class="`border-2 border-player-${color}`"
       class="w-full text-xs text-center bg-white dark--text-dark"
       >{{ color }}</span
@@ -87,6 +91,10 @@ export default {
       type: String,
       required: true,
     },
+    playerName: {
+      type: String,
+      default: "",
+    },
     autoWidth: {
       type: Boolean,
       default: false,
@@ -95,7 +103,11 @@ export default {
       type: Boolean,
       default: false,
     },
-    showColorNames: {
+    showColorName: {
+      type: Boolean,
+      default: false,
+    },
+    showPlayerName: {
       type: Boolean,
       default: false,
     },
@@ -107,7 +119,37 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.crew-icon {
+  &--with-name {
+    @apply my-3;
+  }
+}
+.player-name {
+  @apply absolute;
+  @apply left-0;
+  @apply right-0;
+  @apply z-20;
+  @apply text-center;
+  @apply text-xs;
+  top: -15px;
+}
 .border-player-orange {
   font-size: 0.7em;
+}
+.is-imposter {
+  position: relative;
+
+  .is-imposter-text {
+    @apply absolute;
+    @apply left-0;
+    @apply right-0;
+    @apply z-20;
+    @apply font-bold;
+    @apply text-center;
+    @apply text-player-red;
+    bottom: -12px;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+      1px 1px 0 white;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 ::selection {
-  @apply bg-theme-red;
+  @apply bg-theme-green;
   @apply text-white;
 }
 
@@ -60,6 +60,11 @@ body {
       @apply px-2;
       @apply py-1;
     }
+  }
+
+  input[type="text"] {
+    @apply border;
+    @apply border-theme-gray;
   }
 
   label {

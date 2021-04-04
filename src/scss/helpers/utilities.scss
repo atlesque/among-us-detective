@@ -64,24 +64,3 @@
   @apply max-w-6xl;
   @apply mx-auto;
 }
-
-.is-dead {
-  @apply bg-theme-gray-dark;
-}
-
-.is-imposter {
-  position: relative;
-
-  .is-imposter-text {
-    @apply absolute;
-    @apply left-0;
-    @apply right-0;
-    @apply z-20;
-    @apply font-bold;
-    @apply text-center;
-    @apply text-player-red;
-    bottom: -12px;
-    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
-      1px 1px 0 white;
-  }
-}

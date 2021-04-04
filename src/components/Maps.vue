@@ -84,7 +84,11 @@ export default {
   name: "Maps",
   mounted() {
     document.addEventListener("keyup", e => {
-      if (e.code === "KeyM" && this.areNotesOpen === false) {
+      if (
+        e.code === "KeyM" &&
+        this.areNotesOpen === false &&
+        this.settingsModalOpenState === false
+      ) {
         this.isMapVisible = !this.isMapVisible;
       }
     });
@@ -97,6 +101,7 @@ export default {
   },
   computed: {
     ...mapState("notes", ["areNotesOpen"]),
+    ...mapState("settings", ["settingsModalOpenState"]),
   },
   methods: {
     selectMap(newMap) {

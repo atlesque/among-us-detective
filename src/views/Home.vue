@@ -22,12 +22,13 @@
         <div class="flex flex-row flex-1 max-w-xl min-h-12">
           <CrewPool
             :crewMembers="inactiveCrewMembers"
-            :showColorNames="showColorNames === true"
+            :showColorName="showColorNames === true"
+            :showPlayerNames="showPlayerNames === true"
             @changed="value => handleCrewChanged({ type: 'inactive', value })"
             @removed="
               member => handleMemberRemoved({ list: 'inactive', member })
             "
-            class="flex-1 border lg:mb-0 "
+            class="flex-1 border lg:mb-0 pool--inactive"
           />
           <button
             :disabled="inactiveCrewMembers.length <= 0"
@@ -72,7 +73,8 @@
       :unknown="unknownCrewMembersForPlayer"
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
-      :showColorNames="showColorNames === true"
+      :showColorName="showColorNames === true"
+      :showPlayerNames="showPlayerNames === true"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
       class="mb-2 lg:mb-4"
@@ -80,7 +82,8 @@
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"
       :crewMembers="activeCrewMembersWithoutPlayer"
-      :showColorNames="showColorNames === true"
+      :showColorName="showColorNames === true"
+      :showPlayerNames="showPlayerNames === true"
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 z-10 flex justify-end px-2 py-1">
@@ -154,7 +157,11 @@ export default {
       localStorage.setItem("returningPlayer", JSON.stringify(true));
     }
     document.addEventListener("keyup", e => {
-      if (e.code === "KeyN" && this.isNotesModalOpen === false) {
+      if (
+        e.code === "KeyN" &&
+        this.isNotesModalOpen === false &&
+        this.isSettingsModalOpen === false
+      ) {
         this.isNotesModalOpen = true;
       } else if (e.code === "Escape" && this.isNotesModalOpen === true) {
         this.isNotesModalOpen = false;
@@ -166,7 +173,7 @@ export default {
       isPlayerPickerOpen: false,
       isHelpModalOpen: false,
       isAboutModalOpen: false,
-      isSettingsModalOpen: false,
+      // isSettingsModalOpen: false,
       // isNotesModalOpen: false,
       roundNotes: "",
       gameNotes: "",
@@ -185,13 +192,25 @@ export default {
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("notes", ["areNotesOpen"]),
-    ...mapState("settings", ["showColorNames"]),
+    ...mapState("settings", [
+      "showColorNames",
+      "showPlayerNames",
+      "settingsModalOpenState",
+    ]),
     isNotesModalOpen: {
       get() {
         return this.areNotesOpen;
       },
       set(value) {
         this.setNotesOpenState(value);
+      },
+    },
+    isSettingsModalOpen: {
+      get() {
+        return this.settingsModalOpenState;
+      },
+      set(value) {
+        this.setSettingsModalOpenState(value);
       },
     },
   },
@@ -210,6 +229,7 @@ export default {
       "setAllMembersAsUnknown",
     ]),
     ...mapActions("notes", ["setNotesOpenState"]),
+    ...mapActions("settings", ["setSettingsModalOpenState"]),
     initNewGame() {
       this.resetAllCrew();
       this.gameNotes = "";
