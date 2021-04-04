@@ -1,12 +1,10 @@
 const types = {
   OPEN_NOTES: "✔️[Opened] notes",
   CLOSE_NOTES: "❌[Closed] notes",
-  SET_RESET_NOTES_ON_NEW_GAME: "✔️[Set] reset notes on new game",
 };
 
 const state = {
   areNotesOpen: false,
-  resetNotesOnNewGame: true,
 };
 
 const getters = {};
@@ -18,9 +16,6 @@ const mutations = {
   [types.CLOSE_NOTES](state) {
     state.areNotesOpen = false;
   },
-  [types.SET_RESET_NOTES_ON_NEW_GAME](state, value) {
-    state.resetNotesOnNewGame = value;
-  },
 };
 
 const actions = {
@@ -30,9 +25,6 @@ const actions = {
     } else {
       commit(types.CLOSE_NOTES);
     }
-  },
-  async setResetNotesOnNewGame({ commit }, value) {
-    commit(types.SET_RESET_NOTES_ON_NEW_GAME, value);
   },
 };
 

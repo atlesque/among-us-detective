@@ -14,7 +14,8 @@
             @click="toggleRecordRoundNotes"
             :class="{
               'text-player-green': isRecordingRoundNotes === true,
-              'text-player-red': speechError.length > 0,
+              'text-player-red':
+                lastRecordedType === 'roundNotes' && speechError.length > 0,
             }"
           >
             <span class="icon-mic"></span>
@@ -36,13 +37,26 @@
     </div>
     <div class="game-notes-wrapper">
       <div class="flex justify-between">
-        <label
-          for="game-notes"
-          class="block text-sm font-medium leading-5 text-gray-700"
-        >
-          <template v-if="resetNotesOnNewGame === true">This game</template>
-          <template v-else>General</template>
-        </label>
+        <div class="flex items-center justify-center">
+          <label
+            for="game-notes"
+            class="block text-sm font-medium leading-5 text-gray-700"
+          >
+            <template v-if="resetNotesOnNewGame === true">This game</template>
+            <template v-else>General</template>
+          </label>
+          <button
+            class="relative flex items-center justify-center w-8 h-8 record-round-button"
+            @click="toggleRecordGameNotes"
+            :class="{
+              'text-player-green': isRecordingGameNotes === true,
+              'text-player-red':
+                lastRecordedType === 'gameNotes' && speechError.length > 0,
+            }"
+          >
+            <span class="icon-mic"></span>
+          </button>
+        </div>
         <span class="text-xs leading-5 text-gray-500"
           ><template v-if="resetNotesOnNewGame === true"
             >Cleared each game</template
@@ -99,10 +113,12 @@ export default {
     return {
       allColors,
       isRecordingRoundNotes: false,
+      isRecordingGameNotes: false,
       speechRecognition: null,
       roundNotesHighlighter: null,
       gameNotesHighlighter: null,
       speechError: "",
+      lastRecordedType: "",
     };
   },
   mounted() {
@@ -125,7 +141,7 @@ export default {
     this.$refs["input-round-notes"].focus();
   },
   computed: {
-    ...mapState("notes", ["resetNotesOnNewGame"]),
+    ...mapState("settings", ["resetNotesOnNewGame"]),
     roundNotes: {
       get() {
         return this.round;
@@ -156,11 +172,11 @@ export default {
       this.speechRecognition.maxAlternatives = 1;
       this.speechRecognition.lang = "en-US";
 
-      /* 
+      /*
         NOTE:
         Chrome does not support webkitSpeechGrammarList
         (last checked 2020-10-21)
-        
+
         More info:
         https://github.com/WICG/speech-api/issues/57
         https://github.com/WICG/speech-api/issues/58
@@ -194,11 +210,20 @@ export default {
             finalTranscript += event.results[i][0].transcript;
           }
         }
-        this.roundNotes += finalTranscript.replace(
-          /newline|new line|enter/gi,
-          "\n"
-        );
-        this.roundNotesHighlighter.handleInput();
+
+        if (this.lastRecordedType === "roundNotes") {
+          this.roundNotes += finalTranscript.replace(
+            /newline|new line|enter/gi,
+            "\n"
+          );
+          this.roundNotesHighlighter.handleInput();
+        } else {
+          this.gameNotes += finalTranscript.replace(
+            /newline|new line|enter/gi,
+            "\n"
+          );
+          this.gameNotesHighlighter.handleInput();
+        }
       };
 
       this.speechRecognition.onerror = event => {
@@ -211,28 +236,53 @@ export default {
         if (event.error == "not-allowed") {
           this.speechError = "Check recording permissions in your browser";
         }
-        this.disableRecordingNotes();
+        this.disableRecordingRoundNotes();
+        this.disableRecordingGameNotes();
       };
     },
     toggleRecordRoundNotes() {
       const newValue = !this.isRecordingRoundNotes;
       if (newValue === true) {
-        this.enableRecordingNotes();
+        this.enableRecordingRoundNotes();
       } else {
-        this.disableRecordingNotes();
+        this.disableRecordingRoundNotes();
       }
     },
-    enableRecordingNotes() {
+    enableRecordingRoundNotes() {
       this.isRecordingRoundNotes = true;
+      this.lastRecordedType = "roundNotes";
       this.speechRecognition.start();
     },
-    disableRecordingNotes() {
+    disableRecordingRoundNotes() {
       this.isRecordingRoundNotes = false;
       this.speechRecognition.stop();
       this.roundNotesHighlighter.handleInput();
       setTimeout(() => {
         this.$refs["input-round-notes"].scrollTop = this.$refs[
           "input-round-notes"
+        ].scrollHeight;
+      }, 500);
+    },
+    toggleRecordGameNotes() {
+      const newValue = !this.isRecordingGameNotes;
+      if (newValue === true) {
+        this.enableRecordingGameNotes();
+      } else {
+        this.disableRecordingGameNotes();
+      }
+    },
+    enableRecordingGameNotes() {
+      this.isRecordingGameNotes = true;
+      this.lastRecordedType = "gameNotes";
+      this.speechRecognition.start();
+    },
+    disableRecordingGameNotes() {
+      this.isRecordingGameNotes = false;
+      this.speechRecognition.stop();
+      this.gameNotesHighlighter.handleInput();
+      setTimeout(() => {
+        this.$refs["input-game-notes"].scrollTop = this.$refs[
+          "input-game-notes"
         ].scrollHeight;
       }, 500);
     },

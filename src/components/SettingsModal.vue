@@ -148,10 +148,10 @@ export default {
       "showTasksCheckbox",
       "showMeetingsCount",
       "showPlayerNames",
+      "resetNotesOnNewGame",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("crew", ["crewMembers"]),
-    ...mapState("notes", ["resetNotesOnNewGame"]),
     areColorNamesVisible: {
       get() {
         return this.showColorNames;
@@ -214,10 +214,10 @@ export default {
       "setShowTasksCheckbox",
       "setShowMeetingsCount",
       "setShowPlayerNames",
+      "setResetNotesOnNewGame",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),
-    ...mapActions("notes", ["setResetNotesOnNewGame"]),
     handleCloseEvent() {
       if (this.isEditingPlayerNames === true) {
         this.isEditingPlayerNames = false;

@@ -185,11 +185,12 @@ export default {
       "crewMembersSuspectedByPlayer",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
-    ...mapState("notes", ["areNotesOpen", "resetNotesOnNewGame"]),
+    ...mapState("notes", ["areNotesOpen"]),
     ...mapState("settings", [
       "showColorNames",
       "showPlayerNames",
       "settingsModalOpenState",
+      "resetNotesOnNewGame",
     ]),
     isNotesModalOpen: {
       get() {
