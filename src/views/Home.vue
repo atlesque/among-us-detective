@@ -22,7 +22,7 @@
         <div class="flex flex-row flex-1 max-w-xl min-h-12">
           <CrewPool
             :crewMembers="inactiveCrewMembers"
-            :showColorName="showColorNames === true"
+            :showColorNames="showColorNames === true"
             :showPlayerNames="showPlayerNames === true"
             @changed="value => handleCrewChanged({ type: 'inactive', value })"
             @removed="
@@ -73,7 +73,7 @@
       :unknown="unknownCrewMembersForPlayer"
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
-      :showColorName="showColorNames === true"
+      :showColorNames="showColorNames === true"
       :showPlayerNames="showPlayerNames === true"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
@@ -82,7 +82,7 @@
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"
       :crewMembers="activeCrewMembersWithoutPlayer"
-      :showColorName="showColorNames === true"
+      :showColorNames="showColorNames === true"
       :showPlayerNames="showPlayerNames === true"
       class="mb-2"
     />

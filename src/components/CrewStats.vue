@@ -80,7 +80,7 @@
           <td colspan="3">
             <CrewPool
               :crewMembers="getAllMembersProtectedBy(member)"
-              :showColorName="showColorNames === true"
+              :showColorNames="showColorNames === true"
               :showPlayerName="showPlayerNames === true"
               @changed="
                 value =>
@@ -102,7 +102,7 @@
           <td class="relative" colspan="3">
             <CrewPool
               :crewMembers="getAllMembersSuspectedBy(member)"
-              :showColorName="showColorNames === true"
+              :showColorNames="showColorNames === true"
               :showPlayerName="showPlayerNames === true"
               @changed="
                 value =>
