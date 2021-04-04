@@ -15,7 +15,7 @@
             <CrewPool
               class="pool--innocent"
               :crewMembers="innocentList"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="value => (innocentList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'innocent', member })
@@ -26,7 +26,7 @@
             <CrewPool
               class="pool--unknown"
               :crewMembers="unknownList"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="value => (unknownList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'unknown', member })
@@ -37,7 +37,7 @@
             <CrewPool
               class="pool--suspect"
               :crewMembers="suspectList"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="value => (suspectList = value)"
               @removed="
                 member => handleRemoveMember({ list: 'suspect', member })
@@ -48,7 +48,7 @@
             <CrewPool
               class="pool--dead"
               :crewMembers="deadList"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="value => (deadList = value)"
               @removed="member => handleRemoveMember({ list: 'dead', member })"
             />
@@ -87,7 +87,7 @@ export default {
       type: Array,
       required: true,
     },
-    areColorNamesVisible: {
+    showColorNames: {
       type: Boolean,
       default: false,
     },

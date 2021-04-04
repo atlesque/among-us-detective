@@ -25,7 +25,7 @@
             >
               <CrewIcon
                 :color="member.color"
-                :showColorNames="areColorNamesVisible"
+                :showColorNames="showColorNames === true"
                 :is-imposter="member.isImposter"
               />
               <div v-show="member.isDead === false" class="flex lg:flex-col">
@@ -78,7 +78,7 @@
           <td colspan="3">
             <CrewPool
               :crewMembers="getAllMembersProtectedBy(member)"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="
                 value =>
                   linkInnocentsWithProtector({
@@ -99,7 +99,7 @@
           <td class="relative" colspan="3">
             <CrewPool
               :crewMembers="getAllMembersSuspectedBy(member)"
-              :showColorNames="areColorNamesVisible === true"
+              :showColorNames="showColorNames === true"
               @changed="
                 value =>
                   linkSuspectsWithAccuser({
@@ -141,7 +141,7 @@ export default {
       type: Array,
       required: true,
     },
-    areColorNamesVisible: {
+    showColorNames: {
       type: Boolean,
       default: false,
     },

@@ -72,7 +72,7 @@
       :unknown="unknownCrewMembersForPlayer"
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
-      :showColorNames="showColorNames"
+      :showColorNames="showColorNames === true"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
       class="mb-2 lg:mb-4"
@@ -80,7 +80,7 @@
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"
       :crewMembers="activeCrewMembersWithoutPlayer"
-      :showColorNames="showColorNames"
+      :showColorNames="showColorNames === true"
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 z-10 flex justify-end px-2 py-1">
