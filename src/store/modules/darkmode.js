@@ -17,6 +17,7 @@ const mutations = {
 const actions = {
   async setDarkMode({ commit }, value) {
     commit(types.SET_DARK_MODE, value);
+    localStorage.setItem("hasSetDarkMode", true);
   },
 };
 
