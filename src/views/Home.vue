@@ -42,12 +42,8 @@
       <div class="flex justify-between mb-2">
         <button
           @click="initNewRound()"
-          class="mr-2 button button-success"
-          :disabled="
-            activeCrewMembersWithoutPlayer.length <= 0 ||
-              unknownCrewMembersForPlayer.length ===
-                activeCrewMembersWithoutPlayer.length
-          "
+          class="h-12 mr-2 button button-success"
+          :disabled="activeCrewMembersWithoutPlayer.length <= 0"
         >
           New round
         </button>
@@ -60,7 +56,7 @@
         />
         <button
           @click="initNewGame()"
-          class="button button-primary"
+          class="h-12 button button-primary"
           :disabled="activeCrewMembersWithoutPlayer.length <= 0"
         >
           New game
