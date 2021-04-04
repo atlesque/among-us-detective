@@ -6,6 +6,7 @@ const types = {
   SET_SHOW_PLAYER_NAMES: "✔️[Set] show player names",
   SET_SETTING_MODAL_OPEN_STATE: "✔️[Set] settings modal open state",
   SET_RESET_NOTES_ON_NEW_GAME: "✔️[Set] reset notes on new game",
+  SET_SHOW_ROUND_NOTES: "✔️[Set] show round notes",
 };
 
 const state = {
@@ -16,6 +17,7 @@ const state = {
   showPlayerNames: false,
   settingsModalOpenState: false,
   resetNotesOnNewGame: true,
+  showRoundNotes: true,
 };
 
 const getters = {};
@@ -42,6 +44,9 @@ const mutations = {
   [types.SET_RESET_NOTES_ON_NEW_GAME](state, value) {
     state.resetNotesOnNewGame = value;
   },
+  [types.SET_SHOW_ROUND_NOTES](state, value) {
+    state.showRoundNotes = value;
+  },
 };
 
 const actions = {
@@ -65,6 +70,9 @@ const actions = {
   },
   async setResetNotesOnNewGame({ commit }, value) {
     commit(types.SET_RESET_NOTES_ON_NEW_GAME, value);
+  },
+  async setShowRoundNotes({ commit }, value) {
+    commit(types.SET_SHOW_ROUND_NOTES, value);
   },
 };
 

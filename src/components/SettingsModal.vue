@@ -113,6 +113,15 @@
                   />
                 </td>
               </tr>
+              <tr>
+                <td>Show round notes:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="areRoundNotesVisible"
+                    @changed="value => (areRoundNotesVisible = value)"
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </template>
@@ -149,6 +158,7 @@ export default {
       "showMeetingsCount",
       "showPlayerNames",
       "resetNotesOnNewGame",
+      "showRoundNotes",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("crew", ["crewMembers"]),
@@ -200,6 +210,14 @@ export default {
         this.setResetNotesOnNewGame(value);
       },
     },
+    areRoundNotesVisible: {
+      get() {
+        return this.showRoundNotes;
+      },
+      set(value) {
+        this.setShowRoundNotes(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Color names" : "Icons";
     },
@@ -215,6 +233,7 @@ export default {
       "setShowMeetingsCount",
       "setShowPlayerNames",
       "setResetNotesOnNewGame",
+      "setShowRoundNotes",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),

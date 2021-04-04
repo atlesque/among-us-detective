@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div class="my-2 round-notes-wrapper">
+    <div v-show="showRoundNotes === true" class="my-2 round-notes-wrapper">
       <span class="text-sm text-theme-red">{{ speechError }}</span>
       <div class="flex justify-between">
         <div class="flex items-center justify-center">
@@ -141,7 +141,7 @@ export default {
     this.$refs["input-round-notes"].focus();
   },
   computed: {
-    ...mapState("settings", ["resetNotesOnNewGame"]),
+    ...mapState("settings", ["resetNotesOnNewGame", "showRoundNotes"]),
     roundNotes: {
       get() {
         return this.round;
