@@ -89,21 +89,28 @@
               <tr>
                 <td>Show player names:</td>
                 <td>
-                  <Checkbox
-                    :isChecked="arePlayerNamesVisible"
-                    @changed="value => (arePlayerNamesVisible = value)"
-                  />
+                  <div class="flex">
+                    <Checkbox
+                      :isChecked="arePlayerNamesVisible"
+                      @changed="value => (arePlayerNamesVisible = value)"
+                    />
+                    <button
+                      v-if="arePlayerNamesVisible === true"
+                      @click="isEditingPlayerNames = true"
+                      class="button-sm"
+                    >
+                      Edit names
+                    </button>
+                  </div>
                 </td>
               </tr>
-              <tr v-if="arePlayerNamesVisible === true">
-                <td></td>
+              <tr>
+                <td>Reset notes each game:</td>
                 <td>
-                  <button
-                    @click="isEditingPlayerNames = true"
-                    class="button-sm"
-                  >
-                    Edit names
-                  </button>
+                  <Checkbox
+                    :isChecked="areNotesResetOnNewGame"
+                    @changed="value => (areNotesResetOnNewGame = value)"
+                  />
                 </td>
               </tr>
             </tbody>
@@ -144,6 +151,7 @@ export default {
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("crew", ["crewMembers"]),
+    ...mapState("notes", ["resetNotesOnNewGame"]),
     areColorNamesVisible: {
       get() {
         return this.showColorNames;
@@ -184,6 +192,14 @@ export default {
         this.setShowPlayerNames(value);
       },
     },
+    areNotesResetOnNewGame: {
+      get() {
+        return this.resetNotesOnNewGame;
+      },
+      set(value) {
+        this.setResetNotesOnNewGame(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Color names" : "Icons";
     },
@@ -201,6 +217,7 @@ export default {
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),
+    ...mapActions("notes", ["setResetNotesOnNewGame"]),
     handleCloseEvent() {
       if (this.isEditingPlayerNames === true) {
         this.isEditingPlayerNames = false;

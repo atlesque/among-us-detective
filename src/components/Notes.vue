@@ -39,9 +39,16 @@
         <label
           for="game-notes"
           class="block text-sm font-medium leading-5 text-gray-700"
-          >This game</label
         >
-        <span class="text-xs leading-5 text-gray-500">Cleared each game</span>
+          <template v-if="resetNotesOnNewGame === true">This game</template>
+          <template v-else>General</template>
+        </label>
+        <span class="text-xs leading-5 text-gray-500"
+          ><template v-if="resetNotesOnNewGame === true"
+            >Cleared each game</template
+          >
+          <template v-else>Never cleared</template></span
+        >
       </div>
       <div class="relative w-full mt-1">
         <AutoSizingTextarea>
@@ -67,6 +74,7 @@
 <script>
 /*global webkitSpeechRecognition webkitSpeechGrammarList */
 
+import { mapState } from "vuex";
 import HighlightWithinTextarea from "@/utilities/highlight-within-textarea.js";
 import allColors from "@/config/playerColors.js";
 // Don't use lazy-loading syntax for this, otherwise Highlight won't work
@@ -117,6 +125,7 @@ export default {
     this.$refs["input-round-notes"].focus();
   },
   computed: {
+    ...mapState("notes", ["resetNotesOnNewGame"]),
     roundNotes: {
       get() {
         return this.round;

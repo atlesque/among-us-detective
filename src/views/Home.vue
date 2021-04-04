@@ -169,8 +169,6 @@ export default {
       isPlayerPickerOpen: false,
       isHelpModalOpen: false,
       isAboutModalOpen: false,
-      // isSettingsModalOpen: false,
-      // isNotesModalOpen: false,
       roundNotes: "",
       gameNotes: "",
     };
@@ -187,7 +185,7 @@ export default {
       "crewMembersSuspectedByPlayer",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
-    ...mapState("notes", ["areNotesOpen"]),
+    ...mapState("notes", ["areNotesOpen", "resetNotesOnNewGame"]),
     ...mapState("settings", [
       "showColorNames",
       "showPlayerNames",
@@ -228,7 +226,9 @@ export default {
     ...mapActions("settings", ["setSettingsModalOpenState"]),
     initNewGame() {
       this.resetAllCrew();
-      this.gameNotes = "";
+      if (this.resetNotesOnNewGame === true) {
+        this.gameNotes = "";
+      }
       this.roundNotes = "";
       this.$gtag.event("init_new_game", {
         event_category: "global_stats",
