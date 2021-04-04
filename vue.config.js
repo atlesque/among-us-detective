@@ -8,5 +8,6 @@ module.exports = {
     workboxOptions: {
       skipWaiting: true,
     },
+    assetsVersion: "1.1",
   },
 };
