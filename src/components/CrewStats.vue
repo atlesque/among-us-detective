@@ -6,6 +6,7 @@
       <thead>
         <tr>
           <th>Color</th>
+          <th>Imp?</th>
           <th>Tasks?</th>
           <th>Meeting?</th>
           <th colspan="3">Innocent</th>
@@ -25,6 +26,7 @@
               <CrewIcon
                 :color="member.color"
                 :showColorNames="areColorNamesVisible"
+                :is-imposter="member.isImposter"
               />
               <div v-show="member.isDead === false" class="flex lg:flex-col">
                 <span
@@ -41,6 +43,15 @@
                 >
               </div>
             </div>
+          </td>
+          <td>
+            <Checkbox
+              class="justify-center"
+              :isChecked="member.isImposter === true"
+              @changed="
+                value => setMemberIsImposter({ member, isImposter: value })
+              "
+            />
           </td>
           <td>
             <Checkbox
@@ -169,6 +180,7 @@ export default {
       "linkSuspectsWithAccuser",
       "linkInnocentsWithProtector",
       "setCrewMemberIsDoneWithTasks",
+      "setMemberIsImposter",
       "setCrewMemberTotalMeetings",
       "removeProtectedFromProtector",
       "removeSuspectFromAccuser",

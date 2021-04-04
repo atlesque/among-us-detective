@@ -1,3 +1,5 @@
+import allColors from "@/config/playerColors.js";
+
 const types = {
   SET_CREW: "✔️[Set] crew members",
   RESET_ALL_CREW: "✨[Reset] all crew",
@@ -11,6 +13,7 @@ const types = {
   LINK_SUSPECTS_WITH_ACCUSER: "✔️ [Link] suspects with accuser",
   LINK_INNOCENTS_WITH_PROTECTOR: "✔️ [Link] innocents with protector",
   SET_MEMBER_DONE_WITH_TASKS: "✔️ [Set] member done with tasks",
+  SET_MEMBER_IS_IMPOSTER: "✔️ [Set] member is imposter",
   SET_MEMBER_MEETINGS_HELD: "✔️ [Set] member total meetings held",
   SET_MEMBER_AS_UNKNOWN: "✔️ [Set] member as unknown",
   SET_MEMBER_AS_INACTIVE: "✔️ [Set] member as inactive",
@@ -18,116 +21,18 @@ const types = {
   REMOVE_SUSPECT_FROM_ACCUSER: "✔️ [Removed] suspect from accuser",
 };
 
-const defaultCrewMembers = [
-  {
-    color: "red",
+const defaultCrewMembers = allColors.map(colorName => {
+  return {
+    color: colorName,
     isActive: false,
+    isImposter: false,
     isDead: false,
     isDoneWithTasks: false,
     totalMeetingsHeld: 0,
     suspectedBy: [],
     protectedBy: [],
-  },
-  {
-    color: "blue",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "green",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "pink",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "orange",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "yellow",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "black",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "white",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "purple",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "brown",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "cyan",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-  {
-    color: "lime",
-    isActive: false,
-    isDead: false,
-    isDoneWithTasks: false,
-    totalMeetingsHeld: 0,
-    suspectedBy: [],
-    protectedBy: [],
-  },
-];
+  };
+});
 
 const defaultPlayerColor = "yellow";
 
@@ -240,6 +145,7 @@ const mutations = {
       .filter(member => member.color !== state.playerColor)
       .map(member => {
         member.isDead = false;
+        member.isImposter = false;
         member.suspectedBy = [];
         member.protectedBy = [];
         member.isDoneWithTasks = false;
@@ -278,6 +184,7 @@ const mutations = {
         ) {
           member.isActive = true;
           member.isDead = false;
+          member.isImposter = false;
           if (member.protectedBy.includes(state.playerColor) === false) {
             member.protectedBy = member.protectedBy.concat(state.playerColor);
           }
@@ -299,6 +206,7 @@ const mutations = {
         ) {
           member.isActive = true;
           member.isDead = false;
+          member.isImposter = false;
           if (member.protectedBy.includes(state.playerColor) === true) {
             member.protectedBy = member.protectedBy.filter(
               memberColor => memberColor !== state.playerColor
@@ -401,6 +309,23 @@ const mutations = {
     state.crewMembers = state.crewMembers.map(someMember => {
       if (someMember.color === member.color) {
         someMember.isDoneWithTasks = isDone;
+      }
+      return someMember;
+    });
+  },
+  [types.SET_MEMBER_IS_IMPOSTER](state, { member, isImposter }) {
+    state.crewMembers = state.crewMembers.map(someMember => {
+      if (someMember.color === member.color) {
+        someMember.isImposter = isImposter;
+        if (someMember.isDead === false) {
+          someMember.protectedBy = someMember.protectedBy.filter(
+            protectorColor => protectorColor !== state.playerColor
+          );
+          someMember.suspectedBy = [
+            // Use Set to avoid duplicates
+            ...new Set(someMember.suspectedBy.concat(state.playerColor)),
+          ];
+        }
       }
       return someMember;
     });
@@ -513,6 +438,9 @@ const actions = {
   },
   async setCrewMemberIsDoneWithTasks({ commit }, { member, isDone }) {
     commit(types.SET_MEMBER_DONE_WITH_TASKS, { member, isDone });
+  },
+  async setMemberIsImposter({ commit }, { member, isImposter }) {
+    commit(types.SET_MEMBER_IS_IMPOSTER, { member, isImposter });
   },
   async setCrewMemberTotalMeetings({ commit }, { member, meetingsCount }) {
     commit(types.SET_MEMBER_MEETINGS_HELD, { member, meetingsCount });

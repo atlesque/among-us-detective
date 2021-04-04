@@ -2,11 +2,15 @@
   <div
     class="relative flex items-center justify-center rounded crew-icon"
     :class="[
-      showColorNames === true ? `bg-player-${color}` : '',
+      {
+        'is-imposter': isImposter === true,
+      },
       autoWidth === true ? 'w-full' : 'w-10',
       autoHeight === true ? 'h-full' : 'h-8',
+      showColorNames === true ? `bg-player-${color}` : '',
     ]"
   >
+    <span v-if="isImposter === true" class="is-imposter-text">IMP</span>
     <span
       v-if="showColorNames === true"
       :class="`border-2 border-player-${color}`"
@@ -92,6 +96,10 @@ export default {
       default: false,
     },
     showColorNames: {
+      type: Boolean,
+      default: false,
+    },
+    isImposter: {
       type: Boolean,
       default: false,
     },

@@ -10,6 +10,7 @@
         :key="member.color"
         :color="member.color"
         :showColorNames="showColorNames"
+        :is-imposter="member.isImposter"
         class="float-left mb-2 mr-2"
         v-on:dblclick.native="removeMember(member)"
       />
