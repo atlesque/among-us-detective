@@ -74,6 +74,14 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-04-04",
+          changes: [
+            "Add new Airship map <small>(Thx Ezzelin and Triple A!)</small>",
+            "Update Mira HQ map <small>(Thx SamuraiPipotchi on Twitter!)</small>",
+            "Fix caching so everyone sees the new version",
+          ],
+        },
+        {
           date: "2020-10-28",
           changes: [
             "Rename <b>Player</b> to <b>My color</b> to clarify color picker use <small>(Thx Elle and lustle on Reddit!)</small>",
