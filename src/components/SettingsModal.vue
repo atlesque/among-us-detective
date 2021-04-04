@@ -30,6 +30,15 @@
                 />
               </td>
             </tr>
+            <tr>
+              <td>Show Tasks checkbox:</td>
+              <td>
+                <Checkbox
+                  :isChecked="isTasksCheckboxVisible"
+                  @changed="value => (isTasksCheckboxVisible = value)"
+                />
+              </td>
+            </tr>
           </tbody>
         </table>
       </template>
@@ -54,7 +63,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("settings", ["showColorNames", "showImposterCheckbox"]),
+    ...mapState("settings", [
+      "showColorNames",
+      "showImposterCheckbox",
+      "showTasksCheckbox",
+    ]),
     ...mapState("darkMode", ["isDarkMode"]),
     areColorNamesVisible: {
       get() {
@@ -72,6 +85,14 @@ export default {
         this.setShowImposterCheckbox(value);
       },
     },
+    isTasksCheckboxVisible: {
+      get() {
+        return this.showTasksCheckbox;
+      },
+      set(value) {
+        this.setShowTasksCheckbox(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Names" : "Icons";
     },
@@ -80,7 +101,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions("settings", ["setShowColorNames", "setShowImposterCheckbox"]),
+    ...mapActions("settings", [
+      "setShowColorNames",
+      "setShowImposterCheckbox",
+      "setShowTasksCheckbox",
+    ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     closeModal() {
       this.$emit("close");
