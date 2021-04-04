@@ -22,7 +22,7 @@
         <div class="flex flex-row flex-1 max-w-xl min-h-12">
           <CrewPool
             :crewMembers="inactiveCrewMembers"
-            :showColorNames="areColorNamesVisible === true"
+            :showColorNames="showColorNames === true"
             @changed="value => handleCrewChanged({ type: 'inactive', value })"
             @removed="
               member => handleMemberRemoved({ list: 'inactive', member })
@@ -72,7 +72,7 @@
       :unknown="unknownCrewMembersForPlayer"
       :suspect="crewMembersSuspectedByPlayer"
       :dead="deadCrewMembers"
-      :areColorNamesVisible="areColorNamesVisible"
+      :showColorNames="showColorNames"
       @changed="handleCrewChanged"
       @removed="handleMemberRemoved"
       class="mb-2 lg:mb-4"
@@ -80,15 +80,12 @@
     <CrewStats
       v-show="activeCrewMembersWithoutPlayer.length > 0"
       :crewMembers="activeCrewMembersWithoutPlayer"
-      :areColorNamesVisible="areColorNamesVisible"
+      :showColorNames="showColorNames"
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 z-10 flex justify-end px-2 py-1">
-      <button @click="toggleColorNames" class="mr-2 button-sm">
-        {{ toggleColorNamesButtonText }}
-      </button>
-      <button @click="toggleDarkMode" class="mr-2 button-sm">
-        {{ toggleDarkModeButtonText }}
+      <button @click="toggleSettingsModal" class="mr-2 button-sm">
+        Settings
       </button>
       <button @click="toggleHelpModal" class="mr-2 button-sm">
         Help
@@ -114,6 +111,10 @@
       @close="toggleHelpModal"
     />
     <AboutModal v-if="isAboutModalOpen === true" @close="toggleAboutModal" />
+    <SettingsModal
+      v-if="isSettingsModalOpen === true"
+      @close="toggleSettingsModal"
+    />
     <CookieWarning />
   </div>
 </template>
@@ -129,6 +130,7 @@ const Maps = () => import("@/components/Maps.vue");
 const NotesModal = () => import("@/components/NotesModal.vue");
 const HelpModalWithGifs = () => import("@/components/HelpModalWithGifs.vue");
 const AboutModal = () => import("@/components/AboutModal.vue");
+const SettingsModal = () => import("@/components/SettingsModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
 
 export default {
@@ -142,6 +144,7 @@ export default {
     NotesModal,
     HelpModalWithGifs,
     AboutModal,
+    SettingsModal,
     CookieWarning,
   },
   mounted() {
@@ -161,9 +164,9 @@ export default {
   data() {
     return {
       isPlayerPickerOpen: false,
-      areColorNamesVisible: false,
       isHelpModalOpen: false,
       isAboutModalOpen: false,
+      isSettingsModalOpen: false,
       // isNotesModalOpen: false,
       roundNotes: "",
       gameNotes: "",
@@ -182,12 +185,7 @@ export default {
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("notes", ["areNotesOpen"]),
-    toggleColorNamesButtonText() {
-      return this.areColorNamesVisible === true ? "Icons" : "Names";
-    },
-    toggleDarkModeButtonText() {
-      return this.isDarkMode === true ? "Light" : "Dark";
-    },
+    ...mapState("settings", ["showColorNames"]),
     isNotesModalOpen: {
       get() {
         return this.areNotesOpen;
@@ -211,7 +209,6 @@ export default {
       "setMemberAsInactive",
       "setAllMembersAsUnknown",
     ]),
-    ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("notes", ["setNotesOpenState"]),
     initNewGame() {
       this.resetAllCrew();
@@ -296,41 +293,41 @@ export default {
     handleTogglePlayerPicker(isOpen) {
       this.isPlayerPickerOpen = isOpen;
     },
-    toggleColorNames() {
-      const newValue = !this.areColorNamesVisible;
-      this.areColorNamesVisible = newValue;
-      const eventName =
-        newValue === true ? "show_color_names" : "hide_color_names";
-      this.$gtag.event(eventName, {
-        event_category: "global_stats",
-      });
-    },
-    toggleDarkMode() {
-      const newValue = !this.isDarkMode;
-      this.setDarkMode(newValue);
-      const eventName =
-        newValue === true ? "dark_mode_enabled" : "light_mode_enabled";
-      this.$gtag.event(eventName, {
-        event_category: "global_stats",
-      });
-    },
     toggleHelpModal() {
-      this.isHelpModalOpen = !this.isHelpModalOpen;
-      this.$gtag.event("open_help", {
-        event_category: "global_stats",
-      });
+      const newValue = !this.isHelpModalOpen;
+      this.isHelpModalOpen = newValue;
+      if (newValue === true) {
+        this.$gtag.event("open_help", {
+          event_category: "global_stats",
+        });
+      }
     },
     toggleAboutModal() {
-      this.isAboutModalOpen = !this.isAboutModalOpen;
-      this.$gtag.event("open_changelog", {
-        event_category: "global_stats",
-      });
+      const newValue = !this.isAboutModalOpen;
+      this.isAboutModalOpen = newValue;
+      if (newValue === true) {
+        this.$gtag.event("open_changelog", {
+          event_category: "global_stats",
+        });
+      }
+    },
+    toggleSettingsModal() {
+      const newValue = !this.isSettingsModalOpen;
+      this.isSettingsModalOpen = newValue;
+      if (newValue === true) {
+        this.$gtag.event("open_settings", {
+          event_category: "global_stats",
+        });
+      }
     },
     toggleNotesModal() {
-      this.isNotesModalOpen = !this.isNotesModalOpen;
-      this.$gtag.event("open_notes", {
-        event_category: "global_stats",
-      });
+      const newValue = !this.isNotesModalOpen;
+      this.isNotesModalOpen = newValue;
+      if (newValue === true) {
+        this.$gtag.event("open_notes", {
+          event_category: "global_stats",
+        });
+      }
     },
   },
 };

@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import crew from "./modules/crew";
 import darkMode from "./modules/darkmode";
 import notes from "./modules/notes";
+import settings from "./modules/settings";
 
 Vue.use(Vuex);
 
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
     crew,
     darkMode,
     notes,
+    settings,
   },
 });
 
