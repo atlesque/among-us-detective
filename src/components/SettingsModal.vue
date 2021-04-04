@@ -185,7 +185,7 @@ export default {
       },
     },
     toggleColorNamesButtonText() {
-      return this.areColorNamesVisible === true ? "Names" : "Icons";
+      return this.areColorNamesVisible === true ? "Color names" : "Icons";
     },
     toggleDarkModeButtonText() {
       return this.isDarkMode === true ? "Dark" : "Light";
