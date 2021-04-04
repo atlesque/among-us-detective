@@ -106,3 +106,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.border-player-orange {
+  font-size: 0.7em;
+}
+</style>
