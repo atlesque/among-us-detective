@@ -299,6 +299,9 @@ const actions = {
           member.suspectedBy = member.suspectedBy.concat(accuser.color);
           member.isActive = true;
         }
+        member.protectedBy = member.protectedBy.filter(
+          protectorColor => protectorColor !== accuser.color
+        );
       }
       return member;
     });
@@ -316,6 +319,9 @@ const actions = {
           member.protectedBy = member.protectedBy.concat(protector.color);
           member.isActive = true;
         }
+        member.suspectedBy = member.suspectedBy.filter(
+          accuserColor => accuserColor !== protector.color
+        );
       }
       return member;
     });
