@@ -35,12 +35,13 @@ const getters = {
       member => member.color !== state.playerColor
     );
   },
+  usableCrewMembers: (state, getters) => {
+    return getters.canTrackOwnColor === true
+      ? state.crewMembers
+      : getters.crewMembersWithoutPlayer;
+  },
   activeCrewMembers: (state, getters) => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(member => member.isActive === true);
+    return getters.usableCrewMembers.filter(member => member.isActive === true);
   },
   activeCrewMembersWithoutPlayer: (state, getters) => {
     return getters.activeCrewMembers.filter(
@@ -102,11 +103,7 @@ const getters = {
     });
   },
   crewMembersProtectedByPlayer: (state, getters) => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(member => {
+    return getters.usableCrewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.protectedBy.includes(state.playerColor) === true
@@ -114,11 +111,7 @@ const getters = {
     });
   },
   unknownCrewMembersForPlayer: (state, getters) => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(member => {
+    return getters.usableCrewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.isDead === false &&
@@ -128,11 +121,7 @@ const getters = {
     });
   },
   crewMembersSuspectedByPlayer: (state, getters) => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(member => {
+    return getters.usableCrewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.suspectedBy.includes(state.playerColor) === true
@@ -140,20 +129,12 @@ const getters = {
     });
   },
   getAllMembersSuspectedBy: (state, getters) => accuser => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(
+    return getters.usableCrewMembers.filter(
       member => member.suspectedBy.includes(accuser.color) === true
     );
   },
   getAllMembersProtectedBy: (state, getters) => protector => {
-    const crewMembers =
-      getters.canTrackOwnColor === true
-        ? state.crewMembers
-        : getters.crewMembersWithoutPlayer;
-    return crewMembers.filter(
+    return getters.usableCrewMembers.filter(
       member => member.protectedBy.includes(protector.color) === true
     );
   },
