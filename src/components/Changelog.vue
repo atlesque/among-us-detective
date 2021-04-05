@@ -30,11 +30,32 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-04-05",
+          changes: [
+            "Change player color selector to use modal",
+            "Highlight own color when tracking yourself is enabled",
+            "Disable adding member to both innocent and suspect",
+            "Add option to use your own color <small>(Thx connor and Triple A!)</small>",
+            "Misc. internal improvements and refactoring",
+          ],
+        },
+        {
           date: "2021-04-04",
           changes: [
+            "Add option to hide round notes (useful if you need to save space)",
+            "Add voice transcription to Game notes too",
+            "Add option to preserve Game notes after new game",
+            "Allow editing player names <small>(Thx teeny!)</small>",
+            "Preserve settings on page refresh (including Dark mode)",
+            "Make Tasks, Meetings and Imposter checkboxes configurable in Settings",
+            "Group all settings under Settings modal to free up space",
+            "Add checkbox for marking someone as an imposter (when you're 100% sure) <small>(Thx __Glaceyy and EhCrumb on Reddit!)</small>",
             "Add new Airship map <small>(Thx Ezzelin and Triple A!)</small>",
             "Update Mira HQ map <small>(Thx SamuraiPipotchi on Twitter!)</small>",
             "Fix caching so everyone sees the new version",
+            "Fix player color names resetting to icons",
+            "Fix new round button being disabled in some cases",
+            "Misc. UI improvements",
           ],
         },
         {
