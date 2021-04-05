@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 z-20 overflow-y-auto">
+  <div class="fixed inset-0 z-30 overflow-y-auto">
     <div
       class="flex items-center justify-center min-h-screen p-20 px-4 pt-4 text-center sm:block sm:p-0"
     >
