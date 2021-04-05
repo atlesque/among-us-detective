@@ -162,6 +162,7 @@ export default {
     @apply text-center;
     @apply text-xs;
     top: -15px;
+    background-color: rgb(255, 255, 255, 0.75);
   }
 }
 </style>
