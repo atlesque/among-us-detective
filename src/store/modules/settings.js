@@ -7,6 +7,7 @@ const types = {
   SET_SETTING_MODAL_OPEN_STATE: "✔️[Set] settings modal open state",
   SET_RESET_NOTES_ON_NEW_GAME: "✔️[Set] reset notes on new game",
   SET_SHOW_ROUND_NOTES: "✔️[Set] show round notes",
+  SET_CAN_TRACK_OWN_COLOR: "✔️[Set] can track own color",
 };
 
 const state = {
@@ -18,6 +19,7 @@ const state = {
   settingsModalOpenState: false,
   resetNotesOnNewGame: true,
   showRoundNotes: true,
+  canTrackOwnColor: false,
 };
 
 const getters = {};
@@ -47,6 +49,9 @@ const mutations = {
   [types.SET_SHOW_ROUND_NOTES](state, value) {
     state.showRoundNotes = value;
   },
+  [types.SET_CAN_TRACK_OWN_COLOR](state, value) {
+    state.canTrackOwnColor = value;
+  },
 };
 
 const actions = {
@@ -73,6 +78,9 @@ const actions = {
   },
   async setShowRoundNotes({ commit }, value) {
     commit(types.SET_SHOW_ROUND_NOTES, value);
+  },
+  async setCanTrackOwnColor({ commit }, value) {
+    commit(types.SET_CAN_TRACK_OWN_COLOR, value);
   },
 };
 

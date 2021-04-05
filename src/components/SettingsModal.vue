@@ -122,6 +122,15 @@
                   />
                 </td>
               </tr>
+              <tr>
+                <td>Can track own color:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="isTrackingOwnColorEnabled"
+                    @changed="value => (isTrackingOwnColorEnabled = value)"
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </template>
@@ -159,6 +168,7 @@ export default {
       "showPlayerNames",
       "resetNotesOnNewGame",
       "showRoundNotes",
+      "canTrackOwnColor",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("crew", ["crewMembers"]),
@@ -218,6 +228,14 @@ export default {
         this.setShowRoundNotes(value);
       },
     },
+    isTrackingOwnColorEnabled: {
+      get() {
+        return this.canTrackOwnColor;
+      },
+      set(value) {
+        this.setCanTrackOwnColor(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Color names" : "Icons";
     },
@@ -234,6 +252,7 @@ export default {
       "setShowPlayerNames",
       "setResetNotesOnNewGame",
       "setShowRoundNotes",
+      "setCanTrackOwnColor",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),

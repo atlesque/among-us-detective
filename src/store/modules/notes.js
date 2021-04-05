@@ -1,6 +1,5 @@
 const types = {
-  OPEN_NOTES: "✔️[Opened] notes",
-  CLOSE_NOTES: "❌[Closed] notes",
+  SET_NOTES_MODAL_OPEN_STATE: "✅[Set] notes modal open state",
 };
 
 const state = {
@@ -10,21 +9,14 @@ const state = {
 const getters = {};
 
 const mutations = {
-  [types.OPEN_NOTES](state) {
-    state.areNotesOpen = true;
-  },
-  [types.CLOSE_NOTES](state) {
-    state.areNotesOpen = false;
+  [types.SET_NOTES_MODAL_OPEN_STATE](state, value) {
+    state.areNotesOpen = value;
   },
 };
 
 const actions = {
   async setNotesOpenState({ commit }, value) {
-    if (value === true) {
-      commit(types.OPEN_NOTES);
-    } else {
-      commit(types.CLOSE_NOTES);
-    }
+    commit(types.SET_NOTES_MODAL_OPEN_STATE, value);
   },
 };
 
