@@ -28,9 +28,8 @@ export default {
     };
   },
   mounted() {
-    const hasSetDarkMode = JSON.parse(localStorage.getItem("hasSetDarkMode"));
     if (
-      (hasSetDarkMode == null || hasSetDarkMode === false) &&
+      this.hasDarkModeBeenSetBefore === false &&
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches === true
     ) {
@@ -54,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("darkMode", ["isDarkMode"]),
+    ...mapState("darkMode", ["isDarkMode", "hasDarkModeBeenSetBefore"]),
   },
   methods: {
     ...mapActions("darkMode", ["setDarkMode"]),

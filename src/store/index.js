@@ -16,6 +16,7 @@ const vuexLocalStorage = new VuexPersist({
   // Everything below will be stored in localStorage, which persists across page reloads
   reducer: state => ({
     settings: state.settings,
+    darkMode: state.darkMode,
   }),
 });
 
