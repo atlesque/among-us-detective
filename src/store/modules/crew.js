@@ -35,8 +35,12 @@ const getters = {
       member => member.color !== state.playerColor
     );
   },
-  activeCrewMembers: state => {
-    return state.crewMembers.filter(member => member.isActive === true);
+  activeCrewMembers: (state, getters) => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(member => member.isActive === true);
   },
   activeCrewMembersWithoutPlayer: (state, getters) => {
     return getters.activeCrewMembers.filter(
@@ -98,7 +102,11 @@ const getters = {
     });
   },
   crewMembersProtectedByPlayer: (state, getters) => {
-    return getters.crewMembersWithoutPlayer.filter(member => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.protectedBy.includes(state.playerColor) === true
@@ -106,7 +114,11 @@ const getters = {
     });
   },
   unknownCrewMembersForPlayer: (state, getters) => {
-    return getters.crewMembersWithoutPlayer.filter(member => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.isDead === false &&
@@ -116,12 +128,34 @@ const getters = {
     });
   },
   crewMembersSuspectedByPlayer: (state, getters) => {
-    return getters.crewMembersWithoutPlayer.filter(member => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(member => {
       return (
         member.isActive === true &&
         member.suspectedBy.includes(state.playerColor) === true
       );
     });
+  },
+  getAllMembersSuspectedBy: (state, getters) => accuser => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(
+      member => member.suspectedBy.includes(accuser.color) === true
+    );
+  },
+  getAllMembersProtectedBy: (state, getters) => protector => {
+    const crewMembers =
+      getters.canTrackOwnColor === true
+        ? state.crewMembers
+        : getters.crewMembersWithoutPlayer;
+    return crewMembers.filter(
+      member => member.protectedBy.includes(protector.color) === true
+    );
   },
 };
 
@@ -149,14 +183,12 @@ const actions = {
   },
   resetActiveCrew({ commit, state }) {
     const newCrew = state.crewMembers.map(member => {
-      if (member.color !== state.playerColor) {
-        member.isDead = false;
-        member.isImposter = false;
-        member.suspectedBy = [];
-        member.protectedBy = [];
-        member.isDoneWithTasks = false;
-        member.totalMeetingsHeld = 0;
-      }
+      member.isDead = false;
+      member.isImposter = false;
+      member.suspectedBy = [];
+      member.protectedBy = [];
+      member.isDoneWithTasks = false;
+      member.totalMeetingsHeld = 0;
       return member;
     });
     commit(types.SET_CREW, newCrew);
@@ -167,7 +199,6 @@ const actions = {
   setInactiveCrewMembers({ commit, state }, inactiveMembers) {
     const newCrew = state.crewMembers.map(member => {
       if (
-        member.color !== state.playerColor &&
         inactiveMembers
           .map(inactiveMember => inactiveMember.color)
           .includes(member.color) === true
@@ -206,7 +237,6 @@ const actions = {
   setUnknownCrewMembers({ commit, state }, unknownMembers) {
     const newCrew = (state.crewMembers = state.crewMembers.map(member => {
       if (
-        member.color !== state.playerColor &&
         unknownMembers
           .map(unknownMember => unknownMember.color)
           .includes(member.color) === true
@@ -255,7 +285,6 @@ const actions = {
   setDeadCrewMembers({ commit, state }, deadMembers) {
     const newCrew = state.crewMembers.map(member => {
       if (
-        member.color !== state.playerColor &&
         deadMembers
           .map(deadMember => deadMember.color)
           .includes(member.color) === true
@@ -280,7 +309,6 @@ const actions = {
   linkSuspectsWithAccuser({ commit, state }, { suspects, accuser }) {
     const newCrew = state.crewMembers.map(member => {
       if (
-        member.color !== state.playerColor &&
         suspects
           .map(suspectedMember => suspectedMember.color)
           .filter(color => color !== accuser.color)
@@ -298,7 +326,6 @@ const actions = {
   linkInnocentsWithProtector({ commit, state }, { innocents, protector }) {
     const newCrew = state.crewMembers.map(member => {
       if (
-        member.color !== state.playerColor &&
         innocents
           .map(protectedMember => protectedMember.color)
           .filter(color => color !== protector.color)
@@ -394,10 +421,7 @@ const actions = {
     { protectedMember, protector }
   ) {
     const newCrew = state.crewMembers.map(member => {
-      if (
-        member.color !== state.playerColor &&
-        member.color === protectedMember.color
-      ) {
+      if (member.color === protectedMember.color) {
         member.protectedBy = member.protectedBy.filter(
           memberColor => memberColor !== protector.color
         );
@@ -408,10 +432,7 @@ const actions = {
   },
   removeSuspectFromAccuser({ commit, state }, { suspect, accuser }) {
     const newCrew = state.crewMembers.map(member => {
-      if (
-        member.color !== state.playerColor &&
-        member.color === suspect.color
-      ) {
+      if (member.color === suspect.color) {
         member.suspectedBy = member.suspectedBy.filter(
           memberColor => memberColor !== accuser.color
         );
@@ -422,16 +443,14 @@ const actions = {
   },
   setAllMembersAsUnknown({ commit, state }) {
     const newCrew = state.crewMembers.map(member => {
-      if (member.color !== state.playerColor) {
-        member.isActive = true;
-        member.isDead = false;
-        member.suspectedBy = member.suspectedBy.filter(
-          memberColor => memberColor !== state.playerColor
-        );
-        member.protectedBy = member.protectedBy.filter(
-          memberColor => memberColor !== state.playerColor
-        );
-      }
+      member.isActive = true;
+      member.isDead = false;
+      member.suspectedBy = member.suspectedBy.filter(
+        memberColor => memberColor !== state.playerColor
+      );
+      member.protectedBy = member.protectedBy.filter(
+        memberColor => memberColor !== state.playerColor
+      );
       return member;
     });
     commit(types.SET_CREW, newCrew);

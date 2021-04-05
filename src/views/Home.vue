@@ -43,7 +43,7 @@
         <button
           @click="initNewRound()"
           class="h-12 mr-2 button button-success"
-          :disabled="activeCrewMembersWithoutPlayer.length <= 0"
+          :disabled="activeCrewMembers.length <= 0"
         >
           New round
         </button>
@@ -57,7 +57,7 @@
         <button
           @click="initNewGame()"
           class="h-12 button button-primary"
-          :disabled="activeCrewMembersWithoutPlayer.length <= 0"
+          :disabled="activeCrewMembers.length <= 0"
         >
           New game
         </button>
@@ -76,8 +76,8 @@
       class="mb-2 lg:mb-4"
     />
     <CrewStats
-      v-show="activeCrewMembersWithoutPlayer.length > 0"
-      :crewMembers="activeCrewMembersWithoutPlayer"
+      v-show="activeCrewMembers.length > 0"
+      :crewMembers="activeCrewMembers"
       :showColorNames="showColorNames === true"
       :showPlayerNames="showPlayerNames === true"
       class="mb-2"
@@ -177,7 +177,7 @@ export default {
     ...mapState("crew", ["playerColor"]),
     ...mapGetters("crew", [
       "crewMembersWithoutPlayer",
-      "activeCrewMembersWithoutPlayer",
+      "activeCrewMembers",
       "deadCrewMembers",
       "inactiveCrewMembers",
       "crewMembersProtectedByPlayer",
@@ -244,7 +244,6 @@ export default {
     },
     handleChangePlayerColor(selectedColor) {
       this.setPlayerColor(selectedColor);
-      this.initNewGame();
       this.$gtag.event(`change_player_color_${selectedColor}`, {
         event_category: "player_stats",
       });

@@ -155,7 +155,11 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("crew", ["crewMembersWithoutPlayer"]),
+    ...mapGetters("crew", [
+      "crewMembersWithoutPlayer",
+      "getAllMembersSuspectedBy",
+      "getAllMembersProtectedBy",
+    ]),
     ...mapState("settings", [
       "showImposterCheckbox",
       "showTasksCheckbox",
@@ -198,16 +202,6 @@ export default {
       "removeProtectedFromProtector",
       "removeSuspectFromAccuser",
     ]),
-    getAllMembersSuspectedBy(accuser) {
-      return this.crewMembersWithoutPlayer.filter(member => {
-        return member.suspectedBy.includes(accuser.color) === true;
-      });
-    },
-    getAllMembersProtectedBy(protector) {
-      return this.crewMembersWithoutPlayer.filter(member => {
-        return member.protectedBy.includes(protector.color) === true;
-      });
-    },
     getSuspectCounterClass(suspectedByCount) {
       if (suspectedByCount >= 1) {
         return "font-bold text-player-red";
