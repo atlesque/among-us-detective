@@ -4,6 +4,7 @@
     :class="[
       {
         'is-imposter': isImposter === true,
+        'is-player': isPlayer === true,
         'crew-icon--with-name': showPlayerName === true,
       },
       autoWidth === true ? 'w-full' : 'w-10',
@@ -115,41 +116,52 @@ export default {
       type: Boolean,
       default: false,
     },
+    isPlayer: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .crew-icon {
   &--with-name {
     @apply my-3;
   }
-}
-.player-name {
-  @apply absolute;
-  @apply left-0;
-  @apply right-0;
-  @apply z-20;
-  @apply text-center;
-  @apply text-xs;
-  top: -15px;
-}
-.border-player-orange {
-  font-size: 0.7em;
-}
-.is-imposter {
-  position: relative;
 
-  .is-imposter-text {
+  &.is-player {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+  }
+
+  &.is-imposter {
+    position: relative;
+
+    .is-imposter-text {
+      @apply absolute;
+      @apply left-0;
+      @apply right-0;
+      @apply z-20;
+      @apply font-bold;
+      @apply text-center;
+      @apply text-player-red;
+      bottom: -12px;
+      text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
+        1px 1px 0 white;
+    }
+  }
+
+  .border-player-orange {
+    font-size: 0.7em;
+  }
+
+  .player-name {
     @apply absolute;
     @apply left-0;
     @apply right-0;
     @apply z-20;
-    @apply font-bold;
     @apply text-center;
-    @apply text-player-red;
-    bottom: -12px;
-    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white,
-      1px 1px 0 white;
+    @apply text-xs;
+    top: -15px;
   }
 }
 </style>

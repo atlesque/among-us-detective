@@ -29,4 +29,10 @@
   .cookie-warning {
     @apply text-black;
   }
+
+  .crew-icon {
+    &.is-player {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+  }
 }

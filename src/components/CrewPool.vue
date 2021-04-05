@@ -12,6 +12,7 @@
         :showColorName="showColorNames === true"
         :showPlayerName="showPlayerNames === true"
         :is-imposter="member.isImposter"
+        :is-player="member.isPlayer"
         :player-name="member.playerName"
         class="float-left mb-2 mr-2"
         v-on:dblclick.native="removeMember(member)"

@@ -28,6 +28,7 @@
                 :showColorName="showColorNames === true"
                 :showPlayerName="showPlayerNames === true"
                 :is-imposter="member.isImposter"
+                :is-player="member.isPlayer"
                 :player-name="member.playerName"
               />
               <div v-show="member.isDead === false" class="flex lg:flex-col">

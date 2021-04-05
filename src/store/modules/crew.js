@@ -9,6 +9,7 @@ const defaultCrewMembers = allColors.map(colorName => {
   return {
     color: colorName,
     playerName: "",
+    isPlayer: false,
     isActive: false,
     isImposter: false,
     isDead: false,
@@ -22,7 +23,12 @@ const defaultCrewMembers = allColors.map(colorName => {
 const defaultPlayerColor = "yellow";
 
 const state = {
-  crewMembers: JSON.parse(JSON.stringify(defaultCrewMembers)),
+  crewMembers: defaultCrewMembers.map(member => {
+    if (member.color === defaultPlayerColor) {
+      member.isPlayer = true;
+    }
+    return member;
+  }),
   playerColor: JSON.parse(JSON.stringify(defaultPlayerColor)),
 };
 
@@ -158,6 +164,7 @@ const actions = {
         originalMember => originalMember.color === defaultMember.color
       ).playerName;
       defaultMember.playerName = playerName;
+      defaultMember.isPlayer = defaultMember.color === state.playerColor;
       return defaultMember;
     });
     commit(types.SET_CREW, newCrew);
@@ -174,8 +181,13 @@ const actions = {
     });
     commit(types.SET_CREW, newCrew);
   },
-  setPlayerColor({ commit }, color) {
+  setPlayerColor({ commit, state }, color) {
     commit(types.SET_PLAYER_COLOR, color);
+    const newCrew = state.crewMembers.map(member => {
+      member.isPlayer = member.color === color;
+      return member;
+    });
+    commit(types.SET_CREW, newCrew);
   },
   setInactiveCrewMembers({ commit, state }, inactiveMembers) {
     const newCrew = state.crewMembers.map(member => {
