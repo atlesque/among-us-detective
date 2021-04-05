@@ -26,7 +26,26 @@
               >(Read the disclaimer here)</router-link
             >
           </p>
-          <Changelog />
+          <div class="flex">
+            <button
+              @click="activeTab = 'changelog'"
+              class="mr-1 rounded-b-none button-sm"
+              :class="{ 'active button-success': activeTab === 'changelog' }"
+            >
+              Changelog
+            </button>
+            <button
+              @click="activeTab = 'upcomingChanges'"
+              class="rounded-b-none button-sm"
+              :class="{
+                'active button-success': activeTab === 'upcomingChanges',
+              }"
+            >
+              Upcoming changes
+            </button>
+          </div>
+          <Changelog v-show="activeTab === 'changelog'" />
+          <UpcomingChangesList v-show="activeTab === 'upcomingChanges'" />
           <div
             class="flex justify-between mt-6 text-xs leading-5 text-theme-gray-dark"
           >
@@ -46,16 +65,20 @@
 <script>
 const Modal = () => import("@/components/Modal.vue");
 const Changelog = () => import("@/components/Changelog.vue");
+const UpcomingChangesList = () =>
+  import("@/components/UpcomingChangesList.vue");
 
 export default {
   name: "AboutModal",
   components: {
     Modal,
     Changelog,
+    UpcomingChangesList,
   },
   data() {
     return {
       isFeedbackScreenOpen: false,
+      activeTab: "changelog",
     };
   },
   methods: {

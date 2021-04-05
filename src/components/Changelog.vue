@@ -1,6 +1,5 @@
 <template>
   <section class="changelog">
-    <h2 class="text-base font-bold">Changelog</h2>
     <div class="p-2 overflow-y-scroll bg-gray-100 rounded max-h-64">
       <div
         v-for="(changelogItem, index) in changelog"
