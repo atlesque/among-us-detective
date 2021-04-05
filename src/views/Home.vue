@@ -244,6 +244,7 @@ export default {
     },
     handleChangePlayerColor(selectedColor) {
       this.setPlayerColor(selectedColor);
+      this.initNewGame();
       this.$gtag.event(`change_player_color_${selectedColor}`, {
         event_category: "player_stats",
       });
