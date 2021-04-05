@@ -7,18 +7,6 @@
     >
       <span class="px-1 text-black bg-white rounded">My color</span>
     </button>
-    <!-- <div
-      v-else
-      class="grid flex-1 grid-cols-6 grid-rows-2 gap-1 grid-auto-flow"
-    >
-      <button
-        v-for="color in playerColors"
-        :key="color"
-        :class="`bg-player-${color}`"
-        class="rounded"
-        @click="selectPlayerColor(color)"
-      ></button>
-    </div> -->
     <Modal
       v-if="isPlayerPickerOpen === true"
       @close="isPlayerPickerOpen = false"

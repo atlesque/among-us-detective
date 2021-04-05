@@ -58,10 +58,6 @@ export default {
   methods: {
     removeMember(memberToRemove) {
       this.$emit("removed", memberToRemove);
-      /* console.log(memberToRemove);
-      this.crewMembersInPool = this.crewMembersInPool.filter(member => {
-        return member.color !== memberToRemove.color;
-      }); */
     },
   },
 };
