@@ -23,7 +23,6 @@ export default {
       upcomingChanges: [
         "Imposter mode",
         "Imposter fake task helper",
-        "Player location tracker",
         "Mira HQ door log helper",
         "Text guide",
         "iOS fixes: double-tap and typing in Notes",

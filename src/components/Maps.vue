@@ -50,6 +50,7 @@
       </div>
     </div>
     <div v-show="isMapVisible">
+      <MapPlayerTracker />
       <picture v-show="selectedMap === 'the-skeld'">
         <source
           srcset="@/assets/images/maps/the-skeld.webp"
@@ -80,8 +81,13 @@
 <script>
 import { mapState } from "vuex";
 
+const MapPlayerTracker = () => import("@/components/MapPlayerTracker.vue");
+
 export default {
   name: "Maps",
+  components: {
+    MapPlayerTracker,
+  },
   mounted() {
     document.addEventListener("keyup", e => {
       if (
