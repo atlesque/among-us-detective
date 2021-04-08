@@ -1,6 +1,10 @@
 <template>
   <section class="relative map-player-tracker">
-    <button @click="resetPositions" class="absolute right-0 button-sm">
+    <button
+      v-if="activeCrewMembers.length > 0"
+      @click="resetPositions"
+      class="absolute right-0 button-sm"
+    >
       Reset positions
     </button>
     <div class="container">
