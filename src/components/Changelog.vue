@@ -29,6 +29,10 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-04-08",
+          changes: ["Track dead players on map"],
+        },
+        {
           date: "2021-04-07",
           changes: [
             "Add player location tracker <small>(Thx PacoZK1 and SteelFrog21_YT on Reddit!)</small>",

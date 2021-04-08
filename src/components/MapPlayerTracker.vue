@@ -22,6 +22,7 @@
           :showPlayerName="showPlayerNames === true"
           :is-imposter="member.isImposter"
           :is-player="member.isPlayer"
+          :is-dead="member.isDead"
           :player-name="member.playerName"
           class="inline-flex map-player-tracker--crew-icon"
         />
@@ -78,5 +79,7 @@ export default {
   width: 4vw;
   min-width: 2em;
   max-width: 2.5em;
+  filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white)
+    drop-shadow(0 0 1px white) drop-shadow(0 0 1px white);
 }
 </style>

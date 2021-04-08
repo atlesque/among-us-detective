@@ -16,12 +16,29 @@
     <span v-if="showPlayerName === true" class="player-name">{{
       playerName
     }}</span>
-    <span
-      v-if="showColorName === true"
-      :class="`border-2 border-player-${color}`"
-      class="w-full text-xs text-center bg-white dark--text-dark"
-      >{{ color }}</span
-    >
+    <div v-if="isDead === true" class="absolute inset-0 z-20 cross-icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="2841.9 760.3 2643.9 2643.8"
+        class="w-full h-full text-player-red"
+      >
+        <path
+          fill="currentColor"
+          d="M5382.1 3404.1c-26.5 0-53-10.1-73.3-30.4L2872.3 937.3c-40.5-40.5-40.5-106.1 0-146.6s106.2-40.5 146.6 0l2436.5 2436.5c40.5 40.5 40.5 106.1 0 146.6-20.2 20.2-46.7 30.3-73.3 30.3z"
+        />
+        <path
+          fill="currentColor"
+          d="M2945.7 3404.1c-26.5 0-53.1-10.1-73.3-30.4-40.5-40.5-40.5-106.1 0-146.6L5308.8 790.7c40.5-40.5 106.1-40.5 146.6 0s40.5 106.1 0 146.6L3018.9 3373.8c-20.2 20.2-46.7 30.3-73.2 30.3z"
+        />
+      </svg>
+    </div>
+    <template v-if="showColorName === true">
+      <span
+        :class="`border-2 border-player-${color}`"
+        class="w-full text-xs text-center bg-white dark--text-dark"
+        >{{ color }}</span
+      >
+    </template>
     <template v-else>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -120,6 +137,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isDead: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
@@ -163,6 +184,10 @@ export default {
     @apply text-xs;
     top: -15px;
     background-color: rgb(255, 255, 255, 0.75);
+  }
+
+  .cross-icon {
+    filter: drop-shadow(0 0 1px black);
   }
 }
 </style>
