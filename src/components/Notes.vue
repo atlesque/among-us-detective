@@ -171,9 +171,6 @@ export default {
       if (this.isSpeechRecognitionSupported === false) {
         return;
       }
-      console.log(
-        `isSpeechRecognitionSupported: ${this.isSpeechRecognitionSupported}`
-      );
       this.speechRecognition = new webkitSpeechRecognition();
       this.speechRecognition.continuous = true;
       this.speechRecognition.interimResults = true;
