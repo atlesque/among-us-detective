@@ -13,7 +13,15 @@ const routes = [
     path: "/disclaimer",
     name: "Disclaimer",
     component: () =>
-      import(/* webpackChunkName: "pageNotFound" */ "@/views/Disclaimer.vue"),
+      import(/* webpackChunkName: "disclaimer" */ "@/views/Disclaimer.vue"),
+  },
+  {
+    path: "/donation-complete",
+    name: "DonationComplete",
+    component: () =>
+      import(
+        /* webpackChunkName: "donationComplete" */ "@/views/DonationComplete.vue"
+      ),
   },
   {
     path: "/404-not-found",

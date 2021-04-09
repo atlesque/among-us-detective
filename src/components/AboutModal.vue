@@ -23,7 +23,7 @@
           <p>
             ✅ It is 100% legal and safe to use
             <router-link to="/disclaimer" class="text-xs"
-              >(Read the disclaimer here)</router-link
+              >(Read the disclaimer)</router-link
             >
           </p>
           <div class="flex">
@@ -44,17 +44,22 @@
               Upcoming changes
             </button>
           </div>
-          <Changelog v-show="activeTab === 'changelog'" />
-          <UpcomingChangesList v-show="activeTab === 'upcomingChanges'" />
+          <div class="mb-2">
+            <Changelog v-show="activeTab === 'changelog'" />
+            <UpcomingChangesList v-show="activeTab === 'upcomingChanges'" />
+          </div>
           <div
             class="flex justify-between mt-6 text-xs leading-5 text-theme-gray-dark"
           >
             <span class="mb-0 text-xs">
               Made with ❤ by <a href="https://atlesque.com">Atlesque</a>
             </span>
-            <span class="text-xs">
-              <button @click="toggleFeedbackScreen">Give feedback</button>
-            </span>
+            <div class="flex flex-col text-xs">
+              <button @click="toggleFeedbackScreen" class="mb-2 font-bold">
+                Give feedback
+              </button>
+              <DonationButton showLink class="ml-auto" />
+            </div>
           </div>
         </template>
       </template>
@@ -67,6 +72,7 @@ const Modal = () => import("@/components/Modal.vue");
 const Changelog = () => import("@/components/Changelog.vue");
 const UpcomingChangesList = () =>
   import("@/components/UpcomingChangesList.vue");
+const DonationButton = () => import("@/components/DonationButton.vue");
 
 export default {
   name: "AboutModal",
@@ -74,6 +80,7 @@ export default {
     Modal,
     Changelog,
     UpcomingChangesList,
+    DonationButton,
   },
   data() {
     return {
