@@ -167,4 +167,7 @@ button {
 .map-container {
   max-width: 1366px;
 }
+.map-picture-container picture {
+  pointer-events: none;
+}
 </style>
