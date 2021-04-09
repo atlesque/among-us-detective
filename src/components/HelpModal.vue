@@ -62,7 +62,7 @@
 const Modal = () => import("@/components/Modal.vue");
 
 export default {
-  name: "HelpModalWithGifs",
+  name: "HelpModal",
   components: {
     Modal,
   },
@@ -71,7 +71,8 @@ export default {
       currentStep: 0,
       steps: [
         {
-          description: "Select your color by clicking on <b>My color</b>",
+          description:
+            "Select your color by clicking on <b>My player</b>.<br/>Optionally: select if you're an imposter",
           media: {
             type: "video",
             webm: "changing-player-color.webm",
@@ -81,7 +82,7 @@ export default {
         {
           description: `
           Select which colors are active, either by:
-          <ol class="pl-4 list-disc list-inside">
+          <ol class="pl-4 text-left list-disc">
             <li>Dragging players from the pool to the <b>Unknown</b> column</li>
             <li>
               Or: clicking on grey arrow near the pool to move
@@ -186,11 +187,29 @@ export default {
         },
         {
           description:
-            "You can take notes by clicking the <b>Notes</b> button. Round notes will be reset each time you click <b>New round</b>. Game notes will be reset each time you click <b>New game</b>. You can also dictate notes using your mic",
+            "You can take notes by clicking the <b>Notes</b> button.<br/>Round notes will be reset each time you click <b>New round</b>.<br/>Game notes will be reset each time you click <b>New game</b>.<br/>You can also dictate notes using your mic",
           media: {
             type: "video",
             webm: "taking-notes.webm",
             mp4: "taking-notes.mp4",
+          },
+        },
+        {
+          description:
+            "You can track player locations by opening the map and dragging players onto it.<br/>Click <b>Reset positions> to reset them",
+          media: {
+            type: "video",
+            webm: "tracking-on-map.webm",
+            mp4: "tracking-on-map.mp4",
+          },
+        },
+        {
+          description:
+            "You can track tasks by clicking <b>Tasks</b> and selecting your map.<br/>Click on a task to check it.<br/>Click on <b>Reset</b> to reset them",
+          media: {
+            type: "video",
+            webm: "tasks.webm",
+            mp4: "tasks.mp4",
           },
         },
         {
@@ -224,19 +243,16 @@ export default {
         },
         {
           description: `
-          <span class="block font-bold text-left">The bottom of the screen contains some settings:</span>
+          <span class="block font-bold text-left">The bottom of the screen has a few links:</span>
           <ul class="pl-4 text-left list-disc">
             <li>
-              <b>Names/Icons</b>: Toggles showing color names instead of player icons
+              <b>Settings</b>: Lets you customize the app to your liking
             </li>
             <li>
-              <b>Light/Dark</b>: Toggles showing Light/Dark mode
+              <b>Help</b>: Shows this tutorial again
             </li>
             <li>
-              <b>Help</b>: Shows this Help menu
-            </li>
-            <li>
-              <b>About</b>: Shows development information about this app
+              <b>About</b>: Shows information about the app
             </li>
           </ul>
           `,

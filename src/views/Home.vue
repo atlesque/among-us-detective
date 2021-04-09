@@ -117,10 +117,7 @@
       @gameNotesChanged="value => (gameNotes = value)"
       @close="toggleNotesModal"
     />
-    <HelpModalWithGifs
-      v-if="isHelpModalOpen === true"
-      @close="toggleHelpModal"
-    />
+    <HelpModal v-if="isHelpModalOpen === true" @close="toggleHelpModal" />
     <AboutModal v-if="isAboutModalOpen === true" @close="toggleAboutModal" />
     <SettingsModal
       v-if="isSettingsModalOpen === true"
@@ -140,7 +137,7 @@ const CrewStats = () => import("@/components/CrewStats.vue");
 const CrewPool = () => import("@/components/CrewPool.vue");
 const Maps = () => import("@/components/Maps.vue");
 const NotesModal = () => import("@/components/NotesModal.vue");
-const HelpModalWithGifs = () => import("@/components/HelpModalWithGifs.vue");
+const HelpModal = () => import("@/components/HelpModal.vue");
 const AboutModal = () => import("@/components/AboutModal.vue");
 const SettingsModal = () => import("@/components/SettingsModal.vue");
 const TasksModal = () => import("@/components/TasksModal.vue");
@@ -155,7 +152,7 @@ export default {
     CrewPool,
     Maps,
     NotesModal,
-    HelpModalWithGifs,
+    HelpModal,
     AboutModal,
     SettingsModal,
     TasksModal,
