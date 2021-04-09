@@ -49,8 +49,8 @@
         </button>
       </div>
     </div>
-    <div v-show="isMapVisible">
-      <MapPlayerTracker />
+    <div v-show="isMapVisible" class="mx-auto map-container">
+      <MapPlayerTracker class="z-10" />
       <picture v-show="selectedMap === 'the-skeld'">
         <source
           srcset="@/assets/images/maps/the-skeld.webp"
@@ -59,11 +59,26 @@
         <source srcset="@/assets/images/maps/the-skeld.png" type="image/png" />
         <img src="@/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
       </picture>
-      <picture v-show="selectedMap === 'mira-hq'">
-        <source srcset="@/assets/images/maps/mira-hq.webp" type="image/webp" />
-        <source srcset="@/assets/images/maps/mira-hq.png" type="image/png" />
-        <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
-      </picture>
+      <div class="relative z-0" v-show="selectedMap === 'mira-hq'">
+        <div class="absolute inset-0 z-10">
+          <button
+            @click="areSensorsVisible = !areSensorsVisible"
+            class="absolute right-0 m-2 button-sm"
+          >
+            {{ areSensorsVisible === true ? "Hide sensors" : "Show sensors" }}
+          </button>
+          <MiraHqOverlay v-show="areSensorsVisible === true" />
+        </div>
+        <picture>
+          <source
+            srcset="@/assets/images/maps/mira-hq.webp"
+            type="image/webp"
+          />
+          <source srcset="@/assets/images/maps/mira-hq.png" type="image/png" />
+          <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
+        </picture>
+      </div>
+
       <picture v-show="selectedMap === 'polus'">
         <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
         <source srcset="@/assets/images/maps/polus.png" type="image/png" />
@@ -82,11 +97,13 @@
 import { mapState } from "vuex";
 
 const MapPlayerTracker = () => import("@/components/MapPlayerTracker.vue");
+const MiraHqOverlay = () => import("@/components/MiraHqOverlay.vue");
 
 export default {
   name: "Maps",
   components: {
     MapPlayerTracker,
+    MiraHqOverlay,
   },
   mounted() {
     document.addEventListener("keyup", e => {
@@ -102,6 +119,7 @@ export default {
   data() {
     return {
       isMapVisible: false,
+      areSensorsVisible: false,
       selectedMap: "the-skeld",
     };
   },
@@ -125,5 +143,8 @@ button {
   &.active {
     @apply font-bold;
   }
+}
+.map-container {
+  max-width: 1366px;
 }
 </style>
