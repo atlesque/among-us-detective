@@ -51,44 +51,61 @@
     </div>
     <div v-show="isMapVisible" class="mx-auto map-container">
       <MapPlayerTracker class="z-10" />
-      <picture v-show="selectedMap === 'the-skeld'">
-        <source
-          srcset="@/assets/images/maps/the-skeld.webp"
-          type="image/webp"
-        />
-        <source srcset="@/assets/images/maps/the-skeld.png" type="image/png" />
-        <img src="@/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
-      </picture>
-      <div class="relative z-0" v-show="selectedMap === 'mira-hq'">
-        <div class="absolute inset-0 z-10">
-          <button
-            @click="areSensorsVisible = !areSensorsVisible"
-            class="absolute right-0 m-2 button-sm"
-          >
-            {{ areSensorsVisible === true ? "Hide sensors" : "Show sensors" }}
-          </button>
-          <MiraHqOverlay v-show="areSensorsVisible === true" />
-        </div>
-        <picture>
+      <div
+        class="map-picture-container"
+        :class="{
+          'opacity-50':
+            isImproveMapContrastEnabled === true &&
+            !(selectedMap === 'mira-hq' && areSensorsVisible === true),
+        }"
+      >
+        <picture v-show="selectedMap === 'the-skeld'">
           <source
-            srcset="@/assets/images/maps/mira-hq.webp"
+            srcset="@/assets/images/maps/the-skeld.webp"
             type="image/webp"
           />
-          <source srcset="@/assets/images/maps/mira-hq.png" type="image/png" />
-          <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
+          <source
+            srcset="@/assets/images/maps/the-skeld.png"
+            type="image/png"
+          />
+          <img src="@/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
+        </picture>
+        <div class="relative z-0" v-show="selectedMap === 'mira-hq'">
+          <div class="absolute inset-0 z-10">
+            <button
+              @click="areSensorsVisible = !areSensorsVisible"
+              class="absolute right-0 m-2 button-sm"
+            >
+              {{ areSensorsVisible === true ? "Hide sensors" : "Show sensors" }}
+            </button>
+            <MiraHqOverlay v-show="areSensorsVisible === true" />
+          </div>
+          <picture>
+            <source
+              srcset="@/assets/images/maps/mira-hq.webp"
+              type="image/webp"
+            />
+            <source
+              srcset="@/assets/images/maps/mira-hq.png"
+              type="image/png"
+            />
+            <img src="@/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
+          </picture>
+        </div>
+        <picture v-show="selectedMap === 'polus'">
+          <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
+          <source srcset="@/assets/images/maps/polus.png" type="image/png" />
+          <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
+        </picture>
+        <picture v-show="selectedMap === 'airship'">
+          <source
+            srcset="@/assets/images/maps/airship.webp"
+            type="image/webp"
+          />
+          <source srcset="@/assets/images/maps/airship.png" type="image/png" />
+          <img src="@/assets/images/maps/airship.png" alt="Airship Map" />
         </picture>
       </div>
-
-      <picture v-show="selectedMap === 'polus'">
-        <source srcset="@/assets/images/maps/polus.webp" type="image/webp" />
-        <source srcset="@/assets/images/maps/polus.png" type="image/png" />
-        <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
-      </picture>
-      <picture v-show="selectedMap === 'airship'">
-        <source srcset="@/assets/images/maps/airship.webp" type="image/webp" />
-        <source srcset="@/assets/images/maps/airship.png" type="image/png" />
-        <img src="@/assets/images/maps/airship.png" alt="Airship Map" />
-      </picture>
     </div>
   </div>
 </template>
@@ -125,7 +142,10 @@ export default {
   },
   computed: {
     ...mapState("notes", ["areNotesOpen"]),
-    ...mapState("settings", ["settingsModalOpenState"]),
+    ...mapState("settings", [
+      "settingsModalOpenState",
+      "isImproveMapContrastEnabled",
+    ]),
   },
   methods: {
     selectMap(newMap) {

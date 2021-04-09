@@ -131,6 +131,15 @@
                   />
                 </td>
               </tr>
+              <tr>
+                <td>Improve map contrast:</td>
+                <td>
+                  <Checkbox
+                    :isChecked="isImprovingMapContrast"
+                    @changed="value => (isImprovingMapContrast = value)"
+                  />
+                </td>
+              </tr>
             </tbody>
           </table>
         </template>
@@ -169,6 +178,7 @@ export default {
       "resetNotesOnNewGame",
       "showRoundNotes",
       "canTrackOwnColor",
+      "isImproveMapContrastEnabled",
     ]),
     ...mapState("darkMode", ["isDarkMode"]),
     ...mapState("crew", ["crewMembers"]),
@@ -236,6 +246,14 @@ export default {
         this.setCanTrackOwnColor(value);
       },
     },
+    isImprovingMapContrast: {
+      get() {
+        return this.isImproveMapContrastEnabled;
+      },
+      set(value) {
+        this.setIsImproveMapContrastEnabled(value);
+      },
+    },
     toggleColorNamesButtonText() {
       return this.areColorNamesVisible === true ? "Color names" : "Icons";
     },
@@ -253,6 +271,7 @@ export default {
       "setResetNotesOnNewGame",
       "setShowRoundNotes",
       "setCanTrackOwnColor",
+      "setIsImproveMapContrastEnabled",
     ]),
     ...mapActions("darkMode", ["setDarkMode"]),
     ...mapActions("crew", ["setCrewMemberPlayerName", "resetAllPlayerNames"]),

@@ -8,6 +8,7 @@ const types = {
   SET_RESET_NOTES_ON_NEW_GAME: "✔️[Set] reset notes on new game",
   SET_SHOW_ROUND_NOTES: "✔️[Set] show round notes",
   SET_CAN_TRACK_OWN_COLOR: "✔️[Set] can track own color",
+  SET_IMPROVE_MAP_CONTRAST: "✔️[Set] improve map contrast",
 };
 
 const state = {
@@ -20,6 +21,7 @@ const state = {
   resetNotesOnNewGame: true,
   showRoundNotes: true,
   canTrackOwnColor: false,
+  isImproveMapContrastEnabled: true,
 };
 
 const getters = {};
@@ -52,6 +54,9 @@ const mutations = {
   [types.SET_CAN_TRACK_OWN_COLOR](state, value) {
     state.canTrackOwnColor = value;
   },
+  [types.SET_IMPROVE_MAP_CONTRAST](state, value) {
+    state.isImproveMapContrastEnabled = value;
+  },
 };
 
 const actions = {
@@ -81,6 +86,9 @@ const actions = {
   },
   async setCanTrackOwnColor({ commit }, value) {
     commit(types.SET_CAN_TRACK_OWN_COLOR, value);
+  },
+  async setIsImproveMapContrastEnabled({ commit }, value) {
+    commit(types.SET_IMPROVE_MAP_CONTRAST, value);
   },
 };
 
