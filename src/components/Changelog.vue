@@ -29,13 +29,23 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-04-09",
+          changes: [
+            "Add imposter mode <small>(Thx u/Cantwaitforyandere and S.P. Eieye!)</small>",
+            "Add tasks logger <small>(Thx Trolliant, tacallender and u/Cantwaitforyandere!)</small>",
+            "Add Mira HQ map overlay to help with door logs <small>(Thx u/XanderTheV!)</small>",
+            "Increase map player contrast",
+            "Fix Notes on iOS <small>(Thx S.P. Eieye!)</small>",
+          ],
+        },
+        {
           date: "2021-04-08",
           changes: ["Track dead players on map"],
         },
         {
           date: "2021-04-07",
           changes: [
-            "Add player location tracker <small>(Thx PacoZK1 and SteelFrog21_YT on Reddit!)</small>",
+            "Add player location tracker <small>(Thx u/PacoZK1 and u/SteelFrog21_YT!)</small>",
           ],
         },
         {
@@ -58,7 +68,7 @@ export default {
             "Preserve settings on page refresh (including Dark mode)",
             "Make Tasks, Meetings and Imposter checkboxes configurable in Settings",
             "Group all settings under Settings modal to free up space",
-            "Add checkbox for marking someone as an imposter (when you're 100% sure) <small>(Thx __Glaceyy and EhCrumb on Reddit!)</small>",
+            "Add checkbox for marking someone as an imposter (when you're 100% sure) <small>(Thx u/__Glaceyy and u/EhCrumb!)</small>",
             "Add new The Airship map <small>(Thx Ezzelin and Triple A!)</small>",
             "Update Mira HQ map <small>(Thx SamuraiPipotchi on Twitter!)</small>",
             "Fix caching so everyone sees the new version",
@@ -70,14 +80,14 @@ export default {
         {
           date: "2020-10-28",
           changes: [
-            "Rename <b>Player</b> to <b>My color</b> to clarify color picker use <small>(Thx Elle and lustle on Reddit!)</small>",
-            "Add hotkeys 'M' to toggle map and 'N' to toggle notes <small>(Thx CadeFromSales on Reddit!)</small>",
+            "Rename <b>Player</b> to <b>My color</b> to clarify color picker use <small>(Thx u/Elle and u/lustle!)</small>",
+            "Add hotkeys 'M' to toggle map and 'N' to toggle notes <small>(Thx u/CadeFromSales!)</small>",
           ],
         },
         {
           date: "2020-10-21",
           changes: [
-            "Add Speech-to-Text for transcribing notes by voice <small>(Thx CadeFromSales on Reddit!)</small>",
+            "Add Speech-to-Text for transcribing notes by voice <small>(Thx u/CadeFromSales!)</small>",
           ],
         },
         {
@@ -102,7 +112,7 @@ export default {
         {
           date: "2020-10-06",
           changes: [
-            "Show Help modal for new players <small>(Thx peasant-trip on Reddit!)</small>",
+            "Show Help modal for new players <small>(Thx u/peasant-trip!)</small>",
           ],
         },
         {
@@ -119,7 +129,7 @@ export default {
             "Make table UI prettier",
             "Move Changelog into separate modal",
             "Improve 'Show map' button layout",
-            "Add Notes modal. You can now add notes per round and per game. <small>(Props to Greedlord and AshamedBrit on Reddit for the suggestion!)</small>",
+            "Add Notes modal. You can now add notes per round and per game. <small>(Thx u/Greedlord and u/AshamedBrit!)</small>",
             "Improve mobile UI",
           ],
         },

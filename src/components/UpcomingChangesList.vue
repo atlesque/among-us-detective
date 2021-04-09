@@ -21,12 +21,9 @@ export default {
   data() {
     return {
       upcomingChanges: [
-        "Imposter mode",
-        "Imposter fake task helper",
-        "Mira HQ door log helper",
         "Text guide",
-        "iOS fixes: double-tap and typing in Notes",
         "Optional saving all state after page reload",
+        "Fix double-click shortcuts on mobile",
       ],
     };
   },
