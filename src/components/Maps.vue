@@ -54,7 +54,7 @@
       <div
         class="map-picture-container"
         :class="{
-          'opacity-50':
+          'map-picture-container--lighter':
             isImproveMapContrastEnabled === true &&
             !(selectedMap === 'mira-hq' && areSensorsVisible === true),
         }"
@@ -167,7 +167,12 @@ button {
 .map-container {
   max-width: 1366px;
 }
-.map-picture-container picture {
-  pointer-events: none;
+.map-picture-container {
+  picture {
+    pointer-events: none;
+  }
+  &--lighter img {
+    opacity: 0.5;
+  }
 }
 </style>
