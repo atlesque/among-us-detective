@@ -10,6 +10,7 @@
             >This round
           </label>
           <button
+            v-if="isSpeechRecognitionSupported === true"
             class="relative flex items-center justify-center w-8 h-8 record-round-button"
             @click="toggleRecordRoundNotes"
             :class="{
@@ -46,6 +47,7 @@
             <template v-else>General</template>
           </label>
           <button
+            v-if="isSpeechRecognitionSupported === true"
             class="relative flex items-center justify-center w-8 h-8 record-round-button"
             @click="toggleRecordGameNotes"
             :class="{
@@ -160,12 +162,18 @@ export default {
         this.gameNotesHighlighter.handleInput();
       },
     },
+    isSpeechRecognitionSupported() {
+      return typeof webkitSpeechRecognition !== "undefined";
+    },
   },
   methods: {
     initSpeechRecording() {
-      if (webkitSpeechRecognition == null) {
+      if (this.isSpeechRecognitionSupported === false) {
         return;
       }
+      console.log(
+        `isSpeechRecognitionSupported: ${this.isSpeechRecognitionSupported}`
+      );
       this.speechRecognition = new webkitSpeechRecognition();
       this.speechRecognition.continuous = true;
       this.speechRecognition.interimResults = true;
