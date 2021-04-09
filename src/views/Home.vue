@@ -82,7 +82,7 @@
       :showPlayerNames="showPlayerNames === true"
       class="mb-2"
     />
-    <div class="fixed bottom-0 left-0 right-0 z-10 flex justify-end px-2 py-1">
+    <div class="fixed bottom-0 left-0 right-0 z-20 flex justify-end px-2 py-1">
       <button @click="toggleSettingsModal" class="mr-2 button-sm">
         Settings
       </button>

@@ -3,9 +3,13 @@
     <table class="w-full overflow-hidden rounded shadow table-fixed">
       <thead>
         <tr>
-          <th class="bg-theme-green-light dark--text-dark">My innocents</th>
+          <th class="bg-theme-green-light dark--text-dark">
+            {{ isPlayerImposter === true ? "My protectors" : "My innocents" }}
+          </th>
           <th class="unknown-column">Unknown</th>
-          <th class="bg-theme-yellow-light dark--text-dark">My suspects</th>
+          <th class="bg-theme-yellow-light dark--text-dark">
+            {{ isPlayerImposter === true ? "Hitlist" : "My suspects" }}
+          </th>
           <th class="text-theme-red-light bg-theme-gray-dark">Dead</th>
         </tr>
       </thead>
@@ -63,6 +67,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 const CrewPool = () => import("@/components/CrewPool.vue");
 
 export default {
@@ -101,6 +106,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters("crew", ["isPlayerImposter"]),
     innocentList: {
       get() {
         return [...this.innocent].sort((a, b) => {

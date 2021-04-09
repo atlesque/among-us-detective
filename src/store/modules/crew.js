@@ -144,6 +144,12 @@ const getters = {
       member => member.protectedBy.includes(protector.color) === true
     );
   },
+  playerCrewMember: state => {
+    return state.crewMembers.find(member => member.color === state.playerColor);
+  },
+  isPlayerImposter: (state, getters) => {
+    return getters.playerCrewMember.isImposter === true;
+  },
 };
 
 const mutations = {
@@ -352,7 +358,7 @@ const actions = {
     const newCrew = state.crewMembers.map(someMember => {
       if (someMember.color === member.color) {
         someMember.isImposter = isImposter;
-        if (someMember.isDead === false) {
+        if (someMember.isDead === false && member.color !== state.playerColor) {
           someMember.protectedBy = someMember.protectedBy.filter(
             protectorColor => protectorColor !== state.playerColor
           );
