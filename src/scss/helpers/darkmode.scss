@@ -2,6 +2,10 @@
   @apply bg-black;
   @apply text-theme-gray-extra-light;
 
+  textarea {
+    @apply border-theme-gray;
+  }
+
   .dark--text-dark {
     @apply text-theme-gray-extra-dark;
   }

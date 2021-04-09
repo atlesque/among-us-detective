@@ -10,7 +10,10 @@ body {
 
 // Use body to overwrite the CSS reset
 body {
-  * {
+  button,
+  table,
+  label,
+  div {
     @apply select-none;
   }
 
@@ -28,6 +31,7 @@ body {
 
   textarea {
     @apply rounded;
+    @apply bg-theme-gray-extra-light;
 
     &:disabled {
       @apply bg-theme-gray-dark;
@@ -51,6 +55,12 @@ body {
     @apply transition;
     @apply duration-150;
     @apply ease-in-out;
+    /*
+      It's important to never set user-select: none on input/textarea elements on iOS,
+      because it will prevent user input. That's why we set it to auto here.
+      Details: https://armno.in.th/2020/11/26/css-user-select/
+    */
+    @apply select-auto;
     &:focus {
       @apply outline-none;
       @apply shadow-outline;
