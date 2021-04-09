@@ -7,6 +7,8 @@ import crew from "./modules/crew";
 import darkMode from "./modules/darkmode";
 import notes from "./modules/notes";
 import settings from "./modules/settings";
+import tasks from "./modules/tasks";
+import maps from "./modules/maps";
 
 Vue.use(Vuex);
 
@@ -29,6 +31,8 @@ const store = new Vuex.Store({
     darkMode,
     notes,
     settings,
+    tasks,
+    maps,
   },
   plugins: [vuexLocalStorage.plugin],
 });

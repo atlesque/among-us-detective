@@ -19,34 +19,10 @@
         v-show="isMapVisible === true"
         class="flex self-start p-1 mt-2 rounded md:rounded-l-none bg-theme-blue-dark md:mt-0"
       >
-        <button
-          @click="selectMap('the-skeld')"
-          class="mr-2 button-sm"
-          :class="{ 'active button-success': selectedMap === 'the-skeld' }"
-        >
-          The Skeld
-        </button>
-        <button
-          @click="selectMap('mira-hq')"
-          class="mr-2 button-sm"
-          :class="{ 'active button-success': selectedMap === 'mira-hq' }"
-        >
-          Mira HQ
-        </button>
-        <button
-          @click="selectMap('polus')"
-          class="mr-2 button-sm"
-          :class="{ 'active button-success': selectedMap === 'polus' }"
-        >
-          Polus
-        </button>
-        <button
-          @click="selectMap('airship')"
-          class="button-sm"
-          :class="{ 'active button-success': selectedMap === 'airship' }"
-        >
-          Airship
-        </button>
+        <MapSelector
+          :selectedMap="selectedMap"
+          @mapSelected="map => selectMap(map)"
+        />
       </div>
     </div>
     <div v-show="isMapVisible" class="mx-auto map-container">
@@ -97,13 +73,19 @@
           <source srcset="@/assets/images/maps/polus.png" type="image/png" />
           <img src="@/assets/images/maps/polus.png" alt="Polus Map" />
         </picture>
-        <picture v-show="selectedMap === 'airship'">
+        <picture v-show="selectedMap === 'the-airship'">
           <source
-            srcset="@/assets/images/maps/airship.webp"
+            srcset="@/assets/images/maps/the-airship.webp"
             type="image/webp"
           />
-          <source srcset="@/assets/images/maps/airship.png" type="image/png" />
-          <img src="@/assets/images/maps/airship.png" alt="Airship Map" />
+          <source
+            srcset="@/assets/images/maps/the-airship.png"
+            type="image/png"
+          />
+          <img
+            src="@/assets/images/maps/the-airship.png"
+            alt="The Airship Map"
+          />
         </picture>
       </div>
     </div>
@@ -111,8 +93,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
+const MapSelector = () => import("@/components/MapSelector.vue");
 const MapPlayerTracker = () => import("@/components/MapPlayerTracker.vue");
 const MiraHqOverlay = () => import("@/components/MiraHqOverlay.vue");
 
@@ -121,6 +104,7 @@ export default {
   components: {
     MapPlayerTracker,
     MiraHqOverlay,
+    MapSelector,
   },
   mounted() {
     document.addEventListener("keyup", e => {
@@ -137,10 +121,10 @@ export default {
     return {
       isMapVisible: false,
       areSensorsVisible: false,
-      selectedMap: "the-skeld",
     };
   },
   computed: {
+    ...mapState("maps", ["selectedMap"]),
     ...mapState("notes", ["areNotesOpen"]),
     ...mapState("settings", [
       "settingsModalOpenState",
@@ -148,8 +132,9 @@ export default {
     ]),
   },
   methods: {
+    ...mapActions("maps", ["setSelectedMap"]),
     selectMap(newMap) {
-      this.selectedMap = newMap;
+      this.setSelectedMap(newMap);
       this.$gtag.event(`change_map_${newMap}`, {
         event_category: "global_stats",
       });

@@ -1,10 +1,5 @@
 import allColors from "@/config/playerColors.js";
 
-const types = {
-  SET_CREW: "✔️[Set] crew members",
-  SET_PLAYER_COLOR: "✔️ [Set] player color",
-};
-
 const defaultCrewMembers = allColors.map(colorName => {
   return {
     color: colorName,
@@ -21,6 +16,11 @@ const defaultCrewMembers = allColors.map(colorName => {
 });
 
 const defaultPlayerColor = "yellow";
+
+const types = {
+  SET_CREW: "✔️[Set] crew members",
+  SET_PLAYER_COLOR: "✔️ [Set] player color",
+};
 
 const state = {
   crewMembers: defaultCrewMembers.map(member => {

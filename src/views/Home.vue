@@ -4,14 +4,21 @@
     :class="{ 'dark-mode': isDarkMode === true }"
   >
     <div class="flex flex-col-reverse justify-between mb-2 lg:flex-row">
-      <PlayerSelector
-        class="hidden lg:flex"
-        :currentColor="playerColor"
-        @colorChanged="handleChangePlayerColor"
-        @pickerToggle="handleTogglePlayerPicker"
-        :isPickerOpen="isPlayerPickerOpen"
-      />
-
+      <div class="justify-between hidden lg:flex lg:flex-col">
+        <PlayerSelector
+          :currentColor="playerColor"
+          @colorChanged="handleChangePlayerColor"
+          @pickerToggle="handleTogglePlayerPicker"
+          :isPickerOpen="isPlayerPickerOpen"
+          class="h-12 mb-2"
+        />
+        <button
+          @click="isTasksModalOpen = true"
+          class="flex items-center justify-center w-full h-12 button"
+        >
+          Tasks
+        </button>
+      </div>
       <div class="flex justify-center flex-1">
         <button
           @click="toggleNotesModal"
@@ -39,24 +46,29 @@
           </button>
         </div>
       </div>
-      <div class="flex justify-between mb-2">
+      <div class="flex justify-between mb-2 lg:mb-0 lg:flex-col">
         <button
           @click="initNewRound()"
-          class="h-12 mr-2 button button-success"
+          class="h-12 mr-2 lg:w-full button button-success"
           :disabled="activeCrewMembers.length <= 0"
         >
           New round
         </button>
-        <PlayerSelector
-          class="mr-2 lg:hidden"
-          :currentColor="playerColor"
-          @colorChanged="handleChangePlayerColor"
-          @pickerToggle="handleTogglePlayerPicker"
-          :isPickerOpen="isPlayerPickerOpen"
-        />
+        <div class="flex lg:hidden">
+          <PlayerSelector
+            class="mr-2"
+            :currentColor="playerColor"
+            @colorChanged="handleChangePlayerColor"
+            @pickerToggle="handleTogglePlayerPicker"
+            :isPickerOpen="isPlayerPickerOpen"
+          />
+          <button @click="isTasksModalOpen = true" class="py-1 mr-2 button-sm">
+            Tasks
+          </button>
+        </div>
         <button
           @click="initNewGame()"
-          class="h-12 button button-primary"
+          class="h-12 lg:w-full button button-primary"
           :disabled="activeCrewMembers.length <= 0"
         >
           New game
@@ -114,6 +126,7 @@
       v-if="isSettingsModalOpen === true"
       @close="toggleSettingsModal"
     />
+    <TasksModal v-if="isTasksModalOpen === true" @close="toggleTasksModal" />
     <CookieWarning />
   </div>
 </template>
@@ -130,6 +143,7 @@ const NotesModal = () => import("@/components/NotesModal.vue");
 const HelpModalWithGifs = () => import("@/components/HelpModalWithGifs.vue");
 const AboutModal = () => import("@/components/AboutModal.vue");
 const SettingsModal = () => import("@/components/SettingsModal.vue");
+const TasksModal = () => import("@/components/TasksModal.vue");
 const CookieWarning = () => import("@/components/CookieWarning.vue");
 
 export default {
@@ -144,6 +158,7 @@ export default {
     HelpModalWithGifs,
     AboutModal,
     SettingsModal,
+    TasksModal,
     CookieWarning,
   },
   mounted() {
@@ -169,6 +184,7 @@ export default {
       isPlayerPickerOpen: false,
       isHelpModalOpen: false,
       isAboutModalOpen: false,
+      isTasksModalOpen: false,
       roundNotes: "",
       gameNotes: "",
     };
@@ -225,8 +241,10 @@ export default {
     ]),
     ...mapActions("notes", ["setNotesOpenState"]),
     ...mapActions("settings", ["setSettingsModalOpenState"]),
+    ...mapActions("tasks", ["resetAllTasks"]),
     initNewGame() {
       this.resetAllCrew();
+      this.resetAllTasks();
       if (this.resetNotesOnNewGame === true) {
         this.gameNotes = "";
       }
@@ -237,6 +255,7 @@ export default {
     },
     initNewRound() {
       this.resetActiveCrew();
+      this.resetAllTasks();
       this.roundNotes = "";
       this.$gtag.event("init_new_round", {
         event_category: "global_stats",
@@ -342,6 +361,15 @@ export default {
       this.isNotesModalOpen = newValue;
       if (newValue === true) {
         this.$gtag.event("open_notes", {
+          event_category: "global_stats",
+        });
+      }
+    },
+    toggleTasksModal() {
+      const newValue = !this.isTasksModalOpen;
+      this.isTasksModalOpen = newValue;
+      if (newValue === true) {
+        this.$gtag.event("open_fake_tasks", {
           event_category: "global_stats",
         });
       }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-12 w-36">
+  <div class="flex">
     <button
       class="flex items-center justify-center w-full h-full rounded button"
       :class="`bg-player-${currentColor}`"

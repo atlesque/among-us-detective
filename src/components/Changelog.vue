@@ -59,7 +59,7 @@ export default {
             "Make Tasks, Meetings and Imposter checkboxes configurable in Settings",
             "Group all settings under Settings modal to free up space",
             "Add checkbox for marking someone as an imposter (when you're 100% sure) <small>(Thx __Glaceyy and EhCrumb on Reddit!)</small>",
-            "Add new Airship map <small>(Thx Ezzelin and Triple A!)</small>",
+            "Add new The Airship map <small>(Thx Ezzelin and Triple A!)</small>",
             "Update Mira HQ map <small>(Thx SamuraiPipotchi on Twitter!)</small>",
             "Fix caching so everyone sees the new version",
             "Fix player color names resetting to icons",

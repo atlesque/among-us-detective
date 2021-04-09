@@ -56,9 +56,9 @@ let tasks = {
 document.querySelector(".wikitable tbody").querySelectorAll("tr").forEach(row => {
   const name = row.querySelectorAll("td a")[0].text;
   const map = row.querySelectorAll("td a")[1].text.replace(" ", "-").toLowerCase();
-  const type = row.querySelectorAll("td")[2].innerText.split(",").map(type => type.trim().replace("visual", "Visual"));
+  const types = row.querySelectorAll("td")[2].innerText.split(",").map(type => type.trim().replace("visual", "Visual"));
   const locations = [...row.querySelectorAll("td")[3].querySelectorAll("a")].map(location => location.innerText);
-  tasks[map].push({ name, type, locations })
+  tasks[map].push({ name, types, locations })
 })
 console.log(JSON.stringify(tasks, null, 2))
 ```
