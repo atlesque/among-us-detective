@@ -29,6 +29,12 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-04-12",
+          changes: [
+            "Adjust map constrast and color scheme <small>(Thx u/Greenbay7115!)</small>",
+          ],
+        },
+        {
           date: "2021-04-09",
           changes: [
             "Add imposter mode <small>(Thx u/Cantwaitforyandere and S.P. Eieye!)</small>",
