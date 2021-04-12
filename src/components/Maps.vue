@@ -157,7 +157,7 @@ button {
     pointer-events: none;
   }
   &--lighter img {
-    opacity: 0.5;
+    opacity: 0.75;
   }
 }
 </style>
