@@ -68,7 +68,7 @@
         </div>
         <button
           @click="initNewGame()"
-          class="h-12 lg:w-full button button-primary"
+          class="h-12 lg:w-full button button-warning"
           :disabled="activeCrewMembers.length <= 0"
         >
           New game

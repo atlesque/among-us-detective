@@ -6,7 +6,7 @@
   @apply px-4;
   @apply py-2;
   @apply text-white;
-  @apply bg-theme-gray;
+  @apply bg-theme-blue;
   @apply outline-none;
   @apply transition-all;
   @apply duration-100;
@@ -16,11 +16,11 @@
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
     @apply outline-none;
-    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-light");
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.blue-light");
   }
 
   &:active:not(:disabled) {
-    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-dark");
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.blue-dark");
   }
 
   &:disabled {
@@ -92,5 +92,20 @@
   &:active {
     box-shadow: 0 0 0 theme("width.1") theme("colors.theme.red-light");
     @apply bg-theme-red-dark;
+  }
+}
+
+.button-gray {
+  @extend .button;
+  @apply bg-theme-gray;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-light");
+  }
+
+  &:active {
+    box-shadow: 0 0 0 theme("width.1") theme("colors.theme.gray-light");
+    @apply bg-theme-gray-dark;
   }
 }
