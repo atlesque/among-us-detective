@@ -80,6 +80,30 @@ module.exports = {
           "lime-dark": "#15A83F",
           lime: "#50F039",
           "lime-light": "#85f574",
+
+          "maroon-dark": "#410F1A",
+          maroon: "#5F1D2E",
+          "maroon-light": "#af8e97",
+
+          "rose-dark": "#DE92B3",
+          rose: "#ECC0D3",
+          "rose-light": "#f2d3e0",
+
+          "banana-dark": "#D2BC89",
+          banana: "#F0E7A8",
+          "banana-light": "#f6f1cb",
+
+          "gray-dark": "##465664",
+          gray: "#758593",
+          "gray-light": "#acb6be",
+
+          "tan-dark": "#51413E",
+          tan: "#918877",
+          "tan-light": "#b2aca0",
+
+          "coral-dark": "#B44362",
+          coral: "#D76464",
+          "coral-light": "#df8383",
         },
       },
       minHeight: {

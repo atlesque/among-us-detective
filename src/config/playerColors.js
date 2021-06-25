@@ -11,4 +11,10 @@ export default [
   "brown",
   "cyan",
   "lime",
+  "maroon",
+  "rose",
+  "banana",
+  "gray",
+  "tan",
+  "coral",
 ];
