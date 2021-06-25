@@ -30,7 +30,7 @@ export default {
       changelog: [
         {
           date: "2021-06-25",
-          changs: ["Add new colors"],
+          changes: ["Add new colors"],
         },
         {
           date: "2021-04-12",
