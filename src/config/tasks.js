@@ -21,6 +21,11 @@ export default {
       locations: ["O2"],
     },
     {
+      name: "Clean Vent",
+      types: ["Short"],
+      locations: ["Any room with a vent"],
+    },
+    {
       name: "Clear Asteroids",
       types: ["Long", "Visual"],
       locations: ["Weapons"],
@@ -125,6 +130,11 @@ export default {
       name: "Clean Toilet",
       types: ["Short"],
       locations: ["Lounge"],
+    },
+    {
+      name: "Clean Vent",
+      types: ["Short"],
+      locations: ["Any room with a vent"],
     },
     {
       name: "Decontaminate",
@@ -282,6 +292,11 @@ export default {
       name: "Clean O2 Filter",
       types: ["Short"],
       locations: ["Greenhouse"],
+    },
+    {
+      name: "Clean Vent",
+      types: ["Short"],
+      locations: ["Any room with a vent"],
     },
     {
       name: "Clear Asteroids",

@@ -29,6 +29,10 @@ export default {
     return {
       changelog: [
         {
+          date: "2021-07-19",
+          changes: ["Add new Clean Vent task"],
+        },
+        {
           date: "2021-06-25",
           changes: ["Add new colors"],
         },

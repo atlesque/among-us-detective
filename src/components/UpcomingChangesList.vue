@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       upcomingChanges: [
+        "Fix a problem tracking fellow imposters when you are an imposter too",
         "Text guide",
         "Optional saving all state after page reload",
         "Fix double-click shortcuts on mobile",
