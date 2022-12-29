@@ -14,7 +14,7 @@ Vue.config.productionTip = false;
 import VueGtag from "vue-gtag";
 
 Vue.use(VueGtag, {
-  config: { id: "UA-114452911-9" },
+  config: { id: "G-F1ZVM4FLC6" },
 });
 
 /* 
