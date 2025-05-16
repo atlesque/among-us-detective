@@ -29,6 +29,12 @@ export default {
     return {
       changelog: [
         {
+          date: "2025-05-16",
+          changes: [
+            "Enabled tracking your own color by default, to avoid confusion why yellow is missing",
+          ],
+        },
+        {
           date: "2021-07-19",
           changes: ["Add new Clean Vent task"],
         },
