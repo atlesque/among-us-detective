@@ -20,7 +20,7 @@ const state = {
   settingsModalOpenState: false,
   resetNotesOnNewGame: true,
   showRoundNotes: true,
-  canTrackOwnColor: false,
+  canTrackOwnColor: true,
   isImproveMapContrastEnabled: true,
 };
 
