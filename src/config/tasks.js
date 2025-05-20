@@ -533,4 +533,136 @@ export default {
       ],
     },
   ],
+  "the-fungle": [
+    {
+      name: "Assemble Artifact",
+      types: ["Short"],
+      locations: ["Laboratory"],
+    },
+    {
+      name: "Build Sandcastle",
+      types: ["Short"],
+      locations: ["Splash Zone"],
+    },
+    {
+      name: "Collect Vegetables",
+      types: ["Long"],
+      locations: ["Greenhouse", "Kitchen"],
+    },
+    {
+      name: "Cook Fish",
+      types: ["Long"],
+      locations: ["Dock", "Kitchen"],
+    },
+    {
+      name: "Collect Samples",
+      types: ["Common"],
+      locations: ["Jungle", "Laboratory"],
+    },
+    {
+      name: "Collect Shells",
+      types: ["Short"],
+      locations: ["Beach", "Splash zone"],
+    },
+    {
+      name: "Crank Generator",
+      types: ["Short"],
+      locations: ["Communications", "Kitchen"],
+    },
+    {
+      name: "Empty Garbage",
+      types: ["Short"],
+      locations: ["Cafetaria", "Splash Zone"],
+    },
+    {
+      name: "Enter Id Code",
+      types: ["Common"],
+      locations: ["Admin", "Meeting Room", "Lookout"],
+    },
+    {
+      name: "Extract Fuel",
+      types: ["Long"],
+      locations: ["Upper Engine", "Storage"],
+    },
+    {
+      name: "Find Signal",
+      types: ["Short"],
+      locations: ["Communications"],
+    },
+    {
+      name: "Fix Antenna",
+      types: ["Short"],
+      locations: ["Communications"],
+    },
+    {
+      name: "Fix Wiring",
+      types: ["Short"],
+      locations: ["Communications", "Dropship"],
+    },
+    {
+      name: "Help Critter",
+      types: ["Long"],
+      locations: ["Jungle", "Laboratory"],
+    },
+    {
+      name: "Hoist Supplies",
+      types: ["Long"],
+      locations: ["Jungle", "The Cliffs"],
+    },
+    {
+      name: "Lift Weights",
+      types: ["Short"],
+      locations: ["Splash Zone"],
+    },
+    {
+      name: "Mine Ores",
+      types: ["Long"],
+      locations: ["Mining Pit"],
+    },
+    {
+      name: "Monitor Mushroom",
+      types: ["Short"],
+      locations: ["Jungle"],
+    },
+    {
+      name: "Play Video Game",
+      types: ["Short"],
+      locations: ["The Dorm"],
+    },
+    {
+      name: "Polish Gem",
+      types: ["Long"],
+      locations: ["Mining Pit"],
+    },
+    {
+      name: "Record Temperature",
+      types: ["Short"],
+      locations: ["Greenhouse", "Laboratory", "Reactor"],
+    },
+    {
+      name: "Replace Parts",
+      types: ["Common"],
+      locations: ["Reactor", "Upper Engine", "Communications", "Dropship"],
+    },
+    {
+      name: "Replace Water Jug",
+      types: ["Long"],
+      locations: ["Storage", "Cafetaria"],
+    },
+    {
+      name: "Roast Marshmellow",
+      types: ["Common"],
+      locations: ["Beach (random sand pile)", "Beach (central campfire)"],
+    },
+    {
+      name: "Throw Frisbee",
+      types: ["Short"],
+      locations: ["Splash Zone"],
+    },
+    {
+      name: "Water Plants",
+      types: ["Long"],
+      locations: ["Storage", "Greenhouse"],
+    },
+  ],
 };
