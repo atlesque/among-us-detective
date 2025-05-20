@@ -87,6 +87,17 @@
             alt="The Airship Map"
           />
         </picture>
+        <picture v-show="selectedMap === 'the-fungle'">
+          <source
+            srcset="@/assets/images/maps/the-fungle.webp"
+            type="image/webp"
+          />
+          <source
+            srcset="@/assets/images/maps/the-fungle.png"
+            type="image/png"
+          />
+          <img src="@/assets/images/maps/the-fungle.png" alt="The Fungle Map" />
+        </picture>
       </div>
     </div>
   </div>

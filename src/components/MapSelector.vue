@@ -23,10 +23,17 @@
     </button>
     <button
       @click="selectMap('the-airship')"
-      class="button-sm"
+      class="mr-1 button-sm"
       :class="{ 'active button-success': selectedMap === 'the-airship' }"
     >
       The Airship
+    </button>
+    <button
+      @click="selectMap('the-fungle')"
+      class="button-sm"
+      :class="{ 'active button-success': selectedMap === 'the-fungle' }"
+    >
+      The Fungle
     </button>
   </div>
 </template>

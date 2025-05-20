@@ -3,15 +3,12 @@
     <Modal @close="closeModal">
       <template slot="title">Tasks</template>
       <template slot="body">
-        <div class="relative flex my-4">
+        <div class="my-4 flex flex-col gap-1 items-start">
           <MapSelector
             :selectedMap="selectedMap"
             @mapSelected="map => setSelectedMap(map)"
           />
-          <button
-            @click="resetAllTasks"
-            class="absolute right-0 button-danger button-sm"
-          >
+          <button @click="resetAllTasks" class=" button-danger button-sm">
             Reset
           </button>
         </div>

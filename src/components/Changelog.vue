@@ -29,6 +29,10 @@ export default {
     return {
       changelog: [
         {
+          date: "2025-05-20",
+          changes: ["Added new map: The Fungle"],
+        },
+        {
           date: "2025-05-16",
           changes: [
             "Enabled tracking your own color by default, to avoid confusion why yellow is missing",
