@@ -1,15 +1,14 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
-  purge: {
-    content: ["./src/**/*.html", "./src/**/*.vue"],
-    options: {
-      // Uses PurgeCSS v2.x.x syntax
-      whitelistPatterns: [/^bg-player-.*/, /^text-player-.*/],
-    },
-  },
+  content: [
+    "./app/**/*.{vue,ts,js}",
+    "./src/**/*.{vue,js}",
+    "./public/**/*.html",
+  ],
+  safelist: [
+    { pattern: /^bg-player-/ },
+    { pattern: /^text-player-/ },
+    { pattern: /^border-player-/ },
+  ],
   theme: {
     extend: {
       colors: {
@@ -112,5 +111,5 @@ module.exports = {
     },
   },
   variants: {},
-  plugins: [require("@tailwindcss/ui")],
+  plugins: [],
 };

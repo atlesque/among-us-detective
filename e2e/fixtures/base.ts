@@ -1,22 +1,21 @@
 import { test as base, Page } from "@playwright/test";
 
-const DEFAULT_VUEX_STATE = JSON.stringify({
-  settings: {
-    showColorNames: false,
-    showImposterCheckbox: true,
-    showTasksCheckbox: true,
-    showMeetingsCount: true,
-    showPlayerNames: false,
-    settingsModalOpenState: false,
-    resetNotesOnNewGame: true,
-    showRoundNotes: true,
-    canTrackOwnColor: true,
-    isImproveMapContrastEnabled: true,
-  },
-  darkMode: {
-    isDarkMode: false,
-    hasDarkModeBeenSetBefore: false,
-  },
+const DEFAULT_SETTINGS_STATE = JSON.stringify({
+  showColorNames: false,
+  showImposterCheckbox: true,
+  showTasksCheckbox: true,
+  showMeetingsCount: true,
+  showPlayerNames: false,
+  settingsModalOpenState: false,
+  resetNotesOnNewGame: true,
+  showRoundNotes: true,
+  canTrackOwnColor: true,
+  isImproveMapContrastEnabled: true,
+});
+
+const DEFAULT_DARKMODE_STATE = JSON.stringify({
+  isDarkMode: false,
+  hasDarkModeBeenSetBefore: false,
 });
 
 /**
@@ -32,15 +31,28 @@ const DEFAULT_VUEX_STATE = JSON.stringify({
 export const test = base.extend({
   page: async ({ page }, use) => {
     // Must be called BEFORE page.goto so it executes during page load
-    await page.addInitScript((vuexState: string) => {
-      localStorage.clear();
-      // Prevent the help modal auto-opening for "new" visitors
-      localStorage.setItem("returningPlayer", JSON.stringify(true));
-      // Prevent the cookie warning banner
-      localStorage.setItem("acceptedCookies", JSON.stringify(true));
-      // Seed persisted settings so all tests start from known state
-      localStorage.setItem("vuex", vuexState);
-    }, DEFAULT_VUEX_STATE);
+    await page.addInitScript(
+      ({
+        settingsState,
+        darkModeState,
+      }: {
+        settingsState: string;
+        darkModeState: string;
+      }) => {
+        localStorage.clear();
+        // Prevent the help modal auto-opening for "new" visitors
+        localStorage.setItem("returningPlayer", JSON.stringify(true));
+        // Prevent the cookie warning banner
+        localStorage.setItem("acceptedCookies", JSON.stringify(true));
+        // Seed persisted Pinia stores so all tests start from known state
+        localStorage.setItem("settings", settingsState);
+        localStorage.setItem("darkMode", darkModeState);
+      },
+      {
+        settingsState: DEFAULT_SETTINGS_STATE,
+        darkModeState: DEFAULT_DARKMODE_STATE,
+      }
+    );
 
     await page.goto("/");
     await page.waitForSelector("[data-test='new-game-btn']", {

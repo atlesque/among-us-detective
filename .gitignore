@@ -1,5 +1,16 @@
 .DS_Store
 node_modules
+
+# Nuxt build / generated files
+/.nuxt/
+/.output/
+/node_modules/.cache/nuxt/
+
+# Nuxt dev / local
+.nuxt
+.output
+
+# Dist (legacy Vue CLI)
 /dist
 
 # Playwright
@@ -28,3 +39,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Sentry Config File
+.env.sentry-build-plugin
