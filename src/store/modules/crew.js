@@ -355,17 +355,44 @@ const actions = {
     commit(types.SET_CREW, newCrew);
   },
   setMemberIsImposter({ commit, state }, { member, isImposter }) {
+    const playerMember = state.crewMembers.find(
+      m => m.color === state.playerColor
+    );
+    const isPlayerCurrentlyImposter = playerMember?.isImposter === true;
     const newCrew = state.crewMembers.map(someMember => {
       if (someMember.color === member.color) {
         someMember.isImposter = isImposter;
         if (someMember.isDead === false && member.color !== state.playerColor) {
-          someMember.protectedBy = someMember.protectedBy.filter(
-            protectorColor => protectorColor !== state.playerColor
-          );
-          someMember.suspectedBy = [
-            // Use Set to avoid duplicates
-            ...new Set(someMember.suspectedBy.concat(state.playerColor)),
-          ];
+          if (isImposter === true && isPlayerCurrentlyImposter === true) {
+            // In Impostor mode, fellow Impostors are allies — add to Protectors
+            someMember.suspectedBy = someMember.suspectedBy.filter(
+              accuserColor => accuserColor !== state.playerColor
+            );
+            someMember.protectedBy = [
+              // Use Set to avoid duplicates
+              ...new Set(someMember.protectedBy.concat(state.playerColor)),
+            ];
+          } else if (
+            isImposter === false &&
+            isPlayerCurrentlyImposter === true
+          ) {
+            // In Impostor mode, unchecking sends the member back to Unknown
+            someMember.protectedBy = someMember.protectedBy.filter(
+              protectorColor => protectorColor !== state.playerColor
+            );
+            someMember.suspectedBy = someMember.suspectedBy.filter(
+              accuserColor => accuserColor !== state.playerColor
+            );
+          } else {
+            // Normal mode: add to Suspects / Hitlist
+            someMember.protectedBy = someMember.protectedBy.filter(
+              protectorColor => protectorColor !== state.playerColor
+            );
+            someMember.suspectedBy = [
+              // Use Set to avoid duplicates
+              ...new Set(someMember.suspectedBy.concat(state.playerColor)),
+            ];
+          }
         }
       }
       return someMember;
