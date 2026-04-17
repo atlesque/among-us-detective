@@ -5,6 +5,7 @@
         v-show="isMapVisible === false"
         @click="isMapVisible = true"
         class="self-start py-1 button-sm"
+        data-test="toggle-map-btn"
       >
         Show map
       </button>
@@ -12,6 +13,7 @@
         v-show="isMapVisible === true"
         @click="isMapVisible = false"
         class="self-start py-1 md:rounded-r-none button-sm"
+        data-test="toggle-map-btn"
       >
         Hide map
       </button>
@@ -25,7 +27,11 @@
         />
       </div>
     </div>
-    <div v-show="isMapVisible" class="mx-auto map-container">
+    <div
+      v-show="isMapVisible"
+      class="mx-auto map-container"
+      data-test="map-container"
+    >
       <MapPlayerTracker class="z-10" />
       <div
         class="map-picture-container"
@@ -51,6 +57,7 @@
             <button
               @click="areSensorsVisible = !areSensorsVisible"
               class="absolute right-0 m-2 button-sm"
+              data-test="toggle-sensors-btn"
             >
               {{ areSensorsVisible === true ? "Hide sensors" : "Show sensors" }}
             </button>

@@ -32,10 +32,13 @@
           @click="currentStep--"
           class="button"
           :disabled="currentStep <= 0"
+          data-test="help-prev-btn"
         >
           Previous
         </button>
-        <span class="flex items-center justify-center text-theme-gray-light"
+        <span
+          class="flex items-center justify-center text-theme-gray-light"
+          data-test="help-step-counter"
           >{{ currentStep + 1 }}/{{ steps.length }}</span
         >
         <button
@@ -43,6 +46,7 @@
           class="button"
           :disabled="currentStep >= steps.length - 1"
           v-show="currentStep < steps.length - 1"
+          data-test="help-next-btn"
         >
           Next
         </button>
@@ -50,6 +54,7 @@
           @click="closeModal"
           class="button"
           v-show="currentStep >= steps.length - 1"
+          data-test="help-close-btn"
         >
           Close
         </button>

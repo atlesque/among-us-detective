@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" data-test="notes-container">
     <div v-show="showRoundNotes === true" class="my-2 round-notes-wrapper">
       <span class="text-sm text-theme-red">{{ speechError }}</span>
       <div class="flex justify-between">
@@ -90,9 +90,9 @@
 <script>
 /*global webkitSpeechRecognition webkitSpeechGrammarList */
 
-import { mapState } from "vuex";
-import HighlightWithinTextarea from "@/utilities/highlight-within-textarea.js";
 import allColors from "@/config/playerColors.js";
+import HighlightWithinTextarea from "@/utilities/highlight-within-textarea.js";
+import { mapState } from "vuex";
 // Don't use lazy-loading syntax for this, otherwise Highlight won't work
 import AutoSizingTextarea from "@/components/AutoSizingTextarea.vue";
 

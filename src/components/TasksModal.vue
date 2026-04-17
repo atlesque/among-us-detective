@@ -8,7 +8,11 @@
             :selectedMap="selectedMap"
             @mapSelected="map => setSelectedMap(map)"
           />
-          <button @click="resetAllTasks" class=" button-danger button-sm">
+          <button
+            @click="resetAllTasks"
+            class=" button-danger button-sm"
+            data-test="reset-tasks-btn"
+          >
             Reset
           </button>
         </div>
@@ -52,7 +56,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 const Modal = () => import("@/components/Modal.vue");
 const MapSelector = () => import("@/components/MapSelector.vue");
 const Checkbox = () => import("@/components/Checkbox.vue");

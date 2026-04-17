@@ -43,23 +43,31 @@
         <template slot="body">
           <table class="w-full table-fixed settings-list">
             <tbody>
-              <tr>
+              <tr data-test="setting-show-players-as">
                 <td>Show players as:</td>
                 <td>
-                  <button @click="toggleColorNames" class="button-sm">
+                  <button
+                    @click="toggleColorNames"
+                    class="button-sm"
+                    data-test="setting-show-players-as-btn"
+                  >
                     {{ toggleColorNamesButtonText }}
                   </button>
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-theme">
                 <td>Interface theme:</td>
                 <td>
-                  <button @click="toggleDarkMode" class="button-sm">
+                  <button
+                    @click="toggleDarkMode"
+                    class="button-sm"
+                    data-test="setting-theme-btn"
+                  >
                     {{ toggleDarkModeButtonText }}
                   </button>
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-show-imposter">
                 <td>Show Imposter checkbox:</td>
                 <td>
                   <Checkbox
@@ -68,7 +76,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-show-tasks">
                 <td>Show Tasks checkbox:</td>
                 <td>
                   <Checkbox
@@ -77,7 +85,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-show-meetings">
                 <td>Show Meetings count:</td>
                 <td>
                   <Checkbox
@@ -86,7 +94,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-show-player-names">
                 <td>Show player names:</td>
                 <td>
                   <div class="flex">
@@ -98,13 +106,14 @@
                       v-if="arePlayerNamesVisible === true"
                       @click="isEditingPlayerNames = true"
                       class="button-sm"
+                      data-test="edit-player-names-btn"
                     >
                       Edit names
                     </button>
                   </div>
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-reset-notes">
                 <td>Reset notes each game:</td>
                 <td>
                   <Checkbox
@@ -113,7 +122,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-show-round-notes">
                 <td>Show round notes:</td>
                 <td>
                   <Checkbox
@@ -122,7 +131,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-track-own-color">
                 <td>Can track own color:</td>
                 <td>
                   <Checkbox
@@ -131,7 +140,7 @@
                   />
                 </td>
               </tr>
-              <tr>
+              <tr data-test="setting-improve-map-contrast">
                 <td>Improve map contrast:</td>
                 <td>
                   <Checkbox
@@ -150,7 +159,7 @@
 
 <script>
 import playerColors from "@/config/playerColors.js";
-import { mapState, mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 const Modal = () => import("@/components/Modal.vue");
 const Checkbox = () => import("@/components/Checkbox.vue");
 const CrewIcon = () => import("@/components/CrewIcon.vue");

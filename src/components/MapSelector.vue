@@ -1,9 +1,10 @@
 <template>
-  <div class="flex map-selector">
+  <div class="flex map-selector" data-test="map-selector">
     <button
       @click="selectMap('the-skeld')"
       class="mr-1 button-sm"
       :class="{ 'active button-success': selectedMap === 'the-skeld' }"
+      data-test="map-btn-the-skeld"
     >
       The Skeld
     </button>
@@ -11,6 +12,7 @@
       @click="selectMap('mira-hq')"
       class="mr-1 button-sm"
       :class="{ 'active button-success': selectedMap === 'mira-hq' }"
+      data-test="map-btn-mira-hq"
     >
       Mira HQ
     </button>
@@ -18,6 +20,7 @@
       @click="selectMap('polus')"
       class="mr-1 button-sm"
       :class="{ 'active button-success': selectedMap === 'polus' }"
+      data-test="map-btn-polus"
     >
       Polus
     </button>
@@ -25,6 +28,7 @@
       @click="selectMap('the-airship')"
       class="mr-1 button-sm"
       :class="{ 'active button-success': selectedMap === 'the-airship' }"
+      data-test="map-btn-the-airship"
     >
       The Airship
     </button>
@@ -32,6 +36,7 @@
       @click="selectMap('the-fungle')"
       class="button-sm"
       :class="{ 'active button-success': selectedMap === 'the-fungle' }"
+      data-test="map-btn-the-fungle"
     >
       The Fungle
     </button>

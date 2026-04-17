@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full h-full crewpool">
+  <div class="flex w-full h-full crewpool" data-test="crew-pool">
     <Draggable
       v-model="crewMembersInPool"
       :group="{ name: 'crewMembers', pull: 'clone' }"
@@ -14,6 +14,7 @@
         :is-imposter="member.isImposter"
         :is-player="member.isPlayer"
         :player-name="member.playerName"
+        :data-test="`crew-member-${member.color}`"
         class="float-left mb-2 mr-2"
         v-on:dblclick.native="removeMember(member)"
       />

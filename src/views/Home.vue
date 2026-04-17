@@ -15,6 +15,7 @@
         <button
           @click="isTasksModalOpen = true"
           class="flex items-center justify-center w-full h-12 button"
+          data-test="tasks-btn"
         >
           Tasks
         </button>
@@ -23,6 +24,7 @@
         <button
           @click="toggleNotesModal"
           class="py-1 rounded-r-none button-sm lg:ml-2"
+          data-test="notes-btn"
         >
           Notes
         </button>
@@ -41,6 +43,7 @@
             :disabled="inactiveCrewMembers.length <= 0"
             @click="setAllMembersAsUnknown"
             class="rounded-l-none lg:mr-2 button-sm"
+            data-test="activate-all-btn"
           >
             <span class="icon-arrow-down2"></span>
           </button>
@@ -51,6 +54,7 @@
           @click="initNewRound()"
           class="h-12 mr-2 lg:w-full button button-success"
           :disabled="activeCrewMembers.length <= 0"
+          data-test="new-round-btn"
         >
           New round
         </button>
@@ -62,7 +66,11 @@
             @pickerToggle="handleTogglePlayerPicker"
             :isPickerOpen="isPlayerPickerOpen"
           />
-          <button @click="isTasksModalOpen = true" class="py-1 mr-2 button-sm">
+          <button
+            @click="isTasksModalOpen = true"
+            class="py-1 mr-2 button-sm"
+            data-test="tasks-btn-mobile"
+          >
             Tasks
           </button>
         </div>
@@ -70,6 +78,7 @@
           @click="initNewGame()"
           class="h-12 lg:w-full button button-warning"
           :disabled="activeCrewMembers.length <= 0"
+          data-test="new-game-btn"
         >
           New game
         </button>
@@ -95,13 +104,21 @@
       class="mb-2"
     />
     <div class="fixed bottom-0 left-0 right-0 z-20 flex justify-end px-2 py-1">
-      <button @click="toggleSettingsModal" class="mr-2 button-sm">
+      <button
+        @click="toggleSettingsModal"
+        class="mr-2 button-sm"
+        data-test="settings-btn"
+      >
         Settings
       </button>
-      <button @click="toggleHelpModal" class="mr-2 button-sm">
+      <button
+        @click="toggleHelpModal"
+        class="mr-2 button-sm"
+        data-test="help-btn"
+      >
         Help
       </button>
-      <button @click="toggleAboutModal" class="button-sm">
+      <button @click="toggleAboutModal" class="button-sm" data-test="about-btn">
         About
       </button>
     </div>
@@ -129,7 +146,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 const PlayerSelector = () => import("@/components/PlayerSelector.vue");
 const CrewTracker = () => import("@/components/CrewTracker.vue");

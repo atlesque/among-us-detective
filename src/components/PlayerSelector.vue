@@ -1,9 +1,10 @@
 <template>
-  <div class="flex">
+  <div class="flex" data-test="player-selector">
     <button
       class="flex items-center justify-center w-full h-full rounded button"
       :class="`bg-player-${currentColor}`"
       @click="isPlayerPickerOpen = true"
+      data-test="player-selector-btn"
     >
       <span class="px-1 text-black bg-white rounded">My player</span>
     </button>
@@ -24,6 +25,7 @@
                 'color-icon--selected': color === selectedColor,
               },
             ]"
+            :data-test="`player-color-${color}`"
             @click="selectPlayerColor(color)"
           >
             <span class="px-1 text-black bg-white rounded color-name">{{
@@ -31,11 +33,12 @@
             }}</span>
           </button>
         </div>
-        <div class="flex items-center">
+        <div class="flex items-center" data-test="imposter-mode-row">
           <label class="mb-0 mr-2">Imposter mode:</label>
           <Checkbox
             :isChecked="isImposter"
             @changed="value => (isImposter = value)"
+            data-test="imposter-mode-checkbox"
           />
         </div>
       </template>
@@ -45,7 +48,7 @@
 
 <script>
 import availableColors from "@/config/playerColors.js";
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 const Modal = () => import("@/components/Modal.vue");
 const Checkbox = () => import("@/components/Checkbox.vue");
 

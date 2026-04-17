@@ -1,21 +1,34 @@
 <template>
-  <div class="crew-tracker">
+  <div class="crew-tracker" data-test="crew-tracker">
     <table class="w-full overflow-hidden rounded shadow table-fixed">
       <thead>
         <tr>
-          <th class="bg-theme-green-light dark--text-dark">
+          <th
+            class="bg-theme-green-light dark--text-dark"
+            data-test="crew-col-header-innocent"
+          >
             {{ isPlayerImposter === true ? "My protectors" : "My innocents" }}
           </th>
-          <th class="unknown-column">Unknown</th>
-          <th class="bg-theme-yellow-light dark--text-dark">
+          <th class="unknown-column" data-test="crew-col-header-unknown">
+            Unknown
+          </th>
+          <th
+            class="bg-theme-yellow-light dark--text-dark"
+            data-test="crew-col-header-suspect"
+          >
             {{ isPlayerImposter === true ? "Hitlist" : "My suspects" }}
           </th>
-          <th class="text-theme-red-light bg-theme-gray-dark">Dead</th>
+          <th
+            class="text-theme-red-light bg-theme-gray-dark"
+            data-test="crew-col-header-dead"
+          >
+            Dead
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>
+          <td data-test="crew-column-innocent">
             <CrewPool
               class="pool--innocent"
               :crewMembers="innocentList"
@@ -27,7 +40,7 @@
               "
             />
           </td>
-          <td>
+          <td data-test="crew-column-unknown">
             <CrewPool
               class="pool--unknown"
               :crewMembers="unknownList"
@@ -39,7 +52,7 @@
               "
             />
           </td>
-          <td>
+          <td data-test="crew-column-suspect">
             <CrewPool
               class="pool--suspect"
               :crewMembers="suspectList"
@@ -51,7 +64,7 @@
               "
             />
           </td>
-          <td class="bg-theme-gray-dark">
+          <td class="bg-theme-gray-dark" data-test="crew-column-dead">
             <CrewPool
               class="pool--dead"
               :crewMembers="deadList"
