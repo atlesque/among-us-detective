@@ -4,6 +4,7 @@
     <template #body>
       <div
         v-if="currentStepData"
+        :key="currentStepIndex"
         class="mb-4 text-sm leading-5 text-theme-gray-dark"
       >
         <template v-if="currentStepData.media != null">
@@ -26,6 +27,7 @@
           </picture>
           <video
             v-else-if="currentStepData.media.type === 'video'"
+            :key="`video-${currentStepIndex}`"
             autoplay
             loop
             class="mx-auto mb-4"
