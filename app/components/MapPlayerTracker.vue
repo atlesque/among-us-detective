@@ -47,11 +47,21 @@ const { showColorNames, showPlayerNames } = storeToRefs(settingsStore);
 const targetRefs = ref<Record<string, HTMLElement | null>>({});
 
 const moveableItems = computed(() =>
-  activeCrewMembers.value.map((member, index) => ({
+  activeCrewMembers.value.map((member) => ({
     member,
     target: targetRefs.value[member.color] ?? null,
   }))
 );
+
+watch(activeCrewMembers, (members) => {
+  const activeColors = new Set(members.map((member) => member.color));
+
+  Object.keys(targetRefs.value).forEach((color) => {
+    if (!activeColors.has(color)) {
+      delete targetRefs.value[color];
+    }
+  });
+});
 
 const moveableOptions = { draggable: true };
 
@@ -74,7 +84,9 @@ const handleDrag = ({
 };
 
 const resetPositions = () => {
-  Object.values(targetRefs.value).forEach((target) => {
+  moveableItems.value.forEach((item) => {
+    const target = item.target;
+
     if (target) {
       target.style.transform = "";
     }
