@@ -7,62 +7,91 @@
     >
       Reset positions
     </button>
-    <div ref="containerEl" class="container">
-      <Moveable
-        v-for="(member, index) in activeCrewMembers"
-        :key="member.color"
-        :ref="(el: any) => setMoveableRef(el, index)"
-        v-bind="moveableOptions"
-        class="inline-flex moveable"
-        @drag="handleDrag"
-      >
-        <CrewIcon
-          :color="member.color"
-          :show-color-name="showColorNames"
-          :show-player-name="showPlayerNames"
-          :is-imposter="member.isImposter"
-          :is-player="member.isPlayer"
-          :is-dead="member.isDead"
-          :player-name="member.playerName"
-          class="inline-flex map-player-tracker--crew-icon"
+    <div class="container">
+      <template v-for="(item, index) in moveableItems" :key="item.member.color">
+        <div
+          :ref="(el) => setTargetRef(el, item.member.color)"
+          class="inline-flex moveable-target"
+        >
+          <CrewIcon
+            :color="item.member.color"
+            :show-color-name="showColorNames"
+            :show-player-name="showPlayerNames"
+            :is-imposter="item.member.isImposter"
+            :is-player="item.member.isPlayer"
+            :is-dead="item.member.isDead"
+            :player-name="item.member.playerName"
+            class="inline-flex map-player-tracker--crew-icon"
+          />
+        </div>
+        <Moveable
+          v-if="item.target"
+          :key="`${item.member.color}-moveable`"
+          :target="item.target"
+          v-bind="moveableOptions"
+          @drag="handleDrag"
         />
-      </Moveable>
+      </template>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import Moveable from 'vue3-moveable'
+import Moveable from "vue3-moveable";
 
-const crewStore = useCrewStore()
-const settingsStore = useSettingsStore()
-const { activeCrewMembers } = storeToRefs(crewStore)
-const { showColorNames, showPlayerNames } = storeToRefs(settingsStore)
+const crewStore = useCrewStore();
+const settingsStore = useSettingsStore();
+const { activeCrewMembers } = storeToRefs(crewStore);
+const { showColorNames, showPlayerNames } = storeToRefs(settingsStore);
 
-const containerEl = ref<HTMLElement | null>(null)
-const moveableRefs: any[] = []
+const targetRefs = ref<Record<string, HTMLElement | null>>({});
 
-const moveableOptions = { draggable: true }
+const moveableItems = computed(() =>
+  activeCrewMembers.value.map((member) => ({
+    member,
+    target: targetRefs.value[member.color] ?? null,
+  }))
+);
 
-function setMoveableRef(el: any, index: number) {
-  moveableRefs[index] = el
-}
+watch(activeCrewMembers, (members) => {
+  const activeColors = new Set(members.map((member) => member.color));
 
-onBeforeUpdate(() => {
-  moveableRefs.length = 0
-})
-
-function handleDrag({ target, transform }: { target: HTMLElement; transform: string }) {
-  target.style.transform = transform
-}
-
-function resetPositions() {
-  moveableRefs.forEach(ref => {
-    if (ref?.$el) {
-      ref.$el.style.transform = ''
+  Object.keys(targetRefs.value).forEach((color) => {
+    if (!activeColors.has(color)) {
+      delete targetRefs.value[color];
     }
-  })
-}
+  });
+});
+
+const moveableOptions = { draggable: true };
+
+const setTargetRef = (
+  el: Element | { $el?: Element } | null,
+  color: string
+) => {
+  const element = el instanceof Element ? el : el?.$el;
+  targetRefs.value[color] = element instanceof HTMLElement ? element : null;
+};
+
+const handleDrag = ({
+  target,
+  transform,
+}: {
+  target: HTMLElement | SVGElement;
+  transform: string;
+}) => {
+  target.style.transform = transform;
+};
+
+const resetPositions = () => {
+  moveableItems.value.forEach((item) => {
+    const target = item.target;
+
+    if (target) {
+      target.style.transform = "";
+    }
+  });
+};
 </script>
 
 <style lang="scss">
