@@ -33,12 +33,12 @@
             !(mapsStore.selectedMap === 'mira-hq' && areSensorsVisible),
         }"
       >
-        <picture v-show="mapsStore.selectedMap === 'the-skeld'">
+        <picture v-if="mapsStore.selectedMap === 'the-skeld'">
           <source srcset="~/assets/images/maps/the-skeld.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-skeld.png" type="image/png" />
-          <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
+          <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" loading="lazy" decoding="async" />
         </picture>
-        <div v-show="mapsStore.selectedMap === 'mira-hq'" class="relative z-0">
+        <div v-if="mapsStore.selectedMap === 'mira-hq'" class="relative z-0">
           <div class="absolute inset-0 z-10">
             <button
               class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer"
@@ -55,23 +55,23 @@
           <picture>
             <source srcset="~/assets/images/maps/mira-hq.webp" type="image/webp" />
             <source srcset="~/assets/images/maps/mira-hq.png" type="image/png" />
-            <img src="~/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
+            <img src="~/assets/images/maps/mira-hq.png" alt="Mira HQ Map" loading="lazy" decoding="async" />
           </picture>
         </div>
-        <picture v-show="mapsStore.selectedMap === 'polus'">
+        <picture v-if="mapsStore.selectedMap === 'polus'">
           <source srcset="~/assets/images/maps/polus.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/polus.png" type="image/png" />
-          <img src="~/assets/images/maps/polus.png" alt="Polus Map" />
+          <img src="~/assets/images/maps/polus.png" alt="Polus Map" loading="lazy" decoding="async" />
         </picture>
-        <picture v-show="mapsStore.selectedMap === 'the-airship'">
+        <picture v-if="mapsStore.selectedMap === 'the-airship'">
           <source srcset="~/assets/images/maps/the-airship.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-airship.png" type="image/png" />
-          <img src="~/assets/images/maps/the-airship.png" alt="The Airship Map" />
+          <img src="~/assets/images/maps/the-airship.png" alt="The Airship Map" loading="lazy" decoding="async" />
         </picture>
-        <picture v-show="mapsStore.selectedMap === 'the-fungle'">
+        <picture v-if="mapsStore.selectedMap === 'the-fungle'">
           <source srcset="~/assets/images/maps/the-fungle.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-fungle.png" type="image/png" />
-          <img src="~/assets/images/maps/the-fungle.png" alt="The Fungle Map" />
+          <img src="~/assets/images/maps/the-fungle.png" alt="The Fungle Map" loading="lazy" decoding="async" />
         </picture>
       </div>
     </div>

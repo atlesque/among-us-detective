@@ -69,14 +69,20 @@ onMounted(() => {
     }
   })
 
-  // Touch match activity on active state changes
+  // Shallow watcher for note updates (no recursive object traversal)
+  watch(
+    () => [notesStore.roundNotes, notesStore.gameNotes],
+    () => {
+      touchMatchActivity()
+    }
+  )
+
+  // Board and game state changes
   watch(
     () => [
       crewStore.crewMembers,
       roundsStore.currentRoundNumber,
-      roundsStore.roundHistory,
-      notesStore.roundNotes,
-      notesStore.gameNotes,
+      roundsStore.roundHistory.length,
       impostorStore.isImpostorModeActive,
       impostorStore.fellowImpostors,
     ],

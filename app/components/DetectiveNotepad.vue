@@ -282,7 +282,7 @@
                 ? 'border-rose-300 dark:border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
                 : 'border-gray-300 dark:border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
             @focus="recordingTarget = 'round'"
-            @input="roundNotesHighlighter?.handleInput()"
+            @blur="flushNotes"
           />
         </div>
 
@@ -345,7 +345,7 @@
               ? 'border-rose-300 dark:border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
               : 'border-gray-300 dark:border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
             @focus="recordingTarget = 'match'"
-            @input="gameNotesHighlighter?.handleInput()"
+            @blur="flushNotes"
           />
         </div>
       </div>
@@ -357,6 +357,7 @@
 import HighlightWithinTextarea from '~/utils/highlight-within-textarea.js'
 import { buildTextHighlighterRules } from '~/utils/textHighlighter'
 import { useImpostorStore } from '~/stores/impostor'
+import { debounce } from '~/utils/debounce'
 
 /* global SpeechRecognition, webkitSpeechRecognition, webkitSpeechGrammarList */
 declare const SpeechRecognition: any
@@ -399,24 +400,65 @@ const {
   requestMicrophonePermission,
 } = useMicrophone()
 
+const localRoundNotes = ref(notesStore.roundNotes)
+const localGameNotes = ref(notesStore.gameNotes)
+
+const debouncedSaveRoundNotes = debounce((val: string) => {
+  notesStore.setRoundNotes(val)
+}, 200)
+
+const debouncedSaveGameNotes = debounce((val: string) => {
+  notesStore.setGameNotes(val)
+}, 200)
+
+function flushNotes() {
+  debouncedSaveRoundNotes.flush()
+  debouncedSaveGameNotes.flush()
+}
+
+// Synchronize external store changes to local state
+watch(
+  () => notesStore.roundNotes,
+  (newVal) => {
+    if (newVal !== localRoundNotes.value) {
+      localRoundNotes.value = newVal
+      debouncedSaveRoundNotes.cancel()
+      nextTick(() => roundNotesHighlighter?.handleInput())
+    }
+  }
+)
+
+watch(
+  () => notesStore.gameNotes,
+  (newVal) => {
+    if (newVal !== localGameNotes.value) {
+      localGameNotes.value = newVal
+      debouncedSaveGameNotes.cancel()
+      nextTick(() => gameNotesHighlighter?.handleInput())
+    }
+  }
+)
+
 const quickRoundNotes = computed({
   get: () => {
     if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
       return roundsStore.activeSnapshot.roundNotes || ''
     }
-    return notesStore.roundNotes
+    return localRoundNotes.value
   },
   set: (value: string) => {
     if (roundsStore.isViewingHistory) return
-    notesStore.setRoundNotes(value)
+    localRoundNotes.value = value
+    debouncedSaveRoundNotes(value)
     roundNotesHighlighter?.handleInput()
   },
 })
 
 const gameNotes = computed({
-  get: () => notesStore.gameNotes,
+  get: () => localGameNotes.value,
   set: (value: string) => {
-    notesStore.setGameNotes(value)
+    localGameNotes.value = value
+    debouncedSaveGameNotes(value)
     gameNotesHighlighter?.handleInput()
   },
 })
@@ -503,6 +545,7 @@ function startRecordingTimeout() {
 function stopRecording() {
   clearRecordingTimeout()
   isRecording.value = false
+  flushNotes()
   try {
     speechRecognition?.abort()
     speechRecognition?.stop()
@@ -544,13 +587,11 @@ function initSpeechRecording() {
       const sanitized = finalTranscript.replace(/newline|new line|enter/gi, '\n')
       if (sanitized) {
         if (recordingTarget.value === 'match') {
-          const cur = notesStore.gameNotes
-          notesStore.setGameNotes(cur ? cur + ' ' + sanitized : sanitized)
-          gameNotesHighlighter?.handleInput()
+          const cur = localGameNotes.value
+          gameNotes.value = cur ? cur + ' ' + sanitized : sanitized
         } else {
-          const cur = notesStore.roundNotes
-          notesStore.setRoundNotes(cur ? cur + ' ' + sanitized : sanitized)
-          roundNotesHighlighter?.handleInput()
+          const cur = localRoundNotes.value
+          quickRoundNotes.value = cur ? cur + ' ' + sanitized : sanitized
         }
       }
     }
@@ -648,8 +689,16 @@ watch(
 )
 
 watch(
+  () => roundsStore.currentRoundNumber,
+  () => {
+    flushNotes()
+  }
+)
+
+watch(
   () => roundsStore.viewingRoundNumber,
   () => {
+    flushNotes()
     nextTick(() => {
       roundNotesHighlighter?.handleInput()
     })
@@ -665,6 +714,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopRecording()
+  flushNotes()
+  roundNotesHighlighter?.destroy()
+  roundNotesHighlighter = null
+  gameNotesHighlighter?.destroy()
+  gameNotesHighlighter = null
 })
 
 function expandAndFocus() {
@@ -680,10 +734,14 @@ function expand() {
 }
 
 function toggleMinimize() {
+  if (!isMinimized.value) {
+    flushNotes()
+  }
   isMinimized.value = !isMinimized.value
 }
 
 function minimize() {
+  flushNotes()
   isMinimized.value = true
 }
 
@@ -703,5 +761,6 @@ defineExpose({
   toggleVoiceRecording,
   toggleVoiceRecordingFor,
   toggleHighlight,
+  flushNotes,
 })
 </script>

@@ -1,11 +1,36 @@
 export const MATCH_ACTIVITY_KEY = 'among_us_detective_last_match_activity'
 export const MATCH_CACHE_TTL_MS = 2 * 60 * 60 * 1000 // 2 hours in milliseconds
 
-export function touchMatchActivity(): void {
+let touchTimeout: ReturnType<typeof setTimeout> | null = null
+let lastTouchTimestamp = 0
+const ACTIVITY_THROTTLE_WINDOW_MS = 1500
+
+function writeActivityTimestamp(): void {
   if (typeof window === 'undefined') return
   try {
     localStorage.setItem(MATCH_ACTIVITY_KEY, Date.now().toString())
   } catch {}
+  lastTouchTimestamp = Date.now()
+  if (touchTimeout !== null) {
+    clearTimeout(touchTimeout)
+    touchTimeout = null
+  }
+}
+
+export function touchMatchActivity(immediate = false): void {
+  if (typeof window === 'undefined') return
+
+  if (immediate) {
+    writeActivityTimestamp()
+    return
+  }
+
+  const now = Date.now()
+  if (now - lastTouchTimestamp > ACTIVITY_THROTTLE_WINDOW_MS) {
+    writeActivityTimestamp()
+  } else if (!touchTimeout) {
+    touchTimeout = setTimeout(writeActivityTimestamp, ACTIVITY_THROTTLE_WINDOW_MS)
+  }
 }
 
 export function getLastMatchActivity(): number {
@@ -40,7 +65,7 @@ export function checkAndExpireMatchSession(stores: {
     stores.tasksStore?.resetAllTasks?.()
     stores.impostorStore?.clearFellowImpostors?.()
     stores.impostorStore?.setImpostorMode?.(false)
-    touchMatchActivity()
+    touchMatchActivity(true)
     return true
   }
   touchMatchActivity()

@@ -39,6 +39,7 @@
           :target="item.target"
           v-bind="moveableOptions"
           @drag="handleDrag"
+          @dragEnd="handleDragEnd"
         />
       </template>
     </div>
@@ -134,11 +135,22 @@ const handleDrag = ({
 }) => {
   if (roundsStore.isViewingHistory) return;
   target.style.transform = transform;
+};
+
+const handleDragEnd = ({
+  target,
+  isDrag,
+}: {
+  target: HTMLElement | SVGElement;
+  isDrag?: boolean;
+}) => {
+  if (roundsStore.isViewingHistory) return;
+  if (isDrag === false) return;
   const color = Object.keys(targetRefs.value).find(
     (c) => targetRefs.value[c] === target
   );
-  if (color) {
-    roundsStore.setMapPosition(color, transform);
+  if (color && target && "style" in target) {
+    roundsStore.setMapPosition(color, (target as HTMLElement).style.transform || "");
   }
 };
 
