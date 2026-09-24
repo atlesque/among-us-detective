@@ -38,7 +38,7 @@
               class="px-3 py-1.5 text-xs font-bold rounded-t border border-b-0 transition-colors cursor-pointer"
               :class="activeTab === 'changelog'
                 ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
               @click="activeTab = 'changelog'"
             >
               {{ t('about.changelog') }}
@@ -47,7 +47,7 @@
               class="px-3 py-1.5 text-xs font-bold rounded-t border border-b-0 transition-colors cursor-pointer"
               :class="activeTab === 'upcomingChanges'
                 ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
               @click="activeTab = 'upcomingChanges'"
             >
               {{ t('about.roadmapBacklog') }}

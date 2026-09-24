@@ -1,11 +1,11 @@
 <template>
-  <div class="game-roster-selector bg-theme-gray-extra-dark/95 dark:bg-black/90 rounded border border-gray-700/60 p-2 mb-2.5 shadow-sm transition-all">
+  <div class="game-roster-selector bg-white/95 dark:bg-black/90 rounded border border-gray-200 dark:border-gray-700/60 p-2 mb-2.5 shadow-sm transition-all">
     <!-- Header Bar (Always visible) -->
     <div class="flex flex-wrap items-center justify-center sm:justify-between gap-2 text-xs">
       <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
         <!-- Minimize / Expand Toggle Button -->
         <button
-          class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-bold transition-all shadow-sm cursor-pointer"
+          class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-bold transition-all shadow-sm cursor-pointer"
           :title="(isMinimized ? 'Expandir ' : 'Minimizar ') + t('roster.title') + ' (L)'"
           @click="isMinimized = !isMinimized"
         >
@@ -17,25 +17,27 @@
 
         <!-- Count indicator -->
         <span
-          class="px-2 py-0.5 font-bold rounded text-[11px]"
-          :class="activeCount <= 15 ? 'bg-emerald-900/40 text-emerald-300 border border-emerald-700/50' : 'bg-amber-900/40 text-amber-300 border border-amber-700/50'"
+          class="px-2 py-0.5 font-bold rounded text-[11px] shadow-xs transition-colors"
+          :class="activeCount <= 15
+            ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50'
+            : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700/50'"
         >
           {{ activeCount }} / 15 {{ t('roster.playing') }} ({{ 18 - activeCount }} {{ t('roster.notInGame') }})
         </span>
 
         <!-- ME: (Color) indicator badge — clickable to open color picker -->
         <button
-          class="relative flex items-center gap-1.5 px-2 py-0.5 rounded bg-yellow-400/15 border border-yellow-400/40 text-yellow-300 cursor-pointer hover:bg-yellow-400/30 hover:border-yellow-400/70 active:scale-95 transition-all group"
+          class="relative flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100/90 dark:bg-yellow-400/15 border border-amber-300 dark:border-yellow-400/40 text-amber-900 dark:text-yellow-300 cursor-pointer hover:bg-amber-200/90 dark:hover:bg-yellow-400/30 hover:border-amber-400 dark:hover:border-yellow-400/70 active:scale-95 transition-all group shadow-xs"
           data-test="player-selector-btn"
           :title="t('roster.chooseColor')"
           @click.stop="isColorPickerOpen = !isColorPickerOpen"
         >
-          <span class="text-[10px] font-black tracking-wider text-yellow-400">{{ t('roster.me') }}</span>
+          <span class="text-[10px] font-black tracking-wider text-amber-700 dark:text-yellow-400">{{ t('roster.me') }}</span>
           <div class="w-4 h-4 flex items-center justify-center">
             <CrewIcon :color="crewStore.playerColor" :is-player="true" class="w-full h-full" />
           </div>
-          <span class="text-[11px] font-bold capitalize text-white">{{ tColor(crewStore.playerColor) }}</span>
-          <span class="text-[9px] text-yellow-400/60 group-hover:text-yellow-400 transition-colors ml-0.5">▼</span>
+          <span class="text-[11px] font-bold capitalize text-gray-900 dark:text-white">{{ tColor(crewStore.playerColor) }}</span>
+          <span class="text-[9px] text-amber-600 dark:text-yellow-400/60 group-hover:text-amber-800 dark:group-hover:text-yellow-400 transition-colors ml-0.5">▼</span>
         </button>
         <span
           class="hidden md:inline text-[9px] font-semibold leading-tight text-gray-400 dark:text-gray-500"
@@ -47,10 +49,10 @@
 
       <!-- Presets & Collapse State Control -->
       <div class="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-1.5 text-[10px] sm:text-[11px] mt-1 sm:mt-0">
-        <span v-if="!isMinimized" class="text-gray-400 mr-0.5 hidden sm:inline">{{ t('roster.presets') }}</span>
+        <span v-if="!isMinimized" class="text-gray-500 dark:text-gray-400 mr-0.5 hidden sm:inline">{{ t('roster.presets') }}</span>
         <button
           v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-semibold transition-colors"
+          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
           :title="t('roster.preset15')"
           @click="setPreset15"
         >
@@ -58,7 +60,7 @@
         </button>
         <button
           v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-semibold transition-colors"
+          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
           data-test="activate-all-btn"
           :title="t('roster.presetAll')"
           @click="selectAll"
@@ -67,7 +69,7 @@
         </button>
         <button
           v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-semibold transition-colors"
+          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
           data-test="clear-all-btn"
           :title="t('roster.presetClear')"
           @click="clearAll"
@@ -86,11 +88,11 @@
       >
         <div
           ref="colorPickerEl"
-          class="fixed bg-gray-900 border border-yellow-400/50 rounded-lg shadow-2xl p-2.5 sm:p-3 w-[280px] max-w-[calc(100vw-24px)] text-left"
+          class="fixed bg-white dark:bg-gray-900 border border-yellow-400/50 rounded-lg shadow-2xl p-2.5 sm:p-3 w-[280px] max-w-[calc(100vw-24px)] text-left"
           :style="colorPickerStyle"
           @click.stop
         >
-          <div class="text-[10px] font-bold uppercase tracking-wider text-yellow-400 mb-2">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-yellow-400 mb-2">
             {{ t('roster.chooseColor') }}
           </div>
           <div class="grid grid-cols-5 gap-1 sm:gap-1.5">
@@ -103,7 +105,7 @@
               :class="[
                 isPlayerColor(color)
                   ? 'ring-2 ring-yellow-400 bg-yellow-400/20 scale-105 sm:scale-110 shadow-lg'
-                  : 'bg-gray-800/80 hover:bg-gray-700 border border-gray-700/60 hover:border-gray-500'
+                  : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500'
               ]"
               :title="tColor(color)"
               @click="pickColor(color)"
@@ -111,7 +113,7 @@
               <div class="w-5 h-5 flex items-center justify-center pointer-events-none">
                 <CrewIcon :color="color" :is-player="isPlayerColor(color)" class="w-full h-full" />
               </div>
-              <span class="text-[7px] font-bold capitalize text-gray-300 mt-0.5 leading-[8px] break-words w-full text-center truncate">{{ tColor(color) }}</span>
+              <span class="text-[7px] font-bold capitalize text-gray-700 dark:text-gray-300 mt-0.5 leading-[8px] break-words w-full text-center truncate">{{ tColor(color) }}</span>
             </button>
           </div>
         </div>
@@ -121,7 +123,7 @@
     <!-- 18 Colors: Compact Bean Character Row (collapsible) -->
     <div
       v-if="!isMinimized"
-      class="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 mt-1 sm:mt-1.5 border-t border-gray-800"
+      class="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 mt-1 sm:mt-1.5 border-t border-gray-200 dark:border-gray-800"
     >
       <div
         v-for="color in allColors"
@@ -130,8 +132,8 @@
         :class="[
           rosterBeanSizeClasses,
           isMemberActive(color)
-            ? 'bg-gray-800/80 hover:bg-gray-700/80 border border-gray-700 opacity-100'
-            : 'bg-gray-900/40 hover:bg-gray-900/70 border border-dashed border-gray-800 opacity-30 grayscale',
+            ? 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700/80 border border-gray-300 dark:border-gray-700 opacity-100'
+            : 'bg-gray-50/80 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-900/70 border border-dashed border-gray-300 dark:border-gray-800 opacity-50 hover:opacity-80 dark:opacity-35 dark:hover:opacity-65 grayscale',
           isPlayerColor(color) ? 'ring-2 ring-yellow-400 !border-yellow-400 !opacity-100 !grayscale-0 shadow-md' : ''
         ]"
         :title="`${tColor(color)} (${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')})${isPlayerColor(color) ? ` - ${t('card.me')}` : ''}`"
@@ -160,16 +162,18 @@
           </span>
           <span
             v-else
-            class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full"
-            :class="isMemberActive(color) ? 'bg-emerald-500 shadow-[0_0_4px_#10b981]' : 'bg-gray-600'"
+            class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-colors"
+            :class="isMemberActive(color) ? 'bg-emerald-500 shadow-[0_0_4px_#10b981]' : 'bg-gray-400 dark:bg-gray-600'"
           />
         </div>
 
         <span
-          class="mt-0.5 w-full text-center text-[7px] sm:text-[8px] font-bold capitalize leading-[8px] sm:leading-[9px] break-words"
+          class="mt-0.5 w-full text-center text-[6.5px] xs:text-[7px] sm:text-[8px] font-bold capitalize leading-[8px] sm:leading-[9px] truncate px-0.5 tracking-tight transition-colors"
           :class="settingsStore.highlightColorNames
-            ? 'bg-white text-black px-0.5 rounded shadow-sm'
-            : 'text-gray-300'"
+            ? 'bg-gray-900 text-white dark:bg-white dark:text-black px-0.5 rounded shadow-sm'
+            : isMemberActive(color)
+              ? 'text-gray-800 dark:text-gray-200'
+              : 'text-gray-600 dark:text-gray-400'"
         >
           {{ getRosterDisplayName(color) }}
         </span>

@@ -3,17 +3,25 @@ All notable changes to **Among Us Detective** are documented in this file.
 
 ---
 
+## [2.3.0] - 2026-09-23 (Light Mode & Visual Refinements)
+
+### Added & Improved
+- **Full Light Mode Support**: Complete theme overhaul supporting light mode across all deduction boards, popovers, Detective Notepad, and modals.
+- **Dynamic Color Names Highlighting**: Theme-aware contrast badges for player names and roster beans.
+- **General Bug Fixes**: Secondary color contrast improvements, graveyard header styling, and mobile text wrapping fixes.
+
+---
+
 ## [2.2.0] - 2026-09-21 (Investigation Hardening & Review Polish)
 
 ### Added & Improved
-- **Read-Only History Snapshot Mode**: Drag-and-drop card movements, context menu edits, and role assignments are strictly locked while inspecting past meeting rounds (`R1`, `R2`, etc.) to prevent accidental board state corruption.
-- **Resilient Session Lifecycle & TTL**: Round 1 match state is preserved across page reloads with a 2-hour TTL expiration; all `localStorage` operations are wrapped in safe `try/catch` guards to prevent runtime crashes from corrupted browser storage.
-- **Clean Match Reset Lifecycle**: "New Match" now properly resets Impostor Mode state and fellow impostors without destroying or altering the active lobby roster.
-- **Unified Impostor Role Synchronization**: Single source of truth for impostor status and roles; fixed bug where confirming role in impostor mode would move players to alibi instead of fellow impostors.
-- **Multilingual Tasks & Location Translations**: Added official in-game names for all tasks and room locations across English, Portuguese, Spanish, Korean, French, and German; localized 'tan' color to 'Cáqui' in Brazilian Portuguese.
-- **Discreet Voice Dictation**: Auto-detection of browser language for speech recognition with dedicated language switcher and non-intrusive permission controls.
-- **Streamlined Privacy Banner**: Clean, transparent single-action cookie and storage disclosure banner.
-- **Mobile Roster Responsiveness**: Color picker popover is constrained to viewport bounds on narrow mobile screens, and emergency meeting counters are restricted to manual input.
+- **Read-Only History Snapshots**: Locked drag-and-drop and edits during past meeting inspections.
+- **Resilient Session Lifecycle**: Preserved round 1 state across reloads with 2-hour TTL and safe storage parsing.
+- **Clean Match Reset**: Board reset preserving active lobby roster.
+- **Impostor Role Routing**: Fixed role routing for confirmed fellow impostors.
+- **Multilingual Tasks**: Official in-game task and room names in 6 languages.
+- **Voice Dictation**: Automatic language detection and quick switcher.
+- **General Bug Fixes**: Mobile color picker boundary constraints and meeting counters.
 
 ---
 

@@ -3,14 +3,14 @@
     <!-- Round Navigation Timeline inside Notes -->
     <div class="flex items-center justify-between gap-1 overflow-x-auto pb-2 mb-2 border-b border-gray-200 dark:border-gray-700">
       <div class="flex items-center gap-1 shrink-0">
-        <span class="text-[10px] font-bold uppercase text-gray-400 mr-1">{{ t('header.timeline') }}:</span>
+        <span class="text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 mr-1">{{ t('header.timeline') }}:</span>
         <button
           v-for="snap in roundsStore.roundHistory"
           :key="snap.roundNumber"
           type="button"
           class="px-2 py-0.5 text-[11px] font-bold rounded border transition-all"
           :class="roundsStore.viewingRoundNumber === snap.roundNumber
-            ? 'bg-amber-500 text-black border-amber-400 shadow-sm'
+            ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
             : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
           :title="`R${snap.roundNumber}`"
           @click="roundsStore.setViewingRound(snap.roundNumber)"
@@ -47,7 +47,7 @@
           <span>{{ micPermissionState === 'granted' ? t('settings.micAllowed') : t('settings.micAllow') }}</span>
         </button>
 
-        <span class="text-gray-400 text-[10px]">Lang:</span>
+        <span class="text-gray-500 dark:text-gray-400 text-[10px]">Lang:</span>
         <select
           v-model="selectedSpeechLang"
           class="text-[11px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"

@@ -15,8 +15,8 @@
       v-if="showColorName || (showPlayerName && playerName)"
       class="absolute -top-3.5 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded text-[9px] font-bold capitalize leading-tight"
       :class="highlightColorName
-        ? 'bg-white text-black px-1 py-0.5 ring-1 ring-gray-400 shadow-sm'
-        : 'bg-black/60 text-white px-1 py-0.2 backdrop-blur-sm'"
+        ? 'bg-gray-900 text-white dark:bg-white dark:text-black px-1 py-0.5 ring-1 ring-gray-700 dark:ring-gray-300 shadow-sm'
+        : 'bg-black/75 text-white px-1 py-0.2 backdrop-blur-sm shadow-xs'"
     >
       {{ (showPlayerName && playerName) ? playerName : tColor(color) }}
     </span>

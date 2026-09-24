@@ -23,16 +23,23 @@ interface ChangelogItem {
 
 const changelog: ChangelogItem[] = [
   {
-    date: '2026-09-21 (v2.2 - Investigation Hardening & UX Polish)',
+    date: '2026-09-23 (v2.3 - Modo Claro & Refinamento Visual)',
     changes: [
-      '<b>🔒 Read-Only History Snapshot Mode:</b> Locked drag-and-drop card movements and contextual edits when inspecting past meeting rounds to prevent accidental state corruption',
-      '<b>🛡️ Resilient Session Lifecycle:</b> Round 1 match state is preserved across page reloads with a 2-hour TTL expiration; all localStorage parsing is protected against corrupted data with safe try/catch guards',
-      '<b>🔄 Clean Match Reset:</b> "New Match" now properly resets Impostor Mode state and fellow impostors while preserving the active match lobby roster',
-      '<b>🎭 Unified Impostor Synchronization:</b> Centralized role confirmation and column destination logic so confirmed impostor roles accurately route to fellow impostors rather than alibi',
-      '<b>🌐 Multilingual Tasks & Official Translations:</b> Official in-game names for all tasks and room locations across English, Portuguese, Spanish, Korean, French, and German, plus localized tan color to "Cáqui" (pt-BR)',
-      '<b>🎙️ Discreet Voice Dictation:</b> Auto-detection of browser language for speech recognition with dedicated language switcher and non-intrusive permission controls',
-      '<b>🍪 Streamlined Privacy Banner:</b> Single-action transparent cookie and storage consent banner',
-      '<b>📱 Mobile Roster Responsiveness:</b> Constrained color picker popover to viewport bounds on narrow screens, and restricted emergency meeting counters to manual input',
+      '<b>☀️ Modo Claro Completo:</b> Suporte completo ao tema claro em todos os painéis, modais, quadro de deduções e ferramentas',
+      '<b>🎨 Contraste e Destaque Dinâmico:</b> Cores secundárias ajustadas e tags de nomes e cores com contraste dinâmico de alto relevo',
+      '<b>🐛 Fix de Bugs Gerais:</b> Correções no cabeçalho de mortos, quebras de linhas de cores no lobby e refinamento em botões e badges',
+    ],
+  },
+  {
+    date: '2026-09-21 (v2.2 - Histórico & Correções Gerais)',
+    changes: [
+      '<b>🔒 Histórico em Modo Leitura:</b> Bloqueio de arrastar e editar ao visualizar reuniões passadas',
+      '<b>🛡️ Persistência Segura:</b> Sessão da rodada 1 protegida com TTL e tratamento de erros no armazenamento',
+      '<b>🔄 Reinício Limpo:</b> Botão de nova partida preservando a lista de jogadores do lobby ativo',
+      '<b>🎭 Sincronização do Impostor:</b> Correção no roteamento de papéis e confirmações de parceiros impostores',
+      '<b>🌐 Nomes Oficiais de Tarefas:</b> Tradução oficial de salas e tarefas em 6 idiomas',
+      '<b>🎙️ Ditado por Voz:</b> Detecção automática de idioma e seletor rápido',
+      '<b>🐛 Fix de Bugs Gerais:</b> Ajustes de responsividade móvel no seletor de cores e nos contadores de reunião',
     ],
   },
   {

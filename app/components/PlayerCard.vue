@@ -6,7 +6,7 @@
       isPlayer ? 'ring-2 ring-yellow-400 bg-yellow-400/10 shadow' : 'shadow-sm',
       isFellowImpostor ? 'ring-2 ring-rose-500 bg-rose-950/20 shadow' : '',
       member.isDead
-        ? 'bg-neutral-900/80 border border-red-900/40 opacity-70'
+        ? 'bg-red-50/80 dark:bg-neutral-900/80 border border-red-200 dark:border-red-900/40 opacity-80 hover:opacity-100'
         : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500',
       cardSizeClasses
     ]"
@@ -25,8 +25,8 @@
       :class="[
         nameTextClasses,
         highlightColorNames
-          ? 'px-0.5 sm:px-1 py-0.5 bg-white text-black ring-1 ring-gray-400 shadow-sm'
-          : 'text-white bg-transparent'
+          ? 'px-0.5 sm:px-1 py-0.5 bg-gray-900 text-white dark:bg-white dark:text-black ring-1 ring-gray-700 dark:ring-gray-300 shadow-sm'
+          : 'text-gray-900 dark:text-white bg-transparent'
       ]"
     >
       {{ (showPlayerNames && member.playerName) ? member.playerName : tColor(member.color) }}
@@ -106,7 +106,7 @@
     <!-- History evolution indicator (if viewing past round and current live status differs) -->
     <span
       v-if="roundsStore.isViewingHistory && liveStatusDifference"
-      class="w-full text-[7px] font-bold text-center truncate leading-none mt-0.5 px-0.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30"
+      class="w-full text-[7px] font-bold text-center truncate leading-none mt-0.5 px-0.5 py-0.5 rounded bg-amber-50 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30"
       :title="`Current status in Live game: ${liveStatusDifference}`"
     >
       Now: {{ liveStatusDifference }}
@@ -144,7 +144,7 @@
             <button
               v-if="!member.isPlayer"
               type="button"
-              class="shrink-0 px-2 py-0.5 text-[11px] font-bold rounded bg-yellow-400/20 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors"
+              class="shrink-0 px-2 py-0.5 text-[11px] font-bold rounded bg-amber-100 dark:bg-yellow-400/20 text-amber-800 dark:text-yellow-300 border border-amber-300 dark:border-yellow-400/30 hover:bg-amber-200 dark:hover:bg-yellow-400 hover:text-amber-950 dark:hover:text-black transition-colors"
               :title="t('card.setAsMe')"
               @click="setAsMyPlayer"
             >
@@ -242,7 +242,7 @@
               ? isImpostorRole
                 ? 'border-rose-500/50 bg-rose-500/10'
                 : 'border-emerald-500/50 bg-emerald-500/10'
-              : 'border-yellow-500/50 bg-yellow-500/10'"
+              : 'border-amber-300 dark:border-yellow-500/50 bg-amber-50 dark:bg-yellow-500/10'"
             data-test="role-confirmation"
           >
             <div class="flex items-center justify-between gap-2 mb-1">
@@ -250,7 +250,7 @@
                 class="text-[10px] font-bold uppercase tracking-wider"
                 :class="member.roleConfirmed
                   ? isImpostorRole ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-yellow-700 dark:text-yellow-400'"
+                  : 'text-amber-800 dark:text-yellow-400'"
               >
                 {{ member.roleConfirmed ? t('card.roleVerified') : t('card.confirmRole') }}
               </span>
@@ -258,7 +258,7 @@
                 class="text-[10px] font-bold"
                 :class="member.roleConfirmed
                   ? isImpostorRole ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-yellow-700 dark:text-yellow-400'"
+                  : 'text-amber-800 dark:text-yellow-400'"
               >
                 {{ member.roleConfirmed ? t('card.verified') : t('card.claimed') }}
               </span>
@@ -334,7 +334,7 @@
             <div v-if="member.role" class="flex justify-end">
               <button
                 type="button"
-                class="px-2 py-0.5 text-[11px] text-gray-400 hover:text-red-500 rounded hover:bg-red-500/10 transition-colors flex items-center gap-1"
+                class="px-2 py-0.5 text-[11px] text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 rounded hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors flex items-center gap-1"
                 title="Clear role"
                 @click="clearRole"
               >
@@ -347,7 +347,7 @@
               type="button"
               class="w-full py-1.5 px-2 text-[11px] font-bold rounded transition-colors flex items-center justify-center gap-1.5"
               :class="member.isDead
-                ? 'bg-red-500/20 text-red-500 dark:text-red-400 hover:bg-red-500/30 border border-red-500/40'
+                ? 'bg-red-50 dark:bg-red-500/20 text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/30 border border-red-300 dark:border-red-500/40'
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white border border-gray-300 dark:border-gray-700'"
               @click="handleToggleDead"
             >

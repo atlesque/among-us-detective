@@ -91,11 +91,11 @@
 
       <!-- Dead Box (underneath Unknown) -->
       <div
-        class="flex flex-col rounded border border-neutral-700/80 bg-white dark:bg-gray-900 shadow-sm transition-all"
+        class="flex flex-col rounded border border-neutral-300 dark:border-neutral-700/80 bg-white dark:bg-gray-900 shadow-sm transition-all"
         :class="{ [boxMinHeightClass]: deadList.length === 0 }"
       >
         <div
-          class="bg-neutral-800 text-red-400 font-bold flex items-center justify-between rounded-t select-none"
+          class="bg-neutral-800 text-red-400 font-bold flex items-center justify-between rounded-t select-none border-b border-red-500/20"
           :class="headerPaddingClass"
           data-test="crew-col-header-dead"
         >
@@ -103,7 +103,7 @@
           <span class="opacity-80 font-normal ml-1 shrink-0">({{ deadList.length }})</span>
         </div>
         <div
-          class="p-0.5 sm:p-1 bg-neutral-900/40 rounded-b flex-1 flex flex-col"
+          class="p-0.5 sm:p-1 bg-neutral-100/60 dark:bg-neutral-900/40 rounded-b flex-1 flex flex-col"
           :class="{ [poolMinHeightClass]: deadList.length === 0 }"
           data-test="crew-column-dead"
         >

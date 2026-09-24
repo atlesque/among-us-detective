@@ -33,7 +33,7 @@
     <!-- Yellow '?' badge overlay when roleConfirmed is false -->
     <span
       v-if="showBadge && role && !confirmed"
-      class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 bg-yellow-400 text-black font-black text-[10px] rounded-full border border-black shadow pointer-events-none z-10"
+      class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 bg-yellow-400 text-black font-black text-[10px] rounded-full border border-white dark:border-gray-900 ring-1 ring-black/20 dark:ring-white/20 shadow-md pointer-events-none z-10"
       title="Unverified Claim"
     >
       ?
@@ -42,7 +42,7 @@
     <!-- Verified badge uses red for impostor roles and green for crew roles -->
     <span
       v-else-if="showBadge && role && confirmed"
-      class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 text-white font-black text-[10px] rounded-full border border-black shadow pointer-events-none z-10"
+      class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 text-white font-black text-[10px] rounded-full border border-white dark:border-gray-900 ring-1 ring-black/20 dark:ring-white/20 shadow-md pointer-events-none z-10"
       :class="isImpostorRole ? 'bg-rose-600' : 'bg-emerald-500'"
       title="Verified Claim"
     >

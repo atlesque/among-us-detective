@@ -16,7 +16,7 @@
       <span class="hidden sm:inline-block sm:align-middle sm:h-screen" />&#8203;
       <div
         :class="[
-          isDarkMode ? 'bg-gray-900 text-gray-100 border border-gray-700/80 shadow-2xl' : 'bg-white',
+          isDarkMode ? 'bg-gray-900 text-gray-100 border border-gray-700/80 shadow-2xl' : 'bg-white text-gray-900 border border-gray-200 shadow-xl',
           maxWidthClass,
         ]"
         class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full sm:p-6"
@@ -27,7 +27,7 @@
         <div class="absolute top-0 right-0 pt-4 pr-4">
           <button
             type="button"
-            class="text-gray-400 transition duration-150 ease-in-out hover:text-gray-500 focus:outline-none focus:text-gray-500"
+            class="p-1 rounded-md text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
             aria-label="Close"
             @click="emit('close')"
           >

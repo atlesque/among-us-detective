@@ -1,14 +1,14 @@
 <template>
   <section class="relative map-player-tracker">
     <div class="flex justify-between items-center mb-1">
-      <div v-if="roundsStore.isViewingHistory" class="text-xs text-amber-500 font-semibold flex items-center gap-1">
+      <div v-if="roundsStore.isViewingHistory" class="text-xs text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
         <AppIcon name="clock" class="w-3.5 h-3.5 shrink-0" />
         <span>Round {{ roundsStore.viewingRoundNumber }} Map Snapshot (Read-Only)</span>
       </div>
       <div v-else />
       <button
         v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory"
-        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm"
+        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
         @click="resetPositions"
       >
         <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
