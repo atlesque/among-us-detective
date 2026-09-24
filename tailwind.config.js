@@ -93,7 +93,7 @@ module.exports = {
           banana: "#F0E7A8",
           "banana-light": "#f6f1cb",
 
-          "gray-dark": "##465664",
+          "gray-dark": "#465664",
           gray: "#758593",
           "gray-light": "#acb6be",
 

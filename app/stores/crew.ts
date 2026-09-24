@@ -7,6 +7,7 @@ export const CREW_ROLES = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noise
 
 export type ImpostorRole = (typeof IMPOSTOR_ROLES)[number];
 export type CrewRole = (typeof CREW_ROLES)[number];
+export type Role = ImpostorRole | CrewRole | string | null;
 
 export function isImpostorRole(role: string | null | undefined): boolean {
   if (!role) return false;
@@ -213,21 +214,48 @@ export const useCrewStore = defineStore("crew", () => {
     });
   }
 
+  function sanitizeRoleForStatus(
+    role: Role,
+    targetStatus: ColumnStatus,
+    currentConfirmed: boolean
+  ): { role: Role; roleConfirmed: boolean } {
+    let nextRole = role;
+    let nextConfirmed = currentConfirmed;
+    const isImp = isImpostorRole(role);
+    const isCrew = isCrewRole(role);
+
+    // Hard Clear and Impostor are explicit confirmation points for matching role claims.
+    if (targetStatus === 'hard_clear' && isImp) {
+      nextRole = null;
+      nextConfirmed = false;
+    } else if (targetStatus === 'hard_clear' && isCrew) {
+      nextConfirmed = true;
+    } else if (targetStatus === 'impostor') {
+      if (isCrew) {
+        nextConfirmed = false;
+      } else if (isImp) {
+        nextConfirmed = true;
+      }
+    }
+
+    // If crew role moved out of hard_clear, unverify!
+    if (targetStatus !== 'dead' && !isImp && targetStatus !== 'hard_clear' && nextConfirmed) {
+      nextConfirmed = false;
+    }
+    // If impostor role moved out of impostor, unverify!
+    if (targetStatus !== 'dead' && isImp && targetStatus !== 'impostor' && nextConfirmed) {
+      nextConfirmed = false;
+    }
+
+    return { role: nextRole, roleConfirmed: nextConfirmed };
+  }
+
   function setPlayerStatus(colorOrId: string, newStatus: ColumnStatus) {
     const roundsStore = useRoundsStore();
     crewMembers.value = crewMembers.value.map((m) => {
       if (m.color === colorOrId || m.id === colorOrId) {
-        let roleConfirmed = m.roleConfirmed;
-        const isImp = isImpostorRole(m.role);
-        // If crew role moved out of hard_clear, unverify!
-        if (newStatus !== 'dead' && !isImp && newStatus !== 'hard_clear' && m.roleConfirmed) {
-          roleConfirmed = false;
-        }
-        // If impostor role moved out of impostor, unverify!
-        if (newStatus !== 'dead' && isImp && newStatus !== 'impostor' && m.roleConfirmed) {
-          roleConfirmed = false;
-        }
-        const isMemberImposter = newStatus === 'impostor' || isImp;
+        const { role, roleConfirmed } = sanitizeRoleForStatus(m.role, newStatus, m.roleConfirmed);
+        const isMemberImposter = newStatus === 'impostor' || isImpostorRole(role);
         if (newStatus === 'dead') {
           return {
             ...m,
@@ -235,6 +263,7 @@ export const useCrewStore = defineStore("crew", () => {
             isDead: true,
             diedInRound: m.diedInRound || roundsStore.currentRoundNumber,
             status: 'dead' as ColumnStatus,
+            role,
             roleConfirmed,
             isImposter: isMemberImposter,
           };
@@ -245,6 +274,7 @@ export const useCrewStore = defineStore("crew", () => {
             diedInRound: undefined,
             previousStatus: m.status !== 'dead' ? m.status : m.previousStatus,
             status: newStatus,
+            role,
             roleConfirmed,
             isImposter: isMemberImposter,
           };
@@ -263,12 +293,20 @@ export const useCrewStore = defineStore("crew", () => {
           const restoredStatus = (m.previousStatus && m.previousStatus !== 'dead')
             ? m.previousStatus
             : 'unknown';
+          const { role, roleConfirmed } = sanitizeRoleForStatus(
+            m.role,
+            restoredStatus as ColumnStatus,
+            m.roleConfirmed
+          );
+          const isImp = isImpostorRole(role);
           return {
             ...m,
             isDead: false,
             diedInRound: undefined,
             status: restoredStatus as ColumnStatus,
-            roleConfirmed: false,
+            role,
+            roleConfirmed,
+            isImposter: restoredStatus === 'impostor' || isImp,
           };
         } else {
           return {
@@ -288,33 +326,8 @@ export const useCrewStore = defineStore("crew", () => {
     const memberColors = members.map((m) => m.color);
     const updatedMembers = crewMembers.value.map((m) => {
       if (memberColors.includes(m.color)) {
-        let roleConfirmed = m.roleConfirmed;
-        let role = m.role;
-        const isImp = isImpostorRole(m.role);
-        const isCrew = isCrewRole(m.role);
-
-        // Hard Clear and Impostor are explicit confirmation points for matching role claims.
-        if (status === 'hard_clear' && isImp) {
-          role = null;
-          roleConfirmed = false;
-        } else if (status === 'hard_clear' && isCrew) {
-          roleConfirmed = true;
-        } else if (status === 'impostor') {
-          if (isCrew) {
-            roleConfirmed = false;
-          } else if (isImp) {
-            roleConfirmed = true;
-          }
-        }
-        // If crew role moved out of hard_clear, unverify!
-        if (status !== 'dead' && !isImp && status !== 'hard_clear' && roleConfirmed) {
-          roleConfirmed = false;
-        }
-        // If impostor role moved out of impostor, unverify!
-        if (status !== 'dead' && isImp && status !== 'impostor' && roleConfirmed) {
-          roleConfirmed = false;
-        }
-        const isMemberImposter = status === 'impostor' || isImp;
+        const { role, roleConfirmed } = sanitizeRoleForStatus(m.role, status, m.roleConfirmed);
+        const isMemberImposter = status === 'impostor' || isImpostorRole(role);
         if (status === 'dead') {
           const roundsStore = useRoundsStore();
           return {
@@ -493,9 +506,9 @@ export const useCrewStore = defineStore("crew", () => {
     }
 
     // 2. Fill the remaining slots in standard roster order until we reach `count`
-    for (const m of crewMembers.value) {
+    for (const color of (allColors as string[])) {
       if (targetColors.size >= count) break;
-      targetColors.add(m.color);
+      targetColors.add(color);
     }
 
     // 3. Update crewMembers

@@ -404,7 +404,7 @@ const isTouchDevice = ref(false)
 const displayedCrewMembers = computed(() => {
   if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
     const list = roundsStore.activeSnapshot.crewMembers
-    const active = list.filter((m) => m.isActive && (settingsStore.canTrackOwnColor ? true : m.color !== crewStore.playerColor))
+    const active = list.filter((m) => m.isActive && m.color !== crewStore.playerColor)
     return {
       hardClear: active.filter((m) => m.status === 'hard_clear' && !m.isDead),
       trusted: active.filter((m) => m.status === 'trusted' && !m.isDead),
@@ -587,6 +587,8 @@ function initNewMatch() {
 }
 
 function initNewRound() {
+  // Flush pending notes immediately before archiving round snapshot
+  notepadRef.value?.flushNotes?.()
   // Archive current round before advancing (saves snapshot with current roundNotes)
   roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
   crewStore.resetActiveCrew()

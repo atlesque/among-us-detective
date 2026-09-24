@@ -54,6 +54,7 @@ onMounted(() => {
     notesStore,
     tasksStore,
     impostorStore,
+    settingsStore,
   })
 
   // Re-check when returning to the tab after being away
@@ -65,6 +66,7 @@ onMounted(() => {
         notesStore,
         tasksStore,
         impostorStore,
+        settingsStore,
       })
     }
   })
@@ -88,8 +90,7 @@ onMounted(() => {
     ],
     () => {
       touchMatchActivity()
-    },
-    { deep: true }
+    }
   )
 
   let hasDismissed = false

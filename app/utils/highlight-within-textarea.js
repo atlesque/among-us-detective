@@ -374,7 +374,9 @@ export default (function() {
         match,
         submatch
       ) {
-        let className = boundaries[+submatch].className;
+        const b = boundaries[+submatch];
+        if (!b) return match;
+        const className = b.className;
         if (className) {
           return '<mark class="' + className + '">';
         } else {

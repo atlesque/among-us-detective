@@ -6,11 +6,8 @@
         <template v-if="isFeedbackScreenOpen">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSda7OlGq68xKkVyx3GsZZntwrGN_CZZJRidgCl5J6R1QIyB2g/viewform?embedded=true"
-            width="100%"
-            height="520"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
+            class="w-full h-[520px] border-0 rounded-lg"
+            title="Feedback Form"
           >Loading…</iframe>
         </template>
         <template v-else>

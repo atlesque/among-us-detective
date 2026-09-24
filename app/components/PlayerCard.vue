@@ -14,6 +14,10 @@
     :title="isEffectiveReadOnly
       ? `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + member.role + ')' : ''} [${t('notes.readOnlySnapshot')}]`
       : `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + member.role + (member.roleConfirmed ? ' - Verified' : ' - Claimed') + ')' : ''}. ${t('card.clickForOptions')}`"
+    :role="isEffectiveReadOnly ? undefined : 'button'"
+    :tabindex="isEffectiveReadOnly ? -1 : 0"
+    @keydown.enter.prevent="handleCardClick"
+    @keydown.space.prevent="handleCardClick"
     @touchstart.passive="handleTouchStart"
     @touchmove.passive="handleTouchMove"
     @click.stop="handleCardClick"
@@ -652,11 +656,12 @@ function clearRole() {
 }
 
 function toggleRoleConfirmed() {
+  const willBeConfirmed = !props.member.roleConfirmed
   crewStore.toggleRoleConfirmed(props.member.color)
   if (impostorStore.isImpostorModeActive) {
-    if (!props.member.roleConfirmed && isImpostorRole.value) {
+    if (willBeConfirmed && isImpostorRole.value) {
       impostorStore.setFellowImpostorRole(props.member.color, props.member.role)
-    } else if (props.member.roleConfirmed) {
+    } else if (!willBeConfirmed) {
       impostorStore.setFellowImpostorRole(props.member.color, null)
     }
   }

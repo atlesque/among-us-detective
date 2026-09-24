@@ -1,7 +1,7 @@
 <template>
   <div class="donate-button">
     <template v-if="showLink">
-      <a href="https://www.paypal.com/donate?hosted_button_id=GUU8QVSRZFSCQ" target="_blank">
+      <a href="https://www.paypal.com/donate?hosted_button_id=GUU8QVSRZFSCQ" target="_blank" rel="noopener noreferrer">
         Donate
       </a>
     </template>

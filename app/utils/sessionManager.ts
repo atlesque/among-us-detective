@@ -56,12 +56,15 @@ export function checkAndExpireMatchSession(stores: {
   notesStore: any
   tasksStore: any
   impostorStore: any
+  settingsStore?: any
 }): boolean {
   if (isMatchSessionExpired()) {
     stores.roundsStore?.startNewMatch?.()
     stores.crewStore?.resetAllCrew?.()
     stores.notesStore?.clearRoundNotes?.()
-    stores.notesStore?.clearGameNotes?.()
+    if (stores.settingsStore?.resetNotesOnNewGame !== false) {
+      stores.notesStore?.clearGameNotes?.()
+    }
     stores.tasksStore?.resetAllTasks?.()
     stores.impostorStore?.clearFellowImpostors?.()
     stores.impostorStore?.setImpostorMode?.(false)

@@ -198,16 +198,6 @@
               </div>
             </div>
 
-            <div
-              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
-              data-test="setting-track-own-color"
-            >
-              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.canTrackOwnColor') }}</span>
-              <Checkbox
-                :is-checked="settingsStore.canTrackOwnColor"
-                @changed="settingsStore.setCanTrackOwnColor"
-              />
-            </div>
 
             <!-- Notes -->
             <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.notesSection') }}</div>
@@ -313,6 +303,17 @@
               <Checkbox
                 :is-checked="settingsStore.showMapColorNames"
                 @changed="settingsStore.setShowMapColorNames"
+              />
+            </div>
+
+            <div
+              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
+              data-test="setting-track-own-color"
+            >
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.canTrackOwnColor') }}</span>
+              <Checkbox
+                :is-checked="settingsStore.canTrackOwnColor"
+                @changed="settingsStore.setCanTrackOwnColor"
               />
             </div>
           </div>
