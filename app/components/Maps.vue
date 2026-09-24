@@ -12,14 +12,18 @@
         <AppIcon name="map" class="w-3.5 h-3.5 shrink-0" />
         <span>{{ mapsStore.isMapVisible ? t('map.hide') : t('map.show') }}</span>
       </button>
-      <div
-        v-show="mapsStore.isMapVisible"
-        class="flex items-center p-1 rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
-      >
-        <MapSelector :selected-map="mapsStore.selectedMap" @map-selected="selectMap" />
-      </div>
+      <Transition name="fade">
+        <div
+          v-show="mapsStore.isMapVisible"
+          class="flex items-center p-1 rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
+        >
+          <MapSelector :selected-map="mapsStore.selectedMap" @map-selected="selectMap" />
+        </div>
+      </Transition>
     </div>
-    <div v-show="mapsStore.isMapVisible" class="mx-auto map-container" data-test="map-container">
+    <Transition name="map-expand">
+      <div v-show="mapsStore.isMapVisible" class="map-expand-wrapper overflow-hidden">
+        <div class="mx-auto map-container" data-test="map-container">
       <MapPlayerTracker class="z-10" />
       <div
         class="map-picture-container"
@@ -72,6 +76,8 @@
       </div>
     </div>
   </div>
+</Transition>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -99,6 +105,10 @@ button {
   max-width: 1366px;
 }
 .map-picture-container {
+  picture,
+  > div {
+    transition: opacity 200ms ease;
+  }
   picture {
     pointer-events: none;
   }

@@ -1,7 +1,7 @@
 import { expect, test } from "../fixtures/base";
 import { openHelp } from "../helpers/modals";
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 test.describe("Help guide", () => {
   test("Help modal opens when Help button is clicked", async ({ page }) => {
@@ -72,10 +72,10 @@ test.describe("Help guide", () => {
     await openHelp(page);
     await page.click("[data-test='help-tab-rounds']");
     await expect(page.locator("[data-test='help-view-rounds']")).toBeVisible();
-    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("2/4");
-    await page.click("[data-test='help-tab-mapnotes']");
-    await expect(page.locator("[data-test='help-view-map-notes']")).toBeVisible();
-    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("4/4");
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText(`2/${TOTAL_STEPS}`);
+    await page.click("[data-test='help-tab-tools']");
+    await expect(page.locator("[data-test='help-view-tools']")).toBeVisible();
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText(`${TOTAL_STEPS}/${TOTAL_STEPS}`);
     await expect(page.locator("[data-test='help-close-btn']")).toBeVisible();
   });
 });

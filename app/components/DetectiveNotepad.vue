@@ -19,7 +19,7 @@
         <!-- Minimize / Expand Toggle Button -->
         <button
           type="button"
-          class="w-6 h-6 rounded-md transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+          class="w-6 h-6 rounded-md transition-all flex items-center justify-center shrink-0 cursor-pointer active:scale-90"
           :class="impostorStore.isImpostorModeActive
             ? 'bg-rose-100 dark:bg-rose-900/40 hover:bg-rose-200 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-300 border border-rose-300/50 dark:border-rose-700/50'
             : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700/60'"
@@ -29,8 +29,9 @@
           @click="isMinimized = !isMinimized"
         >
           <AppIcon
-            :name="isMinimized ? 'chevron-down' : 'chevron-up'"
-            class="w-3.5 h-3.5 shrink-0"
+            name="chevron-up"
+            class="w-3.5 h-3.5 shrink-0 transition-transform duration-250 ease-out"
+            :class="isMinimized ? 'rotate-180' : 'rotate-0'"
           />
         </button>
 
@@ -140,31 +141,33 @@
           />
 
           <!-- Dropdown Options Menu -->
-          <div
-            v-if="isVoiceLangMenuOpen"
-            class="absolute right-0 top-full mt-1.5 z-50 min-w-[140px] py-1 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl backdrop-blur-md"
-          >
-            <button
-              v-for="opt in voiceLanguageOptions"
-              :key="opt.value"
-              type="button"
-              class="w-full flex items-center justify-between px-3 py-1.5 text-[11px] font-medium text-left transition-colors cursor-pointer"
-              :class="settingsStore.speechLanguage === opt.value
-                ? 'bg-blue-50 dark:bg-blue-600/20 text-blue-600 dark:text-blue-300 font-bold border-l-2 border-blue-500'
-                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'"
-              @click="selectSpeechLanguage(opt.value)"
+          <Transition name="popover-scale">
+            <div
+              v-if="isVoiceLangMenuOpen"
+              class="absolute right-0 top-full mt-1.5 z-50 min-w-[140px] py-1 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl backdrop-blur-md"
             >
-              <span class="flex items-center gap-2">
-                <span>{{ opt.flag }}</span>
-                <span>{{ opt.label }}</span>
-              </span>
-              <AppIcon
-                v-if="settingsStore.speechLanguage === opt.value"
-                name="check"
-                class="w-3 h-3 text-blue-500 dark:text-blue-400"
-              />
-            </button>
-          </div>
+              <button
+                v-for="opt in voiceLanguageOptions"
+                :key="opt.value"
+                type="button"
+                class="w-full flex items-center justify-between px-3 py-1.5 text-[11px] font-medium text-left transition-colors cursor-pointer"
+                :class="settingsStore.speechLanguage === opt.value
+                  ? 'bg-blue-50 dark:bg-blue-600/20 text-blue-600 dark:text-blue-300 font-bold border-l-2 border-blue-500'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'"
+                @click="selectSpeechLanguage(opt.value)"
+              >
+                <span class="flex items-center gap-2">
+                  <span>{{ opt.flag }}</span>
+                  <span>{{ opt.label }}</span>
+                </span>
+                <AppIcon
+                  v-if="settingsStore.speechLanguage === opt.value"
+                  name="check"
+                  class="w-3 h-3 text-blue-500 dark:text-blue-400"
+                />
+              </button>
+            </div>
+          </Transition>
         </div>
 
         <span
@@ -194,7 +197,7 @@
     </div>
 
     <!-- Notepad Body (Collapsible & Compact) -->
-    <div v-show="!isMinimized" class="p-2.5 sm:p-3.5">
+    <div v-show="!isMinimized" class="p-2.5 sm:p-3.5 transition-opacity duration-200">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3.5">
         <!-- Round Notes Column -->
         <div v-if="settingsStore.showRoundNotes" class="flex flex-col">

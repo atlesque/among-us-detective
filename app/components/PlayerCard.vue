@@ -2,7 +2,7 @@
   <div
     class="player-card relative flex flex-col items-center justify-start gap-0 p-0.5 sm:p-1 rounded transition-all duration-200 select-none group"
     :class="[
-      isEffectiveReadOnly ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
+      isEffectiveReadOnly ? 'cursor-default' : 'cursor-grab active:cursor-grabbing hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.98]',
       isPlayer ? 'ring-2 ring-yellow-400 bg-yellow-400/10 shadow' : 'shadow-sm',
       isFellowImpostor ? 'ring-2 ring-rose-500 bg-rose-950/20 shadow' : '',
       member.isDead
@@ -114,21 +114,22 @@
 
     <!-- Compact Floating Popover Menu (Teleported to body, anchored beside clicked card) -->
     <Teleport to="body">
-      <div
-        v-if="isCurrentMenuOpen"
-        class="fixed inset-0 z-50 select-none"
-      >
+      <Transition name="popover-scale">
         <div
-          class="fixed inset-0 bg-transparent"
-          data-test="card-menu-overlay"
-          @click.stop="closeMenu"
-          @contextmenu.prevent.stop="closeMenu"
-        />
-        <div
-          class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
-          :style="menuStyle"
-          @click.stop
+          v-if="isCurrentMenuOpen"
+          class="fixed inset-0 z-50 select-none"
         >
+          <div
+            class="fixed inset-0 bg-black/10 dark:bg-black/30 backdrop-blur-[1px] transition-opacity"
+            data-test="card-menu-overlay"
+            @click.stop="closeMenu"
+            @contextmenu.prevent.stop="closeMenu"
+          />
+          <div
+            class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
+            :style="menuStyle"
+            @click.stop
+          >
           <!-- Header: Color Dot, Player Name, Set as Me -->
           <div class="flex items-center justify-between gap-1.5 pb-2 mb-2 border-b border-gray-200 dark:border-gray-800">
             <div class="flex items-center gap-1.5 min-w-0">
@@ -360,7 +361,8 @@
           </div>
         </div>
       </div>
-    </Teleport>
+    </Transition>
+  </Teleport>
   </div>
 </template>
 

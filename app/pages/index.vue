@@ -140,54 +140,58 @@
     <GameRosterSelector ref="rosterSelectorRef" />
 
     <!-- Browser Zoom Notice Banner -->
-    <div
-      v-if="isBrowserZoomed && !isZoomNoticeDismissed"
-      class="mb-3 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between gap-2 shadow-sm transition-all"
-      data-test="zoom-warning-banner"
-    >
-      <div class="flex items-center gap-2 min-w-0">
-        <AppIcon name="alert" class="w-4 h-4 text-amber-500 shrink-0" />
-        <div class="leading-tight text-[11px] sm:text-xs">
-          <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }} <strong>{{ t('zoom.boardZoom') }}</strong> {{ t('zoom.inSettings').toLowerCase() }} </span>
-          <button
-            type="button"
-            class="underline font-bold text-amber-600 dark:text-amber-400 hover:text-amber-500"
-            @click="openSettingsForZoom"
-          >
-            {{ t('dock.settings') }}
-          </button>
-          <span> {{ t('zoom.forCleanest') }}</span>
-        </div>
-      </div>
-      <button
-        type="button"
-        class="shrink-0 p-1 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200 rounded text-xs font-bold leading-none flex items-center justify-center"
-        title="Dismiss notice"
-        @click="dismissZoomNotice"
+    <Transition name="banner-slide">
+      <div
+        v-if="isBrowserZoomed && !isZoomNoticeDismissed"
+        class="mb-3 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between gap-2 shadow-sm transition-all"
+        data-test="zoom-warning-banner"
       >
-        <AppIcon name="close" class="w-3.5 h-3.5" />
-      </button>
-    </div>
+        <div class="flex items-center gap-2 min-w-0">
+          <AppIcon name="alert" class="w-4 h-4 text-amber-500 shrink-0" />
+          <div class="leading-tight text-[11px] sm:text-xs">
+            <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }} <strong>{{ t('zoom.boardZoom') }}</strong> {{ t('zoom.inSettings').toLowerCase() }} </span>
+            <button
+              type="button"
+              class="underline font-bold text-amber-600 dark:text-amber-400 hover:text-amber-500"
+              @click="openSettingsForZoom"
+            >
+              {{ t('dock.settings') }}
+            </button>
+            <span> {{ t('zoom.forCleanest') }}</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="shrink-0 p-1 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200 rounded text-xs font-bold leading-none flex items-center justify-center cursor-pointer"
+          title="Dismiss notice"
+          @click="dismissZoomNotice"
+        >
+          <AppIcon name="close" class="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </Transition>
 
     <!-- History Inspection Mode Warning Banner -->
-    <div
-      v-if="roundsStore.isViewingHistory"
-      class="mb-3 px-3 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/40 text-indigo-900 dark:text-indigo-200 text-xs flex items-center justify-between gap-2 shadow-sm"
-    >
-      <div class="flex items-center gap-2 min-w-0">
-        <AppIcon name="clock" class="w-4 h-4 text-indigo-400 shrink-0" />
-        <span class="leading-tight text-[11px] sm:text-xs">
-          {{ t('header.historyNotice') }} <strong>R{{ roundsStore.viewingRoundNumber }}</strong> {{ t('header.historyReadOnly') }}
-        </span>
-      </div>
-      <button
-        type="button"
-        class="shrink-0 px-2.5 py-1 text-xs font-bold rounded bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
-        @click="roundsStore.setViewingRound(null)"
+    <Transition name="banner-slide">
+      <div
+        v-if="roundsStore.isViewingHistory"
+        class="mb-3 px-3 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/40 text-indigo-900 dark:text-indigo-200 text-xs flex items-center justify-between gap-2 shadow-sm"
       >
-        {{ t('header.returnToLive') }}
-      </button>
-    </div>
+        <div class="flex items-center gap-2 min-w-0">
+          <AppIcon name="clock" class="w-4 h-4 text-indigo-400 shrink-0" />
+          <span class="leading-tight text-[11px] sm:text-xs">
+            {{ t('header.historyNotice') }} <strong>R{{ roundsStore.viewingRoundNumber }}</strong> {{ t('header.historyReadOnly') }}
+          </span>
+        </div>
+        <button
+          type="button"
+          class="shrink-0 px-2.5 py-1 text-xs font-bold rounded bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer active:scale-95"
+          @click="roundsStore.setViewingRound(null)"
+        >
+          {{ t('header.returnToLive') }}
+        </button>
+      </div>
+    </Transition>
 
     <!-- Mobile Touch Drag Hint (Only shown on physical touch screens, never on desktop mouse even when resized) -->
     <div
@@ -333,10 +337,18 @@
       </div>
     </footer>
 
-    <HelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
-    <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
-    <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
-    <TasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
+    <Transition name="modal">
+      <HelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
+    </Transition>
+    <Transition name="modal">
+      <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
+    </Transition>
+    <Transition name="modal">
+      <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
+    </Transition>
+    <Transition name="modal">
+      <TasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
+    </Transition>
     <CookieWarning />
   </div>
 </template>
@@ -370,7 +382,7 @@ function toggleNotes() {
 }
 
 function handleDockNotesClick() {
-  toggleNotes()
+  notepadRef.value?.expandAndFocus()
 }
 
 function toggleMapVisibility() {

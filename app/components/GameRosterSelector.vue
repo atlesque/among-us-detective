@@ -12,7 +12,11 @@
           <AppIcon name="users" class="w-3.5 h-3.5 text-blue-400 shrink-0" />
           <span class="font-bold">{{ t('roster.title') }}</span>
           <kbd class="hidden md:inline-block text-[10px] px-1 py-0.2 rounded bg-black/30 text-gray-300 font-mono">L</kbd>
-          <span class="text-[9px] text-gray-400 font-mono">{{ isMinimized ? '▶' : '▼' }}</span>
+          <AppIcon
+            name="chevron-down"
+            class="w-3 h-3 text-gray-400 transition-transform duration-200"
+            :class="isMinimized ? '-rotate-90' : 'rotate-0'"
+          />
         </button>
 
         <!-- Count indicator -->
@@ -48,137 +52,146 @@
       </div>
 
       <!-- Presets & Collapse State Control -->
-      <div class="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-1.5 text-[10px] sm:text-[11px] mt-1 sm:mt-0">
-        <span v-if="!isMinimized" class="text-gray-500 dark:text-gray-400 mr-0.5 hidden sm:inline">{{ t('roster.presets') }}</span>
-        <button
-          v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
-          :title="t('roster.preset15')"
-          @click="setPreset15"
-        >
-          {{ t('roster.preset15') }}
-        </button>
-        <button
-          v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
-          data-test="activate-all-btn"
-          :title="t('roster.presetAll')"
-          @click="selectAll"
-        >
-          {{ t('roster.presetAll') }}
-        </button>
-        <button
-          v-if="!isMinimized"
-          class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-colors shadow-2xs"
-          data-test="clear-all-btn"
-          :title="t('roster.presetClear')"
-          @click="clearAll"
-        >
-          {{ t('roster.presetClear') }}
-        </button>
+      <div class="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-1.5 text-[10px] sm:text-[11px] mt-1 sm:mt-0 min-h-[24px]">
+        <Transition name="fade">
+          <div v-if="!isMinimized" class="flex items-center gap-1.5">
+            <span class="text-gray-500 dark:text-gray-400 mr-0.5 hidden sm:inline">{{ t('roster.presets') }}</span>
+            <button
+              class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-all shadow-2xs cursor-pointer active:scale-95"
+              :title="t('roster.preset15')"
+              @click="setPreset15"
+            >
+              {{ t('roster.preset15') }}
+            </button>
+            <button
+              class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-all shadow-2xs cursor-pointer active:scale-95"
+              data-test="activate-all-btn"
+              :title="t('roster.presetAll')"
+              @click="selectAll"
+            >
+              {{ t('roster.presetAll') }}
+            </button>
+            <button
+              class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-all shadow-2xs cursor-pointer active:scale-95"
+              data-test="clear-all-btn"
+              :title="t('roster.presetClear')"
+              @click="clearAll"
+            >
+              {{ t('roster.presetClear') }}
+            </button>
+          </div>
+        </Transition>
       </div>
     </div>
 
     <!-- Color Picker Popover (opens when ME badge is clicked) -->
     <Teleport to="body">
-      <div
-        v-if="isColorPickerOpen"
-        class="fixed inset-0 z-50 select-none bg-transparent"
-        @click.stop="isColorPickerOpen = false"
-      >
+      <Transition name="popover-scale">
         <div
-          ref="colorPickerEl"
-          class="fixed bg-white dark:bg-gray-900 border border-yellow-400/50 rounded-lg shadow-2xl p-2.5 sm:p-3 w-[280px] max-w-[calc(100vw-24px)] text-left"
-          :style="colorPickerStyle"
-          @click.stop
+          v-if="isColorPickerOpen"
+          class="fixed inset-0 z-50 select-none bg-black/15 dark:bg-black/30 backdrop-blur-[1px]"
+          @click.stop="isColorPickerOpen = false"
         >
-          <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-yellow-400 mb-2">
-            {{ t('roster.chooseColor') }}
-          </div>
-          <div class="grid grid-cols-5 gap-1 sm:gap-1.5">
-            <button
-              v-for="color in allColors"
-              :key="color"
-              type="button"
-              :data-test="`player-color-${color}`"
-              class="w-full min-w-0 min-h-[48px] sm:min-h-[54px] flex flex-col items-center justify-center p-1 rounded transition-all cursor-pointer"
-              :class="[
-                isPlayerColor(color)
-                  ? 'ring-2 ring-yellow-400 bg-yellow-400/20 scale-105 sm:scale-110 shadow-lg'
-                  : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500'
-              ]"
-              :title="tColor(color)"
-              @click="pickColor(color)"
-            >
-              <div class="w-5 h-5 flex items-center justify-center pointer-events-none">
-                <CrewIcon :color="color" :is-player="isPlayerColor(color)" class="w-full h-full" />
-              </div>
-              <span class="text-[7px] font-bold capitalize text-gray-700 dark:text-gray-300 mt-0.5 leading-[8px] break-words w-full text-center truncate">{{ tColor(color) }}</span>
-            </button>
+          <div
+            ref="colorPickerEl"
+            class="fixed bg-white dark:bg-gray-900 border border-yellow-400/50 rounded-lg shadow-2xl p-2.5 sm:p-3 w-[280px] max-w-[calc(100vw-24px)] text-left"
+            :style="colorPickerStyle"
+            @click.stop
+          >
+            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-yellow-400 mb-2">
+              {{ t('roster.chooseColor') }}
+            </div>
+            <div class="grid grid-cols-5 gap-1 sm:gap-1.5">
+              <button
+                v-for="color in allColors"
+                :key="color"
+                type="button"
+                :data-test="`player-color-${color}`"
+                class="w-full min-w-0 min-h-[48px] sm:min-h-[54px] flex flex-col items-center justify-center p-1 rounded transition-all cursor-pointer hover:scale-105 active:scale-95"
+                :class="[
+                  isPlayerColor(color)
+                    ? 'ring-2 ring-yellow-400 bg-yellow-400/20 scale-105 sm:scale-110 shadow-lg'
+                    : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500'
+                ]"
+                :title="tColor(color)"
+                @click="pickColor(color)"
+              >
+                <div class="w-5 h-5 flex items-center justify-center pointer-events-none">
+                  <CrewIcon :color="color" :is-player="isPlayerColor(color)" class="w-full h-full" />
+                </div>
+                <span class="text-[7px] font-bold capitalize text-gray-700 dark:text-gray-300 mt-0.5 leading-[8px] break-words w-full text-center truncate">{{ tColor(color) }}</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </Transition>
     </Teleport>
 
     <!-- 18 Colors: Compact Bean Character Row (collapsible) -->
-    <div
-      v-if="!isMinimized"
-      class="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 mt-1 sm:mt-1.5 border-t border-gray-200 dark:border-gray-800"
-    >
+    <Transition name="roster-collapse">
       <div
-        v-for="color in allColors"
-        :key="color"
-        class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all cursor-pointer select-none"
-        :class="[
-          rosterBeanSizeClasses,
-          isMemberActive(color)
-            ? 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700/80 border border-gray-300 dark:border-gray-700 opacity-100'
-            : 'bg-gray-50/80 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-900/70 border border-dashed border-gray-300 dark:border-gray-800 opacity-50 hover:opacity-80 dark:opacity-35 dark:hover:opacity-65 grayscale',
-          isPlayerColor(color) ? 'ring-2 ring-yellow-400 !border-yellow-400 !opacity-100 !grayscale-0 shadow-md' : ''
-        ]"
-        :title="`${tColor(color)} (${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')})${isPlayerColor(color) ? ` - ${t('card.me')}` : ''}`"
-        @click="toggleActive(color)"
-        @contextmenu.prevent="setAsMyPlayer(color)"
-        @dblclick.prevent="setAsMyPlayer(color)"
+        v-if="!isMinimized"
+        class="roster-collapse-wrapper overflow-hidden"
       >
-        <!-- Bean Avatar -->
-        <div :class="rosterAvatarSizeClasses" class="flex items-center justify-center pointer-events-none">
-          <CrewIcon
-            :color="color"
-            :is-dead="false"
-            :is-player="isPlayerColor(color)"
-            :show-player-name="false"
-            class="w-full h-full"
-          />
-        </div>
-
-        <!-- Dot / Me indicator -->
-        <div class="mt-0.5 flex items-center justify-center">
-          <span
-            v-if="isPlayerColor(color)"
-            class="text-[6px] sm:text-[8px] font-black px-0.5 sm:px-1 rounded bg-yellow-400 text-black leading-tight"
-          >
-            {{ t('roster.meBadge') }}
-          </span>
-          <span
-            v-else
-            class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-colors"
-            :class="isMemberActive(color) ? 'bg-emerald-500 shadow-[0_0_4px_#10b981]' : 'bg-gray-400 dark:bg-gray-600'"
-          />
-        </div>
-
-        <span
-          class="mt-0.5 w-full text-center text-[6.5px] xs:text-[7px] sm:text-[8px] font-bold capitalize leading-[8px] sm:leading-[9px] truncate px-0.5 tracking-tight transition-colors"
-          :class="settingsStore.highlightColorNames
-            ? 'bg-gray-900 text-white dark:bg-white dark:text-black px-0.5 rounded shadow-sm'
-            : isMemberActive(color)
-              ? 'text-gray-800 dark:text-gray-200'
-              : 'text-gray-600 dark:text-gray-400'"
+        <div
+          class="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 mt-1 sm:mt-1.5 border-t border-gray-200 dark:border-gray-800"
         >
-          {{ getRosterDisplayName(color) }}
-        </span>
+          <div
+            v-for="color in allColors"
+            :key="color"
+            class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer select-none"
+            :class="[
+              rosterBeanSizeClasses,
+              isMemberActive(color)
+                ? 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700/80 border border-gray-300 dark:border-gray-700 opacity-100'
+                : 'bg-gray-50/80 dark:bg-gray-900/40 hover:bg-gray-100 dark:hover:bg-gray-900/70 border border-dashed border-gray-300 dark:border-gray-800 opacity-50 hover:opacity-80 dark:opacity-35 dark:hover:opacity-65 grayscale',
+              isPlayerColor(color) ? 'ring-2 ring-yellow-400 !border-yellow-400 !opacity-100 !grayscale-0 shadow-md' : ''
+            ]"
+            :title="`${tColor(color)} (${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')})${isPlayerColor(color) ? ` - ${t('card.me')}` : ''}`"
+            @click="toggleActive(color)"
+            @contextmenu.prevent="setAsMyPlayer(color)"
+            @dblclick.prevent="setAsMyPlayer(color)"
+          >
+            <!-- Bean Avatar -->
+            <div :class="rosterAvatarSizeClasses" class="flex items-center justify-center pointer-events-none">
+              <CrewIcon
+                :color="color"
+                :is-dead="false"
+                :is-player="isPlayerColor(color)"
+                :show-player-name="false"
+                class="w-full h-full"
+              />
+            </div>
+
+            <!-- Dot / Me indicator -->
+            <div class="mt-0.5 flex items-center justify-center">
+              <span
+                v-if="isPlayerColor(color)"
+                class="text-[6px] sm:text-[8px] font-black px-0.5 sm:px-1 rounded bg-yellow-400 text-black leading-tight"
+              >
+                {{ t('roster.meBadge') }}
+              </span>
+              <span
+                v-else
+                class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-colors"
+                :class="isMemberActive(color) ? 'bg-emerald-500 shadow-[0_0_4px_#10b981]' : 'bg-gray-400 dark:bg-gray-600'"
+              />
+            </div>
+
+            <span
+              class="mt-0.5 w-full text-center text-[6.5px] xs:text-[7px] sm:text-[8px] font-bold capitalize leading-[8px] sm:leading-[9px] truncate px-0.5 tracking-tight transition-colors"
+              :class="settingsStore.highlightColorNames
+                ? 'bg-gray-900 text-white dark:bg-white dark:text-black px-0.5 rounded shadow-sm'
+                : isMemberActive(color)
+                  ? 'text-gray-800 dark:text-gray-200'
+                  : 'text-gray-600 dark:text-gray-400'"
+            >
+              {{ getRosterDisplayName(color) }}
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
 

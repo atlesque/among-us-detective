@@ -19,7 +19,7 @@
           isDarkMode ? 'bg-gray-900 text-gray-100 border border-gray-700/80 shadow-2xl' : 'bg-white text-gray-900 border border-gray-200 shadow-xl',
           maxWidthClass,
         ]"
-        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full sm:p-6"
+        class="modal-dialog-content inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
