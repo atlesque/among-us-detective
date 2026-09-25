@@ -50,9 +50,13 @@ const { t } = useI18n()
 const isVisible = ref(false)
 
 onMounted(() => {
-  const choice = localStorage.getItem('acceptedCookies')
-  if (!choice) {
-    isVisible.value = true
+  try {
+    const choice = localStorage.getItem('acceptedCookies')
+    if (!choice) {
+      isVisible.value = true
+    }
+  } catch {
+    isVisible.value = false
   }
 })
 

@@ -45,7 +45,7 @@ export function useI18n() {
     let str = translations[currentLoc]?.[key] || translations['en-US']?.[key] || key;
     if (params) {
       for (const [pKey, pVal] of Object.entries(params)) {
-        str = str.replace(new RegExp(`\\{${pKey}\\}`, 'g'), String(pVal));
+        str = str.replaceAll(`{${pKey}}`, () => String(pVal));
       }
     }
     return str;

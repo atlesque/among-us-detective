@@ -7,7 +7,7 @@
     "build": "nuxt generate",
     "build:ssr": "nuxt build",
     "preview": "nuxt preview",
-    "lint": "eslint .",
+    "typecheck": "vue-tsc --noEmit",
     "e2e": "playwright test"
   },
   "dependencies": {

@@ -362,7 +362,7 @@ export default (function() {
       input = input.replace(/\n({{hwt-mark-stop}})?$/, "\n\n$1");
 
       // encode HTML entities
-      input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      input = input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       if (this.browser === "ie") {
         // IE/Edge wraps whitespace differently in a div vs textarea, this fixes it
@@ -378,7 +378,8 @@ export default (function() {
         if (!b) return match;
         const className = b.className;
         if (className) {
-          return '<mark class="' + className + '">';
+          const safeClass = String(className).replace(/[^a-zA-Z0-9_\-\s]/g, "");
+          return '<mark class="' + safeClass + '">';
         } else {
           return "<mark>";
         }

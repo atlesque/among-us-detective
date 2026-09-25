@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 import type { CrewMember } from '~/stores/crew'
 
 export interface RoundSnapshot {
@@ -34,8 +36,8 @@ export const useRoundsStore = defineStore(
       currentMapPositions.value = {}
     }
 
-    function archiveCurrentRound(currentCrewMembers: CrewMember[], roundNotes: string) {
-      if (currentRoundNumber.value >= MAX_ROUNDS) return
+    function archiveCurrentRound(currentCrewMembers: CrewMember[], roundNotes: string): boolean {
+      if (currentRoundNumber.value >= MAX_ROUNDS) return false
 
       const snapshot: RoundSnapshot = {
         roundNumber: currentRoundNumber.value,
@@ -57,6 +59,7 @@ export const useRoundsStore = defineStore(
       currentMapPositions.value = {}
       currentRoundNumber.value += 1
       viewingRoundNumber.value = null
+      return true
     }
 
     function setViewingRound(roundNumber: number | null) {

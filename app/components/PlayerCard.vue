@@ -132,6 +132,7 @@
           <div
             class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
             :style="menuStyle"
+            data-card-popover-menu
             @click.stop
           >
           <!-- Header: Color Dot, Player Name, Set as Me -->
@@ -525,7 +526,11 @@ watch(isCurrentMenuOpen, (isOpen) => {
         closeMenu()
       }
     }
-    scrollListener = () => {
+    scrollListener = (e?: Event) => {
+      const target = e?.target as HTMLElement | null
+      if (target && target.closest?.('[data-card-popover-menu]')) {
+        return
+      }
       closeMenu()
     }
     window.addEventListener('keydown', escListener)
@@ -560,7 +565,7 @@ function handleTouchMove(e: TouchEvent) {
   }
 }
 
-function handleCardClick(e: MouseEvent) {
+function handleCardClick(e?: MouseEvent | KeyboardEvent) {
   if (isEffectiveReadOnly.value) return
   if (isTouchDragging) {
     isTouchDragging = false
@@ -569,7 +574,7 @@ function handleCardClick(e: MouseEvent) {
   openMenu(e)
 }
 
-function openMenu(event?: MouseEvent) {
+function openMenu(event?: MouseEvent | KeyboardEvent) {
   if (isEffectiveReadOnly.value) return
   if (event) {
     const target = (event.currentTarget as HTMLElement) || (event.target as HTMLElement)

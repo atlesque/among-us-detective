@@ -450,7 +450,6 @@ const quickRoundNotes = computed({
     if (roundsStore.isViewingHistory) return
     localRoundNotes.value = value
     debouncedSaveRoundNotes(value)
-    roundNotesHighlighter?.handleInput()
   },
 })
 
@@ -459,7 +458,6 @@ const gameNotes = computed({
   set: (value: string) => {
     localGameNotes.value = value
     debouncedSaveGameNotes(value)
-    gameNotesHighlighter?.handleInput()
   },
 })
 
@@ -593,6 +591,10 @@ function initSpeechRecording() {
           const cur = localRoundNotes.value
           quickRoundNotes.value = cur ? cur + ' ' + sanitized : sanitized
         }
+        nextTick(() => {
+          roundNotesHighlighter?.handleInput()
+          gameNotesHighlighter?.handleInput()
+        })
       }
     }
 

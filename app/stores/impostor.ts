@@ -1,3 +1,6 @@
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+
 export const useImpostorStore = defineStore(
   'impostor',
   () => {
@@ -20,12 +23,13 @@ export const useImpostorStore = defineStore(
     }
 
     function toggleFellowImpostor(color: string) {
-      const idx = fellowImpostors.value.indexOf(color);
-      if (idx >= 0) {
-        fellowImpostors.value.splice(idx, 1);
-        delete fellowImpostorRoles.value[color];
+      if (fellowImpostors.value.includes(color)) {
+        fellowImpostors.value = fellowImpostors.value.filter((c) => c !== color);
+        const updatedRoles = { ...fellowImpostorRoles.value };
+        delete updatedRoles[color];
+        fellowImpostorRoles.value = updatedRoles;
       } else {
-        fellowImpostors.value.push(color);
+        fellowImpostors.value = [...fellowImpostors.value, color];
       }
     }
 
@@ -35,17 +39,19 @@ export const useImpostorStore = defineStore(
 
     function setFellowImpostorRole(color: string, role: string | null) {
       if (!role) {
-        delete fellowImpostorRoles.value[color];
-        const idx = fellowImpostors.value.indexOf(color);
-        if (idx >= 0) {
-          fellowImpostors.value.splice(idx, 1);
-        }
+        const updatedRoles = { ...fellowImpostorRoles.value };
+        delete updatedRoles[color];
+        fellowImpostorRoles.value = updatedRoles;
+        fellowImpostors.value = fellowImpostors.value.filter((c) => c !== color);
         return;
       }
       if (!fellowImpostors.value.includes(color)) {
-        fellowImpostors.value.push(color);
+        fellowImpostors.value = [...fellowImpostors.value, color];
       }
-      fellowImpostorRoles.value[color] = role;
+      fellowImpostorRoles.value = {
+        ...fellowImpostorRoles.value,
+        [color]: role,
+      };
     }
 
     function clearFellowImpostors() {

@@ -587,10 +587,12 @@ function initNewMatch() {
 }
 
 function initNewRound() {
+  if (roundsStore.isMaxRoundsReached || roundsStore.isViewingHistory) return
   // Flush pending notes immediately before archiving round snapshot
   notepadRef.value?.flushNotes?.()
   // Archive current round before advancing (saves snapshot with current roundNotes)
-  roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
+  const archived = roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
+  if (!archived) return
   crewStore.resetActiveCrew()
   tasksStore.resetAllTasks()
   touchMatchActivity()
