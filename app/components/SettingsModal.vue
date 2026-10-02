@@ -87,7 +87,7 @@
                 @click="toggleDarkMode"
               >
                 <AppIcon :name="darkModeStore.isDarkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5 shrink-0" />
-                <span>{{ darkModeStore.isDarkMode ? "Dark" : "Light" }}</span>
+                <span>{{ darkModeStore.isDarkMode ? t('settings.themeDark') : t('settings.themeLight') }}</span>
               </button>
             </div>
 

@@ -347,7 +347,7 @@
                 </span>
                 <span>{{ t('help.impostorFakeTasksTitle') }}</span>
                 <span class="text-[9px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-bold uppercase ml-auto">
-                  Guia Essencial
+                  {{ t('help.essentialGuideBadge') }}
                 </span>
               </div>
               <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">

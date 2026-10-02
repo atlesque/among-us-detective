@@ -253,7 +253,10 @@ export default (function() {
       let match;
       regex.lastIndex = 0;
       while (((match = regex.exec(input)), match !== null)) {
-        ranges.push([match.index, match.index + match[0].length]);
+        const term = match[2] !== undefined ? match[2] : (match[1] !== undefined ? match[1] : match[0]);
+        const offset = match[0].indexOf(term);
+        const start = match.index + (offset >= 0 ? offset : 0);
+        ranges.push([start, start + term.length]);
         if (!regex.global) {
           // non-global regexes do not increase lastIndex, causing an infinite loop,
           // but we can just break manually after the first match

@@ -357,6 +357,7 @@
 import type { CrewMember } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
 import { touchMatchActivity } from '~/utils/sessionManager'
+import { activeMenuColor } from '~/components/PlayerCard.vue'
 
 const crewStore = useCrewStore()
 const settingsStore = useSettingsStore()
@@ -590,6 +591,14 @@ function initNewRound() {
   if (roundsStore.isMaxRoundsReached || roundsStore.isViewingHistory) return
   // Flush pending notes immediately before archiving round snapshot
   notepadRef.value?.flushNotes?.()
+
+  // Ensure diedInRound is populated on dead members before archiving round snapshot
+  crewStore.crewMembers.forEach((m) => {
+    if ((m.isDead || m.status === 'dead') && !m.diedInRound) {
+      m.diedInRound = roundsStore.currentRoundNumber
+    }
+  })
+
   // Archive current round before advancing (saves snapshot with current roundNotes)
   const archived = roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
   if (!archived) return
@@ -612,22 +621,32 @@ function handleCrewChanged({ type, value }: { type: string; value: CrewMember[] 
 function toggleHelpModal() {
   const newValue = !isHelpModalOpen.value
   isHelpModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_help', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_help', { event_category: 'global_stats' })
+  }
 }
 
 function toggleAboutModal() {
   const newValue = !isAboutModalOpen.value
   isAboutModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_changelog', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_changelog', { event_category: 'global_stats' })
+  }
 }
 
 function toggleSettingsModal() {
   const newValue = !isSettingsModalOpen.value
   isSettingsModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_settings', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_settings', { event_category: 'global_stats' })
+  }
 }
 
 function toggleNotesModal() {
+  activeMenuColor.value = null
   notepadRef.value?.expandAndFocus()
   gtag('event', 'open_notes', { event_category: 'global_stats' })
 }
@@ -635,7 +654,10 @@ function toggleNotesModal() {
 function toggleTasksModal() {
   const newValue = !isTasksModalOpen.value
   isTasksModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_fake_tasks', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_fake_tasks', { event_category: 'global_stats' })
+  }
 }
 </script>
 

@@ -204,34 +204,34 @@ const { t } = useI18n()
 
 const trackerGridGapClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'gap-1 sm:gap-1.5'
-  if (zoom === 'large') return 'gap-2 sm:gap-3'
-  if (zoom === 'extra-large') return 'gap-2.5 sm:gap-4'
-  return 'gap-1.5 sm:gap-2'
+  if (zoom === 'compact') return 'gap-1.5 sm:gap-2'
+  if (zoom === 'large') return 'gap-2.5 sm:gap-4'
+  if (zoom === 'extra-large') return 'gap-3 sm:gap-5'
+  return 'gap-2 sm:gap-3'
 })
 
 const boxMinHeightClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'min-h-[64px] sm:min-h-[76px]'
-  if (zoom === 'large') return 'min-h-[110px] sm:min-h-[135px]'
-  if (zoom === 'extra-large') return 'min-h-[135px] sm:min-h-[165px]'
-  return 'min-h-[85px] sm:min-h-[105px]'
+  if (zoom === 'compact') return 'min-h-[85px] sm:min-h-[105px]'
+  if (zoom === 'large') return 'min-h-[135px] sm:min-h-[165px]'
+  if (zoom === 'extra-large') return 'min-h-[160px] sm:min-h-[195px]'
+  return 'min-h-[110px] sm:min-h-[135px]'
 })
 
 const poolMinHeightClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'min-h-[44px] sm:min-h-[55px]'
-  if (zoom === 'large') return 'min-h-[85px] sm:min-h-[110px]'
-  if (zoom === 'extra-large') return 'min-h-[105px] sm:min-h-[135px]'
-  return 'min-h-[60px] sm:min-h-[80px]'
+  if (zoom === 'compact') return 'min-h-[60px] sm:min-h-[80px]'
+  if (zoom === 'large') return 'min-h-[105px] sm:min-h-[135px]'
+  if (zoom === 'extra-large') return 'min-h-[125px] sm:min-h-[160px]'
+  return 'min-h-[85px] sm:min-h-[110px]'
 })
 
 const headerPaddingClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'px-1 sm:px-1.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[10px]'
-  if (zoom === 'large') return 'px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px]'
-  if (zoom === 'extra-large') return 'px-2.5 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-black'
-  return 'px-1.5 sm:px-2 py-1 sm:py-1.5 text-[9.5px] sm:text-[11.5px]'
+  if (zoom === 'compact') return 'px-1.5 sm:px-2 py-1 sm:py-1.5 text-[9.5px] sm:text-[11.5px]'
+  if (zoom === 'large') return 'px-2.5 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-black'
+  if (zoom === 'extra-large') return 'px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base font-black'
+  return 'px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px]'
 })
 
 const hardClearList = computed({

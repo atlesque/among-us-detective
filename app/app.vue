@@ -58,18 +58,7 @@ onMounted(() => {
   })
 
   // Re-check when returning to the tab after being away
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      checkAndExpireMatchSession({
-        crewStore,
-        roundsStore,
-        notesStore,
-        tasksStore,
-        impostorStore,
-        settingsStore,
-      })
-    }
-  })
+  document.addEventListener('visibilitychange', handleVisibilityChange)
 
   // Shallow watcher for note updates (no recursive object traversal)
   watch(
@@ -79,14 +68,14 @@ onMounted(() => {
     }
   )
 
-  // Board and game state changes
+  // Board and game state changes (tracks state signatures without expensive deep traversal)
   watch(
     () => [
-      crewStore.crewMembers,
+      crewStore.crewMembers.map((m) => `${m.color}:${m.status}:${m.role}:${m.isDead}:${m.isActive}`).join(','),
       roundsStore.currentRoundNumber,
       roundsStore.roundHistory.length,
       impostorStore.isImpostorModeActive,
-      impostorStore.fellowImpostors,
+      impostorStore.fellowImpostors.join(','),
     ],
     () => {
       touchMatchActivity()
@@ -103,11 +92,32 @@ onMounted(() => {
 
   if (!hasDismissed) {
     window.addEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
-    window.addEventListener('appinstalled', () => {
-      isAppInstallationPromptVisible.value = false
-    })
+    window.addEventListener('appinstalled', handleAppInstalled)
   }
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  window.removeEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
+  window.removeEventListener('appinstalled', handleAppInstalled)
+})
+
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    checkAndExpireMatchSession({
+      crewStore,
+      roundsStore,
+      notesStore,
+      tasksStore,
+      impostorStore,
+      settingsStore,
+    })
+  }
+}
+
+function handleAppInstalled() {
+  isAppInstallationPromptVisible.value = false
+}
 
 function handleBeforeAppInstallPrompt(event: Event) {
   pwaInstallEvent = event as any

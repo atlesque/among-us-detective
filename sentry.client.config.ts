@@ -7,7 +7,7 @@ Sentry.init({
 
   // We recommend adjusting this value in production, or using tracesSampler
   // for finer control
-  tracesSampleRate: 1.0,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 0,
 
   // Session Replay disabled for privacy
   replaysSessionSampleRate: 0.0,

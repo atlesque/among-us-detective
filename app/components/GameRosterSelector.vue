@@ -6,7 +6,7 @@
         <!-- Minimize / Expand Toggle Button -->
         <button
           class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-bold transition-all shadow-sm cursor-pointer"
-          :title="(isMinimized ? 'Expandir ' : 'Minimizar ') + t('roster.title') + ' (L)'"
+          :title="`${isMinimized ? t('roster.expand') : t('roster.minimize')} ${t('roster.title')} (L)`"
           @click="isMinimized = !isMinimized"
         >
           <AppIcon name="users" class="w-3.5 h-3.5 text-blue-400 shrink-0" />
@@ -216,23 +216,23 @@ function getRosterDisplayName(color: string): string {
 const rosterBeanSizeClasses = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
   if (zoom === 'compact') {
-    return 'w-[28px] min-h-[34px] sm:w-[38px] sm:min-h-[42px]'
+    return 'w-[36px] min-h-[42px] sm:w-[48px] sm:min-h-[52px] md:w-[54px] md:min-h-[56px]'
   }
   if (zoom === 'large') {
-    return 'w-[44px] min-h-[50px] sm:w-[56px] sm:min-h-[62px] md:w-[62px] md:min-h-[64px]'
-  }
-  if (zoom === 'extra-large') {
     return 'w-[52px] min-h-[58px] sm:w-[66px] sm:min-h-[74px] md:w-[72px] md:min-h-[76px]'
   }
-  return 'w-[36px] min-h-[42px] sm:w-[48px] sm:min-h-[52px] md:w-[54px] md:min-h-[56px]'
+  if (zoom === 'extra-large') {
+    return 'w-[60px] min-h-[66px] sm:w-[76px] sm:min-h-[84px] md:w-[82px] md:min-h-[86px]'
+  }
+  return 'w-[44px] min-h-[50px] sm:w-[56px] sm:min-h-[62px] md:w-[62px] md:min-h-[64px]'
 })
 
 const rosterAvatarSizeClasses = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'w-3 h-3 sm:w-4 sm:h-4'
-  if (zoom === 'large') return 'w-5.5 h-5.5 sm:w-7 sm:h-7 md:w-7.5 md:h-7.5'
-  if (zoom === 'extra-large') return 'w-7 h-7 sm:w-8.5 sm:h-8.5 md:w-9 md:h-9'
-  return 'w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'
+  if (zoom === 'compact') return 'w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6'
+  if (zoom === 'large') return 'w-7 h-7 sm:w-8.5 sm:h-8.5 md:w-9 md:h-9'
+  if (zoom === 'extra-large') return 'w-8.5 h-8.5 sm:w-10 sm:h-10 md:w-11 md:h-11'
+  return 'w-5.5 h-5.5 sm:w-7 sm:h-7 md:w-7.5 md:h-7.5'
 })
 
 const activeCount = computed(() => {

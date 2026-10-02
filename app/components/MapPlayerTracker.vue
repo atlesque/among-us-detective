@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-1">
       <div v-if="roundsStore.isViewingHistory" class="text-xs text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
         <AppIcon name="clock" class="w-3.5 h-3.5 shrink-0" />
-        <span>Round {{ roundsStore.viewingRoundNumber }} Map Snapshot (Read-Only)</span>
+        <span>{{ t('map.historySnapshotTitle', { round: roundsStore.viewingRoundNumber }) }}</span>
       </div>
       <div v-else />
       <button
@@ -12,7 +12,7 @@
         @click="resetPositions"
       >
         <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
-        <span>Reset positions</span>
+        <span>{{ t('map.resetPositions') }}</span>
       </button>
     </div>
     <div class="container">
@@ -53,6 +53,7 @@ const crewStore = useCrewStore();
 const roundsStore = useRoundsStore();
 const settingsStore = useSettingsStore();
 const { highlightColorNames, showPlayerNames, showMapColorNames } = storeToRefs(settingsStore);
+const { t } = useI18n();
 
 const targetRefs = ref<Record<string, HTMLElement | null>>({});
 
@@ -95,10 +96,15 @@ function applyAllTransforms() {
 }
 
 watch(
-  () => [roundsStore.viewingRoundNumber, roundsStore.currentRoundNumber],
+  [
+    () => roundsStore.viewingRoundNumber,
+    () => roundsStore.currentRoundNumber,
+    () => roundsStore.currentMapPositions,
+  ],
   () => {
     applyAllTransforms();
-  }
+  },
+  { deep: true }
 );
 
 watch(trackedCrewMembers, (members) => {

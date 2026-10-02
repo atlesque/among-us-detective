@@ -24,7 +24,7 @@ export function buildTextHighlighterRules(
     if (player.name && player.name.trim().length >= 2) {
       const escaped = player.name.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
       rules.push({
-        highlight: new RegExp(`(?:^|(?<=[\\s,.;:!?()[\\]{}"'/\\\\–—]))(${escaped})(?=$|[\\s,.;:!?()[\\]{}"'/\\\\–—])`, 'gi'),
+        highlight: new RegExp(`(^|[\\s,.;:!?()[\\]{}"'/\\\\–—])(${escaped})(?=$|[\\s,.;:!?()[\\]{}"'/\\\\–—])`, 'gi'),
         className: `hwt-mark-${player.color}`,
       })
     }
@@ -109,7 +109,7 @@ export function buildTextHighlighterRules(
     const terms = Array.from(namesToMatch)
       .sort((a, b) => b.length - a.length)
       .map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-    const pattern = new RegExp(`(?:^|(?<=[\\s,.;:!?()[\\]{}"'/\\\\–—]))(${terms.join('|')})(?=$|[\\s,.;:!?()[\\]{}"'/\\\\–—])`, 'gi')
+    const pattern = new RegExp(`(^|[\\s,.;:!?()[\\]{}"'/\\\\–—])(${terms.join('|')})(?=$|[\\s,.;:!?()[\\]{}"'/\\\\–—])`, 'gi')
 
     rules.push({
       highlight: pattern,

@@ -102,7 +102,7 @@
           <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-bold">
             Marcos Binder
           </a> (<a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline">mrbbinder@gmail.com</a>)
-          <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 underline ml-1" title="Ver fork e modificações no GitHub">(ver fork no GitHub ↗)</a>.
+          <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 underline ml-1" :title="t('disclaimer.viewGithubFork')">({{ t('disclaimer.viewForkLink') }})</a>.
         </p>
 
         <p class="leading-relaxed">

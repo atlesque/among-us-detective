@@ -65,7 +65,7 @@
               <span class="block">
                 {{ t('about.modernizedBy') }}
                 <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">Marcos Binder</a>
-                <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-400 dark:text-gray-500 hover:text-emerald-500 underline ml-1" title="Ver modificações no GitHub">(fork v2.0)</a>
+                <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-400 dark:text-gray-500 hover:text-emerald-500 underline ml-1" :title="t('about.viewGithubFork')">(fork v2.0)</a>
               </span>
             </div>
             <div class="flex flex-col items-start sm:items-end gap-1">

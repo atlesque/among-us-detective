@@ -120,8 +120,8 @@
             type="button"
             data-test="notepad-voice-language-btn"
             class="flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer shadow-sm select-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700/50"
-            :title="`Reconhecimento de Voz: ${effectiveLanguageLabel}`"
-            aria-label="Idioma do reconhecimento de voz"
+            :title="`${t('notepad.voiceRecognitionTitle')}: ${effectiveLanguageLabel}`"
+            :aria-label="t('notepad.voiceRecognitionAria')"
             @click="isVoiceLangMenuOpen = !isVoiceLangMenuOpen"
           >
             <AppIcon name="mic" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0" />
@@ -192,7 +192,7 @@
         class="text-[10px] text-red-600 dark:text-red-300 hover:text-red-800 dark:hover:text-white underline shrink-0 font-bold cursor-pointer"
         @click="speechError = ''"
       >
-        Dismiss
+        {{ t('notepad.dismissError') }}
       </button>
     </div>
 
@@ -716,6 +716,16 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopRecording()
+  if (speechRecognition) {
+    speechRecognition.onstart = null
+    speechRecognition.onend = null
+    speechRecognition.onresult = null
+    speechRecognition.onerror = null
+    try {
+      speechRecognition.abort()
+    } catch {}
+    speechRecognition = null
+  }
   flushNotes()
   roundNotesHighlighter?.destroy()
   roundNotesHighlighter = null
