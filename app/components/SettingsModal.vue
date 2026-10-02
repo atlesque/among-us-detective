@@ -306,6 +306,7 @@
               />
             </div>
 
+            <!-- Track own pin on the map. Intentionally in the Map section because it only affects the movement map, not the deduction board. -->
             <div
               class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
               data-test="setting-track-own-color"

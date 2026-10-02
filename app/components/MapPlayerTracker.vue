@@ -57,7 +57,10 @@ const { t } = useI18n();
 
 const targetRefs = ref<Record<string, HTMLElement | null>>({});
 
-// Hide players who died in rounds prior to the currently displayed round
+// Active players shown on the movement map.
+// Note: canTrackOwnColor applies here to the map pins so you can hide your own token if you want.
+// On the main deduction board, your card stays visible with the ME badge so you can track roles and tasks.
+// Also hides players who died in rounds prior to the currently displayed round.
 const trackedCrewMembers = computed(() => {
   if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
     const snap = roundsStore.activeSnapshot;

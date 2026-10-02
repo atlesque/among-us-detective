@@ -6,6 +6,11 @@ const isRequestingMic = ref(false)
 let isInitialized = false
 
 export function useMicrophone() {
+  if (typeof window !== 'undefined' && !isInitialized) {
+    isInitialized = true
+    checkPermission()
+  }
+
   const isSupported = computed(() => {
     if (typeof navigator === 'undefined') return false
     return !!navigator.mediaDevices?.getUserMedia

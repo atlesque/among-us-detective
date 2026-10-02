@@ -8,6 +8,8 @@ export const useSettingsStore = defineStore(
     const settingsModalOpenState = ref(false);
     const resetNotesOnNewGame = ref(true);
     const showRoundNotes = ref(true);
+    // Shows or hides the player's own pin on the movement map.
+    // Kept strictly to the map (on the deduction board, your player card is always shown).
     const canTrackOwnColor = ref(true);
     const isImproveMapContrastEnabled = ref(true);
     const boardZoom = ref<'compact' | 'normal' | 'large' | 'extra-large'>('normal');

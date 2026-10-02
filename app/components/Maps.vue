@@ -39,9 +39,9 @@
           <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" loading="lazy" decoding="async" />
         </picture>
         <div v-if="mapsStore.selectedMap === 'mira-hq'" class="relative z-0">
-          <div class="absolute inset-0 z-10">
+          <div class="absolute inset-0 z-10 pointer-events-none">
             <button
-              class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer"
+              class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer pointer-events-auto"
               :class="areSensorsVisible
                 ? 'bg-amber-600 text-white border border-amber-500 hover:bg-amber-500'
                 : 'bg-white/95 dark:bg-gray-900/90 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'"

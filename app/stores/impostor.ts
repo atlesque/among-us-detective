@@ -41,6 +41,7 @@ export const useImpostorStore = defineStore(
       const updatedRoles = { ...fellowImpostorRoles.value };
       if (!role) {
         delete updatedRoles[color];
+        fellowImpostors.value = fellowImpostors.value.filter((c) => c !== color);
       } else {
         updatedRoles[color] = role;
         if (!fellowImpostors.value.includes(color)) {

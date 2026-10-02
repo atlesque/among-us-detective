@@ -31,10 +31,11 @@
 
         <!-- ME: (Color) indicator badge — clickable to open color picker -->
         <button
+          ref="colorPickerBtnRef"
           class="relative flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100/90 dark:bg-yellow-400/15 border border-amber-300 dark:border-yellow-400/40 text-amber-900 dark:text-yellow-300 cursor-pointer hover:bg-amber-200/90 dark:hover:bg-yellow-400/30 hover:border-amber-400 dark:hover:border-yellow-400/70 active:scale-95 transition-all group shadow-xs"
           data-test="player-selector-btn"
           :title="t('roster.chooseColor')"
-          @click.stop="isColorPickerOpen = !isColorPickerOpen"
+          @click.stop="toggleColorPicker"
         >
           <span class="text-[10px] font-black tracking-wider text-amber-700 dark:text-yellow-400">{{ t('roster.me') }}</span>
           <div class="w-4 h-4 flex items-center justify-center">
@@ -239,10 +240,12 @@ const activeCount = computed(() => {
   return crewStore.crewMembers.filter(m => m.isActive).length
 })
 
-// Position the color picker below the ME badge
-const colorPickerStyle = computed(() => {
-  const btn = document.querySelector('[data-test="player-selector-btn"]')
-  if (!btn) return { top: '80px', left: '12px' }
+const colorPickerBtnRef = ref<HTMLElement | null>(null)
+const colorPickerPosition = ref<{ top: number; left: number }>({ top: 80, left: 12 })
+
+function updateColorPickerPosition() {
+  const btn = colorPickerBtnRef.value || (typeof document !== 'undefined' ? document.querySelector('[data-test="player-selector-btn"]') as HTMLElement | null : null)
+  if (!btn) return
   const rect = btn.getBoundingClientRect()
   const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 360
   const pickerWidth = Math.min(280, Math.max(200, viewportWidth - 24))
@@ -255,12 +258,40 @@ const colorPickerStyle = computed(() => {
   }
   if (left < 12) left = 12
 
-  return {
-    top: `${top}px`,
-    left: `${left}px`,
-    maxWidth: 'calc(100vw - 24px)',
+  colorPickerPosition.value = { top, left }
+}
+
+function toggleColorPicker() {
+  if (!isColorPickerOpen.value) {
+    updateColorPickerPosition()
+    isColorPickerOpen.value = true
+  } else {
+    isColorPickerOpen.value = false
+  }
+}
+
+watch(isColorPickerOpen, (isOpen) => {
+  if (isOpen) {
+    const handleClose = () => { isColorPickerOpen.value = false }
+    const handleScroll = () => { updateColorPickerPosition() }
+    window.addEventListener('resize', handleClose, { passive: true })
+    window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
+    const unwatch = watch(isColorPickerOpen, (open) => {
+      if (!open) {
+        window.removeEventListener('resize', handleClose)
+        window.removeEventListener('scroll', handleScroll, { capture: true })
+        unwatch()
+      }
+    })
   }
 })
+
+// Position the color picker below the ME badge
+const colorPickerStyle = computed(() => ({
+  top: `${colorPickerPosition.value.top}px`,
+  left: `${colorPickerPosition.value.left}px`,
+  maxWidth: 'calc(100vw - 24px)',
+}))
 
 function isMemberActive(color: string) {
   const m = crewStore.crewMembers.find(x => x.color === color)
@@ -296,6 +327,7 @@ function selectAll() {
   crewStore.setPresetPlayerCount(18)
 }
 
+// Deactivates all beans so the user can click only the players in their custom game.
 function clearAll() {
   crewStore.setPresetPlayerCount(0)
 }

@@ -499,6 +499,8 @@ export const useCrewStore = defineStore("crew", () => {
 
   function setPresetPlayerCount(count: number) {
     if (count <= 0) {
+      // The 'Clear' preset deactivates everyone so players can pick custom lobby colors from scratch.
+      // Having 0 active players temporarily pauses the round buttons until players are picked.
       crewMembers.value = crewMembers.value.map((m) => ({
         ...m,
         isActive: false,
@@ -508,13 +510,19 @@ export const useCrewStore = defineStore("crew", () => {
 
     if (count >= crewMembers.value.length) {
       crewMembers.value = crewMembers.value.map((m) => {
-        const wasActive = m.isActive;
+        const wasInactive = !m.isActive;
         return {
           ...m,
           isActive: true,
-          status: !wasActive
+          status: wasInactive
             ? ('unknown' as ColumnStatus)
             : (m.status || ('unknown' as ColumnStatus)),
+          isDead: wasInactive ? false : m.isDead,
+          diedInRound: wasInactive ? undefined : m.diedInRound,
+          role: wasInactive ? null : m.role,
+          roleConfirmed: wasInactive ? false : m.roleConfirmed,
+          isImposter: wasInactive ? false : m.isImposter,
+          previousStatus: wasInactive ? ('unknown' as ColumnStatus) : m.previousStatus,
         };
       });
       return;
@@ -538,12 +546,19 @@ export const useCrewStore = defineStore("crew", () => {
     // 3. Update crewMembers
     crewMembers.value = crewMembers.value.map((m) => {
       const isActive = targetColors.has(m.color);
+      const wasInactive = !m.isActive && isActive;
       return {
         ...m,
         isActive,
-        status: isActive && !m.isActive
+        status: wasInactive
           ? ('unknown' as ColumnStatus)
           : (isActive && (!m.status || m.status === 'unknown') ? ('unknown' as ColumnStatus) : m.status),
+        isDead: wasInactive ? false : m.isDead,
+        diedInRound: wasInactive ? undefined : m.diedInRound,
+        role: wasInactive ? null : m.role,
+        roleConfirmed: wasInactive ? false : m.roleConfirmed,
+        isImposter: wasInactive ? false : m.isImposter,
+        previousStatus: wasInactive ? ('unknown' as ColumnStatus) : m.previousStatus,
       };
     });
   }

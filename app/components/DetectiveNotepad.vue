@@ -200,7 +200,7 @@
     <div v-show="!isMinimized" class="p-2.5 sm:p-3.5 transition-opacity duration-200">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3.5">
         <!-- Round Notes Column -->
-        <div v-if="settingsStore.showRoundNotes" class="flex flex-col">
+        <div v-show="settingsStore.showRoundNotes" class="flex flex-col">
           <div class="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5 min-h-[26px]">
             <div class="flex items-center gap-2">
               <span
@@ -548,6 +548,7 @@ function stopRecording() {
     speechRecognition?.abort()
     speechRecognition?.stop()
   } catch {}
+  speechRecognition = null
 }
 
 function initSpeechRecording() {
@@ -660,24 +661,32 @@ function updateHighlighters() {
   )
 
   if (roundNotesEl.value) {
-    if (roundNotesHighlighter) {
+    if (roundNotesHighlighter && roundNotesHighlighter.el === roundNotesEl.value) {
       roundNotesHighlighter.highlight = { highlight: rules }
       roundNotesHighlighter.handleInput()
     } else {
+      roundNotesHighlighter?.destroy()
       roundNotesHighlighter = new HighlightWithinTextarea(roundNotesEl.value, {
         highlight: rules,
       })
     }
+  } else if (roundNotesHighlighter) {
+    roundNotesHighlighter.destroy()
+    roundNotesHighlighter = null
   }
   if (gameNotesEl.value) {
-    if (gameNotesHighlighter) {
+    if (gameNotesHighlighter && gameNotesHighlighter.el === gameNotesEl.value) {
       gameNotesHighlighter.highlight = { highlight: rules }
       gameNotesHighlighter.handleInput()
     } else {
+      gameNotesHighlighter?.destroy()
       gameNotesHighlighter = new HighlightWithinTextarea(gameNotesEl.value, {
         highlight: rules,
       })
     }
+  } else if (gameNotesHighlighter) {
+    gameNotesHighlighter.destroy()
+    gameNotesHighlighter = null
   }
 }
 

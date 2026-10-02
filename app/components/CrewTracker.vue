@@ -234,6 +234,9 @@ const headerPaddingClass = computed(() => {
   return 'px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px]'
 })
 
+// Deduction board column lists.
+// All active players in the match are organized here, including your own card (with the ME badge).
+// The canTrackOwnColor setting only affects the movement map pins, not this board.
 const hardClearList = computed({
   get: () => props.hardClear,
   set: (value: CrewMember[]) => emit('changed', { type: 'hard_clear', value }),

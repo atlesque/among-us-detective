@@ -262,6 +262,9 @@ export default (function() {
           // but we can just break manually after the first match
           break;
         }
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
       }
       return ranges;
     },

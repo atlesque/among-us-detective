@@ -409,7 +409,7 @@ const displayedCrewMembers = computed(() => {
     return {
       hardClear: active.filter((m) => m.status === 'hard_clear' && !m.isDead),
       trusted: active.filter((m) => m.status === 'trusted' && !m.isDead),
-      unknown: active.filter((m) => m.status === 'unknown' && !m.isDead),
+      unknown: active.filter((m) => (m.status === 'unknown' || !m.status) && !m.isDead && m.status !== 'dead'),
       suspicious: active.filter((m) => m.status === 'suspicious' && !m.isDead),
       impostor: active.filter((m) => m.status === 'impostor' && !m.isDead),
       dead: active.filter((m) => m.status === 'dead' || m.isDead),
@@ -589,7 +589,7 @@ function initNewMatch() {
 
 function initNewRound() {
   if (roundsStore.isMaxRoundsReached || roundsStore.isViewingHistory) return
-  // Flush pending notes immediately before archiving round snapshot
+  // Save debounced notes right away so the snapshot gets whatever is currently in the textarea
   notepadRef.value?.flushNotes?.()
 
   // Ensure diedInRound is populated on dead members before archiving round snapshot
