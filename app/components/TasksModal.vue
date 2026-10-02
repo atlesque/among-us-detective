@@ -22,6 +22,7 @@
               <AppIcon name="alert" class="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-red-900 dark:text-red-200 mr-1">{{ t('tasks.neverFakeVisualBold') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.neverFakeVisualDesc') }}</span>
               </div>
             </div>
@@ -29,6 +30,7 @@
               <AppIcon name="target" class="w-3.5 h-3.5 text-rose-500 dark:text-rose-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-red-900 dark:text-red-200 mr-1">{{ t('tasks.safeToFakeBold') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.safeToFakeDesc') }}</span>
               </div>
             </div>
@@ -46,6 +48,7 @@
               <AppIcon name="key" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-blue-900 dark:text-blue-200 mr-1">{{ t('tasks.commonTasksTitle') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.commonTasksDesc') }}</span>
               </div>
             </div>
@@ -53,6 +56,7 @@
               <AppIcon name="eye" class="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-emerald-900 dark:text-emerald-200 mr-1">{{ t('tasks.visualTasksTitle') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.visualTasksDesc') }}</span>
               </div>
             </div>

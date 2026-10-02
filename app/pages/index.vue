@@ -149,15 +149,23 @@
         <div class="flex items-center gap-2 min-w-0">
           <AppIcon name="alert" class="w-4 h-4 text-amber-500 shrink-0" />
           <div class="leading-tight text-[11px] sm:text-xs">
-            <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }} <strong>{{ t('zoom.boardZoom') }}</strong> {{ t('zoom.inSettings').toLowerCase() }} </span>
+            <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }}</span>
+            {{ ' ' }}
+            <strong class="font-bold text-amber-950 dark:text-amber-100">{{ t('zoom.boardZoom') }}</strong>
+            {{ ' ' }}
+            <span v-if="locale !== 'ko-KR'">{{ t('zoom.in') }}</span>
+            {{ ' ' }}
             <button
               type="button"
-              class="underline font-bold text-amber-600 dark:text-amber-400 hover:text-amber-500"
+              class="underline font-bold text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 cursor-pointer"
               @click="openSettingsForZoom"
             >
               {{ t('dock.settings') }}
             </button>
-            <span> {{ t('zoom.forCleanest') }}</span>
+            {{ ' ' }}
+            <span v-if="locale === 'ko-KR'">{{ t('zoom.in') }}</span>
+            {{ ' ' }}
+            <span>{{ t('zoom.forCleanest') }}</span>
           </div>
         </div>
         <button
@@ -180,7 +188,7 @@
         <div class="flex items-center gap-2 min-w-0">
           <AppIcon name="clock" class="w-4 h-4 text-indigo-400 shrink-0" />
           <span class="leading-tight text-[11px] sm:text-xs">
-            {{ t('header.historyNotice') }} <strong>R{{ roundsStore.viewingRoundNumber }}</strong> {{ t('header.historyReadOnly') }}
+            {{ t('header.historyNotice') }}{{ ' ' }}<strong>R{{ roundsStore.viewingRoundNumber }}</strong>{{ ' ' }}{{ t('header.historyReadOnly') }}
           </span>
         </div>
         <button

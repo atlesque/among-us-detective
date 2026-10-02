@@ -223,7 +223,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     // Zoom Banner
     'zoom.detected': 'Browser zoom detected ({percent}%). If layout feels cramped or too small, use built-in',
     'zoom.boardZoom': 'Board Zoom',
-    'zoom.inSettings': 'Settings',
+    'zoom.in': 'in',
     'zoom.forCleanest': 'for the cleanest fit.',
 
     // Card extras
@@ -636,10 +636,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Ocultar sensores',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom do navegador detectado ({percent}%). Se a tela parecer apertada, use o',
+    'zoom.detected': 'Zoom do navegador detectado ({percent}%). Se o layout parecer apertado ou pequeno, use o',
     'zoom.boardZoom': 'Zoom do Quadro',
-    'zoom.inSettings': 'Configurações',
-    'zoom.forCleanest': 'para ajustar perfeitamente.',
+    'zoom.in': 'em',
+    'zoom.forCleanest': 'para um melhor ajuste.',
 
     // Card extras
     'card.setAsMe': 'Definir como Eu',
@@ -1051,9 +1051,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Ocultar sensores',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom del navegador detectado ({percent}%). Si el diseño se ve apretado, usa el',
+    'zoom.detected': 'Zoom del navegador detectado ({percent}%). Si el diseño se ve apretado o pequeño, usa el',
     'zoom.boardZoom': 'Zoom del Tablero',
-    'zoom.inSettings': 'Ajustes',
+    'zoom.in': 'en',
     'zoom.forCleanest': 'para un mejor ajuste.',
 
     // Card extras
@@ -1466,10 +1466,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Masquer les capteurs',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom navigateur détecté ({percent}%). Si l\'affichage est trop serré, utilisez',
+    'zoom.detected': 'Zoom navigateur détecté ({percent}%). Si l\'affichage semble trop serré ou petit, utilisez le',
     'zoom.boardZoom': 'Zoom du Tableau',
-    'zoom.inSettings': 'Paramètres',
-    'zoom.forCleanest': 'pour un meilleur ajustement.',
+    'zoom.in': 'dans',
+    'zoom.forCleanest': 'pour un ajustement optimal.',
 
     // Card extras
     'card.setAsMe': 'Me définir',
@@ -1881,9 +1881,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Sensoren ausblenden',
 
     // Zoom Banner
-    'zoom.detected': 'Browser-Zoom erkannt ({percent}%). Wenn das Layout zu eng wirkt, nutze',
+    'zoom.detected': 'Browser-Zoom erkannt ({percent}%). Wenn das Layout zu eng oder klein wirkt, nutze den',
     'zoom.boardZoom': 'Board-Zoom',
-    'zoom.inSettings': 'Einstellungen',
+    'zoom.in': 'in den',
     'zoom.forCleanest': 'für die beste Ansicht.',
 
     // Card extras
@@ -2298,8 +2298,8 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     // Zoom Banner
     'zoom.detected': '브라우저 확대/축소 감지됨 ({percent}%). 화면이 좁거나 답답하다면',
     'zoom.boardZoom': '보드 크기',
-    'zoom.inSettings': '설정',
-    'zoom.forCleanest': '에서 조절하는 것을 추천합니다.',
+    'zoom.in': '에서',
+    'zoom.forCleanest': '조절하여 맞추세요.',
 
     // Card extras
     'card.setAsMe': '나로 설정',
