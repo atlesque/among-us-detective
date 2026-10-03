@@ -120,8 +120,8 @@
             type="button"
             data-test="notepad-voice-language-btn"
             class="flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer shadow-sm select-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700/50"
-            :title="`${t('notepad.voiceRecognitionTitle')}: ${effectiveLanguageLabel}`"
-            :aria-label="t('notepad.voiceRecognitionAria')"
+            :title="`${t('notes.voiceLanguageTitle') || t('notepad.voiceRecognitionTitle')}: ${effectiveLanguageLabel}`"
+            :aria-label="t('notes.voiceLanguageTitle') || t('notepad.voiceRecognitionAria')"
             @click="isVoiceLangMenuOpen = !isVoiceLangMenuOpen"
           >
             <AppIcon name="mic" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0" />
@@ -170,6 +170,15 @@
           </Transition>
         </div>
 
+        <NuxtLink
+          v-if="isSpeechRecognitionSupported"
+          to="/privacy"
+          class="text-[10px] text-gray-500 hover:text-gray-300 underline"
+          :title="t('notes.micPrivacyNotice')"
+        >
+          {{ t('cookie.disclaimerLink') }}
+        </NuxtLink>
+
         <span
           class="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded bg-gray-200 dark:bg-black/40 text-gray-700 dark:text-gray-400 border border-gray-300 dark:border-gray-700/40 font-mono"
         >
@@ -190,9 +199,10 @@
       <button
         type="button"
         class="text-[10px] text-red-600 dark:text-red-300 hover:text-red-800 dark:hover:text-white underline shrink-0 font-bold cursor-pointer"
+        :aria-label="t('notes.dismissSpeechError') || t('notepad.dismissError')"
         @click="speechError = ''"
       >
-        {{ t('notepad.dismissError') }}
+        {{ t('notes.dismissSpeechError') || t('notepad.dismissError') }}
       </button>
     </div>
 
@@ -482,7 +492,7 @@ const autoLanguageShort = computed(() => {
 const isVoiceLangMenuOpen = ref(false)
 
 const voiceLanguageOptions = computed(() => [
-  { value: 'auto' as const, flag: '🌐', label: `Auto (${autoLanguageShort.value})` },
+  { value: 'auto' as const, flag: '🌐', label: t('notes.autoLanguage', { language: autoLanguageShort.value }) },
   { value: 'pt-BR' as const, flag: '🇧🇷', label: 'Português' },
   { value: 'en-US' as const, flag: '🇺🇸', label: 'English' },
   { value: 'es-ES' as const, flag: '🇪🇸', label: 'Español' },
@@ -493,7 +503,7 @@ const voiceLanguageOptions = computed(() => [
 
 const speechLanguageButtonLabel = computed(() => {
   if (settingsStore.speechLanguage === 'auto') {
-    return `Auto (${autoLanguageShort.value})`
+    return t('notes.autoLanguage', { language: autoLanguageShort.value })
   }
   return settingsStore.speechLanguage.substring(0, 2).toUpperCase()
 })
@@ -601,11 +611,11 @@ function initSpeechRecording() {
 
     speechRecognition.onerror = (event: any) => {
       stopRecording()
-      if (event.error === 'no-speech') speechError.value = 'No speech detected'
-      else if (event.error === 'audio-capture') speechError.value = 'Check your recording device'
+      if (event.error === 'no-speech') speechError.value = t('notes.speechError.noSpeech')
+      else if (event.error === 'audio-capture') speechError.value = t('notes.speechError.audioCapture')
       else if (event.error === 'not-allowed') {
         micPermissionState.value = 'denied'
-        speechError.value = 'Microphone access blocked. Click "Allow Mic" or enable permissions in browser URL bar.'
+        speechError.value = t('notes.speechError.notAllowed')
       }
     }
   } catch {

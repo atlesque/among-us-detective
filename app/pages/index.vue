@@ -229,8 +229,8 @@
     <DetectiveNotepad ref="notepadRef" class="mt-3 mb-4" />
 
     <!-- Interactive Map Section (Below Detective Notepad) -->
-    <div class="relative mb-16">
-      <Maps />
+    <div :class="mapsStore.isMapVisible ? 'relative mb-16 map-container' : 'relative mb-0'">
+      <LazyMaps v-if="mapsStore.isMapVisible" />
     </div>
 
     <!-- Modern Bottom Detective Toolbar (Persistent Dock) -->
@@ -345,18 +345,10 @@
       </div>
     </footer>
 
-    <Transition name="modal">
-      <HelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
-    </Transition>
-    <Transition name="modal">
-      <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
-    </Transition>
-    <Transition name="modal">
-      <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
-    </Transition>
-    <Transition name="modal">
-      <TasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
-    </Transition>
+    <LazyHelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
+    <LazyAboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
+    <LazySettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
+    <LazyTasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
     <CookieWarning />
   </div>
 </template>
@@ -375,7 +367,7 @@ const roundsStore = useRoundsStore()
 const mapsStore = useMapsStore()
 const impostorStore = useImpostorStore()
 const { gtag } = useGtag()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { micPermissionState, requestMicrophonePermission } = useMicrophone()
 
 const notepadRef = ref<any>(null)
@@ -607,8 +599,8 @@ function initNewRound() {
     }
   })
 
-  // Archive current round before advancing (saves snapshot with current roundNotes)
-  const archived = roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
+  // Archive current round before advancing (saves snapshot with current roundNotes and current map)
+  const archived = roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes, mapsStore.selectedMap)
   if (!archived) return
   crewStore.resetActiveCrew()
   tasksStore.resetAllTasks()

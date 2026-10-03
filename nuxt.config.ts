@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 
   devServer: {
     port: 8071,
-    host: "0.0.0.0",
+    host: "localhost",
   },
 
   compatibilityDate: "2024-11-01",
@@ -143,6 +143,17 @@ export default defineNuxtConfig({
         "vuedraggable", // CJS
         "vue3-moveable",
       ],
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("/node_modules/@sentry/")) {
+              return "sentry-vendor";
+            }
+          },
+        },
+      },
     },
   },
 

@@ -24,7 +24,7 @@ export const useImpostorStore = defineStore(
 
     function toggleFellowImpostor(color: string) {
       if (fellowImpostors.value.includes(color)) {
-        fellowImpostors.value = fellowImpostors.value.filter((c) => c !== color);
+        fellowImpostors.value = fellowImpostors.value.filter((fellowColor) => fellowColor !== color);
         const updatedRoles = { ...fellowImpostorRoles.value };
         delete updatedRoles[color];
         fellowImpostorRoles.value = updatedRoles;
@@ -41,7 +41,7 @@ export const useImpostorStore = defineStore(
       const updatedRoles = { ...fellowImpostorRoles.value };
       if (!role) {
         delete updatedRoles[color];
-        fellowImpostors.value = fellowImpostors.value.filter((c) => c !== color);
+        fellowImpostors.value = fellowImpostors.value.filter((fellowColor) => fellowColor !== color);
       } else {
         updatedRoles[color] = role;
         if (!fellowImpostors.value.includes(color)) {

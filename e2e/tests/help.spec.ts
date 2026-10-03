@@ -72,10 +72,10 @@ test.describe("Help guide", () => {
     await openHelp(page);
     await page.click("[data-test='help-tab-rounds']");
     await expect(page.locator("[data-test='help-view-rounds']")).toBeVisible();
-    await expect(page.locator("[data-test='help-step-counter']")).toHaveText(`2/${TOTAL_STEPS}`);
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("2/5");
     await page.click("[data-test='help-tab-tools']");
     await expect(page.locator("[data-test='help-view-tools']")).toBeVisible();
-    await expect(page.locator("[data-test='help-step-counter']")).toHaveText(`${TOTAL_STEPS}/${TOTAL_STEPS}`);
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("5/5");
     await expect(page.locator("[data-test='help-close-btn']")).toBeVisible();
   });
 });

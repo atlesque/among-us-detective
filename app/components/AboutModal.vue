@@ -8,7 +8,7 @@
             src="https://docs.google.com/forms/d/e/1FAIpQLSda7OlGq68xKkVyx3GsZZntwrGN_CZZJRidgCl5J6R1QIyB2g/viewform?embedded=true"
             class="w-full h-[520px] border-0 rounded-lg"
             title="Feedback Form"
-          >Loading…</iframe>
+          >{{ t('about.feedbackLoading') }}</iframe>
         </template>
         <template v-else>
           <div class="space-y-2 mt-2 text-sm text-gray-700 dark:text-gray-300">
@@ -65,7 +65,7 @@
               <span class="block">
                 {{ t('about.modernizedBy') }}{{ ' ' }}
                 <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">Marcos Binder</a>{{ ' ' }}
-                <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-400 dark:text-gray-500 hover:text-emerald-500 underline ml-1" :title="t('about.viewGithubFork')">(fork v2.0)</a>
+                <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-400 dark:text-gray-500 hover:text-emerald-500 underline ml-1" :title="t('about.forkLinkTitle')">{{ t('about.forkLabel') }}</a>
               </span>
             </div>
             <div class="flex flex-col items-start sm:items-end gap-1">

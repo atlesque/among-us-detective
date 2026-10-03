@@ -12,33 +12,39 @@
         <AppIcon name="map" class="w-3.5 h-3.5 shrink-0" />
         <span>{{ mapsStore.isMapVisible ? t('map.hide') : t('map.show') }}</span>
       </button>
-      <Transition name="fade">
-        <div
-          v-show="mapsStore.isMapVisible"
-          class="flex items-center p-1 rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
-        >
-          <MapSelector :selected-map="mapsStore.selectedMap" @map-selected="selectMap" />
-        </div>
-      </Transition>
-    </div>
-    <Transition name="map-expand">
-      <div v-show="mapsStore.isMapVisible" class="map-expand-wrapper overflow-hidden">
-        <div class="mx-auto map-container" data-test="map-container">
-      <MapPlayerTracker class="z-10" />
       <div
+        v-show="mapsStore.isMapVisible"
+        class="flex items-center p-1 rounded-lg bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800"
+      >
+        <MapSelector
+          :selected-map="displayedMap"
+          :disabled="roundsStore.isViewingHistory"
+          @map-selected="selectMap"
+        />
+      </div>
+    </div>
+    <div
+      v-show="mapsStore.isMapVisible"
+      class="mx-auto map-container"
+      data-test="map-container"
+      :data-map-id="displayedMap"
+    >
+      <div
+        v-if="!isHistoricalMapUnavailable"
         class="map-picture-container"
         :class="{
           'map-picture-container--lighter':
             settingsStore.isImproveMapContrastEnabled &&
-            !(mapsStore.selectedMap === 'mira-hq' && areSensorsVisible),
+            !(displayedMap === 'mira-hq' && areSensorsVisible),
         }"
       >
-        <picture v-if="mapsStore.selectedMap === 'the-skeld'">
+        <MapPlayerTracker :map-id="displayedMap" class="z-10" />
+        <picture v-show="displayedMap === 'the-skeld'">
           <source srcset="~/assets/images/maps/the-skeld.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-skeld.png" type="image/png" />
           <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" loading="lazy" decoding="async" />
         </picture>
-        <div v-if="mapsStore.selectedMap === 'mira-hq'" class="relative z-0">
+        <div v-show="displayedMap === 'mira-hq'" class="relative z-0">
           <div class="absolute inset-0 z-10 pointer-events-none">
             <button
               class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer pointer-events-auto"
@@ -58,36 +64,51 @@
             <img src="~/assets/images/maps/mira-hq.png" alt="Mira HQ Map" loading="lazy" decoding="async" />
           </picture>
         </div>
-        <picture v-if="mapsStore.selectedMap === 'polus'">
+        <picture v-show="displayedMap === 'polus'">
           <source srcset="~/assets/images/maps/polus.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/polus.png" type="image/png" />
           <img src="~/assets/images/maps/polus.png" alt="Polus Map" loading="lazy" decoding="async" />
         </picture>
-        <picture v-if="mapsStore.selectedMap === 'the-airship'">
+        <picture v-show="displayedMap === 'the-airship'">
           <source srcset="~/assets/images/maps/the-airship.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-airship.png" type="image/png" />
           <img src="~/assets/images/maps/the-airship.png" alt="The Airship Map" loading="lazy" decoding="async" />
         </picture>
-        <picture v-if="mapsStore.selectedMap === 'the-fungle'">
+        <picture v-show="displayedMap === 'the-fungle'">
           <source srcset="~/assets/images/maps/the-fungle.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-fungle.png" type="image/png" />
           <img src="~/assets/images/maps/the-fungle.png" alt="The Fungle Map" loading="lazy" decoding="async" />
         </picture>
       </div>
+      <div
+        v-else
+        class="map-snapshot-unavailable"
+        data-test="map-snapshot-unavailable"
+      >
+        {{ t('map.snapshotUnavailable') }}
+      </div>
     </div>
-  </div>
-</Transition>
   </div>
 </template>
 
 <script setup lang="ts">
 const mapsStore = useMapsStore()
-const notesStore = useNotesStore()
+const roundsStore = useRoundsStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n()
 const { gtag } = useGtag()
 
 const areSensorsVisible = ref(false)
+
+const isHistoricalMapUnavailable = computed(
+  () => roundsStore.isViewingHistory && !mapsStore.isKnownMap(roundsStore.activeSnapshot?.mapId)
+)
+
+const displayedMap = computed(() => {
+  if (!roundsStore.isViewingHistory) return mapsStore.selectedMap
+  const snapshotMap = roundsStore.activeSnapshot?.mapId
+  return mapsStore.isKnownMap(snapshotMap) ? snapshotMap : ''
+})
 
 function selectMap(newMap: string) {
   mapsStore.setSelectedMap(newMap)
@@ -105,15 +126,37 @@ button {
   max-width: 1366px;
 }
 .map-picture-container {
+  position: relative;
+  width: 100%;
+
   picture,
   > div {
     transition: opacity 200ms ease;
   }
   picture {
+    display: block;
     pointer-events: none;
   }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
   &--lighter img {
     opacity: 0.75;
   }
+}
+.map-snapshot-unavailable {
+  min-height: 200px;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  color: #fbbf24;
+  text-align: center;
+  border: 1px dashed rgba(251, 191, 36, 0.45);
+  border-radius: 0.75rem;
+  background: rgba(17, 24, 39, 0.8);
 }
 </style>

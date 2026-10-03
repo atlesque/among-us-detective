@@ -19,6 +19,7 @@ This document serves as the single source of truth for all architectural decisio
 
 ## 🏷️ Status Legend
 - `[COMPLETED]` — Implemented, verified, and shipped.
+- `[IN PROGRESS]` — Work is underway but is not yet available in the app.
 - `[PLANNED - FUTURE]` — Future backlog items agreed upon for future releases.
 
 ---
@@ -42,12 +43,11 @@ This document serves as the single source of truth for all architectural decisio
 - **Official Local PNG Icons**: 8 official high-res PNG icons (Detective, Judge, Scientist, Engineer, Noisemaker, Shapeshifter, Phantom, Viper).
 - **In-Card Actions**: Mark tasks (Done / In Progress), log meeting calls, and direct Mark as Dead / Revive with "Died in Round X" tracking badge.
 
-### 1.4 Dedicated Impostor Mode HUD (`app/components/ImpostorModeModal.vue`, `app/stores/impostor.ts`)
-- **Hotkey `I` / Persistent Dock**: Dedicated stealth operations workspace with custom target tracking.
-- **Scapegoat & Target Framing**: Pick an innocent crewmate to generate strategic accusation talking points for emergency meetings.
-- **Fellow Impostors Coordination**: Assign partner roles and synchronize fellow impostors with the deduction board.
-- **Fake Tasks Advisor**: Safe non-animated task recommendations; warns against faking visual tasks.
-- **Sabotage & Alibi Planner**: Stage arrivals for Reactor, O2, Lights, and Comms.
+### 1.4 Impostor Mode Support Available Today (`app/components/CrewTracker.vue`, `DetectiveNotepad.vue`, `TasksModal.vue`, `PlayerCard.vue`)
+- **Inverted Deduction Board**: Hotkey `I` or the Dock button switches the board to Impostor Mode labels for manually tracking targets, alibis, scapegoats, and fellow Impostors.
+- **Impostor-Focused Notes**: The existing notepad switches to Impostor operations notes while the mode is active.
+- **Partner Role Marking**: Mark fellow Impostors and their roles on player cards; the board reflects partner status.
+- **Fake-Task Guidance**: The Tasks reference warns against faking visual tasks and lists safer non-animated tasks.
 
 ### 1.5 Meeting Rounds Snapshots & Timeline Review (`app/stores/rounds.ts`, `app/pages/index.vue`)
 - **Snapshot Architecture**: "Next Round" deep-copies board state, deductions, notes, and map pins.
@@ -72,7 +72,7 @@ This document serves as the single source of truth for all architectural decisio
 - **Built-in Scale Switcher**: 4 zoom levels (Compact, Normal, Large, Extra Large) keeping columns aligned without browser viewport distortion.
 
 ### 1.10 Persistent Dock & Keyboard Shortcuts (`app/pages/index.vue`)
-- Complete keyboard accessibility: <kbd>N</kbd> (Notes), <kbd>M</kbd> (Map), <kbd>T</kbd> (Tasks), <kbd>I</kbd> (Impostor HUD), <kbd>L</kbd> (Roster), <kbd>Esc</kbd> (Close/Minimize).
+- Complete keyboard accessibility: <kbd>N</kbd> (Notes), <kbd>M</kbd> (Map), <kbd>T</kbd> (Tasks), <kbd>I</kbd> (Impostor Mode board), <kbd>L</kbd> (Roster), <kbd>Esc</kbd> (Close/Minimize).
 
 ### 1.11 Comprehensive Multilingual System (`app/utils/translations.ts`, `app/composables/useI18n.ts`)
 - 100% localized across 6 languages with browser auto-detection: English (`en-US`), Português (`pt-BR`), Español (`es-ES`), 한국어 (`ko-KR`), Français (`fr-FR`), Deutsch (`de-DE`).
@@ -87,11 +87,10 @@ This document serves as the single source of truth for all architectural decisio
 ### 1.13 Help Modal Visual Overhaul & Segmented Navigation (`app/components/HelpModal.vue`)
 - Enlarge modal width to ~700px (`sm:max-w-[720px]`) via `maxWidth="700px"` prop on `Modal.vue`.
 - Segmented step navigation bar eliminating native browser scrollbars entirely.
-- Generous card spacing (`gap-3.5`, `p-3.5`) and visual icon badges for Lobby Setup, Meeting Rounds, Deductions, Impostor HUD, and Hotkeys.
+- Generous card spacing (`gap-3.5`, `p-3.5`) and visual icon badges for Lobby Setup, Meeting Rounds, Deductions, Impostor Mode, and Hotkeys.
 
 ---
 
-## 2. Community Feedback Phase (v2.0) `[FEEDBACK PHASE — NOTHING SET IN STONE]`
+## 2. Community Feedback & Impostor HUD Work in Progress
 
-> 📣 **Current Phase**: With the full delivery and stabilization of **Among Us Detective 2.0**, the project is now strictly in the **Community Feedback & Live Match Observation Phase**. No new major features are scheduled or locked in stone at this time. All future enhancements will be prioritized exclusively based on real player feedback and tournament match telemetry.
-
+> 📣 **Current Phase**: **Among Us Detective 2.0** is delivered and stabilized. Work is in progress on a dedicated Impostor HUD and its Sabotage & Alibi Planner. The inverted board, Impostor-focused notes, partner role marking, and fake-task guidance described above are the Impostor Mode tools available today; the dedicated HUD and planner are not implemented yet. Other future enhancements will be prioritized based on player feedback and live-match observation.

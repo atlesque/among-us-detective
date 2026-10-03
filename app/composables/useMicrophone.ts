@@ -1,11 +1,13 @@
 import { ref, computed } from 'vue'
 
 const micPermissionState = ref<'granted' | 'prompt' | 'denied' | 'unknown' | 'unsupported'>('unknown')
-const micErrorMessage = ref('')
+const micErrorKey = ref('')
 const isRequestingMic = ref(false)
 let isInitialized = false
-
 export function useMicrophone() {
+  const { t } = useI18n()
+  const micErrorMessage = computed(() => micErrorKey.value ? t(micErrorKey.value) : '')
+
   if (typeof window !== 'undefined' && !isInitialized) {
     isInitialized = true
     checkPermission()
@@ -47,9 +49,9 @@ export function useMicrophone() {
 
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
       micPermissionState.value = 'unsupported'
-      micErrorMessage.value = !isSecure.value
-        ? 'Acesso ao microfone requer HTTPS ou localhost no navegador.'
-        : 'Microfone não suportado neste navegador.'
+      micErrorKey.value = !isSecure.value
+        ? 'mic.error.secureRequired'
+        : 'mic.error.unsupported'
       return false
     }
 
@@ -62,18 +64,18 @@ export function useMicrophone() {
         track.enabled = false
       })
       micPermissionState.value = 'granted'
-      micErrorMessage.value = ''
+      micErrorKey.value = ''
       isRequestingMic.value = false
       return true
     } catch (err: any) {
       isRequestingMic.value = false
       if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
         micPermissionState.value = 'denied'
-        micErrorMessage.value = 'Permissão de microfone bloqueada pelo navegador. Ative nas permissões do site (ícone ao lado da URL).'
+        micErrorKey.value = 'mic.error.permissionDenied'
       } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-        micErrorMessage.value = 'Nenhum dispositivo de microfone foi encontrado.'
+        micErrorKey.value = 'mic.error.deviceNotFound'
       } else {
-        micErrorMessage.value = 'Erro ao solicitar microfone: ' + (err.message || 'Permissão recusada')
+        micErrorKey.value = 'mic.error.requestFailed'
       }
       return false
     }

@@ -28,7 +28,8 @@
           <button
             type="button"
             class="p-1 rounded-md text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none"
-            aria-label="Close"
+            :aria-label="t('modal.close')"
+            data-test="modal-close"
             @click="emit('close')"
           >
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,6 +70,7 @@ const props = withDefaults(
 )
 const emit = defineEmits<{ close: [] }>()
 
+const { t } = useI18n()
 const darkModeStore = useDarkModeStore()
 const isDarkMode = computed(() => darkModeStore.isDarkMode)
 

@@ -3,7 +3,7 @@
     <aside
       v-if="isVisible"
       role="region"
-      aria-label="Cookie and privacy consent banner"
+      :aria-label="t('cookie.bannerLabel')"
       aria-live="polite"
       class="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-800 shadow-2xl transition-all duration-300"
       data-test="cookie-warning"
@@ -17,7 +17,7 @@
           <p>
             {{ t('cookie.message') }}{{ ' ' }}
             <NuxtLink
-              to="/disclaimer"
+              to="/privacy"
               class="underline font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 inline-block transition-colors"
               data-test="cookie-disclaimer-link"
             >
@@ -56,7 +56,7 @@ onMounted(() => {
       isVisible.value = true
     }
   } catch {
-    isVisible.value = false
+    isVisible.value = true
   }
 })
 
