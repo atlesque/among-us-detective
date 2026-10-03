@@ -11,11 +11,8 @@
 
 - **⚡ Performance Mode ("Disable animations")**: Built-in toggle in Settings to completely eliminate CSS transitions and keyframes, giving an ultra-lightweight, zero-lag experience on low-end hardware.
 - **🕵️ 6-Column Deduction Hierarchy**: Clean, strict separation across *Hard Clear*, *Trusted*, *Unknown*, *Suspicious*, *Impostors*, and *Dead*.
-- **💀 Dedicated Impostor Mode HUD**: Toggleable tactical stealth workspace (`I` or Dock button) featuring:
-  - Strategic Scapegoat & Target Framing (talking points for emergency meetings).
-  - Fellow Impostors coordination with role assignment (Shapeshifter, Phantom, Viper) and board sync.
-  - Safe Fake Tasks advisor (highlights non-animated tasks; warns against faking visual tasks).
-  - Strategic Sabotage & Alibi Planner (Reactor, O2, Lights, Comms).
+- **💀 Impostor Mode tools available today**: Press `I` or use the Dock button to switch the deduction board to an inverted view for manually tracking priority targets, alibis, scapegoats, and fellow Impostors. The mode also provides Impostor-focused notes, partner role marking, and fake-task guidance in the Tasks reference.
+- **🚧 Dedicated Impostor HUD — work in progress**: A standalone tactical HUD and its Sabotage & Alibi Planner are not implemented yet.
 - **🎭 Floating Role Popover (Claimed vs. Verified)**: Quick-access popover on each card to assign Crew roles (*Detective, Judge, Scientist, Engineer, Noisemaker, Tracker*) or Impostor roles (*Shapeshifter, Phantom, Viper*), differentiate between unverified claims (`?`) and confirmed roles (`✓`), mark task completion, and track emergency meetings.
 - **👥 18 Official Bean Colors & Match Roster**: Full 18-color Among Us roster with LED indicators, one-click lobby presets (15 Players, All 18, Clear), collapsible panel (`L`), and golden **"ME"** star isolation.
 - **⏱️ Meeting Rounds & Timeline Snapshots**: Deep-copy snapshots on every "Next Round" click (`R1`, `R2`, `R3`), historical read-only timeline inspection, and evolution tags (e.g., `Now: Hard Clear`) to spot shifting alibis and exposed lies.
@@ -25,7 +22,7 @@
   - <kbd>N</kbd> — Toggle Detective / Impostor Notepad
   - <kbd>M</kbd> — Toggle Interactive Map
   - <kbd>T</kbd> — Open Tasks Reference Guide
-  - <kbd>I</kbd> — Toggle Impostor Mode HUD
+  - <kbd>I</kbd> — Toggle the inverted Impostor Mode board
   - <kbd>L</kbd> — Minimize / Expand Lobby Roster
   - <kbd>Esc</kbd> — Close open modal / minimize notepad / blur inputs
 - **🌐 100% Multilingual Localization (i18n)**: Full native translations across 6 locales with automatic browser language detection and instant switcher:

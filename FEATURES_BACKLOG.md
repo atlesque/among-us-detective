@@ -6,6 +6,8 @@ This document tracks all implemented architectural enhancements and planned futu
 
 ## 📌 Master Implementation Status
 
+**Status legend**: `[COMPLETED]` is available in the app; `[IN PROGRESS]` is being built and is not yet available.
+
 ### ✅ Completed Modernizations (v2.0 & v2.1)
 
 1. **[COMPLETED] Feature 1: Round Timeline & Match Snapshot Architecture**
@@ -16,7 +18,7 @@ This document tracks all implemented architectural enhancements and planned futu
 
 2. **[COMPLETED] Feature 2: Top Action Bar & Dock Modernization**
    - Simplified top bar with clear "Next Round" and "New Match" buttons.
-   - Persistent bottom dock with 1-click access to Notes, Map, Tasks, Impostor HUD, Settings, Help, and About.
+   - Persistent bottom dock with 1-click access to Notes, Map, Tasks, Impostor Mode, Settings, Help, and About.
 
 3. **[COMPLETED] Feature 3: Compact Floating Role Popover**
    - Non-intrusive floating popover anchored to clicked bean card.
@@ -39,7 +41,7 @@ This document tracks all implemented architectural enhancements and planned futu
    - Dock hotkey <kbd>T</kbd>.
 
 7. **[COMPLETED] Feature 7: Comprehensive 5-Tab Multilingual Help Modal**
-   - Rebuilt guide covering Lobby Setup, Meeting Snapshots, Deduction Hierarchy, Impostor HUD, Map Sensors, Dual Notepad, and Shortcuts.
+   - Rebuilt guide covering Lobby Setup, Meeting Snapshots, Deduction Hierarchy, Impostor Mode, Map Sensors, Dual Notepad, and Shortcuts.
    - 100% localized across all 6 supported languages.
 
 8. **[COMPLETED] Feature 8: About Modal & Authorship Credits**
@@ -52,11 +54,9 @@ This document tracks all implemented architectural enhancements and planned futu
    - Settings toggle reducing motion and setting CSS transition/animation durations to `0.001ms !important`.
    - Eliminates all lag on low-end hardware.
 
-10. **[COMPLETED] Feature 10: Dedicated Impostor Mode HUD**
-    - Tactical stealth operations workspace toggled with hotkey <kbd>I</kbd>.
-    - Target framing and scapegoat generator for emergency meetings.
-    - Fellow Impostors role assignment and deduction board sync.
-    - Safe fake tasks guide & strategic sabotage planner.
+10. **[COMPLETED] Feature 10: Impostor Mode Board and Existing Tools**
+    - Hotkey <kbd>I</kbd> switches the deduction board to an inverted Impostor Mode view.
+    - Impostor-focused notes, partner role marking on player cards, and fake-task guidance in the Tasks reference.
 
 11. **[COMPLETED] Feature 11: 18-Color Bean Roster with Golden "ME" Star**
     - 18 official Among Us bean colors with active LEDs and one-click presets.
@@ -78,10 +78,14 @@ This document tracks all implemented architectural enhancements and planned futu
 15. **[COMPLETED] Feature 15: Help Modal 700px Overhaul & Segmented Navigation**
     - Enlarge modal width to ~700px (`sm:max-w-[720px]`).
     - Modern segmented step navigation without native browser scrollbars.
-    - Generous spacing and visual icon badges across Lobby Setup, Impostor HUD, and Hotkeys panel.
+    - Generous spacing and visual icon badges across Lobby Setup, Impostor Mode, and Hotkeys panel.
+
+### 🚧 In Progress
+
+- **Dedicated Impostor HUD and Sabotage & Alibi Planner**: Build a standalone tactical HUD around the existing Impostor Mode tools, with planning for Reactor, O2, Lights, and Comms. The dedicated HUD and planner are not available in the app yet.
 
 ---
 
-### 🔮 Community Feedback Phase (v2.0) — Nothing Set in Stone
+### 🔮 Community Feedback Phase (v2.0)
 
-> 📣 **Status**: Among Us Detective 2.0 is completely delivered and stabilized. We are currently observing real gameplay and collecting feedback from the community. No new features are scheduled or locked in stone; all future work will be evaluated strictly based on player input.
+> 📣 **Status**: Among Us Detective 2.0 is delivered and stabilized. Work on the dedicated Impostor HUD and Sabotage & Alibi Planner is in progress; the current app provides the inverted board, Impostor-focused notes, partner role marking, and fake-task guidance. Other future work will be evaluated based on player input and live-match observation.
