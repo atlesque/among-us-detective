@@ -1,7 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+declare const process: any;
+
 export default defineNuxtConfig({
+  devtools: {
+    enabled: false,
+  },
+
   devServer: {
     port: 8071,
+    host: "localhost",
   },
 
   compatibilityDate: "2024-11-01",
@@ -57,6 +64,10 @@ export default defineNuxtConfig({
         },
         { rel: "manifest", href: "/favicon/site.webmanifest" },
       ],
+      bodyAttrs: {
+        class: "bg-theme-gray-extra-dark",
+        style: "background-color: #101011; margin: 0;",
+      },
     },
   },
 
@@ -71,9 +82,12 @@ export default defineNuxtConfig({
   // Global CSS
   css: ["~/assets/scss/styles.scss"],
 
-  // Google Analytics
+  spaLoadingTemplate: './spa-loading-template.html',
+
+  // Google Analytics (only enabled in production to prevent local dev network delays)
   gtag: {
     id: "G-F1ZVM4FLC6",
+    enabled: process.env.NODE_ENV === "production",
   },
 
   // PWA
@@ -91,11 +105,12 @@ export default defineNuxtConfig({
     },
   },
 
-  // Sentry (DSN and runtime options are in sentry.client.config.ts)
+  // Sentry (only enabled in production to prevent dev startup delay)
   sentry: {
     org: "atlesque-media-vof",
     project: "among-us-detective",
     telemetry: false,
+    enabled: process.env.NODE_ENV === "production",
   },
 
   runtimeConfig: {
@@ -124,12 +139,21 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include: [
-        "@vue/devtools-core",
-        "@vue/devtools-kit",
         "pinia-plugin-persistedstate",
         "vuedraggable", // CJS
         "vue3-moveable",
       ],
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("/node_modules/@sentry/")) {
+              return "sentry-vendor";
+            }
+          },
+        },
+      },
     },
   },
 

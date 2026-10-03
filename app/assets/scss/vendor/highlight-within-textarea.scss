@@ -1,17 +1,20 @@
 /*
  * highlight-within-textarea
  *
- * @author        Will Boyd
- * @github        https://github.com/lonekorean/highlight-within-textarea
- * Current fork:  https://github.com/Blaked84/highlight-within-textarea
+ * Cleaned up for pixel-perfect box-model alignment
  */
 
 .hwt-container {
-  display: inline-block;
+  display: block;
   position: relative;
-  // overflow: hidden !important;
-  -webkit-text-size-adjust: none !important;
   width: 100%;
+  background-color: rgba(31, 41, 55, 0.7);
+  border-radius: 0.5rem;
+  -webkit-text-size-adjust: none !important;
+}
+
+.dark-mode .hwt-container {
+  background-color: rgba(17, 24, 39, 0.85);
 }
 
 .hwt-backdrop {
@@ -23,14 +26,18 @@
   padding-right: 99px !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  pointer-events: none !important;
 }
 
 .hwt-highlights {
-  width: auto !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
   height: auto !important;
-  border-color: transparent !important;
+  min-height: 100% !important;
+  border: 1px solid transparent !important;
   white-space: pre-wrap !important;
   word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
   color: transparent !important;
   overflow: hidden !important;
 }
@@ -39,44 +46,88 @@
   display: block !important;
   position: relative !important;
   margin: 0;
-  padding: 0;
-  border-radius: 0;
-  font: inherit;
+  width: 100%;
+  background: transparent !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
 .hwt-content {
-  border: 1px solid;
-  background: none transparent !important;
-  @apply p-4;
-  @apply block;
-  @apply w-full;
-  @apply text-sm;
-  @apply leading-5;
-  @screen lg {
-    @apply text-base;
-    @apply leading-normal;
-  }
-  appearance: none;
-  border-color: #d2d6dc;
-  border-width: 1px;
-  border-radius: 0.375rem;
-  padding-top: 0.5rem;
-  padding-right: 0.75rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
-    border-color: #a4cafe;
-  }
+  box-sizing: border-box !important;
 }
 
 .hwt-content mark {
   padding: 0 !important;
-  color: inherit;
+  margin: 0 !important;
+  border-radius: 3px;
+  color: transparent !important;
+  font: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.dark .hwt-content mark,
+.dark-mode .hwt-content mark {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Official Among Us color palette for highlighter marks */
+.hwt-mark-red {
+  background-color: rgba(198, 17, 17, 0.85) !important;
+}
+.hwt-mark-blue {
+  background-color: rgba(19, 46, 210, 0.85) !important;
+}
+.hwt-mark-green {
+  background-color: rgba(17, 128, 45, 0.85) !important;
+}
+.hwt-mark-pink {
+  background-color: rgba(238, 84, 187, 0.85) !important;
+}
+.hwt-mark-orange {
+  background-color: rgba(240, 125, 13, 0.85) !important;
+}
+.hwt-mark-yellow {
+  background-color: rgba(246, 246, 87, 0.85) !important;
+}
+.hwt-mark-black {
+  background-color: rgba(63, 71, 78, 0.9) !important;
+}
+.hwt-mark-white {
+  background-color: rgba(215, 225, 241, 0.85) !important;
+}
+.hwt-mark-purple {
+  background-color: rgba(107, 47, 188, 0.85) !important;
+}
+.hwt-mark-brown {
+  background-color: rgba(113, 73, 30, 0.9) !important;
+}
+.hwt-mark-cyan {
+  background-color: rgba(56, 255, 221, 0.85) !important;
+}
+.hwt-mark-lime {
+  background-color: rgba(80, 240, 57, 0.85) !important;
+}
+.hwt-mark-maroon {
+  background-color: rgba(95, 29, 46, 0.9) !important;
+}
+.hwt-mark-rose {
+  background-color: rgba(236, 192, 211, 0.85) !important;
+}
+.hwt-mark-banana {
+  background-color: rgba(240, 231, 168, 0.85) !important;
+}
+.hwt-mark-gray {
+  background-color: rgba(117, 133, 147, 0.85) !important;
+}
+.hwt-mark-tan {
+  background-color: rgba(145, 136, 119, 0.9) !important;
+}
+.hwt-mark-coral {
+  background-color: rgba(215, 100, 100, 0.85) !important;
 }

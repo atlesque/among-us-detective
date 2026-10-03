@@ -1,27 +1,66 @@
 <template>
   <section class="changelog">
-    <div class="p-2 overflow-y-scroll bg-gray-100 rounded max-h-64">
-      <div
-        v-for="(item, index) in changelog"
-        :key="index"
-        class="mb-4 text-sm leading-5 text-theme-gray-dark"
-      >
-        <span class="text-xs font-bold">{{ item.date }}</span>
-        <ul v-if="(item.changes || []).length > 0" class="pl-4 list-disc">
-          <li v-for="(change, i) in item.changes" :key="i" v-html="change" />
-        </ul>
-      </div>
+    <div class="p-2 overflow-y-scroll rounded max-h-64 bg-gray-100 dark:bg-gray-800/60 text-gray-800 dark:text-gray-200">
+      <template v-for="(item, index) in changelog" :key="index">
+        <p v-if="item.notice" class="my-3 border-y border-gray-300 py-2 text-xs italic text-gray-500 dark:border-gray-700 dark:text-gray-400">
+          {{ item.notice }}
+        </p>
+        <div v-else class="mb-4 text-sm leading-5">
+          <span class="text-xs font-bold text-gray-900 dark:text-gray-100">
+            {{ item.date }}<template v-if="item.title"> — {{ item.title }}</template>
+          </span>
+          <ul v-if="(item.changes || []).length > 0" class="pl-4 list-disc text-gray-700 dark:text-gray-300">
+            <li v-for="(change, i) in item.changes" :key="i" v-html="change" />
+          </ul>
+        </div>
+      </template>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { changelogTranslations } from '~/utils/changelogTranslations'
+
 interface ChangelogItem {
-  date: string
-  changes: string[]
+  date?: string
+  title?: string
+  changes?: string[]
+  notice?: string
 }
 
-const changelog: ChangelogItem[] = [
+const { locale } = useI18n()
+const localizedChangelog = computed(() => changelogTranslations[locale.value] ?? changelogTranslations['en-US'])
+
+const olderChangelog: ChangelogItem[] = [
+  {
+    date: '2026-09-18 (Version 2.0 Overhaul)',
+    changes: [
+      '<b>✨ Added & Modernized:</b>',
+      'Multilingual localization (i18n) supporting English, Portuguese, Spanish, Korean, French, and German with browser auto-detection and Settings switcher',
+      'Dedicated Impostor Operations HUD with interactive kill cooldown timer, fake task safety advisor, sabotage planner, and fellow impostor coordination',
+      'Player Tasks Completion tracker (Done ✓ / In Progress) and Emergency Meetings counter directly in player card context menu',
+      'Modern 4-tab visual walkthrough tutorial (Match Setup, Meeting Rounds, Deduction Board, Map & Voice Notes)',
+      'Added a responsive Disclaimer page with information about the companion tool and creator credits',
+      'Modern 6-column deduction hierarchy: Hard Clear, Trusted, Unknown, Suspicious, Impostor, and Dead',
+      'Match Lobby Roster with all 18 official Among Us bean colors, live count indicator, and responsive mobile layout',
+      'Compact floating Role Popover with official role icons (Detective, Judge, Scientist, Engineer, Noisemaker, Shapeshifter, Phantom, Viper) and claim verification badges',
+      'Round Timeline & Snapshot history: view past meetings read-only and observe how deductions evolved across rounds',
+      'Mobile touch-and-hold drag-and-drop: cards smoothly track your finger across columns without triggering unwanted page scrolling',
+      'Persistent bottom Detective Toolbar docked with quick access to Notes, Map, Tasks, Settings, Help, and About',
+      'Direct in-card Mark as Dead / Revive action with "Died in Round X" tracking badge',
+      'Round limit indicator (up to 10 rounds) and dedicated Board Zoom scaling options in Settings',
+      'Full dark mode and high-contrast styling across all screens and modals',
+      '<b>🧹 Removed & Cleaned Up:</b>',
+      'Removed legacy top Player Selector modal and dropdown (replaced by one-click ME badge and popover)',
+      'Removed legacy text notes panel from top header (modernized into persistent bottom dock)',
+      'Removed cluttered emojis throughout UI in favor of clean, professional SVG icons',
+      'Removed obsolete 10-player preset button to declutter match lobby header',
+      'Removed "Right click to set as Me" hint on mobile devices where right click does not exist',
+      'Removed redundant "Expand" / "Minimize" text buttons',
+      'Removed legacy table-based Settings layout in favor of modern card groups',
+      'Removed obsolete CrewStats component',
+    ],
+  },
   { date: '2025-05-20', changes: ['Added new map: The Fungle'] },
   { date: '2025-05-16', changes: ['Enabled tracking your own color by default, to avoid confusion why yellow is missing'] },
   { date: '2021-07-19', changes: ['Add new Clean Vent task'] },
@@ -116,4 +155,10 @@ const changelog: ChangelogItem[] = [
   },
   { date: '2020-09-22', changes: ['Added Dark mode', 'Show player icons by default. Color names can be enabled in footer'] },
 ]
+
+const changelog = computed<ChangelogItem[]>(() => [
+  ...localizedChangelog.value.entries,
+  { notice: localizedChangelog.value.olderEntriesNotice },
+  ...olderChangelog,
+])
 </script>

@@ -1,5 +1,5 @@
 .dark-mode {
-  @apply bg-black;
+  @apply bg-gray-950;
   @apply text-theme-gray-extra-light;
 
   textarea {
@@ -18,16 +18,6 @@
     .crewpool:not(.pool--dead) {
       @apply bg-gray-800;
     }
-  }
-
-  .crew-stats {
-    tr {
-      @apply bg-gray-800;
-    }
-  }
-
-  .pool--inactive {
-    @apply bg-gray-800;
   }
 
   .cookie-warning {

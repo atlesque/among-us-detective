@@ -1,11 +1,9 @@
-::selection {
-  @apply bg-theme-green;
-  @apply text-white;
-}
-
 html,
 body {
   height: 100%;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 // Use body to overwrite the CSS reset

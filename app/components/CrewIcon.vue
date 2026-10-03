@@ -9,12 +9,19 @@
       },
       autoWidth ? 'w-full' : 'w-10',
       autoHeight ? 'h-full' : 'h-8',
-      showColorName ? `bg-player-${color}` : '',
     ]"
   >
+    <span
+      v-if="showColorName || (showPlayerName && playerName)"
+      class="absolute -top-3.5 left-1/2 z-20 -translate-x-1/2 whitespace-nowrap rounded text-[9px] font-bold capitalize leading-tight"
+      :class="highlightColorName
+        ? 'bg-white text-black px-1 py-0.5 ring-1 ring-gray-400 shadow-sm'
+        : 'bg-black/60 text-white px-1 py-0.2 backdrop-blur-sm'"
+    >
+      {{ (showPlayerName && playerName) ? playerName : tColor(color) }}
+    </span>
     <span v-if="isImposter" class="is-imposter-text">IMP</span>
-    <span v-if="showPlayerName" class="player-name">{{ playerName }}</span>
-    <div v-if="isDead" class="absolute inset-0 z-20 cross-icon">
+    <div v-if="isDead" class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none cross-icon p-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="2841.9 760.3 2643.9 2643.8"
@@ -30,22 +37,14 @@
         />
       </svg>
     </div>
-    <template v-if="showColorName">
-      <span
-        :class="`border-2 border-player-${color}`"
-        class="w-full text-xs text-center bg-white dark--text-dark"
-        >{{ color }}</span
-      >
-    </template>
-    <template v-else>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        baseProfile="tiny"
-        viewBox="0 0 246 246"
-        overflow="visible"
-        :class="`text-player-${color}`"
-        class="z-10 w-full"
-      >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      baseProfile="tiny"
+      viewBox="0 0 246 246"
+      overflow="visible"
+      :class="`text-player-${color}`"
+      class="z-10 w-full h-full"
+    >
         <path
           shape-rendering="geometricPrecision"
           fill="#040201"
@@ -95,18 +94,20 @@
           fill="#fffdfe"
           d="M57.1 108.1c-1.6 0-2.8-.1-4 0-3 .2-5.8 0-6.8-3.6-1-3.1.3-6.6 3.2-8.2 7.6-5 16.4-6.3 25.2-7.4 4.1-.5 8.3-.2 12.5 0 4.7.2 8.5 3.8 8.9 8.4.2 4.4-2.2 7.2-7.7 8-10.4 1.7-21.1 2-31.3 2.8z"
         />
-      </svg>
-    </template>
+    </svg>
   </div>
 </template>
 
 <script setup lang="ts">
+const { tColor } = useI18n()
+
 defineProps<{
   color: string
   playerName?: string
   autoWidth?: boolean
   autoHeight?: boolean
   showColorName?: boolean
+  highlightColorName?: boolean
   showPlayerName?: boolean
   isImposter?: boolean
   isPlayer?: boolean

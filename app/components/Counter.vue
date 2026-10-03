@@ -7,13 +7,13 @@
     </div>
     <div v-show="!isDisabled" class="flex flex-col">
       <button
-        class="flex items-center justify-center mb-1 shadow button-sm button-success"
+        class="flex items-center justify-center w-6 h-6 mb-1 text-xs font-bold text-white rounded bg-emerald-600 hover:bg-emerald-500 shadow-sm"
         @click="increaseCount"
       >
         <span>+</span>
       </button>
       <button
-        class="flex items-center justify-center shadow button-sm button-danger"
+        class="flex items-center justify-center w-6 h-6 text-xs font-bold text-white rounded bg-rose-600 hover:bg-rose-500 shadow-sm"
         @click="decreaseCount"
       >
         <span>-</span>

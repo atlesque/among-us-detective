@@ -1,7 +1,7 @@
 export const useDarkModeStore = defineStore(
   "darkMode",
   () => {
-    const isDarkMode = ref(false);
+    const isDarkMode = ref(true);
     const hasDarkModeBeenSetBefore = ref(false);
 
     function setDarkMode(value: boolean) {

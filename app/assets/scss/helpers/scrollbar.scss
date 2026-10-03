@@ -1,0 +1,44 @@
+// Custom sleek, modern scrollbars across the entire application
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.35) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.35);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(156, 163, 175, 0.65);
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+// Dark mode overrides
+.dark-mode {
+  * {
+    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(148, 163, 184, 0.3);
+
+    &:hover {
+      background-color: rgba(148, 163, 184, 0.6);
+    }
+  }
+}

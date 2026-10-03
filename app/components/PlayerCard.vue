@@ -1,0 +1,745 @@
+<template>
+  <div
+    class="player-card relative flex flex-col items-center justify-start gap-0 p-0.5 sm:p-1 rounded transition-all duration-200 select-none group"
+    :class="[
+      isEffectiveReadOnly ? 'cursor-default' : 'cursor-grab active:cursor-grabbing',
+      isPlayer ? 'ring-2 ring-yellow-400 bg-yellow-400/10 shadow' : 'shadow-sm',
+      isFellowImpostor ? 'ring-2 ring-rose-500 bg-rose-950/20 shadow' : '',
+      member.isDead
+        ? 'bg-neutral-900/80 border border-red-900/40 opacity-70'
+        : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500',
+      cardSizeClasses
+    ]"
+    :aria-label="`${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? `, ${tRole(member.role)}, ${member.roleConfirmed ? t('card.confirmedRole') : t('card.claimedRole')}` : ''}`"
+    :title="isEffectiveReadOnly
+      ? `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + tRole(member.role) + ')' : ''} [${t('notes.readOnlySnapshot')}]`
+      : `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + tRole(member.role) + ' - ' + (member.roleConfirmed ? t('card.verifiedTitle') : t('card.claimedTitle')) + ')' : ''}. ${t('card.clickForOptions')}`"
+    @touchstart.passive="handleTouchStart"
+    @touchmove.passive="handleTouchMove"
+    @click.stop="handleCardClick"
+    @contextmenu.prevent="openMenu"
+    @dragstart="closeMenu"
+  >
+    <span
+      class="w-full shrink-0 font-bold capitalize text-center break-words leading-tight rounded mb-1 sm:mb-1.5"
+      :class="[
+        nameTextClasses,
+        highlightColorNames
+          ? 'px-0.5 sm:px-1 py-0.5 bg-white text-black ring-1 ring-gray-400 shadow-sm'
+          : 'text-white bg-transparent'
+      ]"
+    >
+      {{ (showPlayerNames && member.playerName) ? member.playerName : tColor(member.color) }}
+    </span>
+
+    <!-- Avatar Character Bean -->
+    <div
+      class="relative shrink-0 flex items-center justify-center pointer-events-none"
+      :class="beanSizeClasses"
+    >
+      <CrewIcon
+        :color="member.color"
+        :is-dead="member.isDead"
+        :is-player="member.isPlayer"
+        :player-name="member.playerName"
+        :show-player-name="false"
+        :auto-width="true"
+        :auto-height="true"
+        class="w-full h-full"
+      />
+      <!-- Died in Round badge -->
+      <span
+        v-if="member.isDead && member.diedInRound"
+        class="absolute -top-1.5 -right-2 z-30 px-1.5 py-0.5 bg-red-600 text-white text-[8px] sm:text-[9px] font-black rounded-md border border-white/80 shadow-md leading-none select-none flex items-center gap-0.5"
+        :title="t('card.diedInRoundTitle', { round: member.diedInRound })"
+      >
+        <AppIcon name="dead" class="w-2.5 h-2.5 shrink-0" />
+        <span>R{{ member.diedInRound }}</span>
+      </span>
+      <!-- Fellow Impostor Indicator Badge -->
+      <span
+        v-if="isFellowImpostor && !member.isDead"
+        class="absolute -top-1.5 -left-1.5 z-30 px-1 py-0.5 bg-rose-600 text-white rounded border border-white/80 shadow-md flex items-center justify-center text-[7px] font-black leading-none select-none imp-badge"
+        :title="t('card.fellowImpostorTitle')"
+        :aria-label="t('card.fellowImpostorTitle')"
+        data-test="imp-badge"
+      >
+        IMP
+      </span>
+      <!-- Tasks Finished Indicator Badge -->
+      <span
+        v-if="member.isDoneWithTasks && !member.isDead && !isFellowImpostor"
+        class="absolute -top-1.5 -left-1.5 z-30 w-3.5 h-3.5 bg-emerald-600 text-white rounded-full border border-white/80 shadow-md flex items-center justify-center text-[8px] font-black leading-none select-none"
+        :title="t('card.tasksFinishedTitle')"
+        :aria-label="t('card.tasksFinishedTitle')"
+        data-test="tasks-done-badge"
+      >
+        ✓
+      </span>
+    </div>
+
+    <!-- Reveal the role below the stable name and bean without moving either one. -->
+    <Transition name="role-reveal">
+      <div
+        v-if="member.role"
+        class="flex flex-col items-center justify-center mt-0.5 sm:mt-1 min-w-0 max-w-full"
+      >
+        <RoleIcon
+          :key="member.role"
+          :role="member.role"
+          :confirmed="member.roleConfirmed"
+          size="sm"
+          class="shrink-0 role-pop-badge"
+          :class="roleIconClasses"
+        />
+        <span
+          :key="member.role"
+          class="w-full font-bold capitalize text-center break-words leading-tight mt-0.5 role-pop-badge"
+          :class="[
+            isImpostorRole ? 'text-rose-500 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400',
+            roleTextClasses
+          ]"
+        >
+          {{ tRole(member.role) }}
+        </span>
+      </div>
+    </Transition>
+
+    <!-- History evolution indicator (if viewing past round and current live status differs) -->
+    <span
+      v-if="roundsStore.isViewingHistory && liveStatusDifference"
+      class="w-full text-[7px] font-bold text-center truncate leading-none mt-0.5 px-0.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30"
+      :title="t('card.liveStatusTitle', { status: liveStatusDifference })"
+    >
+      {{ t('card.liveStatusNow', { status: liveStatusDifference }) }}
+    </span>
+
+    <!-- Compact Floating Popover Menu (Teleported to body, anchored beside clicked card) -->
+    <Teleport to="body">
+      <div
+        v-if="isCurrentMenuOpen"
+        class="fixed inset-0 z-50 select-none"
+      >
+        <div
+          class="fixed inset-0 bg-transparent"
+          data-test="card-menu-overlay"
+          @click.stop="closeMenu"
+          @contextmenu.prevent.stop="closeMenu"
+        />
+        <div
+          class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] max-w-[calc(100vw-16px)] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
+          ref="menuElement"
+          :style="menuStyle"
+          @click.stop
+        >
+          <!-- Header: Color Dot, Player Name, Set as Me -->
+          <div class="flex items-center justify-between gap-1.5 pb-2 mb-2 border-b border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full border border-black/30 shrink-0 shadow-sm"
+                :class="`bg-player-${member.color}`"
+              />
+              <span class="font-bold capitalize truncate text-xs text-gray-900 dark:text-gray-100">
+                {{ member.playerName || tColor(member.color) }}
+              </span>
+            </div>
+
+            <button
+              v-if="!member.isPlayer"
+              type="button"
+              class="shrink-0 px-2 py-0.5 text-[11px] font-bold rounded bg-yellow-400/20 text-yellow-600 dark:text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors"
+              :title="t('card.setAsMe')"
+              @click="setAsMyPlayer"
+            >
+              {{ t('card.setAsMe') }}
+            </button>
+            <span
+              v-else
+              class="shrink-0 px-2 py-0.5 text-[11px] font-bold rounded bg-yellow-400 text-black shadow-sm flex items-center gap-1"
+            >
+              <AppIcon name="star" class="w-3 h-3 fill-current" />
+              <span>{{ t('card.me') }}</span>
+            </span>
+          </div>
+
+          <!-- Impostor Roles (When Impostor Mode is active, shown on TOP) -->
+          <div v-if="impostorStore.isImpostorModeActive" class="mb-2">
+            <div class="flex items-center justify-between mb-1">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400">
+                {{ t('card.impostorRoles') }}
+              </div>
+              <span v-if="isFellowImpostor" class="text-[9px] font-bold text-rose-400">
+                {{ t('card.fellowImpostorActive') }}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-1">
+              <button
+                v-for="r in impostorRoles"
+                :key="r"
+                type="button"
+                :data-test="`impostor-role-${r.toLowerCase()}`"
+                class="flex items-center gap-1.5 px-2 py-1 text-[11px] rounded border transition-colors text-left"
+                :class="member.role === r
+                  ? 'bg-rose-600 text-white border-rose-500 font-bold shadow-sm'
+                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-rose-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
+                @click="selectRole(r)"
+              >
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Crew Roles (Always shown) -->
+          <div class="mb-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">
+              {{ t('card.crewRoles') }}
+            </div>
+            <div class="grid grid-cols-2 gap-1">
+              <button
+                v-for="r in crewRoles"
+                :key="r"
+                type="button"
+                class="flex items-center gap-1.5 px-2 py-1 text-[11px] rounded border transition-colors text-left"
+                :class="member.role === r
+                  ? 'bg-emerald-600 text-white border-emerald-500 font-bold shadow-sm'
+                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-emerald-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
+                @click="selectRole(r)"
+              >
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Impostor Roles (When normal mode, shown below Crew Roles) -->
+          <div v-if="!impostorStore.isImpostorModeActive" class="mb-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 mb-1">
+              {{ t('card.impostorRoles') }}
+            </div>
+            <div class="grid grid-cols-2 gap-1">
+              <button
+                v-for="r in impostorRoles"
+                :key="r"
+                type="button"
+                :disabled="member.status === 'hard_clear'"
+                class="flex items-center gap-1.5 px-2 py-1 text-[11px] rounded border transition-colors text-left"
+                :class="member.status === 'hard_clear'
+                  ? 'bg-gray-200 dark:bg-gray-800 text-gray-400 border-transparent cursor-not-allowed opacity-60'
+                  : member.role === r
+                  ? 'bg-rose-600 text-white border-rose-500 font-bold shadow-sm'
+                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-rose-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
+                @click="selectRole(r)"
+              >
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Role Confirmation & Verification (Only shown when a role is selected) -->
+          <div
+            v-if="member.role"
+            class="mb-2 rounded-md border p-1.5"
+            :class="member.roleConfirmed
+              ? isImpostorRole
+                ? 'border-rose-500/50 bg-rose-500/10'
+                : 'border-emerald-500/50 bg-emerald-500/10'
+              : 'border-yellow-500/50 bg-yellow-500/10'"
+            data-test="role-confirmation"
+          >
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <span
+                class="text-[10px] font-bold uppercase tracking-wider"
+                :class="member.roleConfirmed
+                  ? isImpostorRole ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-yellow-700 dark:text-yellow-400'"
+              >
+                {{ member.roleConfirmed ? t('card.roleVerified') : t('card.confirmRole') }}
+              </span>
+              <span
+                class="text-[10px] font-bold"
+                :class="member.roleConfirmed
+                  ? isImpostorRole ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+                  : 'text-yellow-700 dark:text-yellow-400'"
+              >
+                {{ member.roleConfirmed ? t('card.verified') : t('card.claimed') }}
+              </span>
+            </div>
+            <button
+              type="button"
+              class="w-full py-1 px-2 text-[11px] font-bold rounded transition-colors text-center flex items-center justify-center gap-1.5"
+              :class="member.roleConfirmed
+                ? isImpostorRole
+                  ? 'bg-rose-700 text-white hover:bg-rose-600 shadow-sm'
+                  : 'bg-emerald-700 text-white hover:bg-emerald-600 shadow-sm'
+                : isImpostorRole
+                  ? 'bg-rose-600 text-white hover:bg-rose-500 shadow-sm'
+                  : 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-sm'"
+              @click="toggleRoleConfirmed"
+            >
+              <AppIcon v-if="!member.roleConfirmed" name="check" class="w-3 h-3 stroke-[3]" />
+              <span>{{ member.roleConfirmed ? t('card.undoVerification') : isImpostorRole ? t('card.confirmImpostor') : t('card.confirmRole') }}</span>
+            </button>
+          </div>
+
+          <!-- Task Completion & Emergency Meetings Controls -->
+          <div class="mb-2 p-1.5 rounded-md border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 flex flex-col gap-1.5">
+            <!-- Tasks Done Toggle -->
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                <AppIcon name="tasks" class="w-3 h-3" />
+                <span>{{ t('card.tasks') }}</span>
+              </span>
+              <button
+                type="button"
+                class="px-2 py-0.5 text-[10px] font-bold rounded border transition-colors flex items-center gap-1"
+                :class="member.isDoneWithTasks
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
+                  : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-100'"
+                data-test="card-toggle-tasks-btn"
+                @click="toggleTasksDone"
+              >
+                <span>{{ member.isDoneWithTasks ? t('card.tasksDone') : t('card.tasksInProgress') }}</span>
+              </button>
+            </div>
+
+            <!-- Emergency Meetings Count -->
+            <div class="flex items-center justify-between pt-1 border-t border-gray-200/60 dark:border-gray-700/50">
+              <span class="text-[10px] font-bold text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                <AppIcon name="bell" class="w-3 h-3" />
+                <span>{{ t('card.meetings') }}</span>
+              </span>
+              <div class="flex items-center gap-1">
+                <button
+                  type="button"
+                  class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
+                  :title="t('card.decrementMeetings')"
+                  @click="decrementMeetings"
+                >
+                  -
+                </button>
+                <span class="text-[10px] font-bold w-3.5 text-center">{{ member.totalMeetingsHeld || 0 }}</span>
+                <button
+                  type="button"
+                  class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
+                  :title="t('card.incrementMeetings')"
+                  @click="incrementMeetings"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom actions: Clear role & Mark as dead / Revive -->
+          <div class="pt-2 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1.5">
+            <div v-if="member.role" class="flex justify-end">
+              <button
+                type="button"
+                class="px-2 py-0.5 text-[11px] text-gray-400 hover:text-red-500 rounded hover:bg-red-500/10 transition-colors flex items-center gap-1"
+                :title="t('card.clearRole')"
+                @click="clearRole"
+              >
+                <AppIcon name="close" class="w-2.5 h-2.5" />
+                <span>{{ t('card.clearRole') }}</span>
+              </button>
+            </div>
+
+            <button
+              type="button"
+              class="w-full py-1.5 px-2 text-[11px] font-bold rounded transition-colors flex items-center justify-center gap-1.5"
+              :class="member.isDead
+                ? 'bg-red-500/20 text-red-500 dark:text-red-400 hover:bg-red-500/30 border border-red-500/40'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white border border-gray-300 dark:border-gray-700'"
+              @click="handleToggleDead"
+            >
+              <AppIcon :name="member.isDead ? 'heart' : 'dead'" class="w-3.5 h-3.5 shrink-0" />
+              <span>{{ member.isDead ? t('card.revivePlayer') : t('card.markAsDead') }}</span>
+              <span v-if="member.isDead && member.diedInRound" class="text-[9px] opacity-80 ml-1">
+                ({{ t('card.diedInRound', { round: member.diedInRound }) }})
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+  </div>
+</template>
+
+<script lang="ts">
+import { ref, computed, watch } from 'vue'
+
+// Shared module singleton ensures ONLY ONE menu can be open across all cards
+const activeMenuColor = ref<string | null>(null)
+const menuPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 })
+</script>
+
+<script setup lang="ts">
+import type { CrewMember } from '~/stores/crew'
+import { useImpostorStore } from '~/stores/impostor'
+
+const props = defineProps<{
+  member: CrewMember
+  highlightColorNames?: boolean
+  showPlayerNames?: boolean
+  isPlayer?: boolean
+  isReadOnly?: boolean
+}>()
+
+const crewStore = useCrewStore()
+const settingsStore = useSettingsStore()
+const roundsStore = useRoundsStore()
+const impostorStore = useImpostorStore()
+const { t, tColor, tRole } = useI18n()
+
+const isEffectiveReadOnly = computed(() => props.isReadOnly === true || roundsStore.isViewingHistory)
+
+const isFellowImpostor = computed(() => impostorStore.isFellowImpostor(props.member.color))
+
+const liveStatusDifference = computed(() => {
+  if (!roundsStore.isViewingHistory) return null
+  const liveMember = crewStore.crewMembers.find((m) => m.color === props.member.color)
+  if (!liveMember) return null
+  if (liveMember.status !== props.member.status) {
+    const statusMap: Record<string, string> = {
+      hard_clear: t('col.hardClear'),
+      trusted: t('col.trusted'),
+      unknown: t('col.unknown'),
+      suspicious: t('col.suspicious'),
+      impostor: t('col.impostor'),
+      dead: t('col.dead'),
+    }
+    return statusMap[liveMember.status] || liveMember.status
+  }
+  return null
+})
+
+const cardSizeClasses = computed(() => {
+  const zoom = settingsStore.boardZoom || 'normal'
+  if (zoom === 'compact') {
+    return [
+      'w-[38px] sm:w-[44px] md:w-[48px]',
+      'h-auto pb-0.5 sm:pb-1'
+    ]
+  }
+  if (zoom === 'large') {
+    return [
+      'w-[60px] sm:w-[70px] md:w-[78px]',
+      'h-auto pb-1.5 sm:pb-2'
+    ]
+  }
+  if (zoom === 'extra-large') {
+    return [
+      'w-[74px] sm:w-[86px] md:w-[96px]',
+      'h-auto pb-2 sm:pb-2.5'
+    ]
+  }
+  return [
+    'w-[48px] sm:w-[56px] md:w-[62px]',
+    'h-auto pb-1 sm:pb-1.5'
+  ]
+})
+
+const beanSizeClasses = computed(() => {
+  const zoom = settingsStore.boardZoom || 'normal'
+  if (zoom === 'compact') return 'w-6 h-6 sm:w-7 sm:h-7'
+  if (zoom === 'large') return 'w-10 h-10 sm:w-11 sm:h-11'
+  if (zoom === 'extra-large') return 'w-12 h-12 sm:w-14 sm:h-14'
+  return 'w-8 h-8 sm:w-9 sm:h-9'
+})
+
+const nameTextClasses = computed(() => {
+  const zoom = settingsStore.boardZoom || 'normal'
+  if (zoom === 'compact') return 'text-[7px] sm:text-[8px] leading-tight min-h-[12px]'
+  if (zoom === 'large') return 'text-[9.5px] sm:text-[11px] leading-tight min-h-[16px]'
+  if (zoom === 'extra-large') return 'text-[11px] sm:text-[12.5px] leading-tight min-h-[18px]'
+  return 'text-[8px] sm:text-[9px] leading-tight min-h-[14px]'
+})
+
+const roleIconClasses = computed(() => {
+  const zoom = settingsStore.boardZoom || 'normal'
+  if (zoom === 'compact') return 'w-3 h-3 sm:w-3.5 sm:h-3.5'
+  if (zoom === 'large') return 'w-4.5 h-4.5 sm:w-5 sm:h-5'
+  if (zoom === 'extra-large') return 'w-5.5 h-5.5 sm:w-6.5 sm:h-6.5'
+  return 'w-3.5 h-3.5 sm:w-4 sm:h-4'
+})
+
+const roleTextClasses = computed(() => {
+  const zoom = settingsStore.boardZoom || 'normal'
+  if (zoom === 'compact') return 'text-[7px] sm:text-[7.5px]'
+  if (zoom === 'large') return 'text-[9px] sm:text-[10px]'
+  if (zoom === 'extra-large') return 'text-[10.5px] sm:text-[12px]'
+  return 'text-[8px] sm:text-[9px]'
+})
+
+const isCurrentMenuOpen = computed(() => activeMenuColor.value === props.member.color)
+const menuElement = ref<HTMLElement | null>(null)
+
+const crewRoles = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noisemaker']
+const impostorRoles = ['Impostor', 'Shapeshifter', 'Phantom', 'Viper']
+
+const isImpostorRole = computed(() => {
+  return props.member.role && impostorRoles.includes(props.member.role)
+})
+
+const menuStyle = computed(() => ({
+  top: `${menuPosition.value.top}px`,
+  left: `${menuPosition.value.left}px`,
+}))
+
+let scrollListener: ((event: Event) => void) | null = null
+let escListener: ((e: KeyboardEvent) => void) | null = null
+let resizeListener: (() => void) | null = null
+let menuAnchorRect: DOMRect | null = null
+let menuAnchorElement: HTMLElement | null = null
+
+function cleanupListeners() {
+  if (scrollListener) {
+    window.removeEventListener('scroll', scrollListener, { capture: true })
+    scrollListener = null
+  }
+  if (escListener) {
+    window.removeEventListener('keydown', escListener)
+    escListener = null
+  }
+  if (resizeListener) {
+    window.removeEventListener('resize', resizeListener)
+    resizeListener = null
+  }
+}
+
+// Close on Escape key or when the page is scrolled
+watch(isCurrentMenuOpen, (isOpen) => {
+  cleanupListeners()
+  if (isOpen) {
+    escListener = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMenu()
+      }
+    }
+    scrollListener = (event: Event) => {
+      const target = event.target
+      if (target instanceof Node && menuElement.value?.contains(target)) return
+      const anchor = menuAnchorElement
+      if (!anchor?.isConnected) {
+        closeMenu()
+        return
+      }
+
+      const rect = anchor.getBoundingClientRect()
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+        closeMenu()
+        return
+      }
+
+      // Keep the popover attached while the page settles a click's auto-scroll.
+      menuAnchorRect = rect
+      updateMenuPosition()
+    }
+    resizeListener = updateMenuPosition
+    window.addEventListener('keydown', escListener)
+    window.addEventListener('scroll', scrollListener, { passive: true, capture: true })
+    window.addEventListener('resize', resizeListener)
+  }
+})
+
+onBeforeUnmount(() => {
+  cleanupListeners()
+  if (activeMenuColor.value === props.member.color) {
+    activeMenuColor.value = null
+    menuAnchorRect = null
+    menuAnchorElement = null
+  }
+})
+
+let touchStartX = 0
+let touchStartY = 0
+let isTouchDragging = false
+
+function handleTouchStart(e: TouchEvent) {
+  if (e.touches.length > 0) {
+    touchStartX = e.touches[0].clientX
+    touchStartY = e.touches[0].clientY
+    isTouchDragging = false
+  }
+}
+
+function handleTouchMove(e: TouchEvent) {
+  if (e.touches.length > 0) {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX)
+    const dy = Math.abs(e.touches[0].clientY - touchStartY)
+    if (dx > 8 || dy > 8) {
+      isTouchDragging = true
+      closeMenu()
+    }
+  }
+}
+
+function handleCardClick(e: MouseEvent) {
+  if (isEffectiveReadOnly.value) return
+  if (isTouchDragging) {
+    isTouchDragging = false
+    return
+  }
+  openMenu(e)
+}
+
+async function openMenu(event?: MouseEvent) {
+  if (isEffectiveReadOnly.value) return
+  const target = event?.currentTarget as HTMLElement | null
+  menuAnchorElement = target
+  menuAnchorRect = target?.getBoundingClientRect() ?? null
+  activeMenuColor.value = props.member.color
+  await nextTick()
+  if (isCurrentMenuOpen.value) updateMenuPosition()
+}
+
+function updateMenuPosition() {
+  const anchor = menuAnchorElement?.isConnected
+    ? menuAnchorElement.getBoundingClientRect()
+    : menuAnchorRect
+  if (!anchor) return
+
+  const viewportPadding = 8
+  const menuRect = menuElement.value?.getBoundingClientRect()
+  const width = Math.min(menuRect?.width || 275, Math.max(1, window.innerWidth - viewportPadding * 2))
+  const height = Math.min(menuRect?.height || 480, Math.max(1, window.innerHeight - viewportPadding * 2))
+  const maxLeft = Math.max(viewportPadding, window.innerWidth - width - viewportPadding)
+  const maxTop = Math.max(viewportPadding, window.innerHeight - height - viewportPadding)
+
+  let left: number
+  let top: number
+  if (window.innerWidth < 640) {
+    const centeredLeft = anchor.left + (anchor.width - width) / 2
+    left = Math.max(viewportPadding, Math.min(centeredLeft, maxLeft))
+
+    const belowTop = anchor.bottom + 4
+    const aboveTop = anchor.top - height - 4
+    if (belowTop + height <= window.innerHeight - viewportPadding) {
+      top = belowTop
+    } else if (aboveTop >= viewportPadding) {
+      top = aboveTop
+    } else {
+      top = maxTop
+    }
+  } else {
+    const rightLeft = anchor.right + 6
+    const preferredLeft = rightLeft + width <= window.innerWidth - viewportPadding
+      ? rightLeft
+      : anchor.left - width - 6
+    left = Math.max(viewportPadding, Math.min(preferredLeft, maxLeft))
+    top = Math.max(viewportPadding, Math.min(anchor.top, maxTop))
+  }
+
+  menuPosition.value = { top, left }
+}
+
+function closeMenu() {
+  cleanupListeners()
+  if (activeMenuColor.value === props.member.color) {
+    activeMenuColor.value = null
+    menuAnchorRect = null
+    menuAnchorElement = null
+  }
+}
+
+function selectRole(role: string) {
+  if (impostorStore.isImpostorModeActive && impostorRoles.includes(role)) {
+    if (props.member.role === role) {
+      crewStore.setPlayerRole(props.member.color, null, false)
+      if (props.member.status === 'impostor') {
+        crewStore.setPlayerStatus(props.member.color, 'unknown')
+      }
+    } else {
+      crewStore.setPlayerRole(props.member.color, role, true)
+    }
+    closeMenu()
+    return
+  }
+
+  if (props.member.role === role) {
+    crewStore.setPlayerRole(props.member.color, null, false)
+  } else {
+    crewStore.setPlayerRole(props.member.color, role, false)
+  }
+  closeMenu()
+}
+
+function clearRole() {
+  crewStore.setPlayerRole(props.member.color, null, false)
+  closeMenu()
+}
+
+function toggleRoleConfirmed() {
+  crewStore.toggleRoleConfirmed(props.member.color)
+  closeMenu()
+}
+
+function setAsMyPlayer() {
+  crewStore.setPlayerColor(props.member.color)
+  closeMenu()
+}
+
+function handleToggleDead() {
+  crewStore.togglePlayerDead(props.member.color)
+  closeMenu()
+}
+
+function toggleTasksDone() {
+  crewStore.setCrewMemberIsDoneWithTasks({
+    member: props.member,
+    isDone: !props.member.isDoneWithTasks,
+  })
+}
+
+function incrementMeetings() {
+  crewStore.setCrewMemberTotalMeetings({
+    member: props.member,
+    meetingsCount: (props.member.totalMeetingsHeld || 0) + 1,
+  })
+}
+
+function decrementMeetings() {
+  const current = props.member.totalMeetingsHeld || 0
+  if (current > 0) {
+    crewStore.setCrewMemberTotalMeetings({
+      member: props.member,
+      meetingsCount: current - 1,
+    })
+  }
+}
+</script>
+
+<style scoped>
+.player-card {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.role-reveal-enter-active,
+.role-reveal-leave-active {
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.role-reveal-enter-from,
+.role-reveal-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.role-pop-badge {
+  animation: role-pop 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes role-pop {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.88);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>

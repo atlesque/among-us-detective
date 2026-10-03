@@ -67,6 +67,16 @@ export default (function() {
       this.highlights = document.createElement("div");
       this.highlights.classList.add(ID + "-highlights", ID + "-content");
 
+      this.syncStyles();
+
+      if (typeof ResizeObserver !== "undefined" && this.el) {
+        this.resizeObserver = new ResizeObserver(() => {
+          this.syncStyles();
+          this.handleScroll();
+        });
+        this.resizeObserver.observe(this.el);
+      }
+
       this.backdrop = document.createElement("div");
       this.backdrop.classList.add(ID + "-backdrop");
       this.backdrop.appendChild(this.highlights);
@@ -171,7 +181,29 @@ export default (function() {
         " + 3px)";
     },
 
+    syncStyles: function() {
+      if (typeof window !== "undefined" && window.getComputedStyle && this.el && this.highlights) {
+        const elStyle = window.getComputedStyle(this.el);
+        this.highlights.style.paddingTop = elStyle.paddingTop;
+        this.highlights.style.paddingRight = elStyle.paddingRight;
+        this.highlights.style.paddingBottom = elStyle.paddingBottom;
+        this.highlights.style.paddingLeft = elStyle.paddingLeft;
+        this.highlights.style.borderTopWidth = elStyle.borderTopWidth;
+        this.highlights.style.borderRightWidth = elStyle.borderRightWidth;
+        this.highlights.style.borderBottomWidth = elStyle.borderBottomWidth;
+        this.highlights.style.borderLeftWidth = elStyle.borderLeftWidth;
+        this.highlights.style.borderStyle = elStyle.borderStyle;
+        this.highlights.style.fontSize = elStyle.fontSize;
+        this.highlights.style.fontFamily = elStyle.fontFamily;
+        this.highlights.style.fontWeight = elStyle.fontWeight;
+        this.highlights.style.lineHeight = elStyle.lineHeight;
+        this.highlights.style.letterSpacing = elStyle.letterSpacing;
+        this.highlights.style.wordSpacing = elStyle.wordSpacing;
+      }
+    },
+
     handleInput: function() {
+      this.syncStyles();
       let input = this.el.value;
       let ranges = this.getRanges(input, this.highlight);
       let unstaggeredRanges = this.removeStaggeredRanges(ranges);
@@ -216,6 +248,7 @@ export default (function() {
     getRegExpRanges: function(input, regex) {
       let ranges = [];
       let match;
+      regex.lastIndex = 0;
       while (((match = regex.exec(input)), match !== null)) {
         ranges.push([match.index, match.index + match[0].length]);
         if (!regex.global) {

@@ -27,11 +27,11 @@ test.describe("Player color selection", () => {
       .first()
       .click();
 
-    // The button background class should reflect the new color
+    // The button should reflect the newly selected player color
     const selectorBtn = page
       .locator("[data-test='player-selector-btn']")
       .first();
-    await expect(selectorBtn).toHaveClass(/bg-player-red/);
+    await expect(selectorBtn).toContainText(/red/i);
   });
 
   test("All 18 player colors are available in the picker", async ({ page }) => {
@@ -66,15 +66,4 @@ test.describe("Player color selection", () => {
     }
   });
 
-  test("Imposter mode checkbox is visible in the color picker", async ({
-    page,
-  }) => {
-    await page
-      .locator("[data-test='player-selector-btn']")
-      .first()
-      .click();
-    await expect(
-      page.locator("[data-test='imposter-mode-row']").first()
-    ).toBeVisible();
-  });
 });

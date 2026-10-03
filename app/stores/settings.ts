@@ -1,31 +1,52 @@
 export const useSettingsStore = defineStore(
   "settings",
   () => {
-    const showColorNames = ref(false);
-    const showImposterCheckbox = ref(true);
-    const showTasksCheckbox = ref(true);
-    const showMeetingsCount = ref(true);
+    const highlightColorNames = ref(false);
+    const highlightNotesColors = ref(true);
     const showPlayerNames = ref(false);
+    const showMapColorNames = ref(false);
     const settingsModalOpenState = ref(false);
     const resetNotesOnNewGame = ref(true);
     const showRoundNotes = ref(true);
     const canTrackOwnColor = ref(true);
     const isImproveMapContrastEnabled = ref(true);
+    const boardZoom = ref<'compact' | 'normal' | 'large' | 'extra-large'>('normal');
+    const disableAnimations = ref(false);
+    const speechLanguage = ref<'auto' | 'pt-BR' | 'en-US' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
+    const uiLanguage = ref<'auto' | 'en-US' | 'pt-BR' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
+    const hasAutoDetectedLanguage = ref(false);
 
-    function setShowColorNames(value: boolean) {
-      showColorNames.value = value;
+    function setDisableAnimations(value: boolean) {
+      disableAnimations.value = value;
     }
-    function setShowImposterCheckbox(value: boolean) {
-      showImposterCheckbox.value = value;
+
+    function setBoardZoom(value: 'compact' | 'normal' | 'large' | 'extra-large') {
+      boardZoom.value = value;
     }
-    function setShowTasksCheckbox(value: boolean) {
-      showTasksCheckbox.value = value;
+
+    function setSpeechLanguage(value: 'auto' | 'pt-BR' | 'en-US' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE') {
+      speechLanguage.value = value;
     }
-    function setShowMeetingsCount(value: boolean) {
-      showMeetingsCount.value = value;
+
+    function setUiLanguage(value: 'auto' | 'en-US' | 'pt-BR' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE') {
+      uiLanguage.value = value;
+    }
+
+    function setHasAutoDetectedLanguage(value: boolean) {
+      hasAutoDetectedLanguage.value = value;
+    }
+
+    function setHighlightColorNames(value: boolean) {
+      highlightColorNames.value = value;
+    }
+    function setHighlightNotesColors(value: boolean) {
+      highlightNotesColors.value = value;
     }
     function setShowPlayerNames(value: boolean) {
       showPlayerNames.value = value;
+    }
+    function setShowMapColorNames(value: boolean) {
+      showMapColorNames.value = value;
     }
     function setSettingsModalOpenState(value: boolean) {
       settingsModalOpenState.value = value;
@@ -44,26 +65,34 @@ export const useSettingsStore = defineStore(
     }
 
     return {
-      showColorNames,
-      showImposterCheckbox,
-      showTasksCheckbox,
-      showMeetingsCount,
+      highlightColorNames,
+      highlightNotesColors,
       showPlayerNames,
+      showMapColorNames,
       settingsModalOpenState,
       resetNotesOnNewGame,
       showRoundNotes,
       canTrackOwnColor,
       isImproveMapContrastEnabled,
-      setShowColorNames,
-      setShowImposterCheckbox,
-      setShowTasksCheckbox,
-      setShowMeetingsCount,
+      boardZoom,
+      disableAnimations,
+      speechLanguage,
+      uiLanguage,
+      hasAutoDetectedLanguage,
+      setHighlightColorNames,
+      setHighlightNotesColors,
       setShowPlayerNames,
+      setShowMapColorNames,
       setSettingsModalOpenState,
       setResetNotesOnNewGame,
       setShowRoundNotes,
       setCanTrackOwnColor,
       setIsImproveMapContrastEnabled,
+      setBoardZoom,
+      setDisableAnimations,
+      setSpeechLanguage,
+      setUiLanguage,
+      setHasAutoDetectedLanguage,
     };
   },
   { persist: true }

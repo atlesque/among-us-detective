@@ -15,8 +15,11 @@
       </div>
       <span class="hidden sm:inline-block sm:align-middle sm:h-screen" />&#8203;
       <div
-        :class="[isDarkMode ? 'bg-gray-200 text-black' : 'bg-white']"
-        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+        :class="[
+          isDarkMode ? 'bg-gray-900 text-gray-100 border border-gray-700/80 shadow-2xl' : 'bg-white',
+          maxWidthClass,
+        ]"
+        class="inline-block w-full px-6 overflow-hidden text-left align-bottom transition-all transform rounded-lg shadow-xl sm:my-8 sm:align-middle sm:w-full sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-headline"
@@ -25,7 +28,8 @@
           <button
             type="button"
             class="text-gray-400 transition duration-150 ease-in-out hover:text-gray-500 focus:outline-none focus:text-gray-500"
-            aria-label="Close"
+            :aria-label="t('modal.close')"
+            data-test="modal-close"
             @click="emit('close')"
           >
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,7 +44,7 @@
         </div>
         <div class="sm:flex sm:items-start">
           <div class="w-full my-6 sm:my-0">
-            <h1 class="text-lg font-medium leading-6 text-gray-900" id="modal-headline">
+            <h1 class="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100 mb-3 sm:mb-4" id="modal-headline">
               <slot name="title" />
             </h1>
             <div class="pb-4 modal-body">
@@ -54,9 +58,55 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ isTransparent?: boolean }>()
+const props = withDefaults(
+  defineProps<{
+    isTransparent?: boolean
+    maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '700px'
+  }>(),
+  {
+    isTransparent: false,
+    maxWidth: 'lg',
+  }
+)
 const emit = defineEmits<{ close: [] }>()
 
+const { t } = useI18n()
 const darkModeStore = useDarkModeStore()
 const isDarkMode = computed(() => darkModeStore.isDarkMode)
+
+const maxWidthClass = computed(() => {
+  switch (props.maxWidth) {
+    case 'sm':
+      return 'sm:max-w-sm'
+    case 'md':
+      return 'sm:max-w-md'
+    case 'lg':
+      return 'sm:max-w-lg'
+    case 'xl':
+      return 'sm:max-w-xl'
+    case '2xl':
+    case '700px':
+      return 'sm:max-w-[720px]'
+    case '3xl':
+      return 'sm:max-w-3xl'
+    case '4xl':
+      return 'sm:max-w-4xl'
+    default:
+      return 'sm:max-w-lg'
+  }
+})
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') {
+    emit('close')
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
 </script>
