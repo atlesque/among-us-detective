@@ -55,7 +55,7 @@
               <div class="flex flex-col">
                 <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.interfaceLanguage') }}</span>
                 <span class="text-[11px] text-gray-500 dark:text-gray-400">
-                  {{ settingsStore.uiLanguage === 'auto' ? `Auto: ${detectedLocaleInfo.name}` : locale }}
+                  {{ settingsStore.uiLanguage === 'auto' ? t('settings.autoLanguageCurrent', { language: detectedLocaleInfo.name }) : locale }}
                 </span>
               </div>
               <select
@@ -65,7 +65,7 @@
                 @change="(e: Event) => setLocale((e.target as HTMLSelectElement).value as any)"
               >
                 <option value="auto">
-                  🌐 Auto ({{ detectedLocaleInfo.name }})
+                  🌐 {{ t('settings.autoLanguage') }} ({{ detectedLocaleInfo.name }})
                 </option>
                 <option v-for="l in availableLocales" :key="l.code" :value="l.code">
                   {{ l.flag }} {{ l.name }}
@@ -87,7 +87,7 @@
                 @click="toggleDarkMode"
               >
                 <AppIcon :name="darkModeStore.isDarkMode ? 'moon' : 'sun'" class="w-3.5 h-3.5 shrink-0" />
-                <span>{{ darkModeStore.isDarkMode ? "Dark" : "Light" }}</span>
+                <span>{{ darkModeStore.isDarkMode ? t('settings.theme.dark') : t('settings.theme.light') }}</span>
               </button>
             </div>
 
@@ -252,7 +252,7 @@
               <div class="flex flex-col">
                 <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.voiceLanguage') }}</span>
                 <span class="text-[11px] text-gray-500 dark:text-gray-400">
-                  {{ settingsStore.speechLanguage === 'auto' ? `Auto: ${detectedLocaleInfo.name}` : getLocaleName(settingsStore.speechLanguage) }}
+                  {{ settingsStore.speechLanguage === 'auto' ? t('settings.autoLanguageCurrent', { language: detectedLocaleInfo.name }) : getLocaleName(settingsStore.speechLanguage) }}
                 </span>
               </div>
               <select
@@ -262,7 +262,7 @@
                 @change="(e: Event) => settingsStore.setSpeechLanguage((e.target as HTMLSelectElement).value as any)"
               >
                 <option value="auto">
-                  🌐 Auto ({{ detectedLocaleInfo.name }})
+                  🌐 {{ t('settings.autoLanguage') }} ({{ detectedLocaleInfo.name }})
                 </option>
                 <option v-for="l in availableLocales" :key="l.code" :value="l.code">
                   {{ l.flag }} {{ l.name }}

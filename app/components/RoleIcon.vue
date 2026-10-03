@@ -4,7 +4,7 @@
     <img
       v-if="imageSrc"
       :src="imageSrc"
-      :alt="role || 'Role'"
+      :alt="role ? tRole(role) : t('role.label')"
       class="object-contain w-full h-full select-none pointer-events-none drop-shadow-sm"
       draggable="false"
     />
@@ -34,7 +34,7 @@
     <span
       v-if="showBadge && role && !confirmed"
       class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 bg-yellow-400 text-black font-black text-[10px] rounded-full border border-black shadow pointer-events-none z-10"
-      title="Unverified Claim"
+      :title="t('role.unverifiedClaim')"
     >
       ?
     </span>
@@ -44,7 +44,7 @@
       v-else-if="showBadge && role && confirmed"
       class="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 text-white font-black text-[10px] rounded-full border border-black shadow pointer-events-none z-10"
       :class="isImpostorRole ? 'bg-rose-600' : 'bg-emerald-500'"
-      title="Verified Claim"
+      :title="t('role.verifiedClaim')"
     >
       <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="20 6 9 17 4 12" />
@@ -54,6 +54,8 @@
 </template>
 
 <script setup lang="ts">
+const { t, tRole } = useI18n()
+
 const props = withDefaults(
   defineProps<{
     role?: string | null

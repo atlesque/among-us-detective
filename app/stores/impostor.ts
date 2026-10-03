@@ -20,9 +20,8 @@ export const useImpostorStore = defineStore(
     }
 
     function toggleFellowImpostor(color: string) {
-      const idx = fellowImpostors.value.indexOf(color);
-      if (idx >= 0) {
-        fellowImpostors.value.splice(idx, 1);
+      if (fellowImpostors.value.includes(color)) {
+        fellowImpostors.value = fellowImpostors.value.filter((fellowColor) => fellowColor !== color);
         delete fellowImpostorRoles.value[color];
       } else {
         fellowImpostors.value.push(color);
@@ -36,12 +35,10 @@ export const useImpostorStore = defineStore(
     function setFellowImpostorRole(color: string, role: string | null) {
       if (!role) {
         delete fellowImpostorRoles.value[color];
-        const idx = fellowImpostors.value.indexOf(color);
-        if (idx >= 0) {
-          fellowImpostors.value.splice(idx, 1);
-        }
+        fellowImpostors.value = fellowImpostors.value.filter((fellowColor) => fellowColor !== color);
         return;
       }
+      fellowImpostors.value = [...new Set(fellowImpostors.value)];
       if (!fellowImpostors.value.includes(color)) {
         fellowImpostors.value.push(color);
       }

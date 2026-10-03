@@ -2,6 +2,7 @@ import { computed, onMounted } from 'vue';
 import { useSettingsStore } from '~/stores/settings';
 import { translations, SUPPORTED_LOCALES, type SupportedLocale, type LocaleInfo } from '~/utils/translations';
 import { getTranslatedTaskName, getTranslatedLocation } from '~/utils/taskTranslations';
+import { uiTranslations } from '~/utils/uiTranslations';
 
 export function useI18n() {
   const settingsStore = useSettingsStore();
@@ -42,13 +43,24 @@ export function useI18n() {
 
   function t(key: string, params?: Record<string, string | number>): string {
     const currentLoc = locale.value;
-    let str = translations[currentLoc]?.[key] || translations['en-US']?.[key] || key;
+    let str = translations[currentLoc]?.[key]
+      || uiTranslations[currentLoc]?.[key]
+      || translations['en-US']?.[key]
+      || uiTranslations['en-US']?.[key]
+      || key;
     if (params) {
       for (const [pKey, pVal] of Object.entries(params)) {
         str = str.replace(new RegExp(`\\{${pKey}\\}`, 'g'), String(pVal));
       }
     }
     return str;
+  }
+
+  function tRole(role: string | null | undefined): string {
+    if (!role) return '';
+    const roleKey = `role.${role.toLowerCase()}`;
+    const translated = t(roleKey);
+    return translated === roleKey ? role : translated;
   }
 
   function tColor(color: string): string {
@@ -70,6 +82,7 @@ export function useI18n() {
 
   return {
     t,
+    tRole,
     tColor,
     tTask,
     tLocation,

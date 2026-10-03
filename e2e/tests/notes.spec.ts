@@ -81,6 +81,8 @@ test.describe("Notes", () => {
   });
 
   test("Notes can be opened via keyboard shortcut N", async ({ page }) => {
+    await page.click("[data-test='notes-minimize-btn']");
+    await expect(page.locator("#round-notes")).not.toBeVisible();
     await page.keyboard.press("n");
     await expect(page.locator("#round-notes")).toBeVisible();
   });

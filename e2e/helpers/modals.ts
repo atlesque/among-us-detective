@@ -13,8 +13,10 @@ export async function openHelp(page: Page): Promise<void> {
 }
 
 export async function openNotes(page: Page): Promise<void> {
-  await page.click("[data-test='notes-btn']");
-  await page.waitForSelector("[data-test='notes-container']", {
+  if (!(await page.locator("#game-notes").isVisible())) {
+    await page.click("[data-test='notes-btn']");
+  }
+  await page.waitForSelector("#game-notes", {
     state: "visible",
   });
 }
@@ -31,7 +33,7 @@ export async function openTasks(page: Page): Promise<void> {
 }
 
 export async function closeModal(page: Page): Promise<void> {
-  // Click the X button inside the modal (aria-label="Close")
-  await page.click("[role='dialog'] button[aria-label='Close']");
+  // Use a stable selector so the accessible label can follow the selected locale.
+  await page.click("[role='dialog'] [data-test='modal-close']");
   await page.waitForSelector("[role='dialog']", { state: "hidden" });
 }

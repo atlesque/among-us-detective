@@ -112,7 +112,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': 'Stop',
     'notes.micPermissionNeeded': 'Microphone permission needed',
     'notes.allowMic': 'Allow Mic',
-    'notes.micPrivacyNotice': 'Voice input is processed locally by your browser speech engine only while active.',
+    'notes.micPrivacyNotice': 'Speech recognition may send audio to your browser vendor or speech provider. See Privacy Policy.',
 
     // Notepad Header & Controls
     'notepad.title': 'Detective Notes',
@@ -239,7 +239,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.scientist': 'Scientist',
     'role.engineer': 'Engineer',
     'role.noisemaker': 'Noisemaker',
-    'role.tracker': 'Tracker',
+    'role.impostor': 'Impostor',
     'role.shapeshifter': 'Shapeshifter',
     'role.phantom': 'Phantom',
     'role.viper': 'Viper',
@@ -249,10 +249,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduces motion and improves performance',
 
     // Cookies & Privacy
-    'cookie.message': 'By using this site, you agree to our use of essential local storage and anonymous telemetry to save your game and improve performance.',
+    'cookie.message': 'Game data is saved in your browser. In production, this app sends usage and diagnostic data to Google Analytics and Sentry.',
     'cookie.accept': 'Got it',
     'cookie.dismiss': 'Got it',
-    'cookie.disclaimerLink': 'Fair Play & Privacy Disclaimer',
+    'cookie.disclaimerLink': 'Privacy Policy',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': 'Current Phase: Community Feedback (v2.0)',
@@ -507,7 +507,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': 'Parar',
     'notes.micPermissionNeeded': 'Falta autorizar microfone',
     'notes.allowMic': 'Autorizar Microfone',
-    'notes.micPrivacyNotice': 'A voz é processada localmente pelo reconhecimento do navegador apenas enquanto ativo.',
+    'notes.micPrivacyNotice': 'O reconhecimento de voz pode enviar áudio ao fornecedor do navegador ou ao provedor de voz. Consulte a Política de Privacidade.',
 
     // Notepad Header & Controls
     'notepad.title': 'Bloco do Detetive',
@@ -634,7 +634,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.scientist': 'Cientista',
     'role.engineer': 'Engenheiro',
     'role.noisemaker': 'Barulhento',
-    'role.tracker': 'Rastreador',
+    'role.impostor': 'Impostor',
     'role.shapeshifter': 'Metamorfo',
     'role.phantom': 'Fantasma',
     'role.viper': 'Víbora',
@@ -644,10 +644,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduz travamentos e melhora o desempenho',
 
     // Cookies & Privacy
-    'cookie.message': 'Este site utiliza armazenamento local para salvar suas partidas e dados anônimos de telemetria para ajudar no desenvolvimento.',
+    'cookie.message': 'Os dados da partida ficam salvos neste navegador. Em produção, este app envia dados de uso e diagnóstico ao Google Analytics e ao Sentry.',
     'cookie.accept': 'Entendi',
     'cookie.dismiss': 'Entendi',
-    'cookie.disclaimerLink': 'Aviso Legal & Termos de Uso',
+    'cookie.disclaimerLink': 'Política de Privacidade',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': 'Fase Atual: Coleta de Feedbacks da Comunidade (v2.0)',
@@ -902,7 +902,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': 'Detener',
     'notes.micPermissionNeeded': 'Falta autorizar el micrófono',
     'notes.allowMic': 'Permitir Micrófono',
-    'notes.micPrivacyNotice': 'La voz se procesa localmente en el navegador solo mientras está activa.',
+    'notes.micPrivacyNotice': 'El reconocimiento de voz puede enviar audio al proveedor del navegador o del servicio de voz. Consulta la Política de privacidad.',
 
     // Notepad Header & Controls
     'notepad.title': 'Bloc de Notas del Detective',
@@ -1028,8 +1028,8 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.judge': 'Juez',
     'role.scientist': 'Científico',
     'role.engineer': 'Ingeniero',
-    'role.noisemaker': 'Bocazas',
-    'role.tracker': 'Rastreador',
+    'role.noisemaker': 'Creador de ruido',
+    'role.impostor': 'Impostor',
     'role.shapeshifter': 'Cambiaformas',
     'role.phantom': 'Fantasma',
     'role.viper': 'Víbora',
@@ -1039,10 +1039,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduce el retraso y mejora el rendimiento',
 
     // Cookies & Privacy
-    'cookie.message': 'Al utilizar este sitio, aceptas el uso de almacenamiento local para guardar tus partidas y análisis anónimos para mejorar el rendimiento.',
+    'cookie.message': 'Los datos de la partida se guardan en tu navegador. En producción, esta aplicación envía datos de uso y diagnóstico a Google Analytics y Sentry.',
     'cookie.accept': 'Entendido',
     'cookie.dismiss': 'Entendido',
-    'cookie.disclaimerLink': 'Aviso Legal y Privacidad',
+    'cookie.disclaimerLink': 'Política de privacidad',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': 'Fase Actual: Recopilación de Comentarios de la Comunidad (v2.0)',
@@ -1297,7 +1297,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': 'Arrêter',
     'notes.micPermissionNeeded': 'Autorisation micro requise',
     'notes.allowMic': 'Autoriser le Micro',
-    'notes.micPrivacyNotice': 'La voix est traitée localement par le navigateur uniquement lorsqu\'elle est active.',
+    'notes.micPrivacyNotice': 'La reconnaissance vocale peut transmettre l’audio au fournisseur du navigateur ou du service vocal. Consultez la politique de confidentialité.',
 
     // Notepad Header & Controls
     'notepad.title': 'Carnet de Détective',
@@ -1423,8 +1423,8 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.judge': 'Juge',
     'role.scientist': 'Scientifique',
     'role.engineer': 'Ingénieur',
-    'role.noisemaker': 'Bruiteur',
-    'role.tracker': 'Pisteur',
+    'role.noisemaker': 'Faiseur de bruit',
+    'role.impostor': 'Imposteur',
     'role.shapeshifter': 'Métamorphe',
     'role.phantom': 'Fantôme',
     'role.viper': 'Vipère',
@@ -1434,10 +1434,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Réduit les ralentissements et améliore les performances',
 
     // Cookies & Privacy
-    'cookie.message': 'En utilisant ce site, vous acceptez l’utilisation du stockage local pour sauvegarder vos parties et de données anonymes pour améliorer les performances.',
+    'cookie.message': 'Les données de partie sont enregistrées dans votre navigateur. En production, cette application envoie des données d’utilisation et de diagnostic à Google Analytics et Sentry.',
     'cookie.accept': 'Compris',
     'cookie.dismiss': 'Compris',
-    'cookie.disclaimerLink': 'Mentions Légales & Confidentialité',
+    'cookie.disclaimerLink': 'Politique de confidentialité',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': 'Phase Actuelle : Retours de la Communauté (v2.0)',
@@ -1692,7 +1692,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': 'Stoppen',
     'notes.micPermissionNeeded': 'Mikrofonzugriff erforderlich',
     'notes.allowMic': 'Mikrofon erlauben',
-    'notes.micPrivacyNotice': 'Die Spracheingabe wird nur bei Aktivierung lokal im Browser verarbeitet.',
+    'notes.micPrivacyNotice': 'Die Spracherkennung kann Audio an den Browseranbieter oder den Spracherkennungsdienst senden. Siehe Datenschutzerklärung.',
 
     // Notepad Header & Controls
     'notepad.title': 'Detektiv-Notizen',
@@ -1819,7 +1819,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.scientist': 'Wissenschaftler',
     'role.engineer': 'Ingenieur',
     'role.noisemaker': 'Krachmacher',
-    'role.tracker': 'Spurenleser',
+    'role.impostor': 'Hochstapler',
     'role.shapeshifter': 'Gestaltwandler',
     'role.phantom': 'Phantom',
     'role.viper': 'Viper',
@@ -1829,10 +1829,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduziert Ruckler und verbessert die Leistung',
 
     // Cookies & Privacy
-    'cookie.message': 'Durch die Nutzung dieser Website stimmst du der Verwendung von lokalem Speicher zum Speichern deiner Partien und anonymen Analysen zu.',
+    'cookie.message': 'Spieldaten werden in deinem Browser gespeichert. In der Produktionsumgebung sendet diese App Nutzungs- und Diagnosedaten an Google Analytics und Sentry.',
     'cookie.accept': 'Verstanden',
     'cookie.dismiss': 'Verstanden',
-    'cookie.disclaimerLink': 'Datenschutz & Disclaimer',
+    'cookie.disclaimerLink': 'Datenschutzerklärung',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': 'Aktuelle Phase: Community-Feedback (v2.0)',
@@ -2087,7 +2087,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'notes.stopVoice': '중지',
     'notes.micPermissionNeeded': '마이크 권한 필요',
     'notes.allowMic': '마이크 허용',
-    'notes.micPrivacyNotice': '음성 입력은 활성화된 동안 브라우저에서 로컬로만 처리됩니다.',
+    'notes.micPrivacyNotice': '음성 인식 중 브라우저 제공업체나 음성 서비스로 오디오가 전송될 수 있습니다. 개인정보 처리방침을 확인하세요.',
 
     // Notepad Header & Controls
     'notepad.title': '탐정 메모장',
@@ -2214,7 +2214,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'role.scientist': '과학자',
     'role.engineer': '엔지니어',
     'role.noisemaker': '소음 유발자',
-    'role.tracker': '추적자',
+    'role.impostor': '임포스터',
     'role.shapeshifter': '변신술사',
     'role.phantom': '팬텀',
     'role.viper': '바이퍼',
@@ -2224,10 +2224,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': '버벅임을 줄이고 성능을 향상시킵니다',
 
     // Cookies & Privacy
-    'cookie.message': '이 웹사이트를 이용함으로써 게임 저장을 위한 로컬 스토리지 사용 및 익명 분석 데이터 전송에 동의하게 됩니다.',
+    'cookie.message': '게임 데이터는 브라우저에 저장됩니다. 운영 환경에서는 이 앱이 사용 및 진단 데이터를 Google Analytics와 Sentry로 전송합니다.',
     'cookie.accept': '확인',
     'cookie.dismiss': '확인',
-    'cookie.disclaimerLink': '이용 약관 및 개인정보 처리방침',
+    'cookie.disclaimerLink': '개인정보 처리방침',
 
     // Roadmap & Feedback Phase
     'roadmap.phaseTitle': '현재 단계: 커뮤니티 피드백 수집 (v2.0)',

@@ -6,7 +6,8 @@
         <!-- Minimize / Expand Toggle Button -->
         <button
           class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 font-bold transition-all shadow-sm cursor-pointer"
-          :title="(isMinimized ? 'Expandir ' : 'Minimizar ') + t('roster.title') + ' (L)'"
+          :title="`${t(isMinimized ? 'roster.expand' : 'roster.minimize')} ${t('roster.title')} (L)`"
+          :aria-label="`${t(isMinimized ? 'roster.expand' : 'roster.minimize')} ${t('roster.title')} (L)`"
           @click="isMinimized = !isMinimized"
         >
           <AppIcon name="users" class="w-3.5 h-3.5 text-blue-400 shrink-0" />

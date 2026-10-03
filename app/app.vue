@@ -121,6 +121,8 @@ function handleAppInstallationConfirmed() {
 
 function handleAppInstallationDismissed() {
   isAppInstallationPromptVisible.value = false
-  localStorage.setItem('appInstallationDismissed', 'true')
+  try {
+    localStorage.setItem('appInstallationDismissed', 'true')
+  } catch {}
 }
 </script>

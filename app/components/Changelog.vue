@@ -1,50 +1,37 @@
 <template>
   <section class="changelog">
     <div class="p-2 overflow-y-scroll rounded max-h-64 bg-gray-100 dark:bg-gray-800/60 text-gray-800 dark:text-gray-200">
-      <div
-        v-for="(item, index) in changelog"
-        :key="index"
-        class="mb-4 text-sm leading-5"
-      >
-        <span class="text-xs font-bold text-gray-900 dark:text-gray-100">{{ item.date }}</span>
-        <ul v-if="(item.changes || []).length > 0" class="pl-4 list-disc text-gray-700 dark:text-gray-300">
-          <li v-for="(change, i) in item.changes" :key="i" v-html="change" />
-        </ul>
-      </div>
+      <template v-for="(item, index) in changelog" :key="index">
+        <p v-if="item.notice" class="my-3 border-y border-gray-300 py-2 text-xs italic text-gray-500 dark:border-gray-700 dark:text-gray-400">
+          {{ item.notice }}
+        </p>
+        <div v-else class="mb-4 text-sm leading-5">
+          <span class="text-xs font-bold text-gray-900 dark:text-gray-100">
+            {{ item.date }}<template v-if="item.title"> — {{ item.title }}</template>
+          </span>
+          <ul v-if="(item.changes || []).length > 0" class="pl-4 list-disc text-gray-700 dark:text-gray-300">
+            <li v-for="(change, i) in item.changes" :key="i" v-html="change" />
+          </ul>
+        </div>
+      </template>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { changelogTranslations } from '~/utils/changelogTranslations'
+
 interface ChangelogItem {
-  date: string
-  changes: string[]
+  date?: string
+  title?: string
+  changes?: string[]
+  notice?: string
 }
 
-const changelog: ChangelogItem[] = [
-  {
-    date: '2026-09-21 (v2.2 - Investigation Hardening & UX Polish)',
-    changes: [
-      '<b>🔒 Read-Only History Snapshot Mode:</b> Locked drag-and-drop card movements and contextual edits when inspecting past meeting rounds to prevent accidental state corruption',
-      '<b>🛡️ Resilient Session Lifecycle:</b> Round 1 match state is preserved across page reloads with a 2-hour TTL expiration; all localStorage parsing is protected against corrupted data with safe try/catch guards',
-      '<b>🔄 Clean Match Reset:</b> "New Match" now properly resets Impostor Mode state and fellow impostors while preserving the active match lobby roster',
-      '<b>🎭 Unified Impostor Synchronization:</b> Centralized role confirmation and column destination logic so confirmed impostor roles accurately route to fellow impostors rather than alibi',
-      '<b>🌐 Multilingual Tasks & Official Translations:</b> Official in-game names for all tasks and room locations across English, Portuguese, Spanish, Korean, French, and German, plus localized tan color to "Cáqui" (pt-BR)',
-      '<b>🎙️ Discreet Voice Dictation:</b> Auto-detection of browser language for speech recognition with dedicated language switcher and non-intrusive permission controls',
-      '<b>🍪 Streamlined Privacy Banner:</b> Single-action transparent cookie and storage consent banner',
-      '<b>📱 Mobile Roster Responsiveness:</b> Constrained color picker popover to viewport bounds on narrow screens, and restricted emergency meeting counters to manual input',
-    ],
-  },
-  {
-    date: '2026-09-20 (v2.1 - Performance, Shortcuts & Help Overhaul)',
-    changes: [
-      '<b>⚡ Performance & Smoothness:</b> Added "Disable animations" option in Settings to eliminate all CSS transitions and keyframes, providing a lightweight, lag-free experience on low-end hardware',
-      '<b>📚 Help Modal Visual Overhaul:</b> Expanded modal to comfortable ~700px width, replaced native tab scrollbar with sleek segmented navigation, increased card spacing, and visually upgraded Lobby Setup, Impostor HUD, and Hotkeys panel',
-      '<b>⌨️ Full Keyboard Shortcuts:</b> Added quick hotkey access: <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">N</kbd> (Notes), <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">M</kbd> (Map), <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">T</kbd> (Tasks), <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">I</kbd> (Impostor HUD), <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">L</kbd> (Roster), <kbd class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-700 font-mono text-xs">Esc</kbd> (Close/Minimize)',
-      '<b>📜 Disclaimer & Authorship Credits:</b> Clarified original authorship conceived and credited by Alexandre Atlesque with link to original GitHub (<a href="https://github.com/atlesque/among-us-detective" target="_blank" class="text-blue-500 underline">atlesque/among-us-detective</a>), modernized by Marcos Binder (<a href="mailto:mrbbinder@gmail.com" class="text-emerald-500 underline">mrbbinder@gmail.com</a> / <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" class="text-gray-400 underline">fork v2.0</a>), added original legacy disclaimer viewer, and clarified that PayPal donations go directly to Alexandre Atlesque',
-      '<b>🌐 100% Multilingual:</b> Complete i18n coverage across all 6 locales (en-US, pt-BR, es-ES, ko-KR, fr-FR, de-DE)',
-    ],
-  },
+const { locale } = useI18n()
+const localizedChangelog = computed(() => changelogTranslations[locale.value] ?? changelogTranslations['en-US'])
+
+const olderChangelog: ChangelogItem[] = [
   {
     date: '2026-09-18 (Version 2.0 Overhaul)',
     changes: [
@@ -53,7 +40,7 @@ const changelog: ChangelogItem[] = [
       'Dedicated Impostor Operations HUD with interactive kill cooldown timer, fake task safety advisor, sabotage planner, and fellow impostor coordination',
       'Player Tasks Completion tracker (Done ✓ / In Progress) and Emergency Meetings counter directly in player card context menu',
       'Modern 4-tab visual walkthrough tutorial (Match Setup, Meeting Rounds, Deduction Board, Map & Voice Notes)',
-      'Modern responsive dark-mode Disclaimer page detailing 100% compliance with Innersloth companion tool policy',
+      'Added a responsive Disclaimer page with information about the companion tool and creator credits',
       'Modern 6-column deduction hierarchy: Hard Clear, Trusted, Unknown, Suspicious, Impostor, and Dead',
       'Match Lobby Roster with all 18 official Among Us bean colors, live count indicator, and responsive mobile layout',
       'Compact floating Role Popover with official role icons (Detective, Judge, Scientist, Engineer, Noisemaker, Shapeshifter, Phantom, Viper) and claim verification badges',
@@ -168,4 +155,10 @@ const changelog: ChangelogItem[] = [
   },
   { date: '2020-09-22', changes: ['Added Dark mode', 'Show player icons by default. Color names can be enabled in footer'] },
 ]
+
+const changelog = computed<ChangelogItem[]>(() => [
+  ...localizedChangelog.value.entries,
+  { notice: localizedChangelog.value.olderEntriesNotice },
+  ...olderChangelog,
+])
 </script>

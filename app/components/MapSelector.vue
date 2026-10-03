@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-wrap items-center gap-1 map-selector" data-test="map-selector">
     <button
-      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all"
+      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      :disabled="disabled"
       :class="selectedMap === 'the-skeld'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
@@ -11,7 +12,8 @@
       The Skeld
     </button>
     <button
-      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all"
+      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      :disabled="disabled"
       :class="selectedMap === 'mira-hq'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
@@ -21,7 +23,8 @@
       Mira HQ
     </button>
     <button
-      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all"
+      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      :disabled="disabled"
       :class="selectedMap === 'polus'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
@@ -31,7 +34,8 @@
       Polus
     </button>
     <button
-      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all"
+      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      :disabled="disabled"
       :class="selectedMap === 'the-airship'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
@@ -41,7 +45,8 @@
       The Airship
     </button>
     <button
-      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all"
+      class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+      :disabled="disabled"
       :class="selectedMap === 'the-fungle'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
@@ -54,6 +59,6 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ selectedMap?: string }>()
+defineProps<{ selectedMap?: string; disabled?: boolean }>()
 const emit = defineEmits<{ mapSelected: [map: string] }>()
 </script>

@@ -47,13 +47,13 @@
           <span>{{ micPermissionState === 'granted' ? t('settings.micAllowed') : t('settings.micAllow') }}</span>
         </button>
 
-        <span class="text-gray-400 text-[10px]">Lang:</span>
+        <span class="text-gray-400 text-[10px]">{{ t('notes.languageLabel') }}</span>
         <select
           v-model="selectedSpeechLang"
           class="text-[11px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded px-1.5 py-0.5 focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-          title="Voice recognition language"
+          :title="t('notes.voiceLanguageTitle')"
         >
-          <option value="auto">🌐 Auto</option>
+          <option value="auto">🌐 {{ t('settings.autoLanguage') }}</option>
           <option value="pt-BR">🇧🇷 Português</option>
           <option value="en-US">🇺🇸 English</option>
           <option value="es-ES">🇪🇸 Español</option>
@@ -61,6 +61,13 @@
           <option value="fr-FR">🇫🇷 Français</option>
           <option value="de-DE">🇩🇪 Deutsch</option>
         </select>
+        <NuxtLink
+          to="/privacy"
+          class="text-[10px] text-gray-500 hover:text-gray-300 underline"
+          :title="t('notes.micPrivacyNotice')"
+        >
+          {{ t('cookie.disclaimerLink') }}
+        </NuxtLink>
       </div>
     </div>
 
@@ -96,15 +103,15 @@
           <button
             type="button"
             class="text-[11px] font-bold underline hover:text-red-300 px-1"
-            title="Request microphone permission again"
+            :title="t('notes.requestMicAgain')"
             @click="requestMicrophonePermission"
           >
-            Allow Mic
+            {{ t('notes.allowMic') }}
           </button>
           <button
             type="button"
             class="shrink-0 text-red-400 hover:text-red-300 font-bold text-xs p-0.5"
-            title="Dismiss error"
+            :title="t('notes.dismissSpeechError')"
             @click="speechError = ''"
           >
             ✕
@@ -131,7 +138,7 @@
             :class="isRecordingRoundNotes
               ? 'bg-red-600 text-white border-red-500 shadow-md animate-pulse'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
-            :title="isRecordingRoundNotes ? t('notes.stopVoice') : t('notes.startVoice')"
+            :title="isRecordingRoundNotes ? t('notes.stopVoice') : t('notes.micPrivacyNotice')"
             @click="toggleRecordRoundNotes"
           >
             <span v-if="isRecordingRoundNotes" class="w-2 h-2 rounded-full bg-white animate-ping" />
@@ -175,7 +182,7 @@
             :class="isRecordingGameNotes
               ? 'bg-red-600 text-white border-red-500 shadow-md animate-pulse'
               : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
-            :title="isRecordingGameNotes ? t('notes.stopVoice') : t('notes.startVoice')"
+            :title="isRecordingGameNotes ? t('notes.stopVoice') : t('notes.micPrivacyNotice')"
             @click="toggleRecordGameNotes"
           >
             <span v-if="isRecordingGameNotes" class="w-2 h-2 rounded-full bg-white animate-ping" />
@@ -318,11 +325,11 @@ async function requestMicrophonePermission(): Promise<boolean> {
   } catch (err: any) {
     if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
       micPermissionState.value = 'denied';
-      speechError.value = 'Microphone access blocked. Click "Allow Mic" or enable permissions in your browser URL bar.';
+      speechError.value = t('notes.speechError.notAllowed');
     } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-      speechError.value = 'No microphone device was detected on your computer/phone.';
+      speechError.value = t('notes.speechError.deviceNotFound');
     } else {
-      speechError.value = 'Microphone permission error: ' + (err.message || 'Permission denied');
+      speechError.value = t('mic.error.requestFailed');
     }
     return false;
   }
@@ -436,12 +443,12 @@ function initSpeechRecording() {
 
   speechRecognition.onerror = (event: any) => {
     stopAllRecording();
-    if (event.error === "no-speech") speechError.value = "No speech detected";
+    if (event.error === "no-speech") speechError.value = t('notes.speechError.noSpeech');
     else if (event.error === "audio-capture")
-      speechError.value = "Check your recording device";
+      speechError.value = t('notes.speechError.audioCapture');
     else if (event.error === "not-allowed") {
       micPermissionState.value = "denied";
-      speechError.value = "Microphone access blocked. Click 'Allow Mic' or enable it in browser settings.";
+      speechError.value = t('notes.speechError.notAllowed');
     }
   };
 }
@@ -459,7 +466,7 @@ async function toggleRecordRoundNotes() {
       speechRecognition?.start();
     } catch (err: any) {
       stopAllRecording();
-      speechError.value = "Check recording permissions in your browser";
+      speechError.value = t('notes.speechError.startFailed');
     }
   } else {
     stopAllRecording();
@@ -485,7 +492,7 @@ async function toggleRecordGameNotes() {
       speechRecognition?.start();
     } catch (err: any) {
       stopAllRecording();
-      speechError.value = "Check recording permissions in your browser";
+      speechError.value = t('notes.speechError.startFailed');
     }
   } else {
     stopAllRecording();

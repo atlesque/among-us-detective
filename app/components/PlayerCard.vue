@@ -10,10 +10,10 @@
         : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-750 border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500',
       cardSizeClasses
     ]"
-    :aria-label="`${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? `, ${member.role}, ${member.roleConfirmed ? 'Verified' : 'Claimed'}` : ''}`"
+    :aria-label="`${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? `, ${tRole(member.role)}, ${member.roleConfirmed ? t('card.confirmedRole') : t('card.claimedRole')}` : ''}`"
     :title="isEffectiveReadOnly
-      ? `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + member.role + ')' : ''} [${t('notes.readOnlySnapshot')}]`
-      : `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + member.role + (member.roleConfirmed ? ' - Verified' : ' - Claimed') + ')' : ''}. ${t('card.clickForOptions')}`"
+      ? `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + tRole(member.role) + ')' : ''} [${t('notes.readOnlySnapshot')}]`
+      : `${(showPlayerNames && member.playerName) ? member.playerName : tColor(member.color)}${member.role ? ' (' + tRole(member.role) + ' - ' + (member.roleConfirmed ? t('card.verifiedTitle') : t('card.claimedTitle')) + ')' : ''}. ${t('card.clickForOptions')}`"
     @touchstart.passive="handleTouchStart"
     @touchmove.passive="handleTouchMove"
     @click.stop="handleCardClick"
@@ -51,7 +51,7 @@
       <span
         v-if="member.isDead && member.diedInRound"
         class="absolute -top-1.5 -right-2 z-30 px-1.5 py-0.5 bg-red-600 text-white text-[8px] sm:text-[9px] font-black rounded-md border border-white/80 shadow-md leading-none select-none flex items-center gap-0.5"
-        :title="`Died in Round ${member.diedInRound}`"
+        :title="t('card.diedInRoundTitle', { round: member.diedInRound })"
       >
         <AppIcon name="dead" class="w-2.5 h-2.5 shrink-0" />
         <span>R{{ member.diedInRound }}</span>
@@ -60,7 +60,8 @@
       <span
         v-if="isFellowImpostor && !member.isDead"
         class="absolute -top-1.5 -left-1.5 z-30 px-1 py-0.5 bg-rose-600 text-white rounded border border-white/80 shadow-md flex items-center justify-center text-[7px] font-black leading-none select-none imp-badge"
-        title="Fellow Impostor"
+        :title="t('card.fellowImpostorTitle')"
+        :aria-label="t('card.fellowImpostorTitle')"
         data-test="imp-badge"
       >
         IMP
@@ -69,7 +70,8 @@
       <span
         v-if="member.isDoneWithTasks && !member.isDead && !isFellowImpostor"
         class="absolute -top-1.5 -left-1.5 z-30 w-3.5 h-3.5 bg-emerald-600 text-white rounded-full border border-white/80 shadow-md flex items-center justify-center text-[8px] font-black leading-none select-none"
-        title="Tasks finished"
+        :title="t('card.tasksFinishedTitle')"
+        :aria-label="t('card.tasksFinishedTitle')"
         data-test="tasks-done-badge"
       >
         ✓
@@ -98,7 +100,7 @@
             roleTextClasses
           ]"
         >
-          {{ member.role }}
+          {{ tRole(member.role) }}
         </span>
       </div>
     </Transition>
@@ -107,9 +109,9 @@
     <span
       v-if="roundsStore.isViewingHistory && liveStatusDifference"
       class="w-full text-[7px] font-bold text-center truncate leading-none mt-0.5 px-0.5 py-0.5 rounded bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30"
-      :title="`Current status in Live game: ${liveStatusDifference}`"
+      :title="t('card.liveStatusTitle', { status: liveStatusDifference })"
     >
-      Now: {{ liveStatusDifference }}
+      {{ t('card.liveStatusNow', { status: liveStatusDifference }) }}
     </span>
 
     <!-- Compact Floating Popover Menu (Teleported to body, anchored beside clicked card) -->
@@ -125,7 +127,8 @@
           @contextmenu.prevent.stop="closeMenu"
         />
         <div
-          class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
+          class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] max-w-[calc(100vw-16px)] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
+          ref="menuElement"
           :style="menuStyle"
           @click.stop
         >
@@ -181,8 +184,8 @@
                   : 'bg-gray-100 dark:bg-gray-800 hover:bg-rose-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
                 @click="selectRole(r)"
               >
-                <RoleIcon :role="r" size="sm" :show-badge="false" class="w-3.5 h-3.5 shrink-0" />
-                <span class="whitespace-nowrap">{{ r }}</span>
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
               </button>
             </div>
           </div>
@@ -203,8 +206,8 @@
                   : 'bg-gray-100 dark:bg-gray-800 hover:bg-emerald-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
                 @click="selectRole(r)"
               >
-                <RoleIcon :role="r" size="sm" :show-badge="false" class="w-3.5 h-3.5 shrink-0" />
-                <span class="whitespace-nowrap">{{ r }}</span>
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
               </button>
             </div>
           </div>
@@ -228,8 +231,8 @@
                   : 'bg-gray-100 dark:bg-gray-800 hover:bg-rose-500/20 text-gray-700 dark:text-gray-300 border-transparent'"
                 @click="selectRole(r)"
               >
-                <RoleIcon :role="r" size="sm" :show-badge="false" class="w-3.5 h-3.5 shrink-0" />
-                <span class="whitespace-nowrap">{{ r }}</span>
+                <RoleIcon :role="r" size="sm" :show-badge="false" aria-hidden="true" class="w-3.5 h-3.5 shrink-0" />
+                <span class="whitespace-nowrap">{{ tRole(r) }}</span>
               </button>
             </div>
           </div>
@@ -311,7 +314,7 @@
                 <button
                   type="button"
                   class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
-                  title="Decrement meetings"
+                  :title="t('card.decrementMeetings')"
                   @click="decrementMeetings"
                 >
                   -
@@ -320,7 +323,7 @@
                 <button
                   type="button"
                   class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
-                  title="Increment meetings"
+                  :title="t('card.incrementMeetings')"
                   @click="incrementMeetings"
                 >
                   +
@@ -335,7 +338,7 @@
               <button
                 type="button"
                 class="px-2 py-0.5 text-[11px] text-gray-400 hover:text-red-500 rounded hover:bg-red-500/10 transition-colors flex items-center gap-1"
-                title="Clear role"
+                :title="t('card.clearRole')"
                 @click="clearRole"
               >
                 <AppIcon name="close" class="w-2.5 h-2.5" />
@@ -388,23 +391,11 @@ const crewStore = useCrewStore()
 const settingsStore = useSettingsStore()
 const roundsStore = useRoundsStore()
 const impostorStore = useImpostorStore()
-const { t, tColor } = useI18n()
+const { t, tColor, tRole } = useI18n()
 
 const isEffectiveReadOnly = computed(() => props.isReadOnly === true || roundsStore.isViewingHistory)
 
 const isFellowImpostor = computed(() => impostorStore.isFellowImpostor(props.member.color))
-
-function toggleFellowImpostor() {
-  impostorStore.toggleFellowImpostor(props.member.color)
-  if (impostorStore.isFellowImpostor(props.member.color) && !props.member.role) {
-    crewStore.setPlayerRole(props.member.color, 'Impostor', true)
-  }
-}
-
-function selectImpostorRole(role: string) {
-  impostorStore.setFellowImpostorRole(props.member.color, role)
-  crewStore.setPlayerRole(props.member.color, role, true)
-}
 
 const liveStatusDifference = computed(() => {
   if (!roundsStore.isViewingHistory) return null
@@ -483,6 +474,7 @@ const roleTextClasses = computed(() => {
 })
 
 const isCurrentMenuOpen = computed(() => activeMenuColor.value === props.member.color)
+const menuElement = ref<HTMLElement | null>(null)
 
 const crewRoles = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noisemaker']
 const impostorRoles = ['Impostor', 'Shapeshifter', 'Phantom', 'Viper']
@@ -496,8 +488,11 @@ const menuStyle = computed(() => ({
   left: `${menuPosition.value.left}px`,
 }))
 
-let scrollListener: (() => void) | null = null
+let scrollListener: ((event: Event) => void) | null = null
 let escListener: ((e: KeyboardEvent) => void) | null = null
+let resizeListener: (() => void) | null = null
+let menuAnchorRect: DOMRect | null = null
+let menuAnchorElement: HTMLElement | null = null
 
 function cleanupListeners() {
   if (scrollListener) {
@@ -507,6 +502,10 @@ function cleanupListeners() {
   if (escListener) {
     window.removeEventListener('keydown', escListener)
     escListener = null
+  }
+  if (resizeListener) {
+    window.removeEventListener('resize', resizeListener)
+    resizeListener = null
   }
 }
 
@@ -519,16 +518,39 @@ watch(isCurrentMenuOpen, (isOpen) => {
         closeMenu()
       }
     }
-    scrollListener = () => {
-      closeMenu()
+    scrollListener = (event: Event) => {
+      const target = event.target
+      if (target instanceof Node && menuElement.value?.contains(target)) return
+      const anchor = menuAnchorElement
+      if (!anchor?.isConnected) {
+        closeMenu()
+        return
+      }
+
+      const rect = anchor.getBoundingClientRect()
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+        closeMenu()
+        return
+      }
+
+      // Keep the popover attached while the page settles a click's auto-scroll.
+      menuAnchorRect = rect
+      updateMenuPosition()
     }
+    resizeListener = updateMenuPosition
     window.addEventListener('keydown', escListener)
     window.addEventListener('scroll', scrollListener, { passive: true, capture: true })
+    window.addEventListener('resize', resizeListener)
   }
 })
 
 onBeforeUnmount(() => {
   cleanupListeners()
+  if (activeMenuColor.value === props.member.color) {
+    activeMenuColor.value = null
+    menuAnchorRect = null
+    menuAnchorElement = null
+  }
 })
 
 let touchStartX = 0
@@ -563,56 +585,62 @@ function handleCardClick(e: MouseEvent) {
   openMenu(e)
 }
 
-function openMenu(event?: MouseEvent) {
+async function openMenu(event?: MouseEvent) {
   if (isEffectiveReadOnly.value) return
-  if (event) {
-    const target = (event.currentTarget as HTMLElement) || (event.target as HTMLElement)
-    if (target && target.getBoundingClientRect) {
-      const rect = target.getBoundingClientRect()
-      const popoverWidth = 275
-      const popoverHeight = 380
-
-      let left: number
-      let top: number
-
-      if (window.innerWidth < 640) {
-        // Mobile / split-screen: center popover relative to card or screen, clamped
-        left = Math.max(8, Math.min(rect.left - (popoverWidth - rect.width) / 2, window.innerWidth - popoverWidth - 8))
-        if (rect.bottom + popoverHeight + 8 <= window.innerHeight) {
-          top = rect.bottom + 4
-        } else {
-          top = Math.max(8, window.innerHeight - popoverHeight - 8)
-        }
-      } else {
-        // Desktop: anchor to right of card
-        left = rect.right + 6
-
-        // If overflows viewport right, position to the left of the card
-        if (left + popoverWidth > window.innerWidth - 8) {
-          left = rect.left - popoverWidth - 6
-        }
-        if (left < 8) {
-          left = 8
-        }
-
-        // If card is in bottom half of screen or overflows bottom, adjust upward cleanly
-        if (rect.top + popoverHeight > window.innerHeight - 12) {
-          top = Math.max(12, Math.min(rect.bottom - popoverHeight, window.innerHeight - popoverHeight - 12))
-        } else {
-          top = Math.max(12, rect.top)
-        }
-      }
-
-      menuPosition.value = { top, left }
-    }
-  }
+  const target = event?.currentTarget as HTMLElement | null
+  menuAnchorElement = target
+  menuAnchorRect = target?.getBoundingClientRect() ?? null
   activeMenuColor.value = props.member.color
+  await nextTick()
+  if (isCurrentMenuOpen.value) updateMenuPosition()
+}
+
+function updateMenuPosition() {
+  const anchor = menuAnchorElement?.isConnected
+    ? menuAnchorElement.getBoundingClientRect()
+    : menuAnchorRect
+  if (!anchor) return
+
+  const viewportPadding = 8
+  const menuRect = menuElement.value?.getBoundingClientRect()
+  const width = Math.min(menuRect?.width || 275, Math.max(1, window.innerWidth - viewportPadding * 2))
+  const height = Math.min(menuRect?.height || 480, Math.max(1, window.innerHeight - viewportPadding * 2))
+  const maxLeft = Math.max(viewportPadding, window.innerWidth - width - viewportPadding)
+  const maxTop = Math.max(viewportPadding, window.innerHeight - height - viewportPadding)
+
+  let left: number
+  let top: number
+  if (window.innerWidth < 640) {
+    const centeredLeft = anchor.left + (anchor.width - width) / 2
+    left = Math.max(viewportPadding, Math.min(centeredLeft, maxLeft))
+
+    const belowTop = anchor.bottom + 4
+    const aboveTop = anchor.top - height - 4
+    if (belowTop + height <= window.innerHeight - viewportPadding) {
+      top = belowTop
+    } else if (aboveTop >= viewportPadding) {
+      top = aboveTop
+    } else {
+      top = maxTop
+    }
+  } else {
+    const rightLeft = anchor.right + 6
+    const preferredLeft = rightLeft + width <= window.innerWidth - viewportPadding
+      ? rightLeft
+      : anchor.left - width - 6
+    left = Math.max(viewportPadding, Math.min(preferredLeft, maxLeft))
+    top = Math.max(viewportPadding, Math.min(anchor.top, maxTop))
+  }
+
+  menuPosition.value = { top, left }
 }
 
 function closeMenu() {
   cleanupListeners()
   if (activeMenuColor.value === props.member.color) {
     activeMenuColor.value = null
+    menuAnchorRect = null
+    menuAnchorElement = null
   }
 }
 
@@ -620,14 +648,11 @@ function selectRole(role: string) {
   if (impostorStore.isImpostorModeActive && impostorRoles.includes(role)) {
     if (props.member.role === role) {
       crewStore.setPlayerRole(props.member.color, null, false)
-      impostorStore.setFellowImpostorRole(props.member.color, null)
       if (props.member.status === 'impostor') {
         crewStore.setPlayerStatus(props.member.color, 'unknown')
       }
     } else {
       crewStore.setPlayerRole(props.member.color, role, true)
-      crewStore.setPlayerStatus(props.member.color, 'impostor')
-      impostorStore.setFellowImpostorRole(props.member.color, role)
     }
     closeMenu()
     return
@@ -643,21 +668,11 @@ function selectRole(role: string) {
 
 function clearRole() {
   crewStore.setPlayerRole(props.member.color, null, false)
-  if (impostorStore.isImpostorModeActive) {
-    impostorStore.setFellowImpostorRole(props.member.color, null)
-  }
   closeMenu()
 }
 
 function toggleRoleConfirmed() {
   crewStore.toggleRoleConfirmed(props.member.color)
-  if (impostorStore.isImpostorModeActive) {
-    if (!props.member.roleConfirmed && isImpostorRole.value) {
-      impostorStore.setFellowImpostorRole(props.member.color, props.member.role)
-    } else if (props.member.roleConfirmed) {
-      impostorStore.setFellowImpostorRole(props.member.color, null)
-    }
-  }
   closeMenu()
 }
 

@@ -217,8 +217,8 @@
     <DetectiveNotepad ref="notepadRef" class="mt-3 mb-4" />
 
     <!-- Interactive Map Section (Below Detective Notepad) -->
-    <div class="relative mb-16">
-      <Maps />
+    <div :class="mapsStore.isMapVisible ? 'relative mb-16 map-container' : 'relative mb-0'">
+      <LazyMaps v-if="mapsStore.isMapVisible" />
     </div>
 
     <!-- Modern Bottom Detective Toolbar (Persistent Dock) -->
@@ -333,10 +333,10 @@
       </div>
     </footer>
 
-    <HelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
-    <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
-    <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
-    <TasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
+    <LazyHelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
+    <LazyAboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
+    <LazySettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
+    <LazyTasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
     <CookieWarning />
   </div>
 </template>
@@ -576,7 +576,7 @@ function initNewMatch() {
 
 function initNewRound() {
   // Archive current round before advancing (saves snapshot with current roundNotes)
-  roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes)
+  roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes, mapsStore.selectedMap)
   crewStore.resetActiveCrew()
   tasksStore.resetAllTasks()
   touchMatchActivity()
