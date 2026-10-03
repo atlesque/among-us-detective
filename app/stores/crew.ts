@@ -415,14 +415,6 @@ export const useCrewStore = defineStore("crew", () => {
             isImposter: isImposterForState(m.status, m.previousStatus, null),
           };
         }
-        if (isCrew && m.status === 'impostor') {
-          return {
-            ...m,
-            role: null,
-            roleConfirmed: false,
-            isImposter: true,
-          };
-        }
         const isRoleConfirmedByColumn = !m.isDead && (
           (isCrew && m.status === 'hard_clear') ||
           (isImp && m.status === 'impostor')

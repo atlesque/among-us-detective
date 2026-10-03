@@ -151,16 +151,6 @@
             </div>
 
             <div class="flex items-center gap-1 shrink-0">
-              <button
-                v-if="member.role"
-                type="button"
-                class="px-1.5 py-0.5 text-[10px] text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 rounded hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors flex items-center gap-0.5"
-                :title="t('card.clearRole')"
-                @click="clearRole"
-              >
-                <AppIcon name="close" class="w-2.5 h-2.5" />
-                <span>{{ t('card.clearRole') }}</span>
-              </button>
 
               <button
                 v-if="!member.isPlayer"
@@ -222,11 +212,8 @@
                 v-for="r in crewRoles"
                 :key="r"
                 type="button"
-                :disabled="member.status === 'impostor'"
                 class="flex items-center gap-1.5 px-2 py-1 text-[11px] rounded border transition-colors text-left"
-                :class="member.status === 'impostor'
-                  ? 'bg-gray-200 dark:bg-gray-800 text-gray-400 border-transparent cursor-not-allowed opacity-60'
-                  : member.role === r
+                :class="member.role === r
                   ? 'bg-[#0f88b3] text-white border-[#0f88b3] font-bold shadow-sm'
                   : 'bg-gray-100 dark:bg-gray-800 hover:bg-[#0f88b3]/20 text-gray-700 dark:text-gray-300 border-transparent'"
                 @click="selectRole(r)"
@@ -671,12 +658,6 @@ function closeMenu() {
 }
 
 function selectRole(role: string) {
-  if (crewRoles.includes(role) && props.member.status === 'impostor') {
-    return
-  }
-  if (impostorRoles.includes(role) && props.member.status === 'hard_clear') {
-    return
-  }
   if (impostorStore.isImpostorModeActive && impostorRoles.includes(role)) {
     if (props.member.role === role) {
       crewStore.setPlayerRole(props.member.color, null, false)

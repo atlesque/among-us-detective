@@ -8,6 +8,7 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
   // --------------------------------------------------------------------------
   test.describe("Map Pin Dragging (MapPlayerTracker.vue)", () => {
     test.beforeEach(async ({ page }) => {
+      await activateAllCrew(page);
       // Ensure map is visible
       const mapContainer = page.locator("[data-test='map-container']");
       if (!(await mapContainer.isVisible())) {
@@ -19,15 +20,15 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
     test("1. Rapid pointer movement updates inline style at 60fps and only commits to store on dragEnd", async ({
       page,
     }) => {
-      const redPin = page.locator(".moveable-target").first();
-      await redPin.scrollIntoViewIfNeeded();
-      await expect(redPin).toBeVisible();
+      const pin = page.locator("[data-test='map-player-blue']");
+      await expect(pin).toHaveAttribute("data-moveable-ready", "true");
+      await pin.evaluate((element) => element.scrollIntoView({ block: "center" }));
+      await expect(pin).toBeVisible();
 
-      // Check initial transform in DOM
-      const initialStyle = await redPin.getAttribute("style");
-      expect(initialStyle || "").not.toContain("translate");
+      // Check initial default coordinates in DOM
+      const defaultX = Number(await pin.getAttribute("data-position-x"));
 
-      const pinBox = await redPin.boundingBox();
+      const pinBox = await pin.boundingBox();
       expect(pinBox).not.toBeNull();
       const startX = pinBox!.x + pinBox!.width / 2;
       const startY = pinBox!.y + pinBox!.height / 2;
@@ -50,11 +51,11 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       await page.mouse.down();
 
       for (let i = 1; i <= 10; i++) {
-        await page.mouse.move(startX + i * 15, startY + i * 10);
+        await page.mouse.move(startX + i * 14, startY + i * 8);
       }
 
       // While pointer is still down, verify inline style is applied on DOM target
-      const inlineStyleDuringDrag = await redPin.getAttribute("style");
+      const inlineStyleDuringDrag = await pin.getAttribute("style");
       expect(inlineStyleDuringDrag).toContain("translate");
 
       // Verify that during drag movement, rounds store was NOT written on every step
@@ -80,18 +81,26 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
         return raw ? JSON.parse(raw) : null;
       });
       expect(roundsData).not.toBeNull();
-      const positions = roundsData.currentMapPositions || {};
-      const posKeys = Object.keys(positions);
+      const currentMapPositions = roundsData.currentMapPositions || {};
+      const skeldPositions = currentMapPositions["the-skeld"] || {};
+      const posKeys = Object.keys(skeldPositions);
       expect(posKeys.length).toBeGreaterThan(0);
-      expect(positions[posKeys[0]]).toContain("translate");
+      expect(skeldPositions[posKeys[0]]).toHaveProperty("x");
+      expect(skeldPositions[posKeys[0]]).toHaveProperty("y");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .not.toBe(defaultX);
     });
 
     test("2. Releasing pointer outside map container correctly commits dragEnd and maintains coordinates", async ({
       page,
     }) => {
-      const pin = page.locator(".moveable-target").first();
-      await pin.scrollIntoViewIfNeeded();
+      const pin = page.locator("[data-test='map-player-blue']");
+      await expect(pin).toHaveAttribute("data-moveable-ready", "true");
+      await pin.evaluate((element) => element.scrollIntoView({ block: "center" }));
       await expect(pin).toBeVisible();
+
+      const defaultX = Number(await pin.getAttribute("data-position-x"));
 
       const pinBox = await pin.boundingBox();
       expect(pinBox).not.toBeNull();
@@ -117,18 +126,26 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
         return raw ? JSON.parse(raw) : null;
       });
       expect(roundsData).not.toBeNull();
-      const positions = roundsData.currentMapPositions || {};
-      const posKeys = Object.keys(positions);
+      const skeldPositions = roundsData.currentMapPositions?.["the-skeld"] || {};
+      const posKeys = Object.keys(skeldPositions);
       expect(posKeys.length).toBeGreaterThan(0);
-      expect(positions[posKeys[0]]).toContain("translate");
+      expect(skeldPositions[posKeys[0]]).toHaveProperty("x");
+      expect(skeldPositions[posKeys[0]]).toHaveProperty("y");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .not.toBe(defaultX);
     });
 
     test("3. Reset positions button clears DOM inline transforms, clears store, and allows re-dragging cleanly", async ({
       page,
     }) => {
-      const pin = page.locator(".moveable-target").first();
-      await pin.scrollIntoViewIfNeeded();
+      const pin = page.locator("[data-test='map-player-blue']");
+      await expect(pin).toHaveAttribute("data-moveable-ready", "true");
+      await pin.evaluate((element) => element.scrollIntoView({ block: "center" }));
       await expect(pin).toBeVisible();
+
+      const defaultX = Number(await pin.getAttribute("data-position-x"));
+      const defaultY = Number(await pin.getAttribute("data-position-y"));
 
       // Drag to offset
       const pinBox = await pin.boundingBox();
@@ -136,28 +153,34 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       const startY = pinBox!.y + pinBox!.height / 2;
       await page.mouse.move(startX, startY);
       await page.mouse.down();
-      await page.mouse.move(startX + 80, startY + 60, { steps: 5 });
+      await page.mouse.move(startX + 140, startY + 85, { steps: 8 });
       await page.mouse.up();
       await page.waitForTimeout(100);
 
-      expect(await pin.getAttribute("style")).toContain("translate");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .not.toBe(defaultX);
 
       // Click "Reset positions"
-      const resetBtn = page.locator("button:has-text('Reset positions')");
+      const resetBtn = page.locator("[data-test='reset-map-positions-btn']");
       await expect(resetBtn).toBeVisible();
       await resetBtn.click();
       await page.waitForTimeout(100);
 
-      // Verify DOM style is cleared
-      const resetStyle = await pin.getAttribute("style");
-      expect(resetStyle || "").not.toContain("translate");
+      // Verify coordinate returned to default
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .toBeCloseTo(defaultX, 5);
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-y")))
+        .toBeCloseTo(defaultY, 5);
 
-      // Verify store is cleared
+      // Verify store for current map is cleared
       const roundsData = await page.evaluate(() => {
         const raw = localStorage.getItem("rounds");
         return raw ? JSON.parse(raw) : null;
       });
-      expect(roundsData?.currentMapPositions || {}).toEqual({});
+      expect(roundsData?.currentMapPositions?.["the-skeld"] || {}).toEqual({});
 
       // Now re-drag the pin again — verify Moveable starts cleanly from origin
       const newPinBox = await pin.boundingBox();
@@ -165,27 +188,31 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       const reStartY = newPinBox!.y + newPinBox!.height / 2;
       await page.mouse.move(reStartX, reStartY);
       await page.mouse.down();
-      await page.mouse.move(reStartX + 40, reStartY + 40, { steps: 5 });
+      await page.mouse.move(reStartX + 120, reStartY + 60, { steps: 8 });
       await page.mouse.up();
       await page.waitForTimeout(100);
 
-      const reDragStyle = await pin.getAttribute("style");
-      expect(reDragStyle).toContain("translate");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .not.toBe(defaultX);
 
       const roundsAfterReDrag = await page.evaluate(() => {
         const raw = localStorage.getItem("rounds");
         return raw ? JSON.parse(raw) : null;
       });
-      const rePositions = roundsAfterReDrag?.currentMapPositions || {};
+      const rePositions = roundsAfterReDrag?.currentMapPositions?.["the-skeld"] || {};
       expect(Object.keys(rePositions).length).toBeGreaterThan(0);
     });
 
     test("4. Map pin snapshot viewing: pins reset on New round, historical positions are read-only, and live round restores", async ({
       page,
     }) => {
-      const pin = page.locator(".moveable-target").first();
-      await pin.scrollIntoViewIfNeeded();
+      const pin = page.locator("[data-test='map-player-blue']");
+      await expect(pin).toHaveAttribute("data-moveable-ready", "true");
+      await pin.evaluate((element) => element.scrollIntoView({ block: "center" }));
       await expect(pin).toBeVisible();
+
+      const defaultX = Number(await pin.getAttribute("data-position-x"));
 
       // Drag pin in Round 1
       const pinBox = await pin.boundingBox();
@@ -193,21 +220,23 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       const startY = pinBox!.y + pinBox!.height / 2;
       await page.mouse.move(startX, startY);
       await page.mouse.down();
-      await page.mouse.move(startX + 100, startY + 70, { steps: 5 });
+      await page.mouse.move(startX + 140, startY + 85, { steps: 8 });
       await page.mouse.up();
       await page.waitForTimeout(100);
 
-      const r1Transform = (await pin.getAttribute("style")) || "";
-      expect(r1Transform).toContain("translate");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .not.toBe(defaultX);
+      const r1X = Number(await pin.getAttribute("data-position-x"));
 
       // Advance to Round 2
-      await activateAllCrew(page);
       await page.click("[data-test='new-round-btn']");
       await page.waitForTimeout(100);
 
       // In Round 2, pin should be reset back to default position
-      const r2Transform = (await pin.getAttribute("style")) || "";
-      expect(r2Transform).not.toContain("translate");
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .toBeCloseTo(defaultX, 5);
 
       // Verify Round 2 store map positions are empty
       const r2Store = await page.evaluate(() => {
@@ -231,12 +260,13 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
 
       // Verify "Reset positions" button is NOT rendered in history mode
       await expect(
-        page.locator("button:has-text('Reset positions')")
+        page.locator("[data-test='reset-map-positions-btn']")
       ).not.toBeVisible();
 
-      // Verify pin in Round 1 snapshot has the restored transform
-      const snapshotTransform = (await pin.getAttribute("style")) || "";
-      expect(snapshotTransform).toContain("translate");
+      // Verify pin in Round 1 snapshot has the restored transform / coordinate
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .toBeCloseTo(r1X, 5);
 
       // Return to Live round
       const liveBtn = page.locator("button:has-text('Live')").first();
@@ -250,9 +280,10 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       }
       await page.waitForTimeout(150);
 
-      // Verify returned to Round 2 live state: pin should have Round 2 transform (empty)
-      const liveTransform = (await pin.getAttribute("style")) || "";
-      expect(liveTransform).not.toContain("translate");
+      // Verify returned to Round 2 live state: pin should have Round 2 coordinate (default)
+      await expect
+        .poll(async () => Number(await pin.getAttribute("data-position-x")))
+        .toBeCloseTo(defaultX, 5);
     });
   });
 

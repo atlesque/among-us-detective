@@ -1,18 +1,21 @@
 <template>
   <section
     ref="mapOverlay"
-    class="relative map-player-tracker"
+    class="map-player-tracker"
     data-test="map-player-tracker"
     :data-map-id="mapId"
   >
-    <div class="flex justify-between items-center mb-1">
-      <div v-if="roundsStore.isViewingHistory" class="text-xs text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
+    <div class="map-player-tracker__toolbar flex justify-start items-start gap-2">
+      <div
+        v-if="roundsStore.isViewingHistory"
+        class="text-xs text-amber-500 font-semibold flex items-center gap-1"
+      >
         <AppIcon name="clock" class="w-3.5 h-3.5 shrink-0" />
-        <span>{{ t('map.historySnapshotTitle', { round: roundsStore.viewingRoundNumber }) || t('map.snapshotReadOnly', { round: roundsStore.viewingRoundNumber || 1 }) }}</span>
+        <span>{{ t('map.snapshotReadOnly', { round: roundsStore.viewingRoundNumber || 1 }) }}</span>
       </div>
       <button
         v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory"
-        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
+        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
         data-test="reset-map-positions-btn"
         @click="resetPositions"
       >
@@ -20,39 +23,38 @@
         <span>{{ t('map.resetPositions') }}</span>
       </button>
     </div>
-    <div class="container">
-      <template v-for="item in moveableItems" :key="item.member.color">
-        <div
-          :ref="getTargetRefCallback(item.member.color)"
-          class="moveable-target"
-          :style="getPositionStyle(item.member.color, item.index)"
-          :data-position-x="getMemberPosition(item.member.color, item.index).x"
-          :data-position-y="getMemberPosition(item.member.color, item.index).y"
-          :data-test="`map-player-${item.member.color}`"
-        >
-          <CrewIcon
-            :color="item.member.color"
-            :show-color-name="showMapColorNames"
-            :highlight-color-name="highlightColorNames"
-            :show-player-name="showPlayerNames"
-            :is-imposter="item.member.isImposter"
-            :is-player="item.member.isPlayer"
-            :is-dead="item.member.isDead"
-            :player-name="item.member.playerName"
-            class="inline-flex map-player-tracker--crew-icon"
-          />
-        </div>
-        <Moveable
-          v-if="item.target && !roundsStore.isViewingHistory"
-          :key="`${item.member.color}-moveable`"
-          :target="item.target"
-          :ref="getMoveableRefCallback(item.member.color)"
-          v-bind="moveableOptions"
-          @drag="handleDrag"
-          @dragEnd="handleDragEnd"
+
+    <template v-for="item in moveableItems" :key="item.member.color">
+      <div
+        :ref="getTargetRefCallback(item.member.color)"
+        class="moveable-target"
+        :style="getPositionStyle(item.member.color, item.index)"
+        :data-position-x="getMemberPosition(item.member.color, item.index).x"
+        :data-position-y="getMemberPosition(item.member.color, item.index).y"
+        :data-test="`map-player-${item.member.color}`"
+      >
+        <CrewIcon
+          :color="item.member.color"
+          :show-color-name="showMapColorNames"
+          :highlight-color-name="highlightColorNames"
+          :show-player-name="showPlayerNames"
+          :is-imposter="item.member.isImposter"
+          :is-player="item.member.isPlayer"
+          :is-dead="item.member.isDead"
+          :player-name="item.member.playerName"
+          class="inline-flex map-player-tracker--crew-icon"
         />
-      </template>
-    </div>
+      </div>
+      <Moveable
+        v-if="item.target && !roundsStore.isViewingHistory"
+        :key="`${item.member.color}-moveable`"
+        :target="item.target"
+        :ref="getMoveableRefCallback(item.member.color)"
+        v-bind="moveableOptions"
+        @drag="handleDrag"
+        @dragEnd="handleDragEnd"
+      />
+    </template>
   </section>
 </template>
 
