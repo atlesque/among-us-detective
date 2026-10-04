@@ -22,6 +22,7 @@
               <AppIcon name="alert" class="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-red-900 dark:text-red-200 mr-1">{{ t('tasks.neverFakeVisualBold') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.neverFakeVisualDesc') }}</span>
               </div>
             </div>
@@ -29,6 +30,7 @@
               <AppIcon name="target" class="w-3.5 h-3.5 text-rose-500 dark:text-rose-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-red-900 dark:text-red-200 mr-1">{{ t('tasks.safeToFakeBold') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.safeToFakeDesc') }}</span>
               </div>
             </div>
@@ -46,6 +48,7 @@
               <AppIcon name="key" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-blue-900 dark:text-blue-200 mr-1">{{ t('tasks.commonTasksTitle') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.commonTasksDesc') }}</span>
               </div>
             </div>
@@ -53,6 +56,7 @@
               <AppIcon name="eye" class="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <span class="font-semibold text-emerald-900 dark:text-emerald-200 mr-1">{{ t('tasks.visualTasksTitle') }}</span>
+                {{ ' ' }}
                 <span>{{ t('tasks.visualTasksDesc') }}</span>
               </div>
             </div>
@@ -232,18 +236,18 @@ const filteredTasks = computed(() => {
 
 function getTaskBadgeStyle(type: string): string {
   if (type.includes("Visual")) {
-    return "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30";
+    return "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30";
   }
   if (type.includes("Common")) {
-    return "bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/30";
+    return "bg-blue-100 dark:bg-blue-500/20 text-blue-800 dark:text-blue-400 border border-blue-300 dark:border-blue-500/30";
   }
   if (type.includes("Long")) {
-    return "bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30";
+    return "bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30";
   }
   if (type.includes("Short")) {
-    return "bg-gray-500/20 text-gray-600 dark:text-gray-400 border border-gray-500/30";
+    return "bg-gray-100 dark:bg-gray-500/20 text-gray-800 dark:text-gray-400 border border-gray-300 dark:border-gray-500/30";
   }
-  return "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300";
+  return "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 border border-gray-300 dark:border-gray-600";
 }
 
 function getTaskTypeInfo(type: string): { label: string; icon: string } {

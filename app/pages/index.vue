@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col p-2 pb-20 sm:pb-24 lg:p-8 lg:pb-24 transition-colors duration-300 min-h-screen text-gray-100 w-full max-w-full overflow-x-hidden"
+    class="flex flex-col p-2 pb-20 sm:pb-24 lg:p-8 lg:pb-24 transition-colors duration-300 min-h-screen text-gray-900 dark:text-gray-100 w-full max-w-full overflow-x-hidden"
     :class="impostorStore.isImpostorModeActive
-      ? 'bg-gradient-to-b from-rose-950/40 via-gray-950 to-gray-950'
-      : 'bg-gradient-to-b from-gray-900/40 via-gray-950 to-gray-950'"
+      ? 'bg-gradient-to-b from-rose-100 via-slate-100 to-slate-100 dark:from-rose-950/40 dark:via-gray-950 dark:to-gray-950'
+      : 'bg-gradient-to-b from-slate-200 via-slate-100 to-slate-100 dark:from-gray-900/40 dark:via-gray-950 dark:to-gray-950'"
   >
     <!-- Header Action Controls -->
     <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 w-full max-w-full">
@@ -12,7 +12,7 @@
         class="flex items-center gap-1 p-1 rounded-lg border shadow-inner overflow-x-auto min-w-0 max-w-full transition-colors"
         :class="impostorStore.isImpostorModeActive
           ? 'bg-rose-950/30 border-rose-900/40'
-          : 'bg-gray-200/80 dark:bg-gray-900/80 border-gray-300 dark:border-gray-800'"
+          : 'bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-800 shadow-xs'"
       >
         <span class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 px-1.5 shrink-0 flex items-center gap-1">
           <AppIcon name="clock" class="w-3.5 h-3.5 shrink-0" />
@@ -25,7 +25,7 @@
           class="px-2 py-0.5 sm:px-2.5 sm:py-1 text-xs font-bold rounded-md transition-colors shrink-0"
           :class="roundsStore.viewingRoundNumber === s.roundNumber
             ? 'bg-indigo-600 text-white shadow-sm'
-            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-300/50 dark:hover:bg-gray-800'"
+            : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-200/80 dark:hover:bg-gray-800'"
           @click="roundsStore.setViewingRound(s.roundNumber)"
         >
           R{{ s.roundNumber }}
@@ -36,7 +36,7 @@
           class="px-2 py-0.5 sm:px-2.5 sm:py-1 text-xs font-bold rounded-md transition-colors flex items-center gap-1 shrink-0"
           :class="!roundsStore.isViewingHistory
             ? 'bg-emerald-600 text-white shadow-sm'
-            : 'text-gray-600 dark:text-gray-400 hover:text-emerald-500 hover:bg-gray-300/50 dark:hover:bg-gray-800'"
+            : 'text-gray-700 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-200/80 dark:hover:bg-gray-800'"
           @click="roundsStore.setViewingRound(null)"
         >
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
@@ -55,8 +55,8 @@
               type="button"
               class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all shrink-0 cursor-pointer"
               :class="isNextRoundInfoOpen || isNextRoundInfoHover
-                ? 'bg-amber-500/25 text-amber-300 border border-amber-400/60 shadow-sm'
-                : 'bg-gray-800/60 hover:bg-gray-700 text-gray-400 hover:text-gray-200 border border-gray-700/60'"
+                ? 'bg-amber-500/25 text-amber-600 dark:text-amber-300 border border-amber-400/60 shadow-sm'
+                : 'bg-gray-200/80 dark:bg-gray-800/60 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 border border-gray-300 dark:border-gray-700/60'"
               :title="t('header.nextRoundHint')"
               :aria-label="t('header.nextRoundHint')"
               data-test="next-round-info-btn"
@@ -71,7 +71,7 @@
             <transition name="fade">
               <div
                 v-if="isNextRoundInfoOpen || isNextRoundInfoHover"
-                class="absolute top-full mt-2 left-0 z-50 w-56 sm:w-64 p-2.5 text-xs text-gray-200 bg-gray-900/95 dark:bg-black/95 border border-amber-500/40 rounded-xl shadow-2xl backdrop-blur-md text-left"
+                class="absolute top-full mt-2 left-0 z-50 w-56 sm:w-64 p-2.5 text-xs text-gray-700 dark:text-gray-200 bg-white/95 dark:bg-gray-900/95 border border-amber-500/40 rounded-xl shadow-2xl backdrop-blur-md text-left"
               >
                 <div class="flex items-center justify-between gap-1.5 font-bold mb-1 text-amber-400 text-[11px]">
                   <div class="flex items-center gap-1">
@@ -80,13 +80,13 @@
                   </div>
                   <button
                     type="button"
-                    class="sm:hidden text-[10px] text-gray-400 hover:text-white px-1"
+                    class="sm:hidden text-[10px] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-1"
                     @click.stop="isNextRoundInfoOpen = false"
                   >
                     ✕
                   </button>
                 </div>
-                <p class="text-[11px] sm:text-xs font-normal leading-tight text-gray-200">
+                <p class="text-[11px] sm:text-xs font-normal leading-tight text-gray-600 dark:text-gray-200">
                   {{ t('header.nextRoundHint') }}
                 </p>
               </div>
@@ -97,7 +97,7 @@
             class="min-h-[38px] py-1 px-3 text-xs sm:text-sm font-bold rounded-lg transition-all flex items-center gap-1.5 shadow-sm w-full sm:w-auto justify-center"
             :class="crewStore.activeCrewMembers.length > 0 && !roundsStore.isViewingHistory && !roundsStore.isMaxRoundsReached
               ? 'bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400/40 shadow-emerald-950/30'
-              : 'bg-gray-800/40 text-gray-500 border border-gray-700/30 cursor-not-allowed'"
+              : 'bg-gray-200/60 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border border-gray-300/50 dark:border-gray-700/30 cursor-not-allowed'"
             :disabled="crewStore.activeCrewMembers.length <= 0 || roundsStore.isViewingHistory || roundsStore.isMaxRoundsReached"
             data-test="new-round-btn"
             :title="roundsStore.isMaxRoundsReached ? 'Maximum rounds reached (10 rounds)' : t('header.nextRoundHint')"
@@ -114,14 +114,14 @@
           </button>
         </div>
 
-        <div class="h-6 w-px bg-gray-700/60 hidden sm:block" />
+        <div class="h-6 w-px bg-gray-300 dark:bg-gray-700/60 hidden sm:block" />
 
         <!-- New Match Button (Destructive / Full Reset Action) -->
         <button
           class="min-h-[38px] py-1 px-2.5 sm:px-3 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center gap-1.5 shrink-0 justify-center"
           :class="crewStore.activeCrewMembers.length > 0
-            ? 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 border border-amber-500/40'
-            : 'bg-gray-800/40 text-gray-500 border border-gray-700/30 cursor-not-allowed'"
+            ? 'bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-amber-800 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300 border border-amber-300 dark:border-amber-500/40 shadow-xs'
+            : 'bg-gray-200/60 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border border-gray-300/50 dark:border-gray-700/30 cursor-not-allowed'"
           :disabled="crewStore.activeCrewMembers.length <= 0"
           data-test="new-game-btn"
           title="Game concluded — reset deduction board for a new game (preserves lobby roster)"
@@ -140,59 +140,71 @@
     <GameRosterSelector ref="rosterSelectorRef" />
 
     <!-- Browser Zoom Notice Banner -->
-    <div
-      v-if="isBrowserZoomed && !isZoomNoticeDismissed"
-      class="mb-3 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between gap-2 shadow-sm transition-all"
-      data-test="zoom-warning-banner"
-    >
-      <div class="flex items-center gap-2 min-w-0">
-        <AppIcon name="alert" class="w-4 h-4 text-amber-500 shrink-0" />
-        <div class="leading-tight text-[11px] sm:text-xs">
-          <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }} <strong>{{ t('zoom.boardZoom') }}</strong> {{ t('zoom.inSettings').toLowerCase() }} </span>
-          <button
-            type="button"
-            class="underline font-bold text-amber-600 dark:text-amber-400 hover:text-amber-500"
-            @click="openSettingsForZoom"
-          >
-            {{ t('dock.settings') }}
-          </button>
-          <span> {{ t('zoom.forCleanest') }}</span>
-        </div>
-      </div>
-      <button
-        type="button"
-        class="shrink-0 p-1 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200 rounded text-xs font-bold leading-none flex items-center justify-center"
-        title="Dismiss notice"
-        @click="dismissZoomNotice"
+    <Transition name="banner-slide">
+      <div
+        v-if="isBrowserZoomed && !isZoomNoticeDismissed"
+        class="mb-3 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between gap-2 shadow-sm transition-all"
+        data-test="zoom-warning-banner"
       >
-        <AppIcon name="close" class="w-3.5 h-3.5" />
-      </button>
-    </div>
+        <div class="flex items-center gap-2 min-w-0">
+          <AppIcon name="alert" class="w-4 h-4 text-amber-500 shrink-0" />
+          <div class="leading-tight text-[11px] sm:text-xs">
+            <span>{{ t('zoom.detected', { percent: browserZoomPercent }) }}</span>
+            {{ ' ' }}
+            <strong class="font-bold text-amber-950 dark:text-amber-100">{{ t('zoom.boardZoom') }}</strong>
+            {{ ' ' }}
+            <span v-if="locale !== 'ko-KR'">{{ t('zoom.in') }}</span>
+            {{ ' ' }}
+            <button
+              type="button"
+              class="underline font-bold text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 cursor-pointer"
+              @click="openSettingsForZoom"
+            >
+              {{ t('dock.settings') }}
+            </button>
+            {{ ' ' }}
+            <span v-if="locale === 'ko-KR'">{{ t('zoom.in') }}</span>
+            {{ ' ' }}
+            <span>{{ t('zoom.forCleanest') }}</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="shrink-0 p-1 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200 rounded text-xs font-bold leading-none flex items-center justify-center cursor-pointer"
+          title="Dismiss notice"
+          @click="dismissZoomNotice"
+        >
+          <AppIcon name="close" class="w-3.5 h-3.5" />
+        </button>
+      </div>
+    </Transition>
 
     <!-- History Inspection Mode Warning Banner -->
-    <div
-      v-if="roundsStore.isViewingHistory"
-      class="mb-3 px-3 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/40 text-indigo-900 dark:text-indigo-200 text-xs flex items-center justify-between gap-2 shadow-sm"
-    >
-      <div class="flex items-center gap-2 min-w-0">
-        <AppIcon name="clock" class="w-4 h-4 text-indigo-400 shrink-0" />
-        <span class="leading-tight text-[11px] sm:text-xs">
-          {{ t('header.historyNotice') }} <strong>R{{ roundsStore.viewingRoundNumber }}</strong> {{ t('header.historyReadOnly') }}
-        </span>
-      </div>
-      <button
-        type="button"
-        class="shrink-0 px-2.5 py-1 text-xs font-bold rounded bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
-        @click="roundsStore.setViewingRound(null)"
+    <Transition name="banner-slide">
+      <div
+        v-if="roundsStore.isViewingHistory"
+        class="mb-3 px-3 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/40 text-indigo-900 dark:text-indigo-200 text-xs flex items-center justify-between gap-2 shadow-sm"
       >
-        {{ t('header.returnToLive') }}
-      </button>
-    </div>
+        <div class="flex items-center gap-2 min-w-0">
+          <AppIcon name="clock" class="w-4 h-4 text-indigo-400 shrink-0" />
+          <span class="leading-tight text-[11px] sm:text-xs">
+            {{ t('header.historyNotice') }}{{ ' ' }}<strong>R{{ roundsStore.viewingRoundNumber }}</strong>{{ ' ' }}{{ t('header.historyReadOnly') }}
+          </span>
+        </div>
+        <button
+          type="button"
+          class="shrink-0 px-2.5 py-1 text-xs font-bold rounded bg-indigo-600 hover:bg-indigo-500 text-white transition-colors cursor-pointer active:scale-95"
+          @click="roundsStore.setViewingRound(null)"
+        >
+          {{ t('header.returnToLive') }}
+        </button>
+      </div>
+    </Transition>
 
     <!-- Mobile Touch Drag Hint (Only shown on physical touch screens, never on desktop mouse even when resized) -->
     <div
       v-if="isTouchDevice"
-      class="touch-only-hint lg:hidden flex items-center justify-center gap-1.5 py-1 px-2 mb-1.5 text-[11px] text-gray-500 dark:text-gray-400 select-none"
+      class="touch-only-hint lg:hidden flex items-center justify-center gap-1.5 py-1 px-2 mb-1.5 text-[11px] font-medium text-gray-600 dark:text-gray-400 select-none"
     >
       <AppIcon name="touch" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0" />
       <span>{{ t('header.mobileDragHint') }}</span>
@@ -222,7 +234,7 @@
     </div>
 
     <!-- Modern Bottom Detective Toolbar (Persistent Dock) -->
-    <footer class="fixed bottom-0 left-0 right-0 z-30 h-12 flex items-center justify-between px-1.5 sm:px-4 md:px-6 bg-gray-900/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-700/60 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
+    <footer class="fixed bottom-0 left-0 right-0 z-30 h-12 flex items-center justify-between px-1.5 sm:px-4 md:px-6 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
       <!-- Left: Investigation Tools (Notes, Map, Tasks, Impostor) -->
       <div class="flex items-center gap-1 sm:gap-2 shrink-0">
         <!-- Notes Button (Prominent & Evident) -->
@@ -243,8 +255,8 @@
           type="button"
           class="h-8 px-1.5 sm:px-2.5 text-xs font-semibold rounded-lg border transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer"
           :class="mapsStore.isMapVisible
-            ? 'bg-indigo-600/30 text-indigo-300 border-indigo-500/50 hover:bg-indigo-600/40'
-            : 'bg-gray-800/80 hover:bg-gray-700 text-gray-300 hover:text-white border-gray-700/60'"
+            ? 'bg-indigo-600/30 text-indigo-600 dark:text-indigo-300 border-indigo-500/50 hover:bg-indigo-600/40'
+            : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-gray-300 dark:border-gray-700/60'"
           data-test="toggle-map-btn"
           :title="`${mapsStore.isMapVisible ? t('dock.hideMap') : t('dock.map')} (M)`"
           @click="toggleMapVisibility"
@@ -259,18 +271,18 @@
           type="button"
           class="h-8 px-2 sm:px-2.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer shadow-xs"
           :class="impostorStore.isImpostorModeActive
-            ? 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 hover:text-amber-100 border border-amber-500/60 ring-1 ring-amber-500/40 font-bold'
-            : 'bg-gray-800/80 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700/60'"
+            ? 'bg-amber-100 dark:bg-amber-500/20 hover:bg-amber-200 dark:hover:bg-amber-500/30 text-amber-800 dark:text-amber-300 hover:text-amber-900 dark:hover:text-amber-100 border border-amber-300 dark:border-amber-500/60 ring-1 ring-amber-400/40 dark:ring-amber-500/40 font-bold'
+            : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"
           data-test="tasks-btn"
           :title="`${t('dock.tasksGuide')} (T)`"
           @click="toggleTasksModal"
         >
-          <AppIcon name="tasks" class="w-3.5 h-3.5 shrink-0" :class="impostorStore.isImpostorModeActive ? 'text-amber-400' : 'opacity-80'" />
+          <AppIcon name="tasks" class="w-3.5 h-3.5 shrink-0" :class="impostorStore.isImpostorModeActive ? 'text-amber-600 dark:text-amber-400' : 'opacity-80'" />
           <span class="hidden sm:inline">{{ t('dock.tasksGuide') }}</span>
           <span class="sm:hidden text-xs">{{ t('card.tasks') }}</span>
           <span
             v-if="impostorStore.isImpostorModeActive"
-            class="text-[8px] sm:text-[9px] px-1 py-0.2 rounded bg-amber-500/30 text-amber-200 font-black uppercase tracking-wider"
+            class="text-[8px] sm:text-[9px] px-1 py-0.2 rounded bg-amber-500/30 text-amber-800 dark:text-amber-200 font-black uppercase tracking-wider"
           >
             Fake
           </span>
@@ -283,12 +295,12 @@
           class="h-8 px-2 sm:px-2.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 shadow-sm cursor-pointer"
           :class="impostorStore.isImpostorModeActive
             ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-950/70 border border-rose-400 ring-2 ring-rose-500/80'
-            : 'bg-rose-950/40 hover:bg-rose-900/60 text-rose-400 hover:text-rose-300 border border-rose-800/50'"
+            : 'bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-700 dark:text-rose-400 hover:text-rose-800 dark:hover:text-rose-300 border border-rose-200 dark:border-rose-800/50'"
           data-test="impostor-mode-btn"
           :title="`${t('dock.impostorMode')} (I)`"
           @click="impostorStore.toggleImpostorMode()"
         >
-          <AppIcon name="skull" class="w-3.5 h-3.5 shrink-0" :class="impostorStore.isImpostorModeActive ? 'text-white' : 'text-rose-400'" />
+          <AppIcon name="skull" class="w-3.5 h-3.5 shrink-0" :class="impostorStore.isImpostorModeActive ? 'text-white' : 'text-rose-600 dark:text-rose-400'" />
           <span class="hidden sm:inline">{{ t('dock.impostorMode') }}</span>
           <span class="sm:hidden text-xs">{{ t('dock.impostorMode') }}</span>
           <kbd class="hidden md:inline-block text-[10px] px-1 py-0.2 rounded bg-black/25 text-rose-200 font-mono">I</kbd>
@@ -299,7 +311,7 @@
       <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
         <button
           type="button"
-          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-800/60 hover:bg-gray-700/80 text-gray-400 hover:text-gray-200 border border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-800/60 hover:bg-gray-200 dark:hover:bg-gray-700/80 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
           data-test="settings-btn"
           :title="t('dock.settings')"
           :aria-label="t('dock.settings')"
@@ -310,7 +322,7 @@
         </button>
         <button
           type="button"
-          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-800/60 hover:bg-gray-700/80 text-gray-400 hover:text-gray-200 border border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-800/60 hover:bg-gray-200 dark:hover:bg-gray-700/80 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
           data-test="help-btn"
           :title="t('dock.help')"
           :aria-label="t('dock.help')"
@@ -321,7 +333,7 @@
         </button>
         <button
           type="button"
-          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-800/60 hover:bg-gray-700/80 text-gray-400 hover:text-gray-200 border border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+          class="h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-medium rounded-lg bg-gray-100 dark:bg-gray-800/60 hover:bg-gray-200 dark:hover:bg-gray-700/80 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-700/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
           data-test="about-btn"
           :title="t('dock.about')"
           :aria-label="t('dock.about')"
@@ -345,6 +357,7 @@
 import type { CrewMember } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
 import { touchMatchActivity } from '~/utils/sessionManager'
+import { activeMenuColor } from '~/components/PlayerCard.vue'
 
 const crewStore = useCrewStore()
 const settingsStore = useSettingsStore()
@@ -354,7 +367,7 @@ const roundsStore = useRoundsStore()
 const mapsStore = useMapsStore()
 const impostorStore = useImpostorStore()
 const { gtag } = useGtag()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { micPermissionState, requestMicrophonePermission } = useMicrophone()
 
 const notepadRef = ref<any>(null)
@@ -370,7 +383,7 @@ function toggleNotes() {
 }
 
 function handleDockNotesClick() {
-  toggleNotes()
+  notepadRef.value?.expandAndFocus()
 }
 
 function toggleMapVisibility() {
@@ -392,11 +405,11 @@ const isTouchDevice = ref(false)
 const displayedCrewMembers = computed(() => {
   if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
     const list = roundsStore.activeSnapshot.crewMembers
-    const active = list.filter((m) => m.isActive && (settingsStore.canTrackOwnColor ? true : m.color !== crewStore.playerColor))
+    const active = list.filter((m) => m.isActive && m.color !== crewStore.playerColor)
     return {
       hardClear: active.filter((m) => m.status === 'hard_clear' && !m.isDead),
       trusted: active.filter((m) => m.status === 'trusted' && !m.isDead),
-      unknown: active.filter((m) => m.status === 'unknown' && !m.isDead),
+      unknown: active.filter((m) => (m.status === 'unknown' || !m.status) && !m.isDead && m.status !== 'dead'),
       suspicious: active.filter((m) => m.status === 'suspicious' && !m.isDead),
       impostor: active.filter((m) => m.status === 'impostor' && !m.isDead),
       dead: active.filter((m) => m.status === 'dead' || m.isDead),
@@ -575,8 +588,20 @@ function initNewMatch() {
 }
 
 function initNewRound() {
-  // Archive current round before advancing (saves snapshot with current roundNotes)
-  roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes, mapsStore.selectedMap)
+  if (roundsStore.isMaxRoundsReached || roundsStore.isViewingHistory) return
+  // Save debounced notes right away so the snapshot gets whatever is currently in the textarea
+  notepadRef.value?.flushNotes?.()
+
+  // Ensure diedInRound is populated on dead members before archiving round snapshot
+  crewStore.crewMembers.forEach((m) => {
+    if ((m.isDead || m.status === 'dead') && !m.diedInRound) {
+      m.diedInRound = roundsStore.currentRoundNumber
+    }
+  })
+
+  // Archive current round before advancing (saves snapshot with current roundNotes and current map)
+  const archived = roundsStore.archiveCurrentRound(crewStore.crewMembers, notesStore.roundNotes, mapsStore.selectedMap)
+  if (!archived) return
   crewStore.resetActiveCrew()
   tasksStore.resetAllTasks()
   touchMatchActivity()
@@ -596,22 +621,32 @@ function handleCrewChanged({ type, value }: { type: string; value: CrewMember[] 
 function toggleHelpModal() {
   const newValue = !isHelpModalOpen.value
   isHelpModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_help', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_help', { event_category: 'global_stats' })
+  }
 }
 
 function toggleAboutModal() {
   const newValue = !isAboutModalOpen.value
   isAboutModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_changelog', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_changelog', { event_category: 'global_stats' })
+  }
 }
 
 function toggleSettingsModal() {
   const newValue = !isSettingsModalOpen.value
   isSettingsModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_settings', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_settings', { event_category: 'global_stats' })
+  }
 }
 
 function toggleNotesModal() {
+  activeMenuColor.value = null
   notepadRef.value?.expandAndFocus()
   gtag('event', 'open_notes', { event_category: 'global_stats' })
 }
@@ -619,7 +654,10 @@ function toggleNotesModal() {
 function toggleTasksModal() {
   const newValue = !isTasksModalOpen.value
   isTasksModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_fake_tasks', { event_category: 'global_stats' })
+  if (newValue) {
+    activeMenuColor.value = null
+    gtag('event', 'open_fake_tasks', { event_category: 'global_stats' })
+  }
 }
 </script>
 

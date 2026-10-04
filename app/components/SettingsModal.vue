@@ -10,7 +10,7 @@
           <div class="flex justify-between items-center my-3">
             <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('settings.editNicknames') }}</span>
             <button
-              class="px-2.5 py-1 text-xs font-bold rounded bg-red-500/15 text-red-500 hover:bg-red-500/25 border border-red-500/30 transition-colors"
+              class="px-2.5 py-1 text-xs font-bold rounded bg-red-50 dark:bg-red-500/15 text-red-700 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/25 border border-red-200 dark:border-red-500/30 transition-colors"
               @click="crewStore.resetAllPlayerNames()"
             >
               {{ t('settings.resetAll') }}
@@ -45,7 +45,7 @@
         <template v-else>
           <div class="space-y-2 mt-2">
             <!-- Display -->
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mt-1">{{ t('settings.display') }}</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-1">{{ t('settings.display') }}</div>
 
             <!-- UI Language -->
             <div
@@ -82,7 +82,7 @@
                 class="px-2.5 py-1 text-xs font-bold rounded transition-colors inline-flex items-center gap-1.5"
                 :class="darkModeStore.isDarkMode
                   ? 'bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 border border-indigo-500/40'
-                  : 'bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/30 border border-yellow-500/40'"
+                  : 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300 shadow-2xs'"
                 data-test="setting-theme-btn"
                 @click="toggleDarkMode"
               >
@@ -164,7 +164,7 @@
             </div>
 
             <!-- Players -->
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mt-3">{{ t('settings.players') }}</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.players') }}</div>
 
             <div
               class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
@@ -189,7 +189,7 @@
                 />
                 <button
                   v-if="settingsStore.showPlayerNames"
-                  class="px-2 py-0.5 text-[11px] font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                  class="px-2 py-0.5 text-[11px] font-bold rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors"
                   data-test="edit-player-names-btn"
                   @click="isEditingPlayerNames = true"
                 >
@@ -198,19 +198,9 @@
               </div>
             </div>
 
-            <div
-              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
-              data-test="setting-track-own-color"
-            >
-              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.canTrackOwnColor') }}</span>
-              <Checkbox
-                :is-checked="settingsStore.canTrackOwnColor"
-                @changed="settingsStore.setCanTrackOwnColor"
-              />
-            </div>
 
             <!-- Notes -->
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mt-3">{{ t('settings.notesSection') }}</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.notesSection') }}</div>
 
             <div
               class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
@@ -292,7 +282,7 @@
             </div>
 
             <!-- Map -->
-            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mt-3">{{ t('settings.mapSection') }}</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.mapSection') }}</div>
 
             <div
               class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
@@ -313,6 +303,18 @@
               <Checkbox
                 :is-checked="settingsStore.showMapColorNames"
                 @changed="settingsStore.setShowMapColorNames"
+              />
+            </div>
+
+            <!-- Track own pin on the map. Intentionally in the Map section because it only affects the movement map, not the deduction board. -->
+            <div
+              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
+              data-test="setting-track-own-color"
+            >
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.canTrackOwnColor') }}</span>
+              <Checkbox
+                :is-checked="settingsStore.canTrackOwnColor"
+                @changed="settingsStore.setCanTrackOwnColor"
               />
             </div>
           </div>

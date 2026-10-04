@@ -4,33 +4,34 @@
     data-test="notes-container"
     class="w-full rounded-xl border transition-all duration-300 shadow-md backdrop-blur-sm"
     :class="impostorStore.isImpostorModeActive
-      ? 'bg-rose-950/40 dark:bg-rose-950/50 border-rose-800/60 dark:border-rose-700/60 shadow-rose-950/40 ring-1 ring-rose-900/40'
-      : 'bg-gray-900/75 dark:bg-gray-950/80 border-gray-700/60 dark:border-gray-800/80'"
+      ? 'bg-rose-50/60 dark:bg-rose-950/40 dark:bg-rose-950/50 border-rose-300/60 dark:border-rose-800/60 dark:border-rose-700/60 shadow-rose-200/40 dark:shadow-rose-950/40 ring-1 ring-rose-300/40 dark:ring-rose-900/40'
+      : 'bg-white/80 dark:bg-gray-900/75 dark:bg-gray-950/80 border-gray-200 dark:border-gray-700/60 dark:border-gray-800/80'"
   >
     <!-- Notepad Header Bar (Clean, Compact & Perfectly Aligned) -->
     <header
       class="relative z-20 flex flex-wrap sm:flex-nowrap items-center justify-between px-2.5 py-1.5 sm:px-3 sm:py-1.5 gap-2 border-b transition-colors w-full max-w-full"
       :class="impostorStore.isImpostorModeActive
-        ? 'border-rose-900/40 bg-rose-950/40'
-        : 'border-gray-800/80 bg-gray-900/60'"
+        ? 'border-rose-300/40 dark:border-rose-900/40 bg-rose-50/60 dark:bg-rose-950/40'
+        : 'border-gray-200 dark:border-gray-800/80 bg-gray-50/80 dark:bg-gray-900/60'"
     >
       <!-- Left: Minimize Toggle, Mode Icon, Title, Badge & Subtitle -->
       <div class="flex items-center gap-2 min-w-0">
         <!-- Minimize / Expand Toggle Button -->
         <button
           type="button"
-          class="w-6 h-6 rounded-md transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+          class="w-6 h-6 rounded-md transition-all flex items-center justify-center shrink-0 cursor-pointer active:scale-90"
           :class="impostorStore.isImpostorModeActive
-            ? 'bg-rose-900/40 hover:bg-rose-900/70 text-rose-300 border border-rose-700/50'
-            : 'bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700/60'"
+            ? 'bg-rose-100 dark:bg-rose-900/40 hover:bg-rose-200 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-300 border border-rose-300/50 dark:border-rose-700/50'
+            : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-300 dark:border-gray-700/60'"
           :title="isMinimized ? t('notepad.expand') : t('notepad.minimize')"
           :aria-label="isMinimized ? t('notepad.expand') : t('notepad.minimize')"
           data-test="notes-minimize-btn"
           @click="isMinimized = !isMinimized"
         >
           <AppIcon
-            :name="isMinimized ? 'chevron-down' : 'chevron-up'"
-            class="w-3.5 h-3.5 shrink-0"
+            name="chevron-up"
+            class="w-3.5 h-3.5 shrink-0 transition-transform duration-250 ease-out"
+            :class="isMinimized ? 'rotate-180' : 'rotate-0'"
           />
         </button>
 
@@ -50,14 +51,14 @@
         <!-- Title, Badge & Subtitle Block -->
         <div class="min-w-0 flex flex-col justify-center">
           <div class="flex items-center gap-1.5 sm:gap-2">
-            <h2 class="text-xs sm:text-sm font-bold text-gray-100 whitespace-nowrap !m-0 !p-0 leading-none">
+            <h2 class="text-xs sm:text-sm font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap !m-0 !p-0 leading-none">
               {{ impostorStore.isImpostorModeActive ? t('notepad.impostorTitle') : t('notepad.title') }}
             </h2>
             <span
               class="inline-flex items-center justify-center text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded border uppercase tracking-wider shrink-0 leading-none !m-0"
               :class="impostorStore.isImpostorModeActive
-                ? 'bg-rose-900/60 text-rose-300 border-rose-700/60'
-                : 'bg-gray-800 text-gray-400 border-gray-700/50'"
+                ? 'bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-300 border-rose-300 dark:border-rose-700/60'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-300 dark:border-gray-700/50'"
             >
               {{ impostorStore.isImpostorModeActive ? t('notepad.impostorBadge') : t('notepad.badge') }}
             </span>
@@ -77,13 +78,13 @@
         <!-- Mic Missing Permission Warning Banner -->
         <div
           v-if="micPermissionState !== 'granted'"
-          class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-[10px] text-amber-300"
+          class="flex items-center gap-1.5 px-2 py-1 rounded-md bg-amber-50 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/30 text-[10px] text-amber-800 dark:text-amber-300"
           data-test="mic-permission-banner"
         >
-          <AppIcon name="mic" class="w-3 h-3 text-amber-400 shrink-0" />
+          <AppIcon name="mic" class="w-3 h-3 text-amber-500 dark:text-amber-400 shrink-0" />
           <button
             type="button"
-            class="underline font-bold hover:text-amber-200 cursor-pointer"
+            class="underline font-bold hover:text-amber-900 dark:hover:text-amber-200 cursor-pointer"
             data-test="mic-allow-btn"
             :title="t('notes.micPrivacyNotice')"
             @click="requestMicrophonePermission"
@@ -98,17 +99,17 @@
           data-test="toggle-notepad-highlight"
           class="hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer shadow-sm select-none"
           :class="settingsStore.highlightNotesColors
-            ? 'bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border-indigo-500/40'
-            : 'bg-gray-800 hover:bg-gray-700 text-gray-400 border-gray-700/50'"
+            ? 'bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-600 dark:text-indigo-300 border-indigo-500/40'
+            : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700/50'"
           :title="settingsStore.highlightNotesColors ? t('notepad.disableHighlight') : t('notepad.enableHighlight')"
           @click="toggleHighlight"
         >
           <span
             class="w-2 h-2 rounded-full transition-all shrink-0"
-            :class="settingsStore.highlightNotesColors ? 'bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]' : 'bg-gray-500'"
+            :class="settingsStore.highlightNotesColors ? 'bg-indigo-500 dark:bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]' : 'bg-gray-400 dark:bg-gray-500'"
           />
           <span class="hidden xs:inline sm:inline">{{ t('notepad.highlightToggle') }}:</span>
-          <span :class="settingsStore.highlightNotesColors ? 'text-indigo-200 font-bold' : 'text-gray-400'">
+          <span :class="settingsStore.highlightNotesColors ? 'text-indigo-700 dark:text-indigo-200 font-bold' : 'text-gray-600 dark:text-gray-400'">
             {{ settingsStore.highlightNotesColors ? t('notepad.on') : t('notepad.off') }}
           </span>
         </button>
@@ -118,17 +119,17 @@
           <button
             type="button"
             data-test="notepad-voice-language-btn"
-            class="flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer shadow-sm select-none bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-700/50"
-            :title="`${t('notes.voiceLanguageTitle')}: ${effectiveLanguageLabel}`"
-            :aria-label="t('notes.voiceLanguageTitle')"
+            class="flex items-center gap-1.5 px-2 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer shadow-sm select-none bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700/50"
+            :title="`${t('notes.voiceLanguageTitle') || t('notepad.voiceRecognitionTitle')}: ${effectiveLanguageLabel}`"
+            :aria-label="t('notes.voiceLanguageTitle') || t('notepad.voiceRecognitionAria')"
             @click="isVoiceLangMenuOpen = !isVoiceLangMenuOpen"
           >
-            <AppIcon name="mic" class="w-3.5 h-3.5 text-blue-400 shrink-0" />
+            <AppIcon name="mic" class="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0" />
             <span>{{ speechLanguageButtonLabel }}</span>
             <AppIcon
               name="chevron-down"
-              class="w-3 h-3 text-gray-400 transition-transform duration-150"
-              :class="isVoiceLangMenuOpen ? 'rotate-180 text-blue-400' : ''"
+              class="w-3 h-3 text-gray-500 dark:text-gray-400 transition-transform duration-150"
+              :class="isVoiceLangMenuOpen ? 'rotate-180 text-blue-500 dark:text-blue-400' : ''"
             />
           </button>
 
@@ -140,31 +141,33 @@
           />
 
           <!-- Dropdown Options Menu -->
-          <div
-            v-if="isVoiceLangMenuOpen"
-            class="absolute right-0 top-full mt-1.5 z-50 min-w-[140px] py-1 rounded-lg bg-gray-900 border border-gray-700 shadow-xl backdrop-blur-md"
-          >
-            <button
-              v-for="opt in voiceLanguageOptions"
-              :key="opt.value"
-              type="button"
-              class="w-full flex items-center justify-between px-3 py-1.5 text-[11px] font-medium text-left transition-colors cursor-pointer"
-              :class="settingsStore.speechLanguage === opt.value
-                ? 'bg-blue-600/20 text-blue-300 font-bold border-l-2 border-blue-500'
-                : 'text-gray-300 hover:bg-gray-800 hover:text-white'"
-              @click="selectSpeechLanguage(opt.value)"
+          <Transition name="popover-scale">
+            <div
+              v-if="isVoiceLangMenuOpen"
+              class="absolute right-0 top-full mt-1.5 z-50 min-w-[140px] py-1 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-xl backdrop-blur-md"
             >
-              <span class="flex items-center gap-2">
-                <span>{{ opt.flag }}</span>
-                <span>{{ opt.label }}</span>
-              </span>
-              <AppIcon
-                v-if="settingsStore.speechLanguage === opt.value"
-                name="check"
-                class="w-3 h-3 text-blue-400"
-              />
-            </button>
-          </div>
+              <button
+                v-for="opt in voiceLanguageOptions"
+                :key="opt.value"
+                type="button"
+                class="w-full flex items-center justify-between px-3 py-1.5 text-[11px] font-medium text-left transition-colors cursor-pointer"
+                :class="settingsStore.speechLanguage === opt.value
+                  ? 'bg-blue-50 dark:bg-blue-600/20 text-blue-600 dark:text-blue-300 font-bold border-l-2 border-blue-500'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'"
+                @click="selectSpeechLanguage(opt.value)"
+              >
+                <span class="flex items-center gap-2">
+                  <span>{{ opt.flag }}</span>
+                  <span>{{ opt.label }}</span>
+                </span>
+                <AppIcon
+                  v-if="settingsStore.speechLanguage === opt.value"
+                  name="check"
+                  class="w-3 h-3 text-blue-500 dark:text-blue-400"
+                />
+              </button>
+            </div>
+          </Transition>
         </div>
 
         <NuxtLink
@@ -177,7 +180,7 @@
         </NuxtLink>
 
         <span
-          class="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded bg-black/40 text-gray-400 border border-gray-700/40 font-mono"
+          class="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded bg-gray-200 dark:bg-black/40 text-gray-700 dark:text-gray-400 border border-gray-300 dark:border-gray-700/40 font-mono"
         >
           N
         </span>
@@ -187,32 +190,32 @@
     <!-- Speech Error Notice -->
     <div
       v-if="speechError && !isMinimized"
-      class="px-3 py-1 bg-red-900/40 border-b border-red-800/50 text-red-200 text-[11px] flex items-center justify-between gap-2"
+      class="px-3 py-1 bg-red-50 dark:bg-red-900/40 border-b border-red-200 dark:border-red-800/50 text-red-800 dark:text-red-200 text-[11px] flex items-center justify-between gap-2"
     >
       <div class="flex items-center gap-1.5 min-w-0 truncate">
-        <AppIcon name="close" class="w-3.5 h-3.5 shrink-0 text-red-400" />
+        <AppIcon name="close" class="w-3.5 h-3.5 shrink-0 text-red-500 dark:text-red-400" />
         <span class="truncate">{{ speechError }}</span>
       </div>
       <button
         type="button"
-        class="text-[10px] text-red-300 hover:text-white underline shrink-0 font-bold cursor-pointer"
-        :aria-label="t('notes.dismissSpeechError')"
+        class="text-[10px] text-red-600 dark:text-red-300 hover:text-red-800 dark:hover:text-white underline shrink-0 font-bold cursor-pointer"
+        :aria-label="t('notes.dismissSpeechError') || t('notepad.dismissError')"
         @click="speechError = ''"
       >
-        {{ t('notes.dismissSpeechError') }}
+        {{ t('notes.dismissSpeechError') || t('notepad.dismissError') }}
       </button>
     </div>
 
     <!-- Notepad Body (Collapsible & Compact) -->
-    <div v-show="!isMinimized" class="p-2.5 sm:p-3.5">
+    <div v-show="!isMinimized" class="p-2.5 sm:p-3.5 transition-opacity duration-200">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3.5">
         <!-- Round Notes Column -->
-        <div v-if="settingsStore.showRoundNotes" class="flex flex-col">
-          <div class="flex items-center justify-between text-xs font-semibold text-gray-300 mb-1.5 min-h-[26px]">
+        <div v-show="settingsStore.showRoundNotes" class="flex flex-col">
+          <div class="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5 min-h-[26px]">
             <div class="flex items-center gap-2">
               <span
                 v-if="roundsStore.isViewingHistory"
-                class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30"
               >
                 <AppIcon name="clock" class="w-3 h-3 shrink-0" />
                 {{ t('notes.roundNotes', { round: roundsStore.viewingRoundNumber }) }} ({{ t('notepad.roundArchived') }})
@@ -221,12 +224,12 @@
                 v-else
                 class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold border"
                 :class="impostorStore.isImpostorModeActive
-                  ? 'bg-rose-600/20 text-rose-400 border-rose-500/30'
-                  : 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'"
+                  ? 'bg-rose-100 dark:bg-rose-600/20 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-500/30'
+                  : 'bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-300 dark:border-emerald-500/30'"
               >
                 <span
                   class="w-1.5 h-1.5 rounded-full shrink-0"
-                  :class="isRecording && recordingTarget === 'round' ? 'bg-red-400 animate-ping' : (impostorStore.isImpostorModeActive ? 'bg-rose-400' : 'bg-emerald-400')"
+                  :class="isRecording && recordingTarget === 'round' ? 'bg-red-500 animate-ping' : (impostorStore.isImpostorModeActive ? 'bg-rose-500' : 'bg-emerald-500')"
                 />
                 {{ t('notes.roundNotes', { round: roundsStore.currentRoundNumber }) }}
               </span>
@@ -239,9 +242,9 @@
                 :class="isRecording && recordingTarget === 'round'
                   ? 'bg-red-600 hover:bg-red-500 text-white animate-pulse border-red-400 shadow-red-900/40'
                   : impostorStore.isImpostorModeActive
-                    ? 'bg-rose-900/30 hover:bg-rose-900/60 text-rose-300 border-rose-700/50'
-                    : 'bg-emerald-600/15 hover:bg-emerald-600/25 text-emerald-300 border-emerald-500/30'"
-                :title="isRecording && recordingTarget === 'round' ? t('notes.stopVoice') : t('notes.micPrivacyNotice')"
+                    ? 'bg-rose-100 dark:bg-rose-900/30 hover:bg-rose-200 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-300 border-rose-300 dark:border-rose-700/50'
+                    : 'bg-emerald-50 dark:bg-emerald-600/15 hover:bg-emerald-100 dark:hover:bg-emerald-600/25 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/30'"
+                :title="isRecording && recordingTarget === 'round' ? t('notes.stopVoice') : t('notes.startVoice')"
                 data-test="notes-voice-btn"
                 @click="toggleVoiceRecordingFor('round')"
               >
@@ -255,16 +258,16 @@
             </div>
 
             <div class="flex items-center gap-2 shrink-0">
-              <span v-if="roundsStore.isViewingHistory" class="text-[10px] text-amber-400 font-medium">
+              <span v-if="roundsStore.isViewingHistory" class="text-[10px] text-amber-600 dark:text-amber-400 font-medium">
                 {{ t('notes.readOnlySnapshot') }}
               </span>
-              <span v-else class="text-[10px] text-gray-500 font-normal hidden sm:inline">
+              <span v-else class="text-[10px] text-gray-500 dark:text-gray-400 font-normal hidden sm:inline">
                 {{ t('notes.savedInherited') }}
               </span>
               <button
                 v-if="roundsStore.isViewingHistory"
                 type="button"
-                class="text-[10px] text-amber-400 hover:text-amber-300 underline font-bold cursor-pointer"
+                class="text-[10px] text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline font-bold cursor-pointer"
                 @click="roundsStore.setViewingRound(null)"
               >
                 {{ t('header.returnToLive') }}
@@ -282,31 +285,30 @@
             :placeholder="roundsStore.isViewingHistory
               ? t('notes.readOnlySnapshot')
               : (impostorStore.isImpostorModeActive ? t('notepad.roundImpostorPlaceholder') : t('notes.roundPlaceholder'))"
-            style="text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);"
-            class="w-full p-2 text-xs sm:text-sm rounded-lg border text-gray-200 placeholder-gray-500 focus:outline-none transition-all resize-y min-h-[64px] bg-transparent"
+            class="w-full p-2 text-xs sm:text-sm rounded-lg border text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-all resize-y min-h-[64px] bg-white/70 dark:bg-transparent"
             :class="roundsStore.isViewingHistory
-              ? 'border-amber-500/40 bg-amber-950/20 text-amber-200/90 cursor-not-allowed'
+              ? 'border-amber-400/40 bg-amber-50/50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-200/90 cursor-not-allowed'
               : impostorStore.isImpostorModeActive
-                ? 'border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
-                : 'border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
+                ? 'border-rose-300 dark:border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
+                : 'border-gray-300 dark:border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
             @focus="recordingTarget = 'round'"
-            @input="roundNotesHighlighter?.handleInput()"
+            @blur="flushNotes"
           />
         </div>
 
         <!-- Full Match Notes Column -->
         <div class="flex flex-col">
-          <div class="flex items-center justify-between text-xs font-semibold text-gray-300 mb-1.5 min-h-[26px]">
+          <div class="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5 min-h-[26px]">
             <div class="flex items-center gap-2">
               <span
                 class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold border"
                 :class="impostorStore.isImpostorModeActive
-                  ? 'bg-rose-900/40 text-rose-200 border-rose-700/50'
-                  : 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'"
+                  ? 'bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-200 border-rose-300 dark:border-rose-700/50'
+                  : 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-500/40'"
               >
                 <span
                   class="w-1.5 h-1.5 rounded-full shrink-0"
-                  :class="isRecording && recordingTarget === 'match' ? 'bg-red-400 animate-ping' : (impostorStore.isImpostorModeActive ? 'bg-rose-400' : 'bg-indigo-400')"
+                  :class="isRecording && recordingTarget === 'match' ? 'bg-red-500 animate-ping' : (impostorStore.isImpostorModeActive ? 'bg-rose-500' : 'bg-indigo-500')"
                 />
                 {{ t('notes.matchNotes') }}
               </span>
@@ -319,9 +321,9 @@
                 :class="isRecording && recordingTarget === 'match'
                   ? 'bg-red-600 hover:bg-red-500 text-white animate-pulse border-red-400 shadow-red-900/40'
                   : impostorStore.isImpostorModeActive
-                    ? 'bg-rose-900/30 hover:bg-rose-900/60 text-rose-300 border-rose-700/50'
-                    : 'bg-indigo-600/15 hover:bg-indigo-600/25 text-indigo-300 border-indigo-500/30'"
-                :title="isRecording && recordingTarget === 'match' ? t('notes.stopVoice') : t('notes.micPrivacyNotice')"
+                    ? 'bg-rose-100 dark:bg-rose-900/30 hover:bg-rose-200 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-300 border-rose-300 dark:border-rose-700/50'
+                    : 'bg-indigo-50 dark:bg-indigo-600/15 hover:bg-indigo-100 dark:hover:bg-indigo-600/25 text-indigo-700 dark:text-indigo-300 border-indigo-300 dark:border-indigo-500/30'"
+                :title="isRecording && recordingTarget === 'match' ? t('notes.stopVoice') : t('notes.startVoice')"
                 data-test="match-notes-voice-btn"
                 @click="toggleVoiceRecordingFor('match')"
               >
@@ -334,7 +336,7 @@
               </button>
             </div>
 
-            <span class="text-[10px] text-gray-500 font-normal hidden sm:inline">
+            <span class="text-[10px] text-gray-500 dark:text-gray-400 font-normal hidden sm:inline">
               {{ t('notes.persistentRounds') }}
             </span>
           </div>
@@ -348,13 +350,12 @@
             :placeholder="impostorStore.isImpostorModeActive
               ? t('notepad.matchImpostorPlaceholder')
               : t('notes.matchPlaceholder')"
-            style="text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);"
-            class="w-full p-2 text-xs sm:text-sm rounded-lg border text-gray-200 placeholder-gray-500 focus:outline-none transition-all resize-y min-h-[64px] bg-transparent"
+            class="w-full p-2 text-xs sm:text-sm rounded-lg border text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-all resize-y min-h-[64px] bg-white/70 dark:bg-transparent"
             :class="impostorStore.isImpostorModeActive
-              ? 'border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
-              : 'border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
+              ? 'border-rose-300 dark:border-rose-800/70 focus:ring-1 focus:ring-rose-500 focus:border-rose-500'
+              : 'border-gray-300 dark:border-gray-700/70 focus:ring-1 focus:ring-blue-500 focus:border-blue-500'"
             @focus="recordingTarget = 'match'"
-            @input="gameNotesHighlighter?.handleInput()"
+            @blur="flushNotes"
           />
         </div>
       </div>
@@ -366,6 +367,7 @@
 import HighlightWithinTextarea from '~/utils/highlight-within-textarea.js'
 import { buildTextHighlighterRules } from '~/utils/textHighlighter'
 import { useImpostorStore } from '~/stores/impostor'
+import { debounce } from '~/utils/debounce'
 
 /* global SpeechRecognition, webkitSpeechRecognition, webkitSpeechGrammarList */
 declare const SpeechRecognition: any
@@ -408,25 +410,64 @@ const {
   requestMicrophonePermission,
 } = useMicrophone()
 
+const localRoundNotes = ref(notesStore.roundNotes)
+const localGameNotes = ref(notesStore.gameNotes)
+
+const debouncedSaveRoundNotes = debounce((val: string) => {
+  notesStore.setRoundNotes(val)
+}, 200)
+
+const debouncedSaveGameNotes = debounce((val: string) => {
+  notesStore.setGameNotes(val)
+}, 200)
+
+function flushNotes() {
+  debouncedSaveRoundNotes.flush()
+  debouncedSaveGameNotes.flush()
+}
+
+// Synchronize external store changes to local state
+watch(
+  () => notesStore.roundNotes,
+  (newVal) => {
+    if (newVal !== localRoundNotes.value) {
+      localRoundNotes.value = newVal
+      debouncedSaveRoundNotes.cancel()
+      nextTick(() => roundNotesHighlighter?.handleInput())
+    }
+  }
+)
+
+watch(
+  () => notesStore.gameNotes,
+  (newVal) => {
+    if (newVal !== localGameNotes.value) {
+      localGameNotes.value = newVal
+      debouncedSaveGameNotes.cancel()
+      nextTick(() => gameNotesHighlighter?.handleInput())
+    }
+  }
+)
+
 const quickRoundNotes = computed({
   get: () => {
     if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
       return roundsStore.activeSnapshot.roundNotes || ''
     }
-    return notesStore.roundNotes
+    return localRoundNotes.value
   },
   set: (value: string) => {
     if (roundsStore.isViewingHistory) return
-    notesStore.setRoundNotes(value)
-    roundNotesHighlighter?.handleInput()
+    localRoundNotes.value = value
+    debouncedSaveRoundNotes(value)
   },
 })
 
 const gameNotes = computed({
-  get: () => notesStore.gameNotes,
+  get: () => localGameNotes.value,
   set: (value: string) => {
-    notesStore.setGameNotes(value)
-    gameNotesHighlighter?.handleInput()
+    localGameNotes.value = value
+    debouncedSaveGameNotes(value)
   },
 })
 
@@ -512,10 +553,12 @@ function startRecordingTimeout() {
 function stopRecording() {
   clearRecordingTimeout()
   isRecording.value = false
+  flushNotes()
   try {
     speechRecognition?.abort()
     speechRecognition?.stop()
   } catch {}
+  speechRecognition = null
 }
 
 function initSpeechRecording() {
@@ -553,14 +596,16 @@ function initSpeechRecording() {
       const sanitized = finalTranscript.replace(/newline|new line|enter/gi, '\n')
       if (sanitized) {
         if (recordingTarget.value === 'match') {
-          const cur = notesStore.gameNotes
-          notesStore.setGameNotes(cur ? cur + ' ' + sanitized : sanitized)
-          gameNotesHighlighter?.handleInput()
+          const cur = localGameNotes.value
+          gameNotes.value = cur ? cur + ' ' + sanitized : sanitized
         } else {
-          const cur = notesStore.roundNotes
-          notesStore.setRoundNotes(cur ? cur + ' ' + sanitized : sanitized)
-          roundNotesHighlighter?.handleInput()
+          const cur = localRoundNotes.value
+          quickRoundNotes.value = cur ? cur + ' ' + sanitized : sanitized
         }
+        nextTick(() => {
+          roundNotesHighlighter?.handleInput()
+          gameNotesHighlighter?.handleInput()
+        })
       }
     }
 
@@ -626,24 +671,32 @@ function updateHighlighters() {
   )
 
   if (roundNotesEl.value) {
-    if (roundNotesHighlighter) {
+    if (roundNotesHighlighter && roundNotesHighlighter.el === roundNotesEl.value) {
       roundNotesHighlighter.highlight = { highlight: rules }
       roundNotesHighlighter.handleInput()
     } else {
+      roundNotesHighlighter?.destroy()
       roundNotesHighlighter = new HighlightWithinTextarea(roundNotesEl.value, {
         highlight: rules,
       })
     }
+  } else if (roundNotesHighlighter) {
+    roundNotesHighlighter.destroy()
+    roundNotesHighlighter = null
   }
   if (gameNotesEl.value) {
-    if (gameNotesHighlighter) {
+    if (gameNotesHighlighter && gameNotesHighlighter.el === gameNotesEl.value) {
       gameNotesHighlighter.highlight = { highlight: rules }
       gameNotesHighlighter.handleInput()
     } else {
+      gameNotesHighlighter?.destroy()
       gameNotesHighlighter = new HighlightWithinTextarea(gameNotesEl.value, {
         highlight: rules,
       })
     }
+  } else if (gameNotesHighlighter) {
+    gameNotesHighlighter.destroy()
+    gameNotesHighlighter = null
   }
 }
 
@@ -657,8 +710,16 @@ watch(
 )
 
 watch(
+  () => roundsStore.currentRoundNumber,
+  () => {
+    flushNotes()
+  }
+)
+
+watch(
   () => roundsStore.viewingRoundNumber,
   () => {
+    flushNotes()
     nextTick(() => {
       roundNotesHighlighter?.handleInput()
     })
@@ -674,6 +735,21 @@ onMounted(() => {
 
 onUnmounted(() => {
   stopRecording()
+  if (speechRecognition) {
+    speechRecognition.onstart = null
+    speechRecognition.onend = null
+    speechRecognition.onresult = null
+    speechRecognition.onerror = null
+    try {
+      speechRecognition.abort()
+    } catch {}
+    speechRecognition = null
+  }
+  flushNotes()
+  roundNotesHighlighter?.destroy()
+  roundNotesHighlighter = null
+  gameNotesHighlighter?.destroy()
+  gameNotesHighlighter = null
 })
 
 function expandAndFocus() {
@@ -689,10 +765,14 @@ function expand() {
 }
 
 function toggleMinimize() {
+  if (!isMinimized.value) {
+    flushNotes()
+  }
   isMinimized.value = !isMinimized.value
 }
 
 function minimize() {
+  flushNotes()
   isMinimized.value = true
 }
 
@@ -712,5 +792,6 @@ defineExpose({
   toggleVoiceRecording,
   toggleVoiceRecordingFor,
   toggleHighlight,
+  flushNotes,
 })
 </script>

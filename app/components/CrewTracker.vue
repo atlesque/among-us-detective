@@ -91,11 +91,11 @@
 
       <!-- Dead Box (underneath Unknown) -->
       <div
-        class="flex flex-col rounded border border-neutral-700/80 bg-white dark:bg-gray-900 shadow-sm transition-all"
+        class="flex flex-col rounded border border-neutral-300 dark:border-neutral-700/80 bg-white dark:bg-gray-900 shadow-sm transition-all"
         :class="{ [boxMinHeightClass]: deadList.length === 0 }"
       >
         <div
-          class="bg-neutral-800 text-red-400 font-bold flex items-center justify-between rounded-t select-none"
+          class="bg-neutral-800 text-red-400 font-bold flex items-center justify-between rounded-t select-none border-b border-red-500/20"
           :class="headerPaddingClass"
           data-test="crew-col-header-dead"
         >
@@ -103,7 +103,7 @@
           <span class="opacity-80 font-normal ml-1 shrink-0">({{ deadList.length }})</span>
         </div>
         <div
-          class="p-0.5 sm:p-1 bg-neutral-900/40 rounded-b flex-1 flex flex-col"
+          class="p-0.5 sm:p-1 bg-neutral-100/60 dark:bg-neutral-900/40 rounded-b flex-1 flex flex-col"
           :class="{ [poolMinHeightClass]: deadList.length === 0 }"
           data-test="crew-column-dead"
         >
@@ -204,36 +204,39 @@ const { t } = useI18n()
 
 const trackerGridGapClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'gap-1 sm:gap-1.5'
-  if (zoom === 'large') return 'gap-2 sm:gap-3'
-  if (zoom === 'extra-large') return 'gap-2.5 sm:gap-4'
-  return 'gap-1.5 sm:gap-2'
+  if (zoom === 'compact') return 'gap-1.5 sm:gap-2'
+  if (zoom === 'large') return 'gap-2.5 sm:gap-4'
+  if (zoom === 'extra-large') return 'gap-3 sm:gap-5'
+  return 'gap-2 sm:gap-3'
 })
 
 const boxMinHeightClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'min-h-[64px] sm:min-h-[76px]'
-  if (zoom === 'large') return 'min-h-[110px] sm:min-h-[135px]'
-  if (zoom === 'extra-large') return 'min-h-[135px] sm:min-h-[165px]'
-  return 'min-h-[85px] sm:min-h-[105px]'
+  if (zoom === 'compact') return 'min-h-[85px] sm:min-h-[105px]'
+  if (zoom === 'large') return 'min-h-[135px] sm:min-h-[165px]'
+  if (zoom === 'extra-large') return 'min-h-[160px] sm:min-h-[195px]'
+  return 'min-h-[110px] sm:min-h-[135px]'
 })
 
 const poolMinHeightClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'min-h-[44px] sm:min-h-[55px]'
-  if (zoom === 'large') return 'min-h-[85px] sm:min-h-[110px]'
-  if (zoom === 'extra-large') return 'min-h-[105px] sm:min-h-[135px]'
-  return 'min-h-[60px] sm:min-h-[80px]'
+  if (zoom === 'compact') return 'min-h-[60px] sm:min-h-[80px]'
+  if (zoom === 'large') return 'min-h-[105px] sm:min-h-[135px]'
+  if (zoom === 'extra-large') return 'min-h-[125px] sm:min-h-[160px]'
+  return 'min-h-[85px] sm:min-h-[110px]'
 })
 
 const headerPaddingClass = computed(() => {
   const zoom = settingsStore.boardZoom || 'normal'
-  if (zoom === 'compact') return 'px-1 sm:px-1.5 py-0.5 sm:py-1 text-[8.5px] sm:text-[10px]'
-  if (zoom === 'large') return 'px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px]'
-  if (zoom === 'extra-large') return 'px-2.5 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-black'
-  return 'px-1.5 sm:px-2 py-1 sm:py-1.5 text-[9.5px] sm:text-[11.5px]'
+  if (zoom === 'compact') return 'px-1.5 sm:px-2 py-1 sm:py-1.5 text-[9.5px] sm:text-[11.5px]'
+  if (zoom === 'large') return 'px-2.5 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm font-black'
+  if (zoom === 'extra-large') return 'px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base font-black'
+  return 'px-2 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-[13px]'
 })
 
+// Deduction board column lists.
+// All active players in the match are organized here, including your own card (with the ME badge).
+// The canTrackOwnColor setting only affects the movement map pins, not this board.
 const hardClearList = computed({
   get: () => props.hardClear,
   set: (value: CrewMember[]) => emit('changed', { type: 'hard_clear', value }),

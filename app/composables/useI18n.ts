@@ -50,7 +50,7 @@ export function useI18n() {
       || key;
     if (params) {
       for (const [pKey, pVal] of Object.entries(params)) {
-        str = str.replace(new RegExp(`\\{${pKey}\\}`, 'g'), String(pVal));
+        str = str.replaceAll(`{${pKey}}`, () => String(pVal));
       }
     }
     return str;

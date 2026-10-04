@@ -4,8 +4,8 @@
       <button
         class="h-8 px-3 text-xs font-bold rounded-lg border transition-all flex items-center gap-1.5 shadow-sm"
         :class="mapsStore.isMapVisible
-          ? 'bg-blue-600/20 text-blue-400 border-blue-500/40 hover:bg-blue-600/30'
-          : 'bg-gray-800 hover:bg-gray-700 text-gray-200 border-gray-700/60'"
+          ? 'bg-blue-600/20 text-blue-600 dark:text-blue-400 border-blue-500/40 hover:bg-blue-600/30'
+          : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border-gray-300 dark:border-gray-700/60'"
         data-test="toggle-map-btn"
         @click="mapsStore.toggleMap()"
       >
@@ -42,15 +42,15 @@
         <picture v-show="displayedMap === 'the-skeld'">
           <source srcset="~/assets/images/maps/the-skeld.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-skeld.png" type="image/png" />
-          <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" />
+          <img src="~/assets/images/maps/the-skeld.png" alt="The Skeld Map" loading="lazy" decoding="async" />
         </picture>
         <div v-show="displayedMap === 'mira-hq'" class="relative z-0">
-          <div class="absolute inset-0 z-10">
+          <div class="absolute inset-0 z-10 pointer-events-none">
             <button
-              class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1"
+              class="absolute right-2 top-2 z-20 px-2.5 py-1 text-xs font-semibold rounded-lg transition-all shadow-md flex items-center gap-1 cursor-pointer pointer-events-auto"
               :class="areSensorsVisible
                 ? 'bg-amber-600 text-white border border-amber-500 hover:bg-amber-500'
-                : 'bg-gray-900/90 text-gray-200 border border-gray-700 hover:bg-gray-800'"
+                : 'bg-white/95 dark:bg-gray-900/90 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800'"
               data-test="toggle-sensors-btn"
               @click="areSensorsVisible = !areSensorsVisible"
             >
@@ -61,23 +61,23 @@
           <picture>
             <source srcset="~/assets/images/maps/mira-hq.webp" type="image/webp" />
             <source srcset="~/assets/images/maps/mira-hq.png" type="image/png" />
-            <img src="~/assets/images/maps/mira-hq.png" alt="Mira HQ Map" />
+            <img src="~/assets/images/maps/mira-hq.png" alt="Mira HQ Map" loading="lazy" decoding="async" />
           </picture>
         </div>
         <picture v-show="displayedMap === 'polus'">
           <source srcset="~/assets/images/maps/polus.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/polus.png" type="image/png" />
-          <img src="~/assets/images/maps/polus.png" alt="Polus Map" />
+          <img src="~/assets/images/maps/polus.png" alt="Polus Map" loading="lazy" decoding="async" />
         </picture>
         <picture v-show="displayedMap === 'the-airship'">
           <source srcset="~/assets/images/maps/the-airship.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-airship.png" type="image/png" />
-          <img src="~/assets/images/maps/the-airship.png" alt="The Airship Map" />
+          <img src="~/assets/images/maps/the-airship.png" alt="The Airship Map" loading="lazy" decoding="async" />
         </picture>
         <picture v-show="displayedMap === 'the-fungle'">
           <source srcset="~/assets/images/maps/the-fungle.webp" type="image/webp" />
           <source srcset="~/assets/images/maps/the-fungle.png" type="image/png" />
-          <img src="~/assets/images/maps/the-fungle.png" alt="The Fungle Map" />
+          <img src="~/assets/images/maps/the-fungle.png" alt="The Fungle Map" loading="lazy" decoding="async" />
         </picture>
       </div>
       <div
@@ -129,6 +129,10 @@ button {
   position: relative;
   width: 100%;
 
+  picture,
+  > div {
+    transition: opacity 200ms ease;
+  }
   picture {
     display: block;
     pointer-events: none;

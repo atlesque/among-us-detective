@@ -6,6 +6,7 @@
       type="checkbox"
       class="w-6 h-6 mb-0 transition duration-150 ease-in-out border-2 border-gray-500 shadow text-theme-green form-checkbox"
       :disabled="isDisabled"
+      :aria-label="ariaLabel"
     />
     <label :for="id" class="block mb-0 ml-2 select-none">
       <slot />
@@ -18,6 +19,7 @@ const props = defineProps<{
   isChecked?: boolean;
   isDisabled?: boolean;
   id?: string;
+  ariaLabel?: string;
 }>();
 
 const emit = defineEmits<{ changed: [value: boolean] }>();

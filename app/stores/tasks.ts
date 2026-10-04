@@ -34,9 +34,15 @@ export const useTasksStore = defineStore("tasks", () => {
     taskIndex: number;
     isDone: boolean;
   }) {
-    const newTasks = JSON.parse(JSON.stringify(tasks.value)) as TaskMap;
-    newTasks[map][taskIndex].isDone = isDone;
-    tasks.value = newTasks;
+    const mapTasks = tasks.value[map];
+    if (!mapTasks || !mapTasks[taskIndex]) return;
+
+    tasks.value = {
+      ...tasks.value,
+      [map]: mapTasks.map((task, idx) =>
+        idx === taskIndex ? { ...task, isDone } : task
+      ),
+    };
   }
 
   function resetAllTasks() {
@@ -48,4 +54,4 @@ export const useTasksStore = defineStore("tasks", () => {
     setTask,
     resetAllTasks,
   };
-}, { persist: true });
+});

@@ -65,8 +65,7 @@ export default defineNuxtConfig({
         { rel: "manifest", href: "/favicon/site.webmanifest" },
       ],
       bodyAttrs: {
-        class: "bg-theme-gray-extra-dark",
-        style: "background-color: #101011; margin: 0;",
+        class: "bg-slate-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased",
       },
     },
   },
@@ -102,6 +101,7 @@ export default defineNuxtConfig({
     },
     workbox: {
       skipWaiting: true,
+      clientsClaim: true,
     },
   },
 

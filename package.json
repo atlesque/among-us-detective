@@ -7,6 +7,7 @@
     "build": "nuxt generate",
     "build:ssr": "nuxt build",
     "preview": "nuxt preview",
+    "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
     "check:locale-parity": "node scripts/check-locale-parity.cjs",
     "e2e": "playwright test"

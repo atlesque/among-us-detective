@@ -8,6 +8,7 @@ export const CREW_ROLES = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noise
 
 export type ImpostorRole = (typeof IMPOSTOR_ROLES)[number];
 export type CrewRole = (typeof CREW_ROLES)[number];
+export type Role = ImpostorRole | CrewRole | string | null;
 
 export function isImpostorRole(role: string | null | undefined): boolean {
   if (!role) return false;
@@ -236,25 +237,47 @@ export const useCrewStore = defineStore("crew", () => {
     });
   }
 
+  function sanitizeRoleForStatus(
+    role: Role,
+    targetStatus: ColumnStatus,
+    currentConfirmed: boolean
+  ): { role: Role; roleConfirmed: boolean } {
+    let nextRole = role;
+    let nextConfirmed = currentConfirmed;
+    const isImp = isImpostorRole(role);
+    const isCrew = isCrewRole(role);
+
+    // Hard Clear and Impostor are explicit confirmation points for matching role claims.
+    if (targetStatus === 'hard_clear' && isImp) {
+      nextRole = null;
+      nextConfirmed = false;
+    } else if (targetStatus === 'hard_clear' && isCrew) {
+      nextConfirmed = true;
+    } else if (targetStatus === 'impostor') {
+      if (isCrew) {
+        nextConfirmed = false;
+      } else if (isImp) {
+        nextConfirmed = true;
+      }
+    }
+
+    // If crew role moved out of hard_clear, unverify!
+    if (targetStatus !== 'dead' && !isImp && targetStatus !== 'hard_clear' && nextConfirmed) {
+      nextConfirmed = false;
+    }
+    // If impostor role moved out of impostor, unverify!
+    if (targetStatus !== 'dead' && isImp && targetStatus !== 'impostor' && nextConfirmed) {
+      nextConfirmed = false;
+    }
+
+    return { role: nextRole, roleConfirmed: nextConfirmed };
+  }
+
   function setPlayerStatus(colorOrId: string, newStatus: ColumnStatus) {
     const roundsStore = useRoundsStore();
     crewMembers.value = crewMembers.value.map((m) => {
       if (m.color === colorOrId || m.id === colorOrId) {
-        let roleConfirmed = m.roleConfirmed;
-        const isImp = isImpostorRole(m.role);
-        let role = m.role;
-        if (newStatus === 'hard_clear' && isImp) {
-          role = null;
-          roleConfirmed = false;
-        }
-        // If crew role moved out of hard_clear, unverify!
-        if (newStatus !== 'dead' && !isImp && newStatus !== 'hard_clear' && m.roleConfirmed) {
-          roleConfirmed = false;
-        }
-        // If impostor role moved out of impostor, unverify!
-        if (newStatus !== 'dead' && isImp && newStatus !== 'impostor' && m.roleConfirmed) {
-          roleConfirmed = false;
-        }
+        const { role, roleConfirmed } = sanitizeRoleForStatus(m.role, newStatus, m.roleConfirmed);
         if (newStatus === 'dead') {
           const updated = {
             ...m,
@@ -295,22 +318,30 @@ export const useCrewStore = defineStore("crew", () => {
           const restoredStatus = (m.previousStatus && m.previousStatus !== 'dead')
             ? m.previousStatus
             : 'unknown';
+          const { role } = sanitizeRoleForStatus(
+            m.role,
+            restoredStatus as ColumnStatus,
+            false
+          );
           const updated = {
             ...m,
             isDead: false,
             diedInRound: undefined,
             status: restoredStatus as ColumnStatus,
+            role,
             roleConfirmed: false,
-            isImposter: isImposterForState(restoredStatus, m.previousStatus, m.role),
+            isImposter: isImposterForState(restoredStatus, m.previousStatus, role),
           };
           return updated;
         } else {
+          const roleConfirmed = m.role ? true : m.roleConfirmed;
           const updated = {
             ...m,
             previousStatus: m.status,
             isDead: true,
             diedInRound: roundsStore.currentRoundNumber,
             status: 'dead' as ColumnStatus,
+            roleConfirmed,
             isImposter: isImposterForState('dead', m.status, m.role),
           };
           return updated;
@@ -326,32 +357,7 @@ export const useCrewStore = defineStore("crew", () => {
     const memberColors = members.map((m) => m.color);
     const updatedMembers = crewMembers.value.map((m) => {
       if (memberColors.includes(m.color)) {
-        let roleConfirmed = m.roleConfirmed;
-        let role = m.role;
-        const isImp = isImpostorRole(m.role);
-        const isCrew = isCrewRole(m.role);
-
-        // Hard Clear and Impostor are explicit confirmation points for matching role claims.
-        if (status === 'hard_clear' && isImp) {
-          role = null;
-          roleConfirmed = false;
-        } else if (status === 'hard_clear' && isCrew) {
-          roleConfirmed = true;
-        } else if (status === 'impostor') {
-          if (isCrew) {
-            roleConfirmed = false;
-          } else if (isImp) {
-            roleConfirmed = true;
-          }
-        }
-        // If crew role moved out of hard_clear, unverify!
-        if (status !== 'dead' && !isImp && status !== 'hard_clear' && roleConfirmed) {
-          roleConfirmed = false;
-        }
-        // If impostor role moved out of impostor, unverify!
-        if (status !== 'dead' && isImp && status !== 'impostor' && roleConfirmed) {
-          roleConfirmed = false;
-        }
+        const { role, roleConfirmed } = sanitizeRoleForStatus(m.role, status, m.roleConfirmed);
         if (status === 'dead') {
           const roundsStore = useRoundsStore();
           return {
@@ -419,6 +425,8 @@ export const useCrewStore = defineStore("crew", () => {
           newStatus = 'impostor';
         }
 
+        const wasImposter = m.isImposter || m.status === 'impostor' || m.previousStatus === 'impostor';
+        const isDeadPlayer = m.isDead || newStatus === 'dead';
         const updated = {
           ...m,
           role,
@@ -439,6 +447,8 @@ export const useCrewStore = defineStore("crew", () => {
       if (m.color === colorOrId || m.id === colorOrId) {
         const newConfirmed = !m.roleConfirmed;
         const isImp = isImpostorRole(m.role);
+        const wasImposter = m.isImposter || m.status === 'impostor' || m.previousStatus === 'impostor';
+        const isDeadPlayer = m.isDead || m.status === 'dead';
         const updated = {
           ...m,
           roleConfirmed: newConfirmed,
@@ -495,11 +505,14 @@ export const useCrewStore = defineStore("crew", () => {
         return {
           ...m,
           isActive: newActive,
-          // When turning back on, ALWAYS reset to 'unknown'
+          // When turning back on, ALWAYS reset to 'unknown' cleanly
           status: newActive ? ('unknown' as ColumnStatus) : m.status,
-          isImposter: newActive
-            ? isImposterForState('unknown', m.previousStatus, m.role)
-            : m.isImposter,
+          isDead: newActive ? false : m.isDead,
+          diedInRound: newActive ? undefined : m.diedInRound,
+          role: newActive ? null : m.role,
+          roleConfirmed: newActive ? false : m.roleConfirmed,
+          isImposter: newActive ? false : m.isImposter,
+          previousStatus: newActive ? ('unknown' as ColumnStatus) : m.previousStatus,
         };
       }
       return m;
@@ -508,6 +521,8 @@ export const useCrewStore = defineStore("crew", () => {
 
   function setPresetPlayerCount(count: number) {
     if (count <= 0) {
+      // The 'Clear' preset deactivates everyone so players can pick custom lobby colors from scratch.
+      // Having 0 active players temporarily pauses the round buttons until players are picked.
       crewMembers.value = crewMembers.value.map((m) => ({
         ...m,
         isActive: false,
@@ -517,16 +532,19 @@ export const useCrewStore = defineStore("crew", () => {
 
     if (count >= crewMembers.value.length) {
       crewMembers.value = crewMembers.value.map((m) => {
-        const wasActive = m.isActive;
+        const wasInactive = !m.isActive;
         return {
           ...m,
           isActive: true,
-          status: !wasActive
+          status: wasInactive
             ? ('unknown' as ColumnStatus)
             : (m.status || ('unknown' as ColumnStatus)),
-          isImposter: !wasActive
-            ? isImposterForState('unknown', m.previousStatus, m.role)
-            : m.isImposter,
+          isDead: wasInactive ? false : m.isDead,
+          diedInRound: wasInactive ? undefined : m.diedInRound,
+          role: wasInactive ? null : m.role,
+          roleConfirmed: wasInactive ? false : m.roleConfirmed,
+          isImposter: wasInactive ? false : m.isImposter,
+          previousStatus: wasInactive ? ('unknown' as ColumnStatus) : m.previousStatus,
         };
       });
       return;
@@ -542,23 +560,27 @@ export const useCrewStore = defineStore("crew", () => {
     }
 
     // 2. Fill the remaining slots in standard roster order until we reach `count`
-    for (const m of crewMembers.value) {
+    for (const color of (allColors as string[])) {
       if (targetColors.size >= count) break;
-      targetColors.add(m.color);
+      targetColors.add(color);
     }
 
     // 3. Update crewMembers
     crewMembers.value = crewMembers.value.map((m) => {
       const isActive = targetColors.has(m.color);
+      const wasInactive = !m.isActive && isActive;
       return {
         ...m,
         isActive,
-        status: isActive && !m.isActive
+        status: wasInactive
           ? ('unknown' as ColumnStatus)
           : (isActive && (!m.status || m.status === 'unknown') ? ('unknown' as ColumnStatus) : m.status),
-        isImposter: isActive && !m.isActive
-          ? isImposterForState('unknown', m.previousStatus, m.role)
-          : m.isImposter,
+        isDead: wasInactive ? false : m.isDead,
+        diedInRound: wasInactive ? undefined : m.diedInRound,
+        role: wasInactive ? null : m.role,
+        roleConfirmed: wasInactive ? false : m.roleConfirmed,
+        isImposter: wasInactive ? false : m.isImposter,
+        previousStatus: wasInactive ? ('unknown' as ColumnStatus) : m.previousStatus,
       };
     });
   }
@@ -643,6 +665,7 @@ export const useCrewStore = defineStore("crew", () => {
   }
 
   function setDeadCrewMembers(deadMembers: CrewMember[]) {
+    const roundsStore = useRoundsStore();
     const deadColors = deadMembers.map((m) => m.color);
     crewMembers.value = crewMembers.value.map((m) => {
       if (deadColors.includes(m.color)) {
@@ -650,6 +673,9 @@ export const useCrewStore = defineStore("crew", () => {
           ...m,
           isActive: true,
           isDead: true,
+          status: 'dead' as ColumnStatus,
+          diedInRound: m.diedInRound || roundsStore.currentRoundNumber,
+          previousStatus: m.status !== 'dead' ? m.status : m.previousStatus || 'unknown',
           protectedBy: m.protectedBy.filter((c) => c !== playerColor.value),
           suspectedBy: m.suspectedBy.filter((c) => c !== playerColor.value),
         };
@@ -845,6 +871,8 @@ export const useCrewStore = defineStore("crew", () => {
       ...m,
       isActive: true,
       isDead: false,
+      status: 'unknown' as ColumnStatus,
+      diedInRound: undefined,
       suspectedBy: m.suspectedBy.filter((c) => c !== playerColor.value),
       protectedBy: m.protectedBy.filter((c) => c !== playerColor.value),
     }));

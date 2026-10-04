@@ -15,7 +15,7 @@
       </div>
       <button
         v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory"
-        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm"
+        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
         data-test="reset-map-positions-btn"
         @click="resetPositions"
       >
@@ -52,6 +52,7 @@
         :ref="getMoveableRefCallback(item.member.color)"
         v-bind="moveableOptions"
         @drag="handleDrag"
+        @dragEnd="handleDragEnd"
       />
     </template>
   </section>
@@ -78,7 +79,10 @@ const targetRefCallbacks = new Map<string, (el: Element | { $el?: Element } | nu
 const moveableRefCallbacks = new Map<string, (instance: unknown) => void>();
 let resizeObserver: ResizeObserver | null = null;
 
-// Hide players who died in rounds prior to the currently displayed round.
+// Active players shown on the movement map.
+// Note: canTrackOwnColor applies here to the map pins so you can hide your own token if you want.
+// On the main deduction board, your card stays visible with the ME badge so you can track roles and tasks.
+// Also hides players who died in rounds prior to the currently displayed round.
 const trackedCrewMembers = computed(() => {
   if (roundsStore.isViewingHistory && roundsStore.activeSnapshot) {
     const snap = roundsStore.activeSnapshot;
@@ -162,8 +166,16 @@ function applyAllTransforms() {
 }
 
 watch(
-  () => [props.mapId, roundsStore.viewingRoundNumber, roundsStore.currentRoundNumber],
-  applyAllTransforms
+  [
+    () => props.mapId,
+    () => roundsStore.viewingRoundNumber,
+    () => roundsStore.currentRoundNumber,
+    () => roundsStore.currentMapPositions,
+  ],
+  () => {
+    applyAllTransforms();
+  },
+  { deep: true }
 );
 
 watch(trackedCrewMembers, (members) => {
@@ -233,14 +245,28 @@ function getTranslation(transform: string): { x: number; y: number } | null {
 const handleDrag = ({ target, transform }: { target: HTMLElement | SVGElement; transform: string }) => {
   if (roundsStore.isViewingHistory || mapSize.value.width <= 0 || mapSize.value.height <= 0) return;
   target.style.transform = transform;
+};
 
-  const color = Object.keys(targetRefs.value).find((candidate) => targetRefs.value[candidate] === target);
-  const translation = getTranslation(transform);
-  if (color && translation) {
-    roundsStore.setMapPosition(props.mapId, color, {
-      x: translation.x / mapSize.value.width,
-      y: translation.y / mapSize.value.height,
-    });
+const handleDragEnd = ({
+  target,
+  isDrag,
+}: {
+  target: HTMLElement | SVGElement;
+  isDrag?: boolean;
+}) => {
+  if (roundsStore.isViewingHistory) return;
+  if (isDrag === false) return;
+  const color = Object.keys(targetRefs.value).find(
+    (c) => targetRefs.value[c] === target
+  );
+  if (color && target && "style" in target) {
+    const translation = getTranslation((target as HTMLElement).style.transform || "");
+    if (translation && mapSize.value.width > 0 && mapSize.value.height > 0) {
+      roundsStore.setMapPosition(props.mapId, color, {
+        x: translation.x / mapSize.value.width,
+        y: translation.y / mapSize.value.height,
+      });
+    }
   }
 };
 

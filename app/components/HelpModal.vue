@@ -18,7 +18,7 @@
             class="flex-1 min-w-0 flex items-center justify-center gap-1 sm:gap-1.5 py-2 px-2 sm:px-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all duration-150 whitespace-nowrap shrink-0 sm:shrink select-none cursor-pointer"
             :class="currentStep === idx
               ? 'bg-blue-600 text-white shadow-sm scale-[1.01]'
-              : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/70 dark:hover:bg-gray-700/50'"
+              : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/80 dark:hover:bg-gray-700/50'"
             :data-test="`help-tab-${tab.id}`"
             @click="currentStep = idx"
           >
@@ -211,13 +211,13 @@
             </div>
 
             <!-- Dead -->
-            <div class="p-2.5 rounded-xl bg-neutral-900/80 border border-neutral-700/80 flex items-start gap-2 shadow-xs">
-              <div class="p-1 rounded bg-red-950/60 text-red-400 shrink-0 mt-0.5">
+            <div class="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-900/80 border border-neutral-300 dark:border-neutral-700/80 flex items-start gap-2 shadow-xs">
+              <div class="p-1 rounded bg-red-500/15 dark:bg-red-950/60 text-red-600 dark:text-red-400 shrink-0 mt-0.5">
                 <AppIcon name="dead" class="w-3.5 h-3.5" />
               </div>
               <div class="space-y-0.5 min-w-0">
-                <span class="font-bold text-red-400 block text-xs">{{ t('col.dead') }}</span>
-                <span class="text-[10px] text-gray-400 leading-snug block">{{ t('help.boardColDead') }}</span>
+                <span class="font-bold text-red-600 dark:text-red-400 block text-xs">{{ t('col.dead') }}</span>
+                <span class="text-[10px] text-gray-600 dark:text-gray-400 leading-snug block">{{ t('help.boardColDead') }}</span>
               </div>
             </div>
           </div>
@@ -347,7 +347,7 @@
                 </span>
                 <span>{{ t('help.impostorFakeTasksTitle') }}</span>
                 <span class="text-[9px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-bold uppercase ml-auto">
-                  Guia Essencial
+                  {{ t('help.essentialGuideBadge') }}
                 </span>
               </div>
               <p class="text-gray-600 dark:text-gray-400 text-xs leading-relaxed">
@@ -417,27 +417,27 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutN') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">N</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">N</kbd>
               </div>
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutM') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">M</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">M</kbd>
               </div>
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutT') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">T</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">T</kbd>
               </div>
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutI') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">I</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">I</kbd>
               </div>
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutL') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">L</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">L</kbd>
               </div>
               <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-gray-900/70 border border-gray-200 dark:border-gray-700/60 shadow-xs">
                 <span class="text-gray-700 dark:text-gray-300 font-medium">{{ t('help.shortcutEsc') }}</span>
-                <kbd class="px-2 py-0.5 rounded bg-gray-800 text-gray-100 font-mono text-xs font-bold border border-gray-700 shadow-xs">Esc</kbd>
+                <kbd class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 font-mono text-xs font-bold border border-gray-300 dark:border-gray-700 shadow-xs">Esc</kbd>
               </div>
             </div>
           </div>

@@ -6,11 +6,8 @@
         <template v-if="isFeedbackScreenOpen">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSda7OlGq68xKkVyx3GsZZntwrGN_CZZJRidgCl5J6R1QIyB2g/viewform?embedded=true"
-            width="100%"
-            height="520"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
+            class="w-full h-[520px] border-0 rounded-lg"
+            title="Feedback Form"
           >{{ t('about.feedbackLoading') }}</iframe>
         </template>
         <template v-else>
@@ -38,7 +35,7 @@
               class="px-3 py-1.5 text-xs font-bold rounded-t border border-b-0 transition-colors cursor-pointer"
               :class="activeTab === 'changelog'
                 ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
               @click="activeTab = 'changelog'"
             >
               {{ t('about.changelog') }}
@@ -47,7 +44,7 @@
               class="px-3 py-1.5 text-xs font-bold rounded-t border border-b-0 transition-colors cursor-pointer"
               :class="activeTab === 'upcomingChanges'
                 ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700'"
               @click="activeTab = 'upcomingChanges'"
             >
               {{ t('about.roadmapBacklog') }}
@@ -62,12 +59,12 @@
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
             <div class="space-y-1">
               <span class="block">
-                {{ t('about.originalBy') }}
+                {{ t('about.originalBy') }}{{ ' ' }}
                 <a href="https://github.com/atlesque/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline font-medium">Alexandre Atlesque</a>
               </span>
               <span class="block">
-                {{ t('about.modernizedBy') }}
-                <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">Marcos Binder</a>
+                {{ t('about.modernizedBy') }}{{ ' ' }}
+                <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-medium">Marcos Binder</a>{{ ' ' }}
                 <a href="https://github.com/marcosbinder/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-[11px] text-gray-400 dark:text-gray-500 hover:text-emerald-500 underline ml-1" :title="t('about.forkLinkTitle')">{{ t('about.forkLabel') }}</a>
               </span>
             </div>

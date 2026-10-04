@@ -54,36 +54,32 @@ onMounted(() => {
     notesStore,
     tasksStore,
     impostorStore,
+    settingsStore,
   })
 
   // Re-check when returning to the tab after being away
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      checkAndExpireMatchSession({
-        crewStore,
-        roundsStore,
-        notesStore,
-        tasksStore,
-        impostorStore,
-      })
-    }
-  })
+  document.addEventListener('visibilitychange', handleVisibilityChange)
 
-  // Touch match activity on active state changes
+  // Shallow watcher for note updates (no recursive object traversal)
+  watch(
+    () => [notesStore.roundNotes, notesStore.gameNotes],
+    () => {
+      touchMatchActivity()
+    }
+  )
+
+  // Board and game state changes (tracks state signatures without expensive deep traversal)
   watch(
     () => [
-      crewStore.crewMembers,
+      crewStore.crewMembers.map((m) => `${m.color}:${m.status}:${m.role}:${m.isDead}:${m.isActive}`).join(','),
       roundsStore.currentRoundNumber,
-      roundsStore.roundHistory,
-      notesStore.roundNotes,
-      notesStore.gameNotes,
+      roundsStore.roundHistory.length,
       impostorStore.isImpostorModeActive,
-      impostorStore.fellowImpostors,
+      impostorStore.fellowImpostors.join(','),
     ],
     () => {
       touchMatchActivity()
-    },
-    { deep: true }
+    }
   )
 
   let hasDismissed = false
@@ -96,11 +92,32 @@ onMounted(() => {
 
   if (!hasDismissed) {
     window.addEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
-    window.addEventListener('appinstalled', () => {
-      isAppInstallationPromptVisible.value = false
-    })
+    window.addEventListener('appinstalled', handleAppInstalled)
   }
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  window.removeEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
+  window.removeEventListener('appinstalled', handleAppInstalled)
+})
+
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    checkAndExpireMatchSession({
+      crewStore,
+      roundsStore,
+      notesStore,
+      tasksStore,
+      impostorStore,
+      settingsStore,
+    })
+  }
+}
+
+function handleAppInstalled() {
+  isAppInstallationPromptVisible.value = false
+}
 
 function handleBeforeAppInstallPrompt(event: Event) {
   pwaInstallEvent = event as any

@@ -1,13 +1,107 @@
+// ==============================================================================
+// Global Animation & Transition Easing Profiles
+// ==============================================================================
+
+// Fast standard fade for tooltips, icons, and small UI elements
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 180ms ease;
 }
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
 
-// Performance Mode: Eliminate all animations and transitions when enabled
+// Modal dialog entrance & exit: silky backdrop fade + dialog scale-in
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  .modal-dialog-content {
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+
+  .modal-dialog-content {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+// Popover scale & fade (for color picker, player context menu, dropdown menus)
+.popover-scale-enter-active,
+.popover-scale-leave-active {
+  transition: opacity 160ms cubic-bezier(0.16, 1, 0.3, 1), transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.popover-scale-enter-from,
+.popover-scale-leave-to {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+// Smooth accordion collapse for match roster bean grid
+.roster-collapse-enter-active,
+.roster-collapse-leave-active {
+  transition: max-height 260ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease, transform 200ms ease;
+  max-height: 240px;
+  overflow: hidden;
+}
+.roster-collapse-enter-from,
+.roster-collapse-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+// Smooth accordion collapse for Detective Notepad
+.notepad-collapse-enter-active,
+.notepad-collapse-leave-active {
+  transition: max-height 320ms cubic-bezier(0.4, 0, 0.2, 1), opacity 240ms ease;
+  max-height: 1400px;
+  overflow: hidden;
+}
+.notepad-collapse-enter-from,
+.notepad-collapse-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+
+// Smooth accordion expand for interactive map & overlay
+.map-expand-enter-active,
+.map-expand-leave-active {
+  transition: max-height 350ms cubic-bezier(0.4, 0, 0.2, 1), opacity 260ms ease;
+  max-height: 1600px;
+  overflow: hidden;
+}
+.map-expand-enter-from,
+.map-expand-leave-to {
+  max-height: 0;
+  opacity: 0;
+}
+
+// Slide & fade for notice banners (zoom notice, read-only history warning)
+.banner-slide-enter-active,
+.banner-slide-leave-active {
+  transition: max-height 240ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease, transform 200ms ease, margin 240ms ease;
+  max-height: 120px;
+  overflow: hidden;
+}
+.banner-slide-enter-from,
+.banner-slide-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+// ==============================================================================
+// Performance Mode & Accessibility (Eliminate all animations when disabled)
+// ==============================================================================
+
 html.disable-animations,
 html.disable-animations *,
 html.disable-animations *::before,
@@ -20,3 +114,15 @@ html.disable-animations *::after {
   scroll-behavior: auto !important;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

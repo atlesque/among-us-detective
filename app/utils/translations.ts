@@ -151,7 +151,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': 'Highlight color names',
     'settings.showPlayerNames': 'Show player names',
     'settings.editNames': 'Edit names',
-    'settings.canTrackOwnColor': 'Can track own color',
+    'settings.canTrackOwnColor': 'Track own color on map',
     'settings.notesSection': 'Notes',
     'settings.highlightNotesColors': 'Highlight colors in notes',
     'settings.resetNotes': 'Reset notes on new game',
@@ -223,7 +223,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     // Zoom Banner
     'zoom.detected': 'Browser zoom detected ({percent}%). If layout feels cramped or too small, use built-in',
     'zoom.boardZoom': 'Board Zoom',
-    'zoom.inSettings': 'Settings',
+    'zoom.in': 'in',
     'zoom.forCleanest': 'for the cleanest fit.',
 
     // Card extras
@@ -409,6 +409,26 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': 'Common',
     'tasks.typeShort': 'Short',
     'tasks.typeLong': 'Long',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': 'Unverified Claim',
+    'card.verifiedClaim': 'Verified Claim',
+    'roster.expand': 'Expand ',
+    'roster.minimize': 'Minimize ',
+    'notepad.voiceRecognitionTitle': 'Voice Recognition',
+    'notepad.voiceRecognitionAria': 'Voice recognition language',
+    'notepad.dismissError': 'Dismiss',
+    'settings.themeDark': 'Dark',
+    'settings.themeLight': 'Light',
+    'map.historySnapshotTitle': 'Round {round} Map Snapshot (Read-Only)',
+    'map.resetPositions': 'Reset positions',
+    'help.essentialGuideBadge': 'Essential Guide',
+    'about.viewGithubFork': 'View fork and modifications on GitHub',
+    'disclaimer.viewGithubFork': 'View fork and modifications on GitHub',
+    'disclaimer.viewForkLink': 'view fork on GitHub ↗',
+    'pwa.installPrompt': 'Would you like to install Among Us Detective as an app for easy access?',
+    'pwa.yesPlease': 'Yes please',
+    'pwa.noThanks': 'No thanks',
   },
 
   'pt-BR': {
@@ -546,7 +566,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': 'Destacar nomes das cores',
     'settings.showPlayerNames': 'Mostrar nomes dos jogadores',
     'settings.editNames': 'Editar nomes',
-    'settings.canTrackOwnColor': 'Permitir mover minha própria cor',
+    'settings.canTrackOwnColor': 'Rastrear própria cor no mapa',
     'settings.notesSection': 'Anotações',
     'settings.highlightNotesColors': 'Destacar cores nas anotações',
     'settings.resetNotes': 'Limpar anotações ao iniciar nova partida',
@@ -616,10 +636,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Ocultar sensores',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom do navegador detectado ({percent}%). Se a tela parecer apertada, use o',
+    'zoom.detected': 'Zoom do navegador detectado ({percent}%). Se o layout parecer apertado ou pequeno, use o',
     'zoom.boardZoom': 'Zoom do Quadro',
-    'zoom.inSettings': 'Configurações',
-    'zoom.forCleanest': 'para ajustar perfeitamente.',
+    'zoom.in': 'em',
+    'zoom.forCleanest': 'para um melhor ajuste.',
 
     // Card extras
     'card.setAsMe': 'Definir como Eu',
@@ -804,6 +824,26 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': 'Comum',
     'tasks.typeShort': 'Curta',
     'tasks.typeLong': 'Longa',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': 'Alegação Não Confirmada',
+    'card.verifiedClaim': 'Alegação Confirmada',
+    'roster.expand': 'Expandir ',
+    'roster.minimize': 'Minimizar ',
+    'notepad.voiceRecognitionTitle': 'Reconhecimento de Voz',
+    'notepad.voiceRecognitionAria': 'Idioma do reconhecimento de voz',
+    'notepad.dismissError': 'Fechar',
+    'settings.themeDark': 'Escuro',
+    'settings.themeLight': 'Claro',
+    'map.historySnapshotTitle': 'Captura do Mapa Round {round} (Somente Leitura)',
+    'map.resetPositions': 'Redefinir posições',
+    'help.essentialGuideBadge': 'Guia Essencial',
+    'about.viewGithubFork': 'Ver modificações no GitHub',
+    'disclaimer.viewGithubFork': 'Ver fork e modificações no GitHub',
+    'disclaimer.viewForkLink': 'ver fork no GitHub ↗',
+    'pwa.installPrompt': 'Gostaria de instalar o Among Us Detective como um aplicativo para fácil acesso?',
+    'pwa.yesPlease': 'Sim, por favor',
+    'pwa.noThanks': 'Não, obrigado',
   },
 
   'es-ES': {
@@ -941,7 +981,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': 'Resaltar nombres de colores',
     'settings.showPlayerNames': 'Mostrar nombres de jugadores',
     'settings.editNames': 'Editar nombres',
-    'settings.canTrackOwnColor': 'Permitir mover mi propio color',
+    'settings.canTrackOwnColor': 'Rastrear mi propio color en el mapa',
     'settings.notesSection': 'Notas',
     'settings.highlightNotesColors': 'Resaltar colores en las notas',
     'settings.resetNotes': 'Limpiar notas al iniciar nueva partida',
@@ -1011,9 +1051,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Ocultar sensores',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom del navegador detectado ({percent}%). Si el diseño se ve apretado, usa el',
+    'zoom.detected': 'Zoom del navegador detectado ({percent}%). Si el diseño se ve apretado o pequeño, usa el',
     'zoom.boardZoom': 'Zoom del Tablero',
-    'zoom.inSettings': 'Ajustes',
+    'zoom.in': 'en',
     'zoom.forCleanest': 'para un mejor ajuste.',
 
     // Card extras
@@ -1199,6 +1239,26 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': 'Común',
     'tasks.typeShort': 'Corta',
     'tasks.typeLong': 'Larga',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': 'Afirmación No Verificada',
+    'card.verifiedClaim': 'Afirmación Verificada',
+    'roster.expand': 'Expandir ',
+    'roster.minimize': 'Minimizar ',
+    'notepad.voiceRecognitionTitle': 'Reconocimiento de Voz',
+    'notepad.voiceRecognitionAria': 'Idioma del reconocimiento de voz',
+    'notepad.dismissError': 'Cerrar',
+    'settings.themeDark': 'Oscuro',
+    'settings.themeLight': 'Claro',
+    'map.historySnapshotTitle': 'Captura de Mapa Ronda {round} (Solo Lectura)',
+    'map.resetPositions': 'Restablecer posiciones',
+    'help.essentialGuideBadge': 'Guía Esencial',
+    'about.viewGithubFork': 'Ver modificaciones en GitHub',
+    'disclaimer.viewGithubFork': 'Ver fork y modificaciones en GitHub',
+    'disclaimer.viewForkLink': 'ver fork en GitHub ↗',
+    'pwa.installPrompt': '¿Deseas instalar Among Us Detective como una aplicación para un acceso rápido?',
+    'pwa.yesPlease': 'Sí, por favor',
+    'pwa.noThanks': 'No, gracias',
   },
 
   'fr-FR': {
@@ -1336,7 +1396,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': 'Surligner les noms des couleurs',
     'settings.showPlayerNames': 'Afficher les pseudonymes',
     'settings.editNames': 'Modifier les noms',
-    'settings.canTrackOwnColor': 'Permettre de déplacer sa propre couleur',
+    'settings.canTrackOwnColor': 'Suivre sa propre couleur sur la carte',
     'settings.notesSection': 'Notes',
     'settings.highlightNotesColors': 'Surligner les couleurs dans les notes',
     'settings.resetNotes': 'Effacer les notes lors d\'une nouvelle partie',
@@ -1406,10 +1466,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Masquer les capteurs',
 
     // Zoom Banner
-    'zoom.detected': 'Zoom navigateur détecté ({percent}%). Si l\'affichage est trop serré, utilisez',
+    'zoom.detected': 'Zoom navigateur détecté ({percent}%). Si l\'affichage semble trop serré ou petit, utilisez le',
     'zoom.boardZoom': 'Zoom du Tableau',
-    'zoom.inSettings': 'Paramètres',
-    'zoom.forCleanest': 'pour un meilleur ajustement.',
+    'zoom.in': 'dans',
+    'zoom.forCleanest': 'pour un ajustement optimal.',
 
     // Card extras
     'card.setAsMe': 'Me définir',
@@ -1594,6 +1654,26 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': 'Commune',
     'tasks.typeShort': 'Courte',
     'tasks.typeLong': 'Longue',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': 'Rôle Non Vérifié',
+    'card.verifiedClaim': 'Rôle Vérifié',
+    'roster.expand': 'Agrandir ',
+    'roster.minimize': 'Réduire ',
+    'notepad.voiceRecognitionTitle': 'Reconnaissance Vocale',
+    'notepad.voiceRecognitionAria': 'Langue de la reconnaissance vocale',
+    'notepad.dismissError': 'Fermer',
+    'settings.themeDark': 'Sombre',
+    'settings.themeLight': 'Clair',
+    'map.historySnapshotTitle': 'Instantané Carte Manche {round} (Lecture Seule)',
+    'map.resetPositions': 'Réinitialiser positions',
+    'help.essentialGuideBadge': 'Guide Essentiel',
+    'about.viewGithubFork': 'Voir les modifications sur GitHub',
+    'disclaimer.viewGithubFork': 'Voir le fork et les modifications sur GitHub',
+    'disclaimer.viewForkLink': 'voir le fork sur GitHub ↗',
+    'pwa.installPrompt': 'Souhaitez-vous installer Among Us Detective comme une application pour un accès rapide ?',
+    'pwa.yesPlease': 'Oui, s\'il vous plaît',
+    'pwa.noThanks': 'Non merci',
   },
 
   'de-DE': {
@@ -1731,7 +1811,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': 'Farbnamen hervorheben',
     'settings.showPlayerNames': 'Spielernamen anzeigen',
     'settings.editNames': 'Namen bearbeiten',
-    'settings.canTrackOwnColor': 'Eigene Farbe bewegbar',
+    'settings.canTrackOwnColor': 'Eigene Farbe auf der Karte verfolgen',
     'settings.notesSection': 'Notizen',
     'settings.highlightNotesColors': 'Farben in Notizen hervorheben',
     'settings.resetNotes': 'Notizen bei neuem Spiel leeren',
@@ -1801,9 +1881,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'map.hideSensors': 'Sensoren ausblenden',
 
     // Zoom Banner
-    'zoom.detected': 'Browser-Zoom erkannt ({percent}%). Wenn das Layout zu eng wirkt, nutze',
+    'zoom.detected': 'Browser-Zoom erkannt ({percent}%). Wenn das Layout zu eng oder klein wirkt, nutze den',
     'zoom.boardZoom': 'Board-Zoom',
-    'zoom.inSettings': 'Einstellungen',
+    'zoom.in': 'in den',
     'zoom.forCleanest': 'für die beste Ansicht.',
 
     // Card extras
@@ -1989,6 +2069,26 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': 'Gemeinsam',
     'tasks.typeShort': 'Kurz',
     'tasks.typeLong': 'Lang',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': 'Unbestätigte Rolle',
+    'card.verifiedClaim': 'Bestätigte Rolle',
+    'roster.expand': 'Erweitern ',
+    'roster.minimize': 'Minimieren ',
+    'notepad.voiceRecognitionTitle': 'Spracherkennung',
+    'notepad.voiceRecognitionAria': 'Sprache der Spracherkennung',
+    'notepad.dismissError': 'Schließen',
+    'settings.themeDark': 'Dunkel',
+    'settings.themeLight': 'Hell',
+    'map.historySnapshotTitle': 'Karten-Snapshot Runde {round} (Schreibgeschützt)',
+    'map.resetPositions': 'Positionen zurücksetzen',
+    'help.essentialGuideBadge': 'Wichtiger Leitfaden',
+    'about.viewGithubFork': 'Änderungen auf GitHub ansehen',
+    'disclaimer.viewGithubFork': 'Fork und Änderungen auf GitHub ansehen',
+    'disclaimer.viewForkLink': 'Fork auf GitHub ansehen ↗',
+    'pwa.installPrompt': 'Möchten Sie Among Us Detective als App für schnellen Zugriff installieren?',
+    'pwa.yesPlease': 'Ja, bitte',
+    'pwa.noThanks': 'Nein danke',
   },
 
   'ko-KR': {
@@ -2126,7 +2226,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.highlightColorNames': '색상 이름 강조',
     'settings.showPlayerNames': '플레이어 이름 표시',
     'settings.editNames': '이름 편집',
-    'settings.canTrackOwnColor': '자신의 색상 추적 허용',
+    'settings.canTrackOwnColor': '지도에서 자신의 색상 추적',
     'settings.notesSection': '메모',
     'settings.highlightNotesColors': '메모 내 색상 강조',
     'settings.resetNotes': '새 게임 시 메모 초기화',
@@ -2198,8 +2298,8 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     // Zoom Banner
     'zoom.detected': '브라우저 확대/축소 감지됨 ({percent}%). 화면이 좁거나 답답하다면',
     'zoom.boardZoom': '보드 크기',
-    'zoom.inSettings': '설정',
-    'zoom.forCleanest': '에서 조절하는 것을 추천합니다.',
+    'zoom.in': '에서',
+    'zoom.forCleanest': '조절하여 맞추세요.',
 
     // Card extras
     'card.setAsMe': '나로 설정',
@@ -2384,5 +2484,25 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'tasks.typeCommon': '공통',
     'tasks.typeShort': '짧음',
     'tasks.typeLong': '김',
+
+    // Core & UI Updates
+    'card.unverifiedClaim': '미확인 주장',
+    'card.verifiedClaim': '확인된 역할',
+    'roster.expand': '펼치기 ',
+    'roster.minimize': '접기 ',
+    'notepad.voiceRecognitionTitle': '음성 인식',
+    'notepad.voiceRecognitionAria': '음성 인식 언어',
+    'notepad.dismissError': '닫기',
+    'settings.themeDark': '다크',
+    'settings.themeLight': '라이트',
+    'map.historySnapshotTitle': '라운드 {round} 맵 스냅샷 (읽기 전용)',
+    'map.resetPositions': '위치 초기화',
+    'help.essentialGuideBadge': '핵심 가이드',
+    'about.viewGithubFork': 'GitHub에서 수정 내역 보기',
+    'disclaimer.viewGithubFork': 'GitHub에서 포크 및 수정 내역 보기',
+    'disclaimer.viewForkLink': 'GitHub에서 포크 보기 ↗',
+    'pwa.installPrompt': '빠른 접속을 위해 Among Us Detective를 앱으로 설치하시겠습니까?',
+    'pwa.yesPlease': '예, 설치합니다',
+    'pwa.noThanks': '아니요',
   },
 };

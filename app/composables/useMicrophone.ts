@@ -4,10 +4,14 @@ const micPermissionState = ref<'granted' | 'prompt' | 'denied' | 'unknown' | 'un
 const micErrorKey = ref('')
 const isRequestingMic = ref(false)
 let isInitialized = false
-
 export function useMicrophone() {
   const { t } = useI18n()
   const micErrorMessage = computed(() => micErrorKey.value ? t(micErrorKey.value) : '')
+
+  if (typeof window !== 'undefined' && !isInitialized) {
+    isInitialized = true
+    checkPermission()
+  }
 
   const isSupported = computed(() => {
     if (typeof navigator === 'undefined') return false

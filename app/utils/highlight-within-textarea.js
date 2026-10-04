@@ -61,8 +61,10 @@ export default (function() {
 
     generate: function() {
       this.el.classList.add(ID + "-input", ID + "-content");
-      this.el.addEventListener("input", this.handleInput.bind(this));
-      this.el.addEventListener("scroll", this.handleScroll.bind(this));
+      this.boundHandleInput = this.handleInput.bind(this);
+      this.boundHandleScroll = this.handleScroll.bind(this);
+      this.el.addEventListener("input", this.boundHandleInput);
+      this.el.addEventListener("scroll", this.boundHandleScroll);
 
       this.highlights = document.createElement("div");
       this.highlights.classList.add(ID + "-highlights", ID + "-content");
@@ -87,9 +89,10 @@ export default (function() {
       this.el.insertAdjacentElement("afterend", this.container);
       this.container.appendChild(this.backdrop);
       this.container.appendChild(this.el);
+      this.boundBlockContainerScroll = this.blockContainerScroll.bind(this);
       this.container.addEventListener(
         "scroll",
-        this.blockContainerScroll.bind(this)
+        this.boundBlockContainerScroll
       );
 
       this.browser = this.detectBrowser();
@@ -203,7 +206,7 @@ export default (function() {
     },
 
     handleInput: function() {
-      this.syncStyles();
+      if (!this.el || !this.highlights) return;
       let input = this.el.value;
       let ranges = this.getRanges(input, this.highlight);
       let unstaggeredRanges = this.removeStaggeredRanges(ranges);
@@ -250,11 +253,17 @@ export default (function() {
       let match;
       regex.lastIndex = 0;
       while (((match = regex.exec(input)), match !== null)) {
-        ranges.push([match.index, match.index + match[0].length]);
+        const term = match[2] !== undefined ? match[2] : (match[1] !== undefined ? match[1] : match[0]);
+        const offset = match[0].indexOf(term);
+        const start = match.index + (offset >= 0 ? offset : 0);
+        ranges.push([start, start + term.length]);
         if (!regex.global) {
           // non-global regexes do not increase lastIndex, causing an infinite loop,
           // but we can just break manually after the first match
           break;
+        }
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++;
         }
       }
       return ranges;
@@ -359,7 +368,7 @@ export default (function() {
       input = input.replace(/\n({{hwt-mark-stop}})?$/, "\n\n$1");
 
       // encode HTML entities
-      input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      input = input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       if (this.browser === "ie") {
         // IE/Edge wraps whitespace differently in a div vs textarea, this fixes it
@@ -371,9 +380,12 @@ export default (function() {
         match,
         submatch
       ) {
-        let className = boundaries[+submatch].className;
+        const b = boundaries[+submatch];
+        if (!b) return match;
+        const className = b.className;
         if (className) {
-          return '<mark class="' + className + '">';
+          const safeClass = String(className).replace(/[^a-zA-Z0-9_\-\s]/g, "");
+          return '<mark class="' + safeClass + '">';
         } else {
           return "<mark>";
         }
@@ -386,6 +398,7 @@ export default (function() {
     },
 
     handleScroll: function() {
+      if (!this.el || !this.backdrop) return;
       this.backdrop.scrollTop = this.el.scrollTop;
 
       // Chrome and Safari won't break long strings of spaces, which can cause
@@ -399,7 +412,46 @@ export default (function() {
     // in Chrome, page up/down in the textarea will shift stuff within the
     // container (despite the CSS), this immediately reverts the shift
     blockContainerScroll: function() {
+      if (!this.container) return;
       this.container.scrollLeft = 0;
+    },
+
+    destroy: function() {
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+        this.resizeObserver = null;
+      }
+
+      if (this.el) {
+        if (this.boundHandleInput) {
+          this.el.removeEventListener("input", this.boundHandleInput);
+        }
+        if (this.boundHandleScroll) {
+          this.el.removeEventListener("scroll", this.boundHandleScroll);
+        }
+        this.el.classList.remove(ID + "-input", ID + "-content");
+      }
+
+      if (this.container) {
+        if (this.boundBlockContainerScroll) {
+          this.container.removeEventListener(
+            "scroll",
+            this.boundBlockContainerScroll
+          );
+        }
+        if (this.el && this.container.parentNode) {
+          this.container.parentNode.insertBefore(this.el, this.container);
+        }
+        this.container.remove();
+        this.container = null;
+      }
+
+      this.backdrop = null;
+      this.highlights = null;
+      this.boundHandleInput = null;
+      this.boundHandleScroll = null;
+      this.boundBlockContainerScroll = null;
+      this.isGenerated = false;
     },
   };
 

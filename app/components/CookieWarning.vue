@@ -15,10 +15,10 @@
             <AppIcon name="shield" class="w-4 h-4" />
           </div>
           <p>
-            {{ t('cookie.message') }}
+            {{ t('cookie.message') }}{{ ' ' }}
             <NuxtLink
               to="/privacy"
-              class="underline font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 ml-1 inline-block transition-colors"
+              class="underline font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 inline-block transition-colors"
               data-test="cookie-disclaimer-link"
             >
               {{ t('cookie.disclaimerLink') }} →
