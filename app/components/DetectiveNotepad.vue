@@ -170,15 +170,6 @@
           </Transition>
         </div>
 
-        <NuxtLink
-          v-if="isSpeechRecognitionSupported"
-          to="/privacy"
-          class="text-[10px] text-gray-500 hover:text-gray-300 underline"
-          :title="t('notes.micPrivacyNotice')"
-        >
-          {{ t('cookie.disclaimerLink') }}
-        </NuxtLink>
-
         <span
           class="hidden sm:inline-flex text-[9px] px-1.5 py-0.5 rounded bg-gray-200 dark:bg-black/40 text-gray-700 dark:text-gray-400 border border-gray-300 dark:border-gray-700/40 font-mono"
         >
