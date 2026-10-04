@@ -60,7 +60,7 @@
             <div class="space-y-1">
               <span class="block">
                 {{ t('about.originalBy') }}{{ ' ' }}
-                <a href="https://github.com/atlesque/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline font-medium">Alexandre Atlesque</a>
+                <a href="https://github.com/atlesque/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline font-medium">Alexander Atlesque</a>
               </span>
               <span class="block">
                 {{ t('about.modernizedBy') }}{{ ' ' }}

@@ -11,7 +11,7 @@ This document serves as the single source of truth for all architectural decisio
 - **Core Principles**:
   1. **Strictly No Playwright Execution during active iteration**: User explicitly requested to rely on fast TypeScript type-checks (`npx vue-tsc --noEmit`).
   2. **Real Nuxt Stack Only (`app/`)**: No static HTML mocks; all architecture stays within the reactive Nuxt app framework.
-  3. **Original Author Attribution**: Respect and highlight original authorship by **Alexandre Atlesque** ([atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)) and modernization by **Marcos Binder** ([mrbbinder@gmail.com](mailto:mrbbinder@gmail.com) / [marcosbinder/among-us-detective](https://github.com/marcosbinder/among-us-detective)). Donations go directly to Alexandre Atlesque.
+  3. **Original Author Attribution**: Respect and highlight original authorship by **Alexander Atlesque** ([atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)) and modernization by **Marcos Binder** ([mrbbinder@gmail.com](mailto:mrbbinder@gmail.com) / [marcosbinder/among-us-detective](https://github.com/marcosbinder/among-us-detective)). Donations go directly to Alexander Atlesque.
   4. **100% Multilingual First**: Every single user-facing string must be localized via `app/utils/translations.ts` across all 6 supported locales (`en-US`, `pt-BR`, `es-ES`, `ko-KR`, `fr-FR`, `de-DE`).
   5. **Split-Screen First**: Optimized for split-screen window sizing (ultra-compact vertical space, zero clipped elements, instant 1-click interactions).
 
@@ -79,10 +79,10 @@ This document serves as the single source of truth for all architectural decisio
 
 ### 1.12 Disclaimer Modernization & Atlesque Credits (`app/pages/disclaimer.vue`)
 - Top back button with left arrow icon (`←`).
-- Explicit accreditation to **Alexandre Atlesque** with link to original GitHub repo (`https://github.com/atlesque/among-us-detective`).
+- Explicit accreditation to **Alexander Atlesque** with link to original GitHub repo (`https://github.com/atlesque/among-us-detective`).
 - Modernization contact for **Marcos Binder** (`mrbbinder@gmail.com`) with discrete link to [GitHub fork](https://github.com/marcosbinder/among-us-detective).
-- Expandable / collapsible viewer for the original legacy disclaimer written by Alexandre Atlesque.
-- Explicit notice that PayPal donations go directly to Alexandre Atlesque.
+- Expandable / collapsible viewer for the original legacy disclaimer written by Alexander Atlesque.
+- Explicit notice that PayPal donations go directly to Alexander Atlesque.
 
 ### 1.13 Help Modal Visual Overhaul & Segmented Navigation (`app/components/HelpModal.vue`)
 - Enlarge modal width to ~700px (`sm:max-w-[720px]`) via `maxWidth="700px"` prop on `Modal.vue`.

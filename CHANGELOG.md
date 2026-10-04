@@ -31,7 +31,7 @@ All notable changes to **Among Us Detective** are documented in this file.
 - **Performance Mode**: Added "Disable animations" toggle in Settings to eliminate all CSS transitions and keyframes for a lightweight experience on lower-end devices.
 - **Help Modal Overhaul**: Expanded modal width to ~700px with segmented navigation, improved card spacing, and refreshed guides.
 - **Keyboard Shortcuts**: Added hotkeys (`N` for Notes, `M` for Map, `T` for Tasks, `I` for Impostor HUD, `L` for Roster, `Esc` to close).
-- **Authorship & Credits**: Clarified original authorship conceived and credited by Alexandre Atlesque and modernization fork by Marcos Binder.
+- **Authorship & Credits**: Clarified original authorship conceived and credited by Alexander Atlesque and modernization fork by Marcos Binder.
 
 ---
 

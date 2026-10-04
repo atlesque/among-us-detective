@@ -96,7 +96,7 @@
         <p class="leading-relaxed">
           {{ t('disclaimer.creditsOriginal') }}
           <a href="https://github.com/atlesque/among-us-detective" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline font-bold">
-            Alexandre Atlesque
+            Alexander Atlesque
           </a>.
           {{ t('disclaimer.creditsModernized') }}
           <a href="mailto:mrbbinder@gmail.com" class="text-emerald-600 dark:text-emerald-400 hover:underline font-bold">
