@@ -152,7 +152,6 @@
             :title="`${tColor(color)} (${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')})${isPlayerColor(color) ? ` - ${t('card.me')}` : ''}`"
             @click="toggleActive(color)"
             @contextmenu.prevent="setAsMyPlayer(color)"
-            @dblclick.prevent="setAsMyPlayer(color)"
           >
             <!-- Bean Avatar -->
             <div :class="rosterAvatarSizeClasses" class="flex items-center justify-center pointer-events-none">
