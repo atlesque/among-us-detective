@@ -17,7 +17,7 @@
         v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory"
         class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
         data-test="reset-map-positions-btn"
-        @click="resetPositions"
+        @click="isResetConfirmOpen = true"
       >
         <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
         <span>{{ t('map.resetPositions') }}</span>
@@ -55,6 +55,40 @@
         @dragEnd="handleDragEnd"
       />
     </template>
+
+    <Teleport to="body">
+      <Modal
+        v-if="isResetConfirmOpen"
+        max-width="sm"
+        data-test="reset-map-positions-confirm"
+        @close="isResetConfirmOpen = false"
+      >
+        <template #title>{{ t('map.resetPositionsConfirmTitle') }}</template>
+        <template #body>
+          <p class="text-sm text-gray-600 dark:text-gray-300">
+            {{ t('map.resetPositionsConfirmBody') }}
+          </p>
+          <div class="flex justify-end gap-2 mt-5">
+            <button
+              type="button"
+              class="px-3 py-1.5 text-sm font-semibold rounded-lg text-gray-700 dark:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 transition-colors"
+              data-test="reset-map-positions-cancel-btn"
+              @click="isResetConfirmOpen = false"
+            >
+              {{ t('map.resetPositionsConfirmCancel') }}
+            </button>
+            <button
+              type="button"
+              class="px-3 py-1.5 text-sm font-semibold rounded-lg text-white bg-red-600 hover:bg-red-700 transition-colors"
+              data-test="reset-map-positions-confirm-btn"
+              @click="confirmResetPositions"
+            >
+              {{ t('map.resetPositionsConfirmAction') }}
+            </button>
+          </div>
+        </template>
+      </Modal>
+    </Teleport>
   </section>
 </template>
 
@@ -270,10 +304,17 @@ const handleDragEnd = ({
   }
 };
 
+const isResetConfirmOpen = ref(false);
+
 const resetPositions = () => {
   if (roundsStore.isViewingHistory) return;
   roundsStore.clearMapPositions(props.mapId);
   applyAllTransforms();
+};
+
+const confirmResetPositions = () => {
+  isResetConfirmOpen.value = false;
+  resetPositions();
 };
 
 onMounted(() => {
