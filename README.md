@@ -89,8 +89,8 @@ pnpm build
 
 ## 👤 Credits & Attribution
 
-- **Original Conception, Credits & Upstream Project**: Conceived, credited, and maintained by **Alexandre Atlesque** ([GitHub: atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)).
+- **Original Conception, Credits & Upstream Project**: Conceived, credited, and maintained by **Alexander Atlesque** ([GitHub: atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)).
 - **Version 2.0 / 2.1 Modernization & Revamp**: Modernized, redesigned, and overhauled by **Marcos Binder** ([mrbbinder@gmail.com](mailto:mrbbinder@gmail.com) • [GitHub Fork: marcosbinder/among-us-detective](https://github.com/marcosbinder/among-us-detective)).
-- **Donations Notice**: All PayPal donations in the app support original creator **Alexandre Atlesque** directly.
+- **Donations Notice**: All PayPal donations in the app support original creator **Alexander Atlesque** directly.
 
 *Among Us is a registered trademark of Innersloth LLC. Among Us Detective is an independent fan-made companion tool and is not affiliated with or endorsed by Innersloth.*

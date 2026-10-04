@@ -355,7 +355,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': 'Originally conceived, credited, and maintained by:',
     'about.modernizedBy': 'Modernized, overhauled, and revamped for v2.0 by:',
     'about.giveFeedback': 'Give Feedback',
-    'about.donateNotice': 'PayPal donations go directly to original creator Alexandre Atlesque.',
+    'about.donateNotice': 'PayPal donations go directly to original creator Alexander Atlesque.',
 
     // Disclaimer Page
     'disclaimer.title': 'Disclaimer & Compliance — Among Us Detective',
@@ -377,7 +377,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'Among Us Detective adheres to every guideline: all information recorded is observed and manually logged by the player.',
     'disclaimer.creditsOriginal': 'Originally conceived, credited, and maintained by',
     'disclaimer.creditsModernized': 'Modernized, revamped, and enhanced for v2.0 by',
-    'disclaimer.githubRepoNotice': 'Official source repository conceived by Alexandre Atlesque:',
+    'disclaimer.githubRepoNotice': 'Official source repository conceived by Alexander Atlesque:',
     'disclaimer.trademark': 'Among Us is a registered trademark of Innersloth LLC. Not affiliated with or endorsed by Innersloth.',
     'disclaimer.viewOriginal': 'View Original from Atlesque',
     'disclaimer.hideOriginal': 'Hide Original Disclaimer',
@@ -771,7 +771,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': 'Projeto original concebido e criado por',
     'about.modernizedBy': 'Modernizado e aprimorado para v2.0 por',
     'about.giveFeedback': 'Dar feedback',
-    'about.donateNotice': 'As doações via PayPal vão diretamente para o criador original Alexandre Atlesque.',
+    'about.donateNotice': 'As doações via PayPal vão diretamente para o criador original Alexander Atlesque.',
 
     // Disclaimer Page
     'disclaimer.title': 'Disclaimer e Conformidade — Among Us Detective',
@@ -793,7 +793,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'O Among Us Detective está em estrita conformidade: todas as informações são inseridas manualmente pelo jogador humano durante a partida.',
     'disclaimer.creditsOriginal': 'Originalmente concebido, projetado e creditado a',
     'disclaimer.creditsModernized': 'Modernizado, reformulado e aprimorado para v2.0 por',
-    'disclaimer.githubRepoNotice': 'Repositório fonte oficial concebido por Alexandre Atlesque:',
+    'disclaimer.githubRepoNotice': 'Repositório fonte oficial concebido por Alexander Atlesque:',
     'disclaimer.trademark': 'Among Us é marca registrada da Innersloth LLC. Não afiliado nem endossado pela Innersloth.',
     'disclaimer.viewOriginal': 'Ver Disclaimer Original de Atlesque',
     'disclaimer.hideOriginal': 'Ocultar Disclaimer Original',
@@ -1187,7 +1187,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': 'Proyecto original concebido y creado por',
     'about.modernizedBy': 'Modernizado y mejorado para v2.0 por',
     'about.giveFeedback': 'Enviar comentarios',
-    'about.donateNotice': 'Las donaciones por PayPal van directamente al creador original Alexandre Atlesque.',
+    'about.donateNotice': 'Las donaciones por PayPal van directamente al creador original Alexander Atlesque.',
 
     // Disclaimer Page
     'disclaimer.title': 'Disclaimer y Cumplimiento — Among Us Detective',
@@ -1209,7 +1209,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'Among Us Detective cumple estrictamente: toda la información es ingresada de forma manual por el jugador humano durante la partida.',
     'disclaimer.creditsOriginal': 'Originalmente concebido, diseñado y acreditado a',
     'disclaimer.creditsModernized': 'Modernizado, rediseñado y mejorado para v2.0 por',
-    'disclaimer.githubRepoNotice': 'Repositorio fuente oficial concebido por Alexandre Atlesque:',
+    'disclaimer.githubRepoNotice': 'Repositorio fuente oficial concebido por Alexander Atlesque:',
     'disclaimer.trademark': 'Among Us es una marca registrada de Innersloth LLC. No está afiliado ni respaldado por Innersloth.',
     'disclaimer.viewOriginal': 'Ver Disclaimer Original de Atlesque',
     'disclaimer.hideOriginal': 'Ocultar Disclaimer Original',
@@ -1603,7 +1603,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': 'Projet original conçu et créé par',
     'about.modernizedBy': 'Modernisé et perfectionné pour la v2.0 par',
     'about.giveFeedback': 'Donner un avis',
-    'about.donateNotice': 'Les dons PayPal vont directement au créateur original Alexandre Atlesque.',
+    'about.donateNotice': 'Les dons PayPal vont directement au créateur original Alexander Atlesque.',
 
     // Disclaimer Page
     'disclaimer.title': 'Avertissement & Conformité — Among Us Detective',
@@ -1625,7 +1625,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'Among Us Detective respecte rigoureusement ces règles : toutes les données sont saisies manuellement par le joueur humain en cours de partie.',
     'disclaimer.creditsOriginal': 'Conçu, créé et crédité à l\'origine par',
     'disclaimer.creditsModernized': 'Modernisé, repensé et amélioré pour la v2.0 par',
-    'disclaimer.githubRepoNotice': 'Dépôt source officiel conçu par Alexandre Atlesque :',
+    'disclaimer.githubRepoNotice': 'Dépôt source officiel conçu par Alexander Atlesque :',
     'disclaimer.trademark': 'Among Us est une marque déposée d\'Innersloth LLC. Non affilié ni approuvé par Innersloth.',
     'disclaimer.viewOriginal': 'Voir le Disclaimer Original d\'Atlesque',
     'disclaimer.hideOriginal': 'Masquer le Disclaimer Original',
@@ -2019,7 +2019,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': 'Ursprüngliches Projekt konzipiert & erstellt von',
     'about.modernizedBy': 'Modernisiert & erweitert für v2.0 von',
     'about.giveFeedback': 'Feedback geben',
-    'about.donateNotice': 'PayPal-Spenden gehen direkt an den ursprünglichen Schöpfer Alexandre Atlesque.',
+    'about.donateNotice': 'PayPal-Spenden gehen direkt an den ursprünglichen Schöpfer Alexander Atlesque.',
 
     // Disclaimer Page
     'disclaimer.title': 'Disclaimer & Richtlinien — Among Us Detective',
@@ -2041,7 +2041,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'Among Us Detective hält alle Vorgaben strikt ein: Sämtliche Informationen werden manuell vom Spieler während der Partie eingegeben.',
     'disclaimer.creditsOriginal': 'Ursprünglich konzipiert, gestaltet und gutgeschrieben an',
     'disclaimer.creditsModernized': 'Modernisiert, überarbeitet und verbessert für v2.0 von',
-    'disclaimer.githubRepoNotice': 'Offizielles Original-Repository von Alexandre Atlesque:',
+    'disclaimer.githubRepoNotice': 'Offizielles Original-Repository von Alexander Atlesque:',
     'disclaimer.trademark': 'Among Us ist ein eingetragenes Warenzeichen von Innersloth LLC. Nicht verbunden mit oder unterstützt von Innersloth.',
     'disclaimer.viewOriginal': 'Original-Disclaimer von Atlesque anzeigen',
     'disclaimer.hideOriginal': 'Original-Disclaimer ausblenden',
@@ -2435,7 +2435,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'about.originalBy': '원작 프로젝트 구상 및 개발:',
     'about.modernizedBy': 'v2.0 현대화 및 개선:',
     'about.giveFeedback': '피드백 보내기',
-    'about.donateNotice': 'PayPal 후원금은 원작자 Alexandre Atlesque에게 직접 전달됩니다.',
+    'about.donateNotice': 'PayPal 후원금은 원작자 Alexander Atlesque에게 직접 전달됩니다.',
 
     // Disclaimer Page
     'disclaimer.title': '면책 조항 및 규정 준수 — Among Us Detective',
@@ -2457,7 +2457,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.innerslothDesc2': 'Among Us Detective는 모든 규정을 준수하며, 기록되는 모든 정보는 플레이어가 직접 눈으로 보고 수동 입력한 내용입니다.',
     'disclaimer.creditsOriginal': '원작 구상, 디자인 및 기여:',
     'disclaimer.creditsModernized': 'v2.0 현대화, 개편 및 개발:',
-    'disclaimer.githubRepoNotice': 'Alexandre Atlesque의 공식 원작 저장소:',
+    'disclaimer.githubRepoNotice': 'Alexander Atlesque의 공식 원작 저장소:',
     'disclaimer.trademark': 'Among Us는 Innersloth LLC의 등록 상표입니다. 본 프로젝트는 Innersloth와 제휴되거나 보증되지 않았습니다.',
     'disclaimer.viewOriginal': 'Atlesque의 원본 면책 조항 보기',
     'disclaimer.hideOriginal': '원본 면책 조항 숨기기',

@@ -45,9 +45,9 @@ This document tracks all implemented architectural enhancements and planned futu
    - 100% localized across all 6 supported languages.
 
 8. **[COMPLETED] Feature 8: About Modal & Authorship Credits**
-   - Full accreditation: Original project conceived and created by **Alexandre Atlesque** ([atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)).
+   - Full accreditation: Original project conceived and created by **Alexander Atlesque** ([atlesque/among-us-detective](https://github.com/atlesque/among-us-detective)).
    - Modernized & enhanced for v2.0 by **Marcos Binder** ([mrbbinder@gmail.com](mailto:mrbbinder@gmail.com) / [fork v2.0](https://github.com/marcosbinder/among-us-detective)).
-   - Clarified that PayPal donations go directly to Alexandre Atlesque.
+   - Clarified that PayPal donations go directly to Alexander Atlesque.
    - Detailed dated changelog and roadmap tab.
 
 9. **[COMPLETED] Feature 9: Performance Mode ("Disable animations")**
@@ -68,9 +68,9 @@ This document tracks all implemented architectural enhancements and planned futu
 
 13. **[COMPLETED] Feature 13: Modernized Fair Play Disclaimer**
     - Top button with back arrow icon (`←`).
-    - Direct link to Alexandre Atlesque's original repository (`https://github.com/atlesque/among-us-detective`) and Marcos Binder modernization contact & fork.
-    - Expandable viewer displaying Alexandre Atlesque's original 2020 legacy letter.
-    - Explicit note that donations go to Alexandre Atlesque.
+    - Direct link to Alexander Atlesque's original repository (`https://github.com/atlesque/among-us-detective`) and Marcos Binder modernization contact & fork.
+    - Expandable viewer displaying Alexander Atlesque's original 2020 legacy letter.
+    - Explicit note that donations go to Alexander Atlesque.
 
 14. **[COMPLETED] Feature 14: 100% Multilingual Localization (i18n)**
     - All user-facing strings translated into English, Portuguese, Spanish, Korean, French, and German with browser auto-detection.
