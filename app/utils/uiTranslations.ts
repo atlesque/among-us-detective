@@ -47,6 +47,8 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': 'Map snapshot unavailable for this round.',
     'map.snapshotReadOnly': 'Round {round} Map Snapshot (Read-Only)',
     'map.resetPositions': 'Reset positions',
+    'map.resetPositionsConfirmCancel': 'Cancel',
+    'map.resetPositionsConfirmAction': 'Confirm',
   },
   'pt-BR': {
     'modal.close': 'Fechar',
@@ -94,6 +96,8 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': 'Mapa indisponível para esta rodada.',
     'map.snapshotReadOnly': 'Mapa da rodada {round} (somente leitura)',
     'map.resetPositions': 'Redefinir posições',
+    'map.resetPositionsConfirmCancel': 'Cancelar',
+    'map.resetPositionsConfirmAction': 'Confirmar',
   },
   'es-ES': {
     'modal.close': 'Cerrar',
@@ -141,6 +145,8 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': 'El mapa no está disponible para esta ronda.',
     'map.snapshotReadOnly': 'Mapa de la ronda {round} (solo lectura)',
     'map.resetPositions': 'Restablecer posiciones',
+    'map.resetPositionsConfirmCancel': 'Cancelar',
+    'map.resetPositionsConfirmAction': 'Confirmar',
   },
   'fr-FR': {
     'modal.close': 'Fermer',
@@ -188,6 +194,8 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': 'Carte indisponible pour cette manche.',
     'map.snapshotReadOnly': 'Carte de la manche {round} (lecture seule)',
     'map.resetPositions': 'Réinitialiser les positions',
+    'map.resetPositionsConfirmCancel': 'Annuler',
+    'map.resetPositionsConfirmAction': 'Confirmer',
   },
   'de-DE': {
     'modal.close': 'Schließen',
@@ -235,6 +243,8 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': 'Für diese Runde ist keine Kartenaufnahme verfügbar.',
     'map.snapshotReadOnly': 'Kartenaufnahme von Runde {round} (schreibgeschützt)',
     'map.resetPositions': 'Positionen zurücksetzen',
+    'map.resetPositionsConfirmCancel': 'Abbrechen',
+    'map.resetPositionsConfirmAction': 'Bestätigen',
   },
   'ko-KR': {
     'modal.close': '닫기',
@@ -282,5 +292,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
     'map.snapshotUnavailable': '이 라운드의 지도 스냅샷을 사용할 수 없습니다.',
     'map.snapshotReadOnly': '{round}라운드 지도 스냅샷 (읽기 전용)',
     'map.resetPositions': '위치 초기화',
+    'map.resetPositionsConfirmCancel': '취소',
+    'map.resetPositionsConfirmAction': '확인',
   },
 }

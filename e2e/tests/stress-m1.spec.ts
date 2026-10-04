@@ -165,6 +165,14 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
       const resetBtn = page.locator("[data-test='reset-map-positions-btn']");
       await expect(resetBtn).toBeVisible();
       await resetBtn.click();
+
+      // Cancelling the confirm dialog keeps the dragged position
+      await page.locator("[data-test='reset-map-positions-cancel-btn']").click();
+      await expect(page.locator("[data-test='reset-map-positions-confirm-btn']")).toHaveCount(0);
+      expect(Number(await pin.getAttribute("data-position-x"))).not.toBe(defaultX);
+
+      await resetBtn.click();
+      await page.locator("[data-test='reset-map-positions-confirm-btn']").click();
       await page.waitForTimeout(100);
 
       // Verify coordinate returned to default
