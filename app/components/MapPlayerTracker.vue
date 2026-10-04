@@ -13,15 +13,33 @@
         <AppIcon name="clock" class="w-3.5 h-3.5 shrink-0" />
         <span>{{ t('map.snapshotReadOnly', { round: roundsStore.viewingRoundNumber || 1 }) }}</span>
       </div>
-      <button
-        v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory"
-        class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer"
-        data-test="reset-map-positions-btn"
-        @click="isResetConfirmOpen = true"
-      >
-        <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
-        <span>{{ t('map.resetPositions') }}</span>
-      </button>
+      <template v-if="trackedCrewMembers.length > 0 && !roundsStore.isViewingHistory">
+        <button
+          class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors flex items-center gap-1 shadow-sm cursor-pointer disabled:cursor-default disabled:hover:bg-gray-800/90 disabled:hover:text-gray-200"
+          data-test="reset-map-positions-btn"
+          :disabled="isResetConfirmOpen"
+          @click="isResetConfirmOpen = true"
+        >
+          <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
+          <span>{{ t('map.resetPositions') }}</span>
+        </button>
+        <template v-if="isResetConfirmOpen">
+          <button
+            class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors shadow-sm cursor-pointer"
+            data-test="reset-map-positions-confirm-btn"
+            @click="confirmResetPositions"
+          >
+            {{ t('map.resetPositionsConfirmAction') }}
+          </button>
+          <button
+            class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-gray-800/90 hover:bg-gray-700 text-gray-200 hover:text-white border border-gray-700/60 transition-colors shadow-sm cursor-pointer"
+            data-test="reset-map-positions-cancel-btn"
+            @click="isResetConfirmOpen = false"
+          >
+            {{ t('map.resetPositionsConfirmCancel') }}
+          </button>
+        </template>
+      </template>
     </div>
 
     <template v-for="item in moveableItems" :key="item.member.color">
@@ -56,39 +74,6 @@
       />
     </template>
 
-    <Teleport to="body">
-      <Modal
-        v-if="isResetConfirmOpen"
-        max-width="sm"
-        data-test="reset-map-positions-confirm"
-        @close="isResetConfirmOpen = false"
-      >
-        <template #title>{{ t('map.resetPositionsConfirmTitle') }}</template>
-        <template #body>
-          <p class="text-sm text-gray-600 dark:text-gray-300">
-            {{ t('map.resetPositionsConfirmBody') }}
-          </p>
-          <div class="flex justify-end gap-2 mt-5">
-            <button
-              type="button"
-              class="px-3 py-1.5 text-sm font-semibold rounded-lg text-gray-700 dark:text-gray-200 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 transition-colors"
-              data-test="reset-map-positions-cancel-btn"
-              @click="isResetConfirmOpen = false"
-            >
-              {{ t('map.resetPositionsConfirmCancel') }}
-            </button>
-            <button
-              type="button"
-              class="px-3 py-1.5 text-sm font-semibold rounded-lg text-white bg-red-600 hover:bg-red-700 transition-colors"
-              data-test="reset-map-positions-confirm-btn"
-              @click="confirmResetPositions"
-            >
-              {{ t('map.resetPositionsConfirmAction') }}
-            </button>
-          </div>
-        </template>
-      </Modal>
-    </Teleport>
   </section>
 </template>
 
