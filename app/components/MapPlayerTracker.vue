@@ -35,7 +35,7 @@
       >
         <CrewIcon
           :color="item.member.color"
-          :show-color-name="showMapColorNames"
+          :show-color-name="showColorNames"
           :highlight-color-name="highlightColorNames"
           :show-player-name="showPlayerNames"
           :is-imposter="item.member.isImposter"
@@ -68,7 +68,7 @@ const crewStore = useCrewStore();
 const roundsStore = useRoundsStore();
 const settingsStore = useSettingsStore();
 const { t } = useI18n();
-const { highlightColorNames, showPlayerNames, showMapColorNames } = storeToRefs(settingsStore);
+const { highlightColorNames, showPlayerNames, showColorNames } = storeToRefs(settingsStore);
 
 const mapOverlay = ref<HTMLElement | null>(null);
 const mapSize = ref({ width: 0, height: 0 });

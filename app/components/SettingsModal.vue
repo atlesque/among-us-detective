@@ -168,6 +168,17 @@
 
             <div
               class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
+              data-test="setting-show-color-names"
+            >
+              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.showColorNames') }}</span>
+              <Checkbox
+                :is-checked="settingsStore.showColorNames"
+                @changed="settingsStore.setShowColorNames"
+              />
+            </div>
+
+            <div
+              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
               data-test="setting-highlight-color-names"
             >
               <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.highlightColorNames') }}</span>
@@ -292,17 +303,6 @@
               <Checkbox
                 :is-checked="settingsStore.isImproveMapContrastEnabled"
                 @changed="settingsStore.setIsImproveMapContrastEnabled"
-              />
-            </div>
-
-            <div
-              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
-              data-test="setting-show-map-color-names"
-            >
-              <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.showMapColorNames') }}</span>
-              <Checkbox
-                :is-checked="settingsStore.showMapColorNames"
-                @changed="settingsStore.setShowMapColorNames"
               />
             </div>
 

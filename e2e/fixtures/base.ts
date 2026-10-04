@@ -4,7 +4,7 @@ const DEFAULT_SETTINGS_STATE = JSON.stringify({
   highlightColorNames: false,
   highlightNotesColors: true,
   showPlayerNames: false,
-  showMapColorNames: false,
+  showColorNames: true,
   settingsModalOpenState: false,
   resetNotesOnNewGame: true,
   showRoundNotes: true,

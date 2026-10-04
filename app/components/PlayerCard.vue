@@ -25,6 +25,7 @@
     @dragstart="closeMenu"
   >
     <span
+      v-if="settingsStore.showColorNames || (showPlayerNames && member.playerName)"
       class="w-full shrink-0 font-bold capitalize text-center break-words leading-tight rounded mb-1 sm:mb-1.5"
       :class="[
         nameTextClasses,

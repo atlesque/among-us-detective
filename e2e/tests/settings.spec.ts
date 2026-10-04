@@ -25,6 +25,17 @@ test.describe("App settings", () => {
     await expect(checkbox).toBeChecked();
   });
 
+  test("Show color names toggles the labels on board cards", async ({ page }) => {
+    const label = page.locator(".player-card > span").filter({ hasText: /^\s*Red\s*$/ });
+    await expect(label.first()).toBeVisible();
+    await openSettings(page);
+    const checkbox = page.locator("[data-test='setting-show-color-names'] input[type='checkbox']");
+    await expect(checkbox).toBeChecked();
+    await checkbox.uncheck();
+    await closeModal(page);
+    await expect(label).toHaveCount(0);
+  });
+
   test("Interface theme — toggling switches between Light and Dark", async ({
     page,
   }) => {
