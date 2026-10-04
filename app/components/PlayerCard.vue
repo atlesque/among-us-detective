@@ -278,21 +278,32 @@
                 {{ member.roleConfirmed ? t('card.verified') : t('card.claimed') }}
               </span>
             </div>
-            <button
-              type="button"
-              class="w-full py-1 px-2 text-[11px] font-bold rounded transition-colors text-center flex items-center justify-center gap-1.5"
-              :class="member.roleConfirmed
-                ? isImpostorRole
-                  ? 'bg-rose-700 text-white hover:bg-rose-600 shadow-sm'
-                  : 'bg-[#0f88b3] text-white hover:bg-[#0c7499] shadow-sm'
-                : isImpostorRole
-                  ? 'bg-rose-600 text-white hover:bg-rose-500 shadow-sm'
-                  : 'bg-[#0f88b3] text-white hover:bg-[#0c7499] shadow-sm'"
-              @click="toggleRoleConfirmed"
-            >
-              <AppIcon v-if="!member.roleConfirmed" name="check" class="w-3 h-3 stroke-[3]" />
-              <span>{{ member.roleConfirmed ? t('card.undoVerification') : isImpostorRole ? t('card.confirmImpostor') : t('card.confirmRole') }}</span>
-            </button>
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                class="flex-1 py-1 px-2 text-[11px] font-bold rounded transition-colors text-center flex items-center justify-center gap-1.5"
+                :class="member.roleConfirmed
+                  ? isImpostorRole
+                    ? 'bg-rose-700 text-white hover:bg-rose-600 shadow-sm'
+                    : 'bg-[#0f88b3] text-white hover:bg-[#0c7499] shadow-sm'
+                  : isImpostorRole
+                    ? 'bg-rose-600 text-white hover:bg-rose-500 shadow-sm'
+                    : 'bg-[#0f88b3] text-white hover:bg-[#0c7499] shadow-sm'"
+                @click="toggleRoleConfirmed"
+              >
+                <AppIcon v-if="!member.roleConfirmed" name="check" class="w-3 h-3 stroke-[3]" />
+                <span>{{ member.roleConfirmed ? t('card.undoVerification') : isImpostorRole ? t('card.confirmImpostor') : t('card.confirmRole') }}</span>
+              </button>
+              <button
+                type="button"
+                class="py-1 px-2 text-[11px] font-semibold text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 bg-white/80 dark:bg-gray-800/80 hover:bg-red-50 dark:hover:bg-red-500/10 rounded border border-gray-300/80 dark:border-gray-700 transition-colors flex items-center gap-1 shrink-0 shadow-sm"
+                :title="t('card.clearRole')"
+                @click="clearRole"
+              >
+                <AppIcon name="close" class="w-2.5 h-2.5" />
+                <span>{{ t('card.clearRole') }}</span>
+              </button>
+            </div>
           </div>
 
           <!-- Task Completion & Emergency Meetings Controls -->
@@ -344,19 +355,8 @@
             </div>
           </div>
 
-          <!-- Bottom actions: Clear role & Mark as dead / Revive -->
+          <!-- Bottom actions: Mark as dead / Revive -->
           <div class="pt-2 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-1.5">
-            <div v-if="member.role" class="flex justify-end">
-              <button
-                type="button"
-                class="px-2 py-0.5 text-[11px] text-gray-400 hover:text-red-500 rounded hover:bg-red-500/10 transition-colors flex items-center gap-1"
-                :title="t('card.clearRole')"
-                @click="clearRole"
-              >
-                <AppIcon name="close" class="w-2.5 h-2.5" />
-                <span>{{ t('card.clearRole') }}</span>
-              </button>
-            </div>
             <button
               type="button"
               class="w-full py-1.5 px-2 text-[11px] font-bold rounded transition-colors flex items-center justify-center gap-1.5"
