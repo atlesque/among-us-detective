@@ -54,4 +54,4 @@ export const useTasksStore = defineStore("tasks", () => {
     setTask,
     resetAllTasks,
   };
-});
+}, { persist: true });
