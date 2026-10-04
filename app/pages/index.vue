@@ -50,7 +50,7 @@
         <!-- Next Round Button & Info Hint -->
         <div class="relative flex items-center gap-1.5 flex-1 sm:flex-initial">
           <!-- Discreet Info (i) Hint Button & Popover on the Left -->
-          <div class="relative inline-flex items-center">
+          <div ref="nextRoundInfoRef" class="relative inline-flex items-center">
             <button
               type="button"
               class="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all shrink-0 cursor-pointer"
@@ -71,6 +71,7 @@
             <transition name="fade">
               <div
                 v-if="isNextRoundInfoOpen || isNextRoundInfoHover"
+                data-test="next-round-info-popover"
                 class="absolute top-full mt-2 left-0 z-50 w-56 sm:w-64 p-2.5 text-xs text-gray-700 dark:text-gray-200 bg-white/95 dark:bg-gray-900/95 border border-amber-500/40 rounded-xl shadow-2xl backdrop-blur-md text-left"
               >
                 <div class="flex items-center justify-between gap-1.5 font-bold mb-1 text-amber-400 text-[11px]">
@@ -400,6 +401,13 @@ const isAboutModalOpen = ref(false)
 const isTasksModalOpen = ref(false)
 const isNextRoundInfoOpen = ref(false)
 const isNextRoundInfoHover = ref(false)
+const nextRoundInfoRef = ref<HTMLElement | null>(null)
+let outsidePointerListener: ((e: PointerEvent) => void) | null = null
+
+function closeNextRoundInfo() {
+  isNextRoundInfoOpen.value = false
+  isNextRoundInfoHover.value = false
+}
 const isTouchDevice = ref(false)
 
 const displayedCrewMembers = computed(() => {
@@ -515,6 +523,9 @@ onMounted(() => {
     const isTyping = !!target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
 
     if (e.key === 'Escape' || e.code === 'Escape') {
+      if (isNextRoundInfoOpen.value) {
+        closeNextRoundInfo()
+      }
       if (isTyping) {
         target.blur()
       }
@@ -559,12 +570,24 @@ onMounted(() => {
     }
   }
   document.addEventListener('keydown', keydownListener)
+
+  outsidePointerListener = (e: PointerEvent) => {
+    if (!isNextRoundInfoOpen.value && !isNextRoundInfoHover.value) return
+    const target = e.target as Node | null
+    if (target && nextRoundInfoRef.value?.contains(target)) return
+    closeNextRoundInfo()
+  }
+  document.addEventListener('pointerdown', outsidePointerListener)
 })
 
 onUnmounted(() => {
   if (keydownListener) {
     document.removeEventListener('keydown', keydownListener)
     keydownListener = null
+  }
+  if (outsidePointerListener) {
+    document.removeEventListener('pointerdown', outsidePointerListener)
+    outsidePointerListener = null
   }
   if (zoomListener) {
     window.removeEventListener('resize', zoomListener)

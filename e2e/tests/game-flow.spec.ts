@@ -88,3 +88,33 @@ test.describe("Game flow — starting rounds and games", () => {
     await expect(page.locator("[role='dialog'] table tbody tr").first()).toBeVisible();
   });
 });
+
+test.describe("Next round info hint", () => {
+  test("Popover opened by click closes when clicking outside it", async ({
+    page,
+  }) => {
+    const infoBtn = page.locator("[data-test='next-round-info-btn']");
+    const popover = page.locator("[data-test='next-round-info-popover']");
+
+    await infoBtn.click();
+    await expect(popover).toBeVisible();
+
+    // Clicking inside the popover keeps it open
+    await popover.click();
+    await expect(popover).toBeVisible();
+
+    await page.mouse.click(5, 400);
+    await expect(popover).toBeHidden();
+  });
+
+  test("Popover opened by click closes on Escape", async ({ page }) => {
+    const infoBtn = page.locator("[data-test='next-round-info-btn']");
+    const popover = page.locator("[data-test='next-round-info-popover']");
+
+    await infoBtn.click();
+    await expect(popover).toBeVisible();
+    await page.mouse.move(5, 400);
+    await page.keyboard.press("Escape");
+    await expect(popover).toBeHidden();
+  });
+});
