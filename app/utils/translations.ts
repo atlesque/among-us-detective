@@ -164,7 +164,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': 'Allow Mic',
     'settings.mapSection': 'Map',
     'settings.improveContrast': 'Improve map contrast',
-    'settings.showMapColorNames': 'Show color names',
+    'settings.showColorNames': 'Show color names',
     'settings.editNicknames': 'Edit player nicknames',
     'settings.resetAll': 'Reset all',
 
@@ -580,7 +580,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': 'Permitir Microfone',
     'settings.mapSection': 'Mapa',
     'settings.improveContrast': 'Melhorar contraste do mapa',
-    'settings.showMapColorNames': 'Mostrar nomes das cores',
+    'settings.showColorNames': 'Mostrar nomes das cores',
     'settings.editNicknames': 'Editar nicks dos jogadores',
     'settings.resetAll': 'Resetar todos',
 
@@ -996,7 +996,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': 'Permitir Micrófono',
     'settings.mapSection': 'Mapa',
     'settings.improveContrast': 'Mejorar contraste del mapa',
-    'settings.showMapColorNames': 'Mostrar nombres de colores',
+    'settings.showColorNames': 'Mostrar nombres de colores',
     'settings.editNicknames': 'Editar nicks de jugadores',
     'settings.resetAll': 'Restablecer todos',
 
@@ -1412,7 +1412,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': 'Autoriser le Micro',
     'settings.mapSection': 'Carte',
     'settings.improveContrast': 'Améliorer le contraste de la carte',
-    'settings.showMapColorNames': 'Afficher les noms des couleurs',
+    'settings.showColorNames': 'Afficher les noms des couleurs',
     'settings.editNicknames': 'Modifier les pseudos des joueurs',
     'settings.resetAll': 'Tout réinitialiser',
 
@@ -1828,7 +1828,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': 'Mikrofon erlauben',
     'settings.mapSection': 'Karte',
     'settings.improveContrast': 'Kartenkontrast verbessern',
-    'settings.showMapColorNames': 'Farbnamen anzeigen',
+    'settings.showColorNames': 'Farbnamen anzeigen',
     'settings.editNicknames': 'Spitznamen bearbeiten',
     'settings.resetAll': 'Alle zurücksetzen',
 
@@ -2244,7 +2244,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.micAllow': '마이크 허용',
     'settings.mapSection': '지도',
     'settings.improveContrast': '지도 대비 개선',
-    'settings.showMapColorNames': '색상 이름 표시',
+    'settings.showColorNames': '색상 이름 표시',
     'settings.editNicknames': '플레이어 별명 편집',
     'settings.resetAll': '모두 초기화',
 
