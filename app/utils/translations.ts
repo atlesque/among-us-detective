@@ -378,9 +378,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'Modernized, revamped, and enhanced for v2.0 by',
     'disclaimer.githubRepoNotice': 'Official source repository conceived by Alexandre Atlesque:',
     'disclaimer.trademark': 'Among Us is a registered trademark of Innersloth LLC. Not affiliated with or endorsed by Innersloth.',
-    'disclaimer.viewOriginal': 'View Original from Atlesque',
-    'disclaimer.hideOriginal': 'Hide Original Disclaimer',
-    'disclaimer.originalHeader': 'Original Legacy Disclaimer by Alexandre Atlesque',
 
     // Tasks & Visual Reference Modal
     'tasks.title': 'Tasks & Visual Reference',
@@ -793,9 +790,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'Modernizado, reformulado e aprimorado para v2.0 por',
     'disclaimer.githubRepoNotice': 'Repositório fonte oficial concebido por Alexandre Atlesque:',
     'disclaimer.trademark': 'Among Us é marca registrada da Innersloth LLC. Não afiliado nem endossado pela Innersloth.',
-    'disclaimer.viewOriginal': 'Ver Disclaimer Original de Atlesque',
-    'disclaimer.hideOriginal': 'Ocultar Disclaimer Original',
-    'disclaimer.originalHeader': 'Disclaimer Original Histórico por Alexandre Atlesque',
 
     // Tasks & Visual Reference Modal
     'tasks.title': 'Guia de Tarefas & Referência Visual',
@@ -1208,9 +1202,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'Modernizado, rediseñado y mejorado para v2.0 por',
     'disclaimer.githubRepoNotice': 'Repositorio fuente oficial concebido por Alexandre Atlesque:',
     'disclaimer.trademark': 'Among Us es una marca registrada de Innersloth LLC. No está afiliado ni respaldado por Innersloth.',
-    'disclaimer.viewOriginal': 'Ver Disclaimer Original de Atlesque',
-    'disclaimer.hideOriginal': 'Ocultar Disclaimer Original',
-    'disclaimer.originalHeader': 'Disclaimer Original Histórico por Alexandre Atlesque',
 
     // Tasks & Visual Reference Modal
     'tasks.title': 'Guía de Tareas y Referencia Visual',
@@ -1623,9 +1614,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'Modernisé, repensé et amélioré pour la v2.0 par',
     'disclaimer.githubRepoNotice': 'Dépôt source officiel conçu par Alexandre Atlesque :',
     'disclaimer.trademark': 'Among Us est une marque déposée d\'Innersloth LLC. Non affilié ni approuvé par Innersloth.',
-    'disclaimer.viewOriginal': 'Voir le Disclaimer Original d\'Atlesque',
-    'disclaimer.hideOriginal': 'Masquer le Disclaimer Original',
-    'disclaimer.originalHeader': 'Avertissement Historique Original par Alexandre Atlesque',
 
     // Tasks & Visual Reference Modal
     'tasks.title': 'Guide des Tâches & Référence Visuelle',
@@ -2038,9 +2026,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'Modernisiert, überarbeitet und verbessert für v2.0 von',
     'disclaimer.githubRepoNotice': 'Offizielles Original-Repository von Alexandre Atlesque:',
     'disclaimer.trademark': 'Among Us ist ein eingetragenes Warenzeichen von Innersloth LLC. Nicht verbunden mit oder unterstützt von Innersloth.',
-    'disclaimer.viewOriginal': 'Original-Disclaimer von Atlesque anzeigen',
-    'disclaimer.hideOriginal': 'Original-Disclaimer ausblenden',
-    'disclaimer.originalHeader': 'Historischer Original-Disclaimer von Alexandre Atlesque',
 
     // Tasks & Visual Reference Modal
     'tasks.title': 'Aufgaben- & Visuelle Referenz',
@@ -2453,9 +2438,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.creditsModernized': 'v2.0 현대화, 개편 및 개발:',
     'disclaimer.githubRepoNotice': 'Alexandre Atlesque의 공식 원작 저장소:',
     'disclaimer.trademark': 'Among Us는 Innersloth LLC의 등록 상표입니다. 본 프로젝트는 Innersloth와 제휴되거나 보증되지 않았습니다.',
-    'disclaimer.viewOriginal': 'Atlesque의 원본 면책 조항 보기',
-    'disclaimer.hideOriginal': '원본 면책 조항 숨기기',
-    'disclaimer.originalHeader': 'Alexandre Atlesque의 역사적 원본 면책 조항',
 
     // Tasks & Visual Reference Modal
     'tasks.title': '임무 및 시각 효과 가이드',

@@ -117,52 +117,10 @@
           {{ t('about.donateNotice') }}
         </p>
 
-        <div class="pt-4 border-t border-gray-200 dark:border-gray-800/80 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div class="pt-4 border-t border-gray-200 dark:border-gray-800/80">
           <span class="text-gray-500 text-[11px] leading-tight">
             {{ t('disclaimer.trademark') }}
           </span>
-
-          <!-- Bottom Button: View Original Disclaimer from Atlesque (No duplicate return to board) -->
-          <button
-            type="button"
-            class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 border border-gray-300 dark:border-gray-700 transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
-            data-test="toggle-original-disclaimer-btn"
-            @click="isOriginalVisible = !isOriginalVisible"
-          >
-            <AppIcon :name="isOriginalVisible ? 'chevron-up' : 'chevron-down'" class="w-3.5 h-3.5 shrink-0" />
-            <span>{{ isOriginalVisible ? t('disclaimer.hideOriginal') : t('disclaimer.viewOriginal') }}</span>
-          </button>
-        </div>
-
-        <!-- Collapsible Original Disclaimer from Alexandre Atlesque -->
-        <div
-          v-show="isOriginalVisible"
-          class="mt-4 p-5 rounded-xl bg-gray-50 dark:bg-gray-900 border border-blue-400/40 dark:border-blue-500/40 text-xs text-gray-700 dark:text-gray-300 space-y-3 shadow-inner"
-          data-test="original-disclaimer-content"
-        >
-          <div class="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-gray-800">
-            <div class="flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold text-sm">
-              <AppIcon name="file" class="w-4 h-4 shrink-0" />
-              <span>{{ t('disclaimer.originalHeader') }}</span>
-            </div>
-            <span class="text-[10px] text-gray-500 uppercase tracking-wider font-mono">{{ t('disclaimer.archivedOriginal') }}</span>
-          </div>
-
-          <p class="text-[11px] text-gray-500 dark:text-gray-400 italic">{{ originalLetter.notice }}</p>
-          <p class="italic text-gray-500 dark:text-gray-400">
-            {{ originalLetter.greeting }}
-          </p>
-          <p v-for="(paragraph, index) in originalLetter.paragraphsBeforeContact" :key="index">
-            {{ paragraph }}
-          </p>
-          <p>
-            {{ originalLetter.contactPrefix }}
-            <a href="mailto:alexander@atlesque.com" class="text-blue-600 dark:text-blue-400 hover:underline">alexander@atlesque.com</a>
-            {{ originalLetter.contactSuffix }}
-          </p>
-          <p>{{ originalLetter.closingParagraph }}</p>
-          <p>{{ originalLetter.signOff }}</p>
-          <p><strong>{{ originalLetter.signature }}</strong></p>
         </div>
       </div>
     </div>
@@ -170,11 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { originalLetterTranslations } from '~/utils/originalLetterTranslations'
-
-const { t, locale } = useI18n()
-const originalLetter = computed(() => originalLetterTranslations[locale.value])
-const isOriginalVisible = ref(false)
+const { t } = useI18n()
 
 useHead(() => ({
   title: t('disclaimer.title'),

@@ -33,7 +33,6 @@ const dictionaries = [
   ['app/utils/uiTranslations.ts', 'uiTranslations'],
   ['app/utils/privacyTranslations.ts', 'privacyTranslations'],
   ['app/utils/changelogTranslations.ts', 'changelogTranslations'],
-  ['app/utils/originalLetterTranslations.ts', 'originalLetterTranslations'],
 ]
 
 let failures = 0
