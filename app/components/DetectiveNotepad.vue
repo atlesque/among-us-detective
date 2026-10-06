@@ -607,6 +607,8 @@ function initSpeechRecording() {
       else if (event.error === 'not-allowed') {
         micPermissionState.value = 'denied'
         speechError.value = t('notes.speechError.notAllowed')
+      } else {
+        speechError.value = t('notes.speechError.startFailed')
       }
     }
   } catch {
@@ -630,7 +632,13 @@ async function toggleVoiceRecordingFor(target: 'round' | 'match') {
   stopRecording()
   speechError.value = ''
   const hasPermission = await requestMicrophonePermission()
-  if (!hasPermission) return
+  if (!hasPermission) {
+    speechError.value = micErrorMessage.value || t('notes.speechError.notAllowed')
+    return
+  }
+
+  // Small delay to ensure audio device handle is cleanly released by hardware drivers
+  await new Promise((resolve) => setTimeout(resolve, 80))
 
   if (!speechRecognition) {
     initSpeechRecording()
@@ -642,6 +650,7 @@ async function toggleVoiceRecordingFor(target: 'round' | 'match') {
       speechRecognition.start()
     } catch {
       stopRecording()
+      speechError.value = t('notes.speechError.startFailed')
     }
   }
 }
