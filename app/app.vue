@@ -5,9 +5,9 @@
     </NuxtLayout>
     <Transition name="fade">
       <AppInstallationPrompt
-        v-if="isAppInstallationPromptVisible"
-        @confirm="handleAppInstallationConfirmed"
-        @cancel="handleAppInstallationDismissed"
+        v-if="isInstallPromptVisible"
+        @confirm="promptInstall"
+        @cancel="dismissPrompt"
       />
     </Transition>
   </div>
@@ -39,8 +39,9 @@ useHead({
   },
 })
 
-const isAppInstallationPromptVisible = ref(false)
-let pwaInstallEvent: any = null
+import { usePwaInstall } from '~/composables/usePwaInstall'
+
+const { isInstallPromptVisible, promptInstall, dismissPrompt } = usePwaInstall()
 
 onMounted(() => {
   if (!hasDarkModeBeenSetBefore.value) {
@@ -81,25 +82,10 @@ onMounted(() => {
       touchMatchActivity()
     }
   )
-
-  let hasDismissed = false
-  try {
-    const stored = localStorage.getItem('appInstallationDismissed')
-    hasDismissed = stored ? JSON.parse(stored) === true : false
-  } catch {
-    hasDismissed = false
-  }
-
-  if (!hasDismissed) {
-    window.addEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
-    window.addEventListener('appinstalled', handleAppInstalled)
-  }
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('visibilitychange', handleVisibilityChange)
-  window.removeEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
-  window.removeEventListener('appinstalled', handleAppInstalled)
 })
 
 function handleVisibilityChange() {
@@ -113,33 +99,5 @@ function handleVisibilityChange() {
       settingsStore,
     })
   }
-}
-
-function handleAppInstalled() {
-  isAppInstallationPromptVisible.value = false
-}
-
-function handleBeforeAppInstallPrompt(event: Event) {
-  pwaInstallEvent = event as any
-  pwaInstallEvent.userChoice.then(() => {
-    isAppInstallationPromptVisible.value = false
-    window.removeEventListener('beforeinstallprompt', handleBeforeAppInstallPrompt)
-  })
-  isAppInstallationPromptVisible.value = true
-}
-
-function handleAppInstallationConfirmed() {
-  if (pwaInstallEvent != null) {
-    pwaInstallEvent.prompt()
-  } else {
-    isAppInstallationPromptVisible.value = false
-  }
-}
-
-function handleAppInstallationDismissed() {
-  isAppInstallationPromptVisible.value = false
-  try {
-    localStorage.setItem('appInstallationDismissed', 'true')
-  } catch {}
 }
 </script>

@@ -332,6 +332,31 @@
                 @changed="settingsStore.setCanTrackOwnColor"
               />
             </div>
+
+            <!-- Application / PWA Installation (#43) -->
+            <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.appSection') }}</div>
+
+            <div
+              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
+              data-test="setting-install-pwa"
+            >
+              <div class="flex flex-col pr-2">
+                <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.installApp') }}</span>
+                <span class="text-[11px] text-gray-500 dark:text-gray-400">{{ t('settings.installAppSub') }}</span>
+              </div>
+              <button
+                type="button"
+                class="px-2.5 py-1 text-xs font-semibold rounded-md border transition-all flex items-center gap-1.5 shrink-0"
+                :class="(isAppInstalled || isStandalone)
+                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 cursor-default'
+                  : 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-600 shadow-sm cursor-pointer active:scale-95'"
+                :disabled="isAppInstalled || isStandalone"
+                @click="promptInstall"
+              >
+                <AppIcon :name="(isAppInstalled || isStandalone) ? 'check' : 'download'" class="w-3.5 h-3.5 shrink-0" />
+                <span>{{ (isAppInstalled || isStandalone) ? t('settings.appInstalled') : t('settings.install') }}</span>
+              </button>
+            </div>
           </div>
         </template>
       </template>
@@ -341,6 +366,7 @@
 
 <script setup lang="ts">
 import playerColors from "~/utils/playerColors.js";
+import { usePwaInstall } from "~/composables/usePwaInstall";
 
 const emit = defineEmits<{ close: [] }>();
 
@@ -352,6 +378,7 @@ const { t, tColor, locale, setLocale, availableLocales, detectedLocaleInfo } = u
 
 const isEditingPlayerNames = ref(false);
 const { micPermissionState, requestMicrophonePermission } = useMicrophone();
+const { isAppInstalled, isStandalone, promptInstall } = usePwaInstall();
 
 async function requestMicPermission() {
   await requestMicrophonePermission();

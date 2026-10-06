@@ -1,21 +1,56 @@
 <template>
-  <section
-    class="fixed bottom-14 left-2 right-2 sm:left-auto sm:right-4 z-40 flex items-center justify-center p-3.5 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 shadow-2xl max-w-lg"
+  <aside
+    class="fixed bottom-20 right-3 sm:bottom-20 sm:right-6 z-50 p-3.5 sm:p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-gray-100 shadow-2xl max-w-[calc(100vw-24px)] sm:max-w-sm transition-all"
+    data-test="pwa-install-prompt"
+    role="dialog"
+    aria-labelledby="pwa-install-title"
   >
-    <div class="flex flex-col items-center justify-center w-full">
-      <span class="mb-3 text-center text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">
-        {{ t('pwa.installPrompt') }}
-      </span>
-      <div class="flex justify-around w-full gap-2">
-        <button type="button" class="px-4 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition-colors cursor-pointer" @click="emit('confirm')">
-          {{ t('pwa.yesPlease') }}
-        </button>
-        <button type="button" class="px-4 py-1.5 text-xs font-bold rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-colors cursor-pointer" @click="emit('cancel')">
-          {{ t('pwa.noThanks') }}
-        </button>
+    <!-- Header with Icon, Title, and Close Button -->
+    <div class="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-gray-100 dark:border-gray-800">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+          <AppIcon name="download" class="w-3.5 h-3.5" />
+        </div>
+        <span id="pwa-install-title" class="text-xs font-bold tracking-tight text-gray-900 dark:text-gray-100">
+          Among Us Detective
+        </span>
       </div>
+
+      <button
+        type="button"
+        class="p-1 rounded-md text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+        :title="t('notepad.dismissError')"
+        :aria-label="t('notepad.dismissError')"
+        @click="emit('cancel')"
+      >
+        <AppIcon name="close" class="w-3.5 h-3.5" />
+      </button>
     </div>
-  </section>
+
+    <!-- Message -->
+    <p class="text-xs font-medium leading-relaxed text-gray-700 dark:text-gray-300 mb-3.5">
+      {{ t('pwa.installPrompt') }}
+    </p>
+
+    <!-- Buttons -->
+    <div class="flex items-center justify-end gap-2">
+      <button
+        type="button"
+        class="px-3 py-1.5 text-xs font-semibold rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+        @click="emit('cancel')"
+      >
+        {{ t('pwa.noThanks') }}
+      </button>
+      <button
+        type="button"
+        class="px-3.5 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white shadow-sm transition-all cursor-pointer flex items-center gap-1.5"
+        @click="emit('confirm')"
+      >
+        <AppIcon name="check" class="w-3 h-3 stroke-[3]" />
+        <span>{{ t('pwa.yesPlease') }}</span>
+      </button>
+    </div>
+  </aside>
 </template>
 
 <script setup lang="ts">

@@ -167,6 +167,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Show color names',
     'settings.editNicknames': 'Edit player nicknames',
     'settings.resetAll': 'Reset all',
+    'settings.appSection': 'Application',
+    'settings.installApp': 'Install as app',
+    'settings.installAppSub': 'Install Among Us Detective for easy offline & full-screen access',
+    'settings.install': 'Install',
+    'settings.appInstalled': 'Installed',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Impostor Operations HUD',
@@ -643,6 +648,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Mostrar nomes das cores',
     'settings.editNicknames': 'Editar nicks dos jogadores',
     'settings.resetAll': 'Resetar todos',
+    'settings.appSection': 'Aplicativo',
+    'settings.installApp': 'Instalar como aplicativo',
+    'settings.installAppSub': 'Instale o Among Us Detective para acesso fácil em tela cheia',
+    'settings.install': 'Instalar',
+    'settings.appInstalled': 'Instalado',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Central de Operações do Impostor',
@@ -1119,6 +1129,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Mostrar nombres de colores',
     'settings.editNicknames': 'Editar nicks de jugadores',
     'settings.resetAll': 'Restablecer todos',
+    'settings.appSection': 'Aplicación',
+    'settings.installApp': 'Instalar como aplicación',
+    'settings.installAppSub': 'Instala Among Us Detective para un acceso fácil en pantalla completa',
+    'settings.install': 'Instalar',
+    'settings.appInstalled': 'Instalado',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Central de Operaciones del Impostor',
@@ -1595,6 +1610,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Afficher les noms des couleurs',
     'settings.editNicknames': 'Modifier les pseudos des joueurs',
     'settings.resetAll': 'Tout réinitialiser',
+    'settings.appSection': 'Application',
+    'settings.installApp': 'Installer comme application',
+    'settings.installAppSub': 'Installez Among Us Detective pour un accès facile en plein écran',
+    'settings.install': 'Installer',
+    'settings.appInstalled': 'Installée',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Centre d\'Opérations de l\'Imposteur',
@@ -2071,6 +2091,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Farbnamen anzeigen',
     'settings.editNicknames': 'Spitznamen bearbeiten',
     'settings.resetAll': 'Alle zurücksetzen',
+    'settings.appSection': 'Anwendung',
+    'settings.installApp': 'Als App installieren',
+    'settings.installAppSub': 'Among Us Detective für einfachen Vollbild-Zugriff installieren',
+    'settings.install': 'Installieren',
+    'settings.appInstalled': 'Installiert',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Impostor-Kommandozentrale',
@@ -2547,6 +2572,11 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': '색상 이름 표시',
     'settings.editNicknames': '플레이어 별명 편집',
     'settings.resetAll': '모두 초기화',
+    'settings.appSection': '애플리케이션',
+    'settings.installApp': '앱으로 설치',
+    'settings.installAppSub': '전체 화면 및 빠른 접근을 위해 Among Us Detective를 앱으로 설치합니다',
+    'settings.install': '설치',
+    'settings.appInstalled': '설치됨',
 
     // Impostor Mode HUD
     'impostor.modeTitle': '임포스터 작전 본부',
