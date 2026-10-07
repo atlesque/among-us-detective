@@ -26,7 +26,6 @@
 </template>
 
 <script setup lang="ts">
-// TODO: confirm the V2 subdomain before merging
 const V2_URL = 'https://v2.amongusdetective.com'
 
 const emit = defineEmits<{ close: [] }>()
