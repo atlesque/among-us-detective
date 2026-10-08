@@ -100,8 +100,19 @@ export default defineNuxtConfig({
       display: "standalone",
     },
     workbox: {
+      navigateFallback: undefined,
+      cleanupOutdatedCaches: true,
       skipWaiting: true,
       clientsClaim: true,
+      runtimeCaching: [
+        {
+          urlPattern: ({ request }) => request.destination === 'document',
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'pages',
+          },
+        },
+      ],
     },
   },
 
