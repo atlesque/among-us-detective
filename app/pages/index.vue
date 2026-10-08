@@ -270,6 +270,27 @@
           <kbd class="hidden md:inline-block text-[10px] px-1 py-0.2 rounded bg-black/25 text-gray-300 font-mono">M</kbd>
         </button>
 
+        <!-- Timer & Stopwatch Button -->
+        <button
+          type="button"
+          class="h-8 px-1.5 sm:px-2.5 text-xs font-semibold rounded-lg border transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer shadow-xs select-none"
+          :class="timerStore.isTimerRunning || timerStore.isStopwatchRunning
+            ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-400 dark:border-amber-600 font-bold ring-1 ring-amber-400/40'
+            : (timerStore.isModalOpen
+              ? 'bg-indigo-600/30 text-indigo-600 dark:text-indigo-300 border-indigo-500/50'
+              : 'bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-gray-300 dark:border-gray-700/60')"
+          data-test="timer-btn"
+          :title="`${t('dock.timer')} (S)`"
+          @click="timerStore.toggleModal()"
+        >
+          <AppIcon name="timer" class="w-3.5 h-3.5 shrink-0" :class="timerStore.isTimerRunning ? 'animate-pulse text-amber-600 dark:text-amber-400' : ''" />
+          <span v-if="timerStore.liveBadgeText" class="font-mono font-bold text-[11px] sm:text-xs">
+            {{ timerStore.liveBadgeText }}
+          </span>
+          <span v-else class="hidden xs:inline sm:inline">{{ t('dock.timer') }}</span>
+          <kbd class="hidden md:inline-block text-[10px] px-1 py-0.2 rounded bg-black/25 text-gray-300 font-mono">S</kbd>
+        </button>
+
         <!-- Tasks Reference Button -->
         <button
           type="button"
@@ -353,6 +374,7 @@
     <LazyAboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
     <LazySettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
     <LazyTasksModal v-if="isTasksModalOpen" @close="isTasksModalOpen = false" />
+    <LazyTimerModal v-if="timerStore.isModalOpen" />
     <CookieWarning />
   </div>
 </template>
@@ -360,6 +382,7 @@
 <script setup lang="ts">
 import type { CrewMember } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
+import { useTimerStore } from '~/stores/timer'
 import { touchMatchActivity } from '~/utils/sessionManager'
 import { activeMenuColor } from '~/components/PlayerCard.vue'
 
@@ -370,6 +393,7 @@ const tasksStore = useTasksStore()
 const roundsStore = useRoundsStore()
 const mapsStore = useMapsStore()
 const impostorStore = useImpostorStore()
+const timerStore = useTimerStore()
 const { gtag } = useGtag()
 const { t, locale } = useI18n()
 const { micPermissionState, requestMicrophonePermission } = useMicrophone()
@@ -532,6 +556,9 @@ onMounted(() => {
       if (isTyping) {
         target.blur()
       }
+      if (timerStore.isModalOpen) {
+        timerStore.toggleModal(false)
+      }
       if (notepadRef.value && !notepadRef.value.isMinimized) {
         notepadRef.value.minimize()
       }
@@ -542,31 +569,37 @@ onMounted(() => {
       return
     }
 
-    if (e.code === 'KeyN' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value) {
+    if (e.code === 'KeyN' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       toggleNotes()
       return
     }
 
-    if (e.code === 'KeyM' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value) {
+    if (e.code === 'KeyM' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       toggleMapVisibility()
       return
     }
 
-    if (e.code === 'KeyT' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value) {
+    if (e.code === 'KeyS' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value) {
+      e.preventDefault()
+      timerStore.toggleModal()
+      return
+    }
+
+    if (e.code === 'KeyT' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       toggleTasksModal()
       return
     }
 
-    if (e.code === 'KeyI' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value) {
+    if (e.code === 'KeyI' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       impostorStore.toggleImpostorMode()
       return
     }
 
-    if (e.code === 'KeyL' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value) {
+    if (e.code === 'KeyL' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       rosterSelectorRef.value?.toggleMinimize()
       return
@@ -599,12 +632,15 @@ onUnmounted(() => {
     }
     zoomListener = null
   }
+  timerStore.cleanup()
 })
 
 function initNewMatch() {
   roundsStore.startNewMatch()
   crewStore.resetAllCrew()
   tasksStore.resetAllTasks()
+  timerStore.resetTimer()
+  timerStore.resetStopwatch()
   if (settingsStore.resetNotesOnNewGame) notesStore.clearGameNotes()
   notesStore.clearRoundNotes()
   impostorStore.setImpostorMode(false)
