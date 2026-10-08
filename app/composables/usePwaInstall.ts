@@ -3,21 +3,24 @@ import { ref, computed } from 'vue'
 const isInstallPromptVisible = ref(false)
 const isAppInstalled = ref(false)
 const isStandalone = ref(false)
+const canPrompt = ref(false)
 const hasDismissed = ref(false)
 let pwaInstallEvent: any = null
 let isInitialized = false
 
 export function usePwaInstall() {
+  const { gtag } = useGtag()
+
   if (typeof window !== 'undefined' && !isInitialized) {
     isInitialized = true
-    initPwaState()
+    initPwaState(gtag)
   }
 
   const canInstall = computed(() => {
     return !isStandalone.value && !isAppInstalled.value
   })
 
-  function initPwaState() {
+  function initPwaState(sendGtag: (command: string, ...args: any[]) => void) {
     if (typeof window === 'undefined') return
 
     const isStandaloneMode = (
@@ -53,6 +56,7 @@ export function usePwaInstall() {
     window.addEventListener('beforeinstallprompt', (event: Event) => {
       event.preventDefault()
       pwaInstallEvent = event
+      canPrompt.value = true
       // When beforeinstallprompt fires, the app is definitely not installed
       isAppInstalled.value = false
 
@@ -65,16 +69,15 @@ export function usePwaInstall() {
     window.addEventListener('appinstalled', () => {
       isAppInstalled.value = true
       isInstallPromptVisible.value = false
+      canPrompt.value = false
       pwaInstallEvent = null
       try {
         localStorage.setItem('appInstallationDismissed', 'true')
       } catch {}
-      if (typeof (window as any).gtag === 'function') {
-        (window as any).gtag('event', 'pwa_installed', {
-          event_category: 'engagement',
-          event_label: 'Among Us Detective App Installed',
-        })
-      }
+      sendGtag('event', 'pwa_installed', {
+        event_category: 'engagement',
+        event_label: 'Among Us Detective App Installed',
+      })
     })
   }
 
@@ -90,19 +93,16 @@ export function usePwaInstall() {
             try {
               localStorage.setItem('appInstallationDismissed', 'true')
             } catch {}
-            if (typeof (window as any).gtag === 'function') {
-              (window as any).gtag('event', 'pwa_installed', {
-                event_category: 'engagement',
-                event_label: 'User Accepted PWA Install',
-              })
-            }
           }
+          canPrompt.value = false
           pwaInstallEvent = null
         }).catch(() => {
+          canPrompt.value = false
           pwaInstallEvent = null
         })
       } catch (err) {
         console.warn('PWA prompt failed:', err)
+        canPrompt.value = false
       }
     }
   }
@@ -121,6 +121,7 @@ export function usePwaInstall() {
     isStandalone,
     hasDismissed,
     canInstall,
+    canPrompt,
     promptInstall,
     dismissPrompt,
   }

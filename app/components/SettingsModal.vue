@@ -342,15 +342,21 @@
             >
               <div class="flex flex-col pr-2">
                 <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.installApp') }}</span>
-                <span class="text-[11px] text-gray-500 dark:text-gray-400">{{ t('settings.installAppSub') }}</span>
+                <span class="text-[11px] text-gray-500 dark:text-gray-400">
+                  {{ (isAppInstalled || isStandalone)
+                    ? t('settings.installAppSub')
+                    : (!canPrompt ? t('settings.installAppManualSub') : t('settings.installAppSub')) }}
+                </span>
               </div>
               <button
                 type="button"
                 class="px-2.5 py-1 text-xs font-semibold rounded-md border transition-all flex items-center gap-1.5 shrink-0"
                 :class="(isAppInstalled || isStandalone)
                   ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 cursor-default'
-                  : 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-600 shadow-sm cursor-pointer active:scale-95'"
-                :disabled="isAppInstalled || isStandalone"
+                  : (!canPrompt
+                    ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700 cursor-not-allowed opacity-60'
+                    : 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-600 shadow-sm cursor-pointer active:scale-95')"
+                :disabled="isAppInstalled || isStandalone || !canPrompt"
                 @click="promptInstall"
               >
                 <AppIcon :name="(isAppInstalled || isStandalone) ? 'check' : 'download'" class="w-3.5 h-3.5 shrink-0" />
@@ -378,7 +384,7 @@ const { t, tColor, locale, setLocale, availableLocales, detectedLocaleInfo } = u
 
 const isEditingPlayerNames = ref(false);
 const { micPermissionState, requestMicrophonePermission } = useMicrophone();
-const { isAppInstalled, isStandalone, promptInstall } = usePwaInstall();
+const { isAppInstalled, isStandalone, canPrompt, promptInstall } = usePwaInstall();
 
 async function requestMicPermission() {
   await requestMicrophonePermission();

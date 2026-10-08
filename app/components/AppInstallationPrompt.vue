@@ -19,8 +19,8 @@
       <button
         type="button"
         class="p-1 rounded-md text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
-        :title="t('notepad.dismissError')"
-        :aria-label="t('notepad.dismissError')"
+        :title="t('pwa.close')"
+        :aria-label="t('pwa.close')"
         @click="emit('cancel')"
       >
         <AppIcon name="close" class="w-3.5 h-3.5" />
