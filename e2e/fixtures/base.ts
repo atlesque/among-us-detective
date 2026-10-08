@@ -42,6 +42,8 @@ export const test = base.extend({
         localStorage.clear();
         // Prevent the help modal auto-opening for "new" visitors
         localStorage.setItem("returningPlayer", JSON.stringify(true));
+        // Prevent the one-time V2 announcement from auto-opening
+        localStorage.setItem("seenV2Announcement", JSON.stringify(true));
         // Prevent the cookie warning banner
         localStorage.setItem("acceptedCookies", JSON.stringify(true));
         // Seed persisted Pinia stores so all tests start from known state

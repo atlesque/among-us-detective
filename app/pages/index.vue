@@ -119,6 +119,7 @@
       @close="toggleNotesModal"
     />
     <HelpModal v-if="isHelpModalOpen" @close="toggleHelpModal" />
+    <V2AnnouncementModal v-if="isV2AnnouncementOpen" @close="closeV2Announcement" />
     <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
     <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
     <TasksModal v-if="isTasksModalOpen" @close="toggleTasksModal" />
@@ -139,6 +140,7 @@ const { isDarkMode } = storeToRefs(useDarkModeStore())
 
 const isPlayerPickerOpen = ref(false)
 const isHelpModalOpen = ref(false)
+const isV2AnnouncementOpen = ref(false)
 const isAboutModalOpen = ref(false)
 const isTasksModalOpen = ref(false)
 const roundNotes = ref('')
@@ -160,6 +162,7 @@ onMounted(() => {
     isHelpModalOpen.value = true
     localStorage.setItem('returningPlayer', JSON.stringify(true))
   }
+  showV2AnnouncementIfUnseen()
   document.addEventListener('keyup', (e: KeyboardEvent) => {
     if (e.code === 'KeyN' && !isNotesModalOpen.value && !isSettingsModalOpen.value) {
       isNotesModalOpen.value = true
@@ -244,6 +247,20 @@ function toggleHelpModal() {
   const newValue = !isHelpModalOpen.value
   isHelpModalOpen.value = newValue
   if (newValue) gtag('event', 'open_help', { event_category: 'global_stats' })
+  else showV2AnnouncementIfUnseen()
+}
+
+// Shown once, and only after the help modal is out of the way
+function showV2AnnouncementIfUnseen() {
+  if (isHelpModalOpen.value) return
+  if (JSON.parse(localStorage.getItem('seenV2Announcement') ?? 'false') === true) return
+  isV2AnnouncementOpen.value = true
+  gtag('event', 'show_v2_announcement', { event_category: 'global_stats' })
+}
+
+function closeV2Announcement() {
+  isV2AnnouncementOpen.value = false
+  localStorage.setItem('seenV2Announcement', JSON.stringify(true))
 }
 
 function toggleAboutModal() {
