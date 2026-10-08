@@ -167,6 +167,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Show color names',
     'settings.editNicknames': 'Edit player nicknames',
     'settings.resetAll': 'Reset all',
+    'settings.appSection': 'Application',
+    'settings.installApp': 'Install as app',
+    'settings.installAppSub': 'Install Among Us Detective for easy offline & full-screen access',
+    'settings.installAppManualSub': 'Use your browser menu (Add to Home Screen) to install',
+    'settings.install': 'Install',
+    'settings.appInstalled': 'Installed',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Impostor Operations HUD',
@@ -489,7 +495,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 crew vs 3 impostors: Skipping allows a kill to reach 3x3 parity (Defeat). Ejecting an Impostor is mandatory!',
     'quorum.imp.matchPoint3ImpsTitle': 'Impostor Match Point (3 Impostors)',
     'quorum.imp.matchPoint3ImpsDesc': 'Vote out any crewmate to win now! Ejecting an innocent reaches 3x3 parity and wins the match in this meeting!',
-
+    'pwa.close': 'Close',
   },
 
   'pt-BR': {
@@ -643,6 +649,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Mostrar nomes das cores',
     'settings.editNicknames': 'Editar nicks dos jogadores',
     'settings.resetAll': 'Resetar todos',
+    'settings.appSection': 'Aplicativo',
+    'settings.installApp': 'Instalar como aplicativo',
+    'settings.installAppSub': 'Instale o Among Us Detective para acesso fácil em tela cheia',
+    'settings.installAppManualSub': 'Use o menu do seu navegador (Adicionar à Tela Inicial) para instalar',
+    'settings.install': 'Instalar',
+    'settings.appInstalled': 'Instalado',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Central de Operações do Impostor',
@@ -965,7 +977,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 tripulantes vs 3 impostores: Pular permite 1 abate para atingir paridade 3x3 (Derrota). Ejetar um Impostor é obrigatório!',
     'quorum.imp.matchPoint3ImpsTitle': 'Match Point dos Impostores (3 Impostores)',
     'quorum.imp.matchPoint3ImpsDesc': 'Vote em qualquer tripulante para vencer agora! Ejetar um inocente atinge paridade 3x3 e vence a partida nesta reunião!',
-
+    'pwa.close': 'Fechar',
   },
 
   'es-ES': {
@@ -1119,6 +1131,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Mostrar nombres de colores',
     'settings.editNicknames': 'Editar nicks de jugadores',
     'settings.resetAll': 'Restablecer todos',
+    'settings.appSection': 'Aplicación',
+    'settings.installApp': 'Instalar como aplicación',
+    'settings.installAppSub': 'Instala Among Us Detective para un acceso fácil en pantalla completa',
+    'settings.installAppManualSub': 'Usa el menú del navegador (Añadir a pantalla de inicio) para instalar',
+    'settings.install': 'Instalar',
+    'settings.appInstalled': 'Instalado',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Central de Operaciones del Impostor',
@@ -1441,7 +1459,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 tripulantes vs 3 impostores: Saltar permite 1 asesinato para alcanzar paridad 3x3 (Derrota). ¡Expulsar a un Impostor es obligatorio!',
     'quorum.imp.matchPoint3ImpsTitle': 'Punto de Partido Impostores (3 Impostores)',
     'quorum.imp.matchPoint3ImpsDesc': '¡Vota a cualquier tripulante para ganar ahora! Eyectar a un inocente alcanza paridad 3x3 y gana la partida en esta reunión!',
-
+    'pwa.close': 'Cerrar',
   },
 
   'fr-FR': {
@@ -1595,6 +1613,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Afficher les noms des couleurs',
     'settings.editNicknames': 'Modifier les pseudos des joueurs',
     'settings.resetAll': 'Tout réinitialiser',
+    'settings.appSection': 'Application',
+    'settings.installApp': 'Installer comme application',
+    'settings.installAppSub': 'Installez Among Us Detective pour un accès facile en plein écran',
+    'settings.installAppManualSub': 'Utilisez le menu du navigateur (Ajouter à l’écran d’accueil) pour installer',
+    'settings.install': 'Installer',
+    'settings.appInstalled': 'Installée',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Centre d\'Opérations de l\'Imposteur',
@@ -1917,7 +1941,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 équipiers vs 3 imposteurs : Passer permet 1 élimination pour atteindre la parité 3x3 (Défaite). Éjecter un Imposteur est obligatoire !',
     'quorum.imp.matchPoint3ImpsTitle': 'Balle de Match Imposteurs (3 Imposteurs)',
     'quorum.imp.matchPoint3ImpsDesc': 'Votez contre un équipier pour gagner maintenant ! Éjecter un innocent atteint la parité 3x3 et gagne la partie !',
-
+    'pwa.close': 'Fermer',
   },
 
   'de-DE': {
@@ -2071,6 +2095,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': 'Farbnamen anzeigen',
     'settings.editNicknames': 'Spitznamen bearbeiten',
     'settings.resetAll': 'Alle zurücksetzen',
+    'settings.appSection': 'Anwendung',
+    'settings.installApp': 'Als App installieren',
+    'settings.installAppSub': 'Among Us Detective für einfachen Vollbild-Zugriff installieren',
+    'settings.installAppManualSub': 'Nutze das Browser-Menü (Zum Startbildschirm hinzufügen) zur Installation',
+    'settings.install': 'Installieren',
+    'settings.appInstalled': 'Installiert',
 
     // Impostor Mode HUD
     'impostor.modeTitle': 'Impostor-Kommandozentrale',
@@ -2393,7 +2423,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 Crew vs 3 Impostoren: Skippen erlaubt 1 Kill zum 3x3 Gleichstand (Niederlage). Einen Impostor rauswerfen ist Pflicht!',
     'quorum.imp.matchPoint3ImpsTitle': 'Matchball für Impostoren (3 Impostoren)',
     'quorum.imp.matchPoint3ImpsDesc': 'Vote einen Crewmate raus, um jetzt zu gewinnen! Ein unschuldiger Rauswurf erreicht 3x3 Gleichstand und beendet das Spiel!',
-
+    'pwa.close': 'Schließen',
   },
 
   'ko-KR': {
@@ -2547,6 +2577,12 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.showColorNames': '색상 이름 표시',
     'settings.editNicknames': '플레이어 별명 편집',
     'settings.resetAll': '모두 초기화',
+    'settings.appSection': '애플리케이션',
+    'settings.installApp': '앱으로 설치',
+    'settings.installAppSub': '전체 화면 및 빠른 접근을 위해 Among Us Detective를 앱으로 설치합니다',
+    'settings.installAppManualSub': '브라우저 메뉴(홈 화면에 추가)를 사용하여 설치하세요',
+    'settings.install': '설치',
+    'settings.appInstalled': '설치됨',
 
     // Impostor Mode HUD
     'impostor.modeTitle': '임포스터 작전 본부',
@@ -2869,6 +2905,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'quorum.matchPoint3ImpsDesc': '4 크루원 vs 3 임포스터: 스킵 시 1킬로 3대3 동률(패배)이 됩니다. 임포스터 추방이 필수입니다!',
     'quorum.imp.matchPoint3ImpsTitle': '임포스터 매치 포인트 (3명)',
     'quorum.imp.matchPoint3ImpsDesc': '지금 아무 크루원이나 투표해 즉시 승리하세요! 무고한 크루원 방출 시 3대3 동률이 되어 바로 승리합니다!',
-
+    'pwa.close': '닫기',
   },
 };
