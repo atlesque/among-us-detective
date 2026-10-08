@@ -56,7 +56,7 @@ test.describe("Role confirmation", () => {
     const member = page.locator("[data-test='crew-member-red']");
     await member.click();
     await page.locator("[data-test='impostor-role-phantom']").click();
-    await expect(member.locator("[data-test='imp-badge']")).toBeVisible();
+    await expect(member.locator("text=Phantom")).toBeVisible();
 
     await dragElement(page, "[data-test='crew-member-red']", "[data-test='crew-column-hard-clear']");
 
@@ -70,7 +70,7 @@ test.describe("Role confirmation", () => {
     });
     expect(state.fellowImpostors).not.toContain("red");
     expect(state.fellowImpostorRoles).not.toHaveProperty("red");
-    await expect(page.locator("[data-test='crew-column-hard-clear'] [data-test='crew-member-red'] [data-test='imp-badge']")).toHaveCount(0);
+    await expect(page.locator("[data-test='crew-column-hard-clear'] [data-test='crew-member-red']")).not.toHaveClass(/ring-rose-500/);
   });
 
   test("assigning a crew role clears a stale fellow impostor badge and role", async ({ page }) => {
@@ -86,7 +86,7 @@ test.describe("Role confirmation", () => {
     expect(state.member).toMatchObject({ role: "Scientist", roleConfirmed: false, isImposter: true });
     expect(state.fellowImpostors).not.toContain("red");
     expect(state.fellowImpostorRoles).not.toHaveProperty("red");
-    await expect(member.locator("[data-test='imp-badge']")).toHaveCount(0);
+    await expect(member).not.toHaveClass(/ring-rose-500/);
   });
 
   test("clearing an impostor role removes its partner badge but preserves the board deduction", async ({ page }) => {
@@ -102,7 +102,7 @@ test.describe("Role confirmation", () => {
     expect(state.member).toMatchObject({ role: null, roleConfirmed: false, status: "impostor", isImposter: true });
     expect(state.fellowImpostors).not.toContain("red");
     expect(state.fellowImpostorRoles).not.toHaveProperty("red");
-    await expect(member.locator("[data-test='imp-badge']")).toHaveCount(0);
+    await expect(member).not.toHaveClass(/ring-rose-500/);
   });
 
   test("death and revival keep the identity flag aligned with status and confirmation", async ({ page }) => {

@@ -20,7 +20,6 @@
     >
       {{ (showPlayerName && playerName) ? playerName : tColor(color) }}
     </span>
-    <span v-if="isImposter" class="is-imposter-text">IMP</span>
     <div v-if="isDead" class="absolute inset-0 z-20 flex items-center justify-center pointer-events-none cross-icon p-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"

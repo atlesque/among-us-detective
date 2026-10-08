@@ -1,5 +1,7 @@
 import allColors from "~/utils/playerColors.js";
 import { useImpostorStore } from "~/stores/impostor";
+import { useSettingsStore } from "~/stores/settings";
+import { useRoundsStore } from "~/stores/rounds";
 
 export type ColumnStatus = 'hard_clear' | 'trusted' | 'unknown' | 'suspicious' | 'impostor' | 'dead';
 
@@ -23,10 +25,11 @@ export function isCrewRole(role: string | null | undefined): boolean {
 function isImposterForState(
   status: ColumnStatus,
   previousStatus: ColumnStatus,
-  role: string | null
+  role: string | null,
+  roleConfirmed: boolean = false
 ): boolean {
   const effectiveStatus = status === 'dead' ? previousStatus : status;
-  return effectiveStatus === 'impostor' || isImpostorRole(role);
+  return effectiveStatus === 'impostor' || (isImpostorRole(role) && roleConfirmed);
 }
 
 export interface CrewMember {
@@ -164,7 +167,7 @@ export const useCrewStore = defineStore("crew", () => {
   );
 
   const isPlayerImposter = computed(
-    () => playerCrewMember.value?.isImposter === true
+    () => impostorStore.isImpostorModeActive || playerCrewMember.value?.isImposter === true
   );
 
   function syncFellowImpostor(member: CrewMember) {
@@ -238,7 +241,7 @@ export const useCrewStore = defineStore("crew", () => {
           ...m,
           isDead: true,
           status: 'dead' as ColumnStatus,
-          isImposter: isImposterForState('dead', previousStatus, m.role),
+          isImposter: isImposterForState('dead', previousStatus, m.role, m.roleConfirmed),
           diedInRound: m.diedInRound || (roundsStore.currentRoundNumber - 1) || 1,
           mapPosition: null,
         };
@@ -275,13 +278,18 @@ export const useCrewStore = defineStore("crew", () => {
       }
     }
 
+    const nextIsImp = isImpostorRole(nextRole);
+    const nextIsCrew = isCrewRole(nextRole);
+
     // If crew role moved out of hard_clear, unverify!
-    if (targetStatus !== 'dead' && !isImp && targetStatus !== 'hard_clear' && nextConfirmed) {
+    if (targetStatus !== 'dead' && nextIsCrew && targetStatus !== 'hard_clear' && nextConfirmed) {
       nextConfirmed = false;
     }
-    // If impostor role moved out of impostor, unverify!
-    if (targetStatus !== 'dead' && isImp && targetStatus !== 'impostor' && nextConfirmed) {
-      nextConfirmed = false;
+    // If impostor role moved out of impostor, unverify claim so it shows '?' instead of disappearing!
+    if (targetStatus !== 'dead' && targetStatus !== 'impostor') {
+      if (nextIsImp && nextConfirmed) {
+        nextConfirmed = false;
+      }
     }
 
     return { role: nextRole, roleConfirmed: nextConfirmed };
@@ -301,7 +309,7 @@ export const useCrewStore = defineStore("crew", () => {
             status: 'dead' as ColumnStatus,
             role,
             roleConfirmed,
-            isImposter: isImposterForState('dead', m.status !== 'dead' ? m.status : m.previousStatus, role),
+            isImposter: isImposterForState('dead', m.status !== 'dead' ? m.status : m.previousStatus, role, roleConfirmed),
           };
           return updated;
         } else {
@@ -313,7 +321,7 @@ export const useCrewStore = defineStore("crew", () => {
             status: newStatus,
             role,
             roleConfirmed,
-            isImposter: isImposterForState(newStatus, m.previousStatus, role),
+            isImposter: isImposterForState(newStatus, m.previousStatus, role, roleConfirmed),
           };
         }
       }
@@ -344,11 +352,11 @@ export const useCrewStore = defineStore("crew", () => {
             status: restoredStatus as ColumnStatus,
             role,
             roleConfirmed: false,
-            isImposter: isImposterForState(restoredStatus, m.previousStatus, role),
+            isImposter: isImposterForState(restoredStatus, m.previousStatus, role, false),
           };
           return updated;
         } else {
-          const roleConfirmed = m.role ? true : m.roleConfirmed;
+          const roleConfirmed = m.roleConfirmed;
           const updated = {
             ...m,
             previousStatus: m.status,
@@ -356,7 +364,7 @@ export const useCrewStore = defineStore("crew", () => {
             diedInRound: roundsStore.currentRoundNumber,
             status: 'dead' as ColumnStatus,
             roleConfirmed,
-            isImposter: isImposterForState('dead', m.status, m.role),
+            isImposter: isImposterForState('dead', m.status, m.role, roleConfirmed),
           };
           return updated;
         }
@@ -382,7 +390,7 @@ export const useCrewStore = defineStore("crew", () => {
             status: 'dead' as ColumnStatus,
             role,
             roleConfirmed,
-            isImposter: isImposterForState('dead', m.status !== 'dead' ? m.status : m.previousStatus, role),
+            isImposter: isImposterForState('dead', m.status !== 'dead' ? m.status : m.previousStatus, role, roleConfirmed),
           };
         } else {
           return {
@@ -393,7 +401,7 @@ export const useCrewStore = defineStore("crew", () => {
             status: status,
             role,
             roleConfirmed,
-            isImposter: isImposterForState(status, m.previousStatus, role),
+            isImposter: isImposterForState(status, m.previousStatus, role, roleConfirmed),
           };
         }
       }
@@ -441,12 +449,13 @@ export const useCrewStore = defineStore("crew", () => {
 
         const wasImposter = m.isImposter || m.status === 'impostor' || m.previousStatus === 'impostor';
         const isDeadPlayer = m.isDead || newStatus === 'dead';
+        const finalConfirmed = roleConfirmed || isRoleConfirmedByColumn;
         const updated = {
           ...m,
           role,
-          roleConfirmed: roleConfirmed || isRoleConfirmedByColumn,
+          roleConfirmed: finalConfirmed,
           status: newStatus,
-          isImposter: isImposterForState(newStatus, m.previousStatus, role),
+          isImposter: isImposterForState(newStatus, m.previousStatus, role, finalConfirmed),
         };
         return updated;
       }
@@ -466,7 +475,7 @@ export const useCrewStore = defineStore("crew", () => {
         const updated = {
           ...m,
           roleConfirmed: newConfirmed,
-          isImposter: isImposterForState(m.status, m.previousStatus, m.role),
+          isImposter: isImposterForState(m.status, m.previousStatus, m.role, newConfirmed),
         };
 
         if (newConfirmed) {
@@ -488,16 +497,16 @@ export const useCrewStore = defineStore("crew", () => {
               if (updated.status === 'impostor') {
                 updated.status = (updated.previousStatus && updated.previousStatus !== 'impostor')
                   ? updated.previousStatus
-                  : 'suspicious' as ColumnStatus;
+                  : (impostorStore.isImpostorModeActive ? 'unknown' : 'suspicious') as ColumnStatus;
               }
             } else {
               if (updated.status === 'hard_clear') {
                 updated.status = (updated.previousStatus && updated.previousStatus !== 'hard_clear')
                   ? updated.previousStatus
-                  : 'trusted' as ColumnStatus;
+                  : (impostorStore.isImpostorModeActive ? 'unknown' : 'trusted') as ColumnStatus;
               }
             }
-            updated.isImposter = isImposterForState(updated.status, updated.previousStatus, updated.role);
+            updated.isImposter = isImposterForState(updated.status, updated.previousStatus, updated.role, updated.roleConfirmed);
           }
         }
         return updated;
@@ -975,7 +984,7 @@ export const useCrewStore = defineStore("crew", () => {
         const role = hasIncompatibleImpostorRole ? null : member.role;
         const roleConfirmed = hasIncompatibleImpostorRole ? false : member.roleConfirmed;
 
-        const isImposter = isImposterForState(member.status, member.previousStatus, role);
+        const isImposter = isImposterForState(member.status, member.previousStatus, role, roleConfirmed);
 
         return { ...member, role, roleConfirmed, isImposter };
       });

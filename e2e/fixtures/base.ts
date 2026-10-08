@@ -12,6 +12,7 @@ const DEFAULT_SETTINGS_STATE = JSON.stringify({
   isImproveMapContrastEnabled: true,
   uiLanguage: 'en-US',
   hasAutoDetectedLanguage: true,
+  matchImpostorsCount: 3,
 });
 
 const DEFAULT_DARKMODE_STATE = JSON.stringify({
