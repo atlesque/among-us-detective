@@ -607,7 +607,7 @@ function initSpeechRecording() {
       else if (event.error === 'not-allowed') {
         micPermissionState.value = 'denied'
         speechError.value = t('notes.speechError.notAllowed')
-      } else {
+      } else if (event.error !== 'aborted') {
         speechError.value = t('notes.speechError.startFailed')
       }
     }
