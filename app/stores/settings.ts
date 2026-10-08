@@ -17,6 +17,16 @@ export const useSettingsStore = defineStore(
     const speechLanguage = ref<'auto' | 'pt-BR' | 'en-US' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
     const uiLanguage = ref<'auto' | 'en-US' | 'pt-BR' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
     const hasAutoDetectedLanguage = ref(false);
+    const matchImpostorsCount = ref<1 | 2 | 3>(2);
+    const showQuorumAlert = ref(true);
+
+    function setMatchImpostorsCount(count: 1 | 2 | 3) {
+      matchImpostorsCount.value = count;
+    }
+
+    function setShowQuorumAlert(value: boolean) {
+      showQuorumAlert.value = value;
+    }
 
     function setDisableAnimations(value: boolean) {
       disableAnimations.value = value;
@@ -95,6 +105,10 @@ export const useSettingsStore = defineStore(
       setSpeechLanguage,
       setUiLanguage,
       setHasAutoDetectedLanguage,
+      matchImpostorsCount,
+      showQuorumAlert,
+      setMatchImpostorsCount,
+      setShowQuorumAlert,
     };
   },
   { persist: true }
