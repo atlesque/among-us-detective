@@ -137,6 +137,20 @@ export const useCrewStore = defineStore("crew", () => {
     crewMembers.value.filter((m) => m.isActive && m.color !== playerColor.value && (m.isDead || m.status === 'dead'))
   );
 
+  // Confirmed dead impostors (unverified suspect column placements do NOT count)
+  const confirmedDeadImpostorsCount = computed(() => {
+    const isImpMode = impostorStore.isImpostorModeActive;
+    return crewMembers.value.filter((m) => {
+      if (!m.isActive || (!m.isDead && m.status !== 'dead')) return false;
+      // In Impostor mode, player or fellow impostor who died is a confirmed dead impostor
+      if (isImpMode && (m.color === playerColor.value || impostorStore.isFellowImpostor(m.color))) {
+        return true;
+      }
+      // In standard crew mode, only confirmed impostor role (e.g. verified role) counts
+      return isImpostorRole(m.role) && m.roleConfirmed;
+    }).length;
+  });
+
   const crewMembersDoneWithTasks = computed(() =>
     crewMembers.value.filter((m) => m.isDoneWithTasks)
   );
@@ -940,6 +954,7 @@ export const useCrewStore = defineStore("crew", () => {
     unknownCrewMembers,
     suspiciousCrewMembers,
     impostorCrewMembers,
+    confirmedDeadImpostorsCount,
     setPlayerStatus,
     togglePlayerDead,
     setColumnMembers,

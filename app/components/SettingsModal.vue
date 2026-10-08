@@ -163,6 +163,21 @@
               </p>
             </div>
 
+            <!-- Tactical Voting HUD (Skip & Danger Alerts) -->
+            <div
+              class="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/50"
+              data-test="setting-show-quorum-hud"
+            >
+              <div class="flex flex-col flex-1 min-w-0 pr-3">
+                <span class="text-sm text-gray-700 dark:text-gray-300">{{ t('settings.showQuorumHud') }}</span>
+                <span class="text-[11px] text-gray-500 dark:text-gray-400">{{ t('settings.showQuorumHudSub') }}</span>
+              </div>
+              <Checkbox
+                :is-checked="settingsStore.showQuorumAlert"
+                @changed="settingsStore.setShowQuorumAlert"
+              />
+            </div>
+
             <!-- Players -->
             <div class="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mt-3">{{ t('settings.players') }}</div>
 
