@@ -15,6 +15,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'en-US': {
     entries: [
       {
+        date: '2026-10-04',
+        title: 'v2.4 — Critical vote alerts and match impostor settings',
+        changes: [
+          '<b>🚨 Critical vote alerts:</b> Real-time reminders during meetings when the crew is at risk of a double kill, at match point, or when skipping vote is mathematically safe.',
+          '<b>👾 Match impostor selector:</b> Quickly set the number of impostors for the match (1, 2, or 3) directly in the lobby bar, dynamically capped by lobby size.',
+        ],
+      },
+      {
         date: '2026-09-21',
         title: 'v2.2 — Investigation hardening and usability polish',
         changes: [
@@ -44,6 +52,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   },
   'pt-BR': {
     entries: [
+      {
+        date: '2026-10-04',
+        title: 'v2.4 — Alertas de votação crítica e ajuste de impostores',
+        changes: [
+          '<b>🚨 Alertas de votação crítica:</b> Avisos em tempo real durante reuniões quando a tripulação corre risco de double kill, em ponto decisivo ou quando pular o voto é seguro.',
+          '<b>👾 Seletor de impostores:</b> Escolha rápida da quantidade de impostores na partida (1, 2 ou 3) direto na barra do lobby, limitado dinamicamente pelo tamanho do lobby.',
+        ],
+      },
       {
         date: '2026-09-21',
         title: 'v2.2 — Melhorias de robustez e usabilidade',
@@ -75,6 +91,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'es-ES': {
     entries: [
       {
+        date: '2026-10-04',
+        title: 'v2.4 — Alertas de votación crítica y ajustes de impostores',
+        changes: [
+          '<b>🚨 Alertas de votação crítica:</b> Avisos em tempo real durante reuniões quando a tripulação corre risco de double kill, em ponto decisivo ou quando saltar voto es seguro.',
+          '<b>👾 Selector de impostores:</b> Selecciona rápidamente la cantidad de impostores (1, 2 o 3) directamente en la barra de la sala, limitado por el tamaño del lobby.',
+        ],
+      },
+      {
         date: '2026-09-21',
         title: 'v2.2 — Mejoras de robustez y uso',
         changes: [
@@ -104,6 +128,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   },
   'fr-FR': {
     entries: [
+      {
+        date: '2026-10-04',
+        title: 'v2.4 — Alertes de vote critique et paramètres d\'imposteurs',
+        changes: [
+          '<b>🚨 Alertes de vote critique :</b> Rappels en temps réel pendant les réunions signalant le danger de double kill, balle de match ou quand passer le vote est sûr.',
+          '<b>👾 Sélecteur d\'imposteurs :</b> Choisissez rapidement le nombre d\'imposteurs (1, 2 ou 3) directement dans la barre du salon, limité selon la taille du lobby.',
+        ],
+      },
       {
         date: '2026-09-21',
         title: 'v2.2 — Fiabilité et confort d’utilisation',
@@ -135,6 +167,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'de-DE': {
     entries: [
       {
+        date: '2026-10-04',
+        title: 'v2.4 — Kritische Abstimmungswarnungen und Impostor-Einstellungen',
+        changes: [
+          '<b>🚨 Kritische Abstimmungswarnungen:</b> Echtzeit-Warnungen bei Meetings bei Gefahr eines Double Kills, bei Matchbällen oder wenn Überspringen sicher ist.',
+          '<b>👾 Match-Impostor-Auswahl:</b> Schnelle Auswahl der Impostor-Anzahl (1, 2 oder 3) direkt in der Lobby-Leiste, dynamisch begrenzt durch die Lobby-Größe.',
+        ],
+      },
+      {
         date: '2026-09-21',
         title: 'v2.2 — Mehr Stabilität und bessere Bedienung',
         changes: [
@@ -164,6 +204,14 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   },
   'ko-KR': {
     entries: [
+      {
+        date: '2026-10-04',
+        title: 'v2.4 — 전술 투표 경고 및 매치 임포스터 설정',
+        changes: [
+          '<b>🚨 전술 투표 경고:</b> 더블킬 위험, 매치 포인트 또는 스킵이 수학적으로 안전한 순간을 회의 중 실시간으로 안내합니다.',
+          '<b>👾 매치 임포스터 선택:</b> 로비 바에서 매치 임포스터 수(1, 2 또는 3명)를 빠르게 설정할 수 있으며, 로비 인원에 따라 동적으로 제한됩니다.',
+        ],
+      },
       {
         date: '2026-09-21',
         title: 'v2.2 — 조사 기록 안정성과 사용성 개선',

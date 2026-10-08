@@ -3,6 +3,20 @@ All notable changes to **Among Us Detective** are documented in this file.
 
 ---
 
+## [2.4.0] - 2026-10-04 (Critical Vote Quorum HUD & Match Quorum Controls)
+
+### Added & Improved
+- **Critical Vote Quorum HUD**: Real-time mathematical alerts during emergency meetings warning of critical threshold states:
+  - Double Kill danger (6 alive vs 2 impostors) and Match Point danger (5 alive vs 2 impostors).
+  - Triple Kill danger (9 or 8 alive vs 3 impostors) and Match Point (7 alive vs 3 impostors).
+  - Decisive final vote (3 alive vs 1 impostor).
+  - Safe skip cushion notices (7 alive vs 2 impostors, 4 alive vs 1 impostor, 10 alive vs 3 impostors).
+  - Contradiction warning when confirmed impostors exceed match limits.
+  - Inverted tactical perspective when playing in Impostor Mode.
+- **Configurable Match Impostor Count**: Added a direct 1, 2, or 3 impostor selector in the Match Roster header, dynamically capped according to active lobby size.
+
+---
+
 ## [2.3.0] - 2026-09-23 (Light Mode & Visual Refinements)
 
 ### Added & Improved

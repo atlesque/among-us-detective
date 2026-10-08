@@ -3,15 +3,23 @@
     <!-- Header Bar (Always visible) -->
     <div class="flex flex-wrap items-center justify-center sm:justify-between gap-2 text-xs">
       <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-        <!-- Minimize / Expand Toggle Button -->
+        <!-- Roster Drawer Button (with border and count) -->
         <button
-          class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-bold transition-all shadow-sm cursor-pointer"
-          :title="`${t(isMinimized ? 'roster.expand' : 'roster.minimize')} ${t('roster.title')} (L)`"
+          class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-bold transition-all shadow-xs cursor-pointer select-none shrink-0"
+          :title="`${isMinimized ? t('roster.expand') : t('roster.minimize')} ${t('roster.title')} (L)`"
           :aria-label="`${t(isMinimized ? 'roster.expand' : 'roster.minimize')} ${t('roster.title')} (L)`"
           @click="isMinimized = !isMinimized"
         >
           <AppIcon name="users" class="w-3.5 h-3.5 text-blue-400 shrink-0" />
-          <span class="font-bold">{{ t('roster.title') }}</span>
+          <span class="font-bold text-[11px] sm:text-xs">{{ t('roster.title') }}</span>
+          <span
+            class="text-[10px] font-bold font-mono transition-colors"
+            :class="activeCount > 15
+              ? 'text-amber-500 dark:text-yellow-400 font-black'
+              : 'text-emerald-600 dark:text-emerald-400'"
+          >
+            ({{ activeCount }}/15)
+          </span>
           <kbd class="hidden md:inline-block text-[10px] px-1 py-0.2 rounded bg-black/30 text-gray-300 font-mono">L</kbd>
           <AppIcon
             name="chevron-down"
@@ -20,43 +28,69 @@
           />
         </button>
 
-        <!-- Count indicator -->
-        <span
-          class="px-2 py-0.5 font-bold rounded text-[11px] shadow-xs transition-colors"
-          :class="activeCount <= 15
-            ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50'
-            : 'bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700/50'"
-        >
-          {{ activeCount }} / 15 {{ t('roster.playing') }} ({{ 18 - activeCount }} {{ t('roster.notInGame') }})
-        </span>
-
         <!-- ME: (Color) indicator badge — clickable to open color picker -->
         <button
           ref="colorPickerBtnRef"
-          class="relative flex items-center gap-1.5 px-2 py-0.5 rounded bg-amber-100/90 dark:bg-yellow-400/15 border border-amber-300 dark:border-yellow-400/40 text-amber-900 dark:text-yellow-300 cursor-pointer hover:bg-amber-200/90 dark:hover:bg-yellow-400/30 hover:border-amber-400 dark:hover:border-yellow-400/70 active:scale-95 transition-all group shadow-xs"
+          class="relative flex items-center gap-1.5 px-2 py-0.5 rounded cursor-pointer active:scale-95 transition-all group shadow-xs shrink-0"
+          :class="crewStore.isPlayerImposter
+            ? 'bg-rose-100/90 dark:bg-rose-950/40 border border-rose-400 dark:border-rose-500/50 text-rose-900 dark:text-rose-200 hover:bg-rose-200/90 dark:hover:bg-rose-900/50'
+            : 'bg-amber-100/90 dark:bg-yellow-400/15 border border-amber-300 dark:border-yellow-400/40 text-amber-900 dark:text-yellow-300 hover:bg-amber-200/90 dark:hover:bg-yellow-400/30 hover:border-amber-400 dark:hover:border-yellow-400/70'"
           data-test="player-selector-btn"
           :title="t('roster.chooseColor')"
           @click.stop="toggleColorPicker"
         >
-          <span class="text-[10px] font-black tracking-wider text-amber-700 dark:text-yellow-400">{{ t('roster.me') }}</span>
+          <span
+            class="text-[10px] font-black tracking-wider uppercase"
+            :class="crewStore.isPlayerImposter ? 'text-rose-700 dark:text-rose-400' : 'text-amber-700 dark:text-yellow-400'"
+          >
+            {{ t('roster.me') }}
+          </span>
           <div class="w-4 h-4 flex items-center justify-center">
             <CrewIcon :color="crewStore.playerColor" :is-player="true" class="w-full h-full" />
           </div>
           <span class="text-[11px] font-bold capitalize text-gray-900 dark:text-white">{{ tColor(crewStore.playerColor) }}</span>
-          <span class="text-[9px] text-amber-600 dark:text-yellow-400/60 group-hover:text-amber-800 dark:group-hover:text-yellow-400 transition-colors ml-0.5">▼</span>
+          <span
+            class="text-[9px] transition-colors ml-0.5"
+            :class="crewStore.isPlayerImposter ? 'text-rose-600 dark:text-rose-400' : 'text-amber-600 dark:text-yellow-400/60 group-hover:text-amber-800 dark:group-hover:text-yellow-400'"
+          >▼</span>
         </button>
-        <span
-          class="hidden md:inline text-[9px] font-semibold leading-tight text-gray-400 dark:text-gray-500"
-          :title="t('roster.rightClickHint')"
+
+        <!-- Impostors Count Selector (1, 2, or 3) -->
+        <div
+          class="flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold bg-rose-100/90 dark:bg-rose-950/25 border border-rose-300 dark:border-rose-900/50 text-rose-900 dark:text-rose-300 shadow-xs shrink-0"
+          :title="`${settingsStore.matchImpostorsCount} ${t('roster.impostors')}`"
         >
-          {{ t('roster.rightClickHint') }}
-        </span>
+          <div class="w-4 h-4 flex items-center justify-center shrink-0">
+            <AppIcon name="skull" class="w-3.5 h-3.5 text-rose-500" />
+          </div>
+          <span class="text-[10px] font-black tracking-wider text-rose-700 dark:text-rose-400 uppercase hidden sm:inline">
+            {{ t('roster.impostors') }}:
+          </span>
+          <div class="flex items-center gap-1">
+            <button
+              v-for="count in ([1, 2, 3] as const)"
+              :key="count"
+              type="button"
+              :disabled="count > maxAllowedImpostors"
+              class="w-4 h-4 flex items-center justify-center text-[10px] font-bold rounded transition-all leading-none"
+              :class="count > maxAllowedImpostors
+                ? 'opacity-30 cursor-not-allowed text-gray-400'
+                : (settingsStore.matchImpostorsCount === count
+                  ? 'bg-rose-600 text-white font-black shadow-xs cursor-pointer'
+                  : 'text-rose-950/70 dark:text-rose-300/70 hover:bg-rose-200/60 dark:hover:bg-rose-900/60 hover:text-rose-950 dark:hover:text-white cursor-pointer')"
+              :title="count > maxAllowedImpostors ? t('roster.impostorsCapHint', { max: maxAllowedImpostors }) : `${count} ${t('roster.impostors')}`"
+              @click="settingsStore.setMatchImpostorsCount(count)"
+            >
+              {{ count }}
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Presets & Collapse State Control -->
+      <!-- Presets & Player Count Control -->
       <div class="w-full sm:w-auto flex items-center justify-center sm:justify-end gap-1.5 text-[10px] sm:text-[11px] mt-1 sm:mt-0 min-h-[24px]">
         <Transition name="fade">
-          <div v-if="!isMinimized" class="flex items-center gap-1.5">
+          <div v-if="!isMinimized" class="flex items-center gap-1.5 flex-wrap justify-end">
             <span class="text-gray-500 dark:text-gray-400 mr-0.5 hidden sm:inline">{{ t('roster.presets') }}</span>
             <button
               class="px-2 py-0.5 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 font-semibold transition-all shadow-2xs cursor-pointer active:scale-95"
@@ -240,6 +274,22 @@ const activeCount = computed(() => {
   return crewStore.crewMembers.filter(m => m.isActive).length
 })
 
+// Among Us lobby caps:
+// 4-6 players: max 1 impostor
+// 7-8 players: max 2 impostors
+// 9-15 players: max 3 impostors
+const maxAllowedImpostors = computed<number>(() => {
+  if (activeCount.value < 7) return 1
+  if (activeCount.value < 9) return 2
+  return 3
+})
+
+watch(maxAllowedImpostors, (maxVal) => {
+  if (settingsStore.matchImpostorsCount > maxVal) {
+    settingsStore.setMatchImpostorsCount(maxVal as 1 | 2 | 3)
+  }
+}, { immediate: true })
+
 const colorPickerBtnRef = ref<HTMLElement | null>(null)
 const colorPickerPosition = ref<{ top: number; left: number }>({ top: 80, left: 12 })
 
@@ -270,20 +320,32 @@ function toggleColorPicker() {
   }
 }
 
-watch(isColorPickerOpen, (isOpen) => {
-  if (isOpen) {
-    const handleClose = () => { isColorPickerOpen.value = false }
-    const handleScroll = () => { updateColorPickerPosition() }
-    window.addEventListener('resize', handleClose, { passive: true })
-    window.addEventListener('scroll', handleScroll, { passive: true, capture: true })
-    const unwatch = watch(isColorPickerOpen, (open) => {
-      if (!open) {
-        window.removeEventListener('resize', handleClose)
-        window.removeEventListener('scroll', handleScroll, { capture: true })
-        unwatch()
-      }
-    })
+let colorPickerCloseHandler: (() => void) | null = null
+let colorPickerScrollHandler: (() => void) | null = null
+
+function cleanupColorPickerListeners() {
+  if (colorPickerCloseHandler) {
+    window.removeEventListener('resize', colorPickerCloseHandler)
+    colorPickerCloseHandler = null
   }
+  if (colorPickerScrollHandler) {
+    window.removeEventListener('scroll', colorPickerScrollHandler, { capture: true })
+    colorPickerScrollHandler = null
+  }
+}
+
+watch(isColorPickerOpen, (isOpen) => {
+  cleanupColorPickerListeners()
+  if (isOpen) {
+    colorPickerCloseHandler = () => { isColorPickerOpen.value = false }
+    colorPickerScrollHandler = () => { updateColorPickerPosition() }
+    window.addEventListener('resize', colorPickerCloseHandler, { passive: true })
+    window.addEventListener('scroll', colorPickerScrollHandler, { passive: true, capture: true })
+  }
+})
+
+onBeforeUnmount(() => {
+  cleanupColorPickerListeners()
 })
 
 // Position the color picker below the ME badge

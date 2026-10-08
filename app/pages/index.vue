@@ -140,6 +140,9 @@
     <!-- Match Lobby & Roster Selector (18 Colors, Glowing LEDs, Presets) -->
     <GameRosterSelector ref="rosterSelectorRef" />
 
+    <!-- Critical Vote / Quorum Warning Banner (Double Kill Danger / Match Point / Safe Skip) -->
+    <CriticalVoteAlert />
+
     <!-- Browser Zoom Notice Banner -->
     <Transition name="banner-slide">
       <div
