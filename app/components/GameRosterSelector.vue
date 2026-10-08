@@ -275,19 +275,17 @@ const activeCount = computed(() => {
 })
 
 // Among Us lobby caps:
-// 4-6 players: max 1 impostor
-// 7-8 players: max 2 impostors
-// 9-15 players: max 3 impostors
-const maxAllowedImpostors = computed<number>(() => {
-  if (activeCount.value < 7) return 1
-  if (activeCount.value < 9) return 2
+// <= 6 players: max 1 impostor
+// <= 8 players (7-8): max 2 impostors
+// 9+ players (9-15): max 3 impostors
+const maxAllowedImpostors = computed<1 | 2 | 3>(() => {
+  if (activeCount.value <= 6) return 1
+  if (activeCount.value <= 8) return 2
   return 3
 })
 
 watch(maxAllowedImpostors, (maxVal) => {
-  if (settingsStore.matchImpostorsCount > maxVal) {
-    settingsStore.setMatchImpostorsCount(maxVal as 1 | 2 | 3)
-  }
+  settingsStore.applyLobbyCap(maxVal)
 }, { immediate: true })
 
 const colorPickerBtnRef = ref<HTMLElement | null>(null)

@@ -17,11 +17,23 @@ export const useSettingsStore = defineStore(
     const speechLanguage = ref<'auto' | 'pt-BR' | 'en-US' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
     const uiLanguage = ref<'auto' | 'en-US' | 'pt-BR' | 'es-ES' | 'ko-KR' | 'fr-FR' | 'de-DE'>('auto');
     const hasAutoDetectedLanguage = ref(false);
-    const matchImpostorsCount = ref<1 | 2 | 3>(2);
+    // Default to 3 impostors matching the default 15-player lobby (Innersloth 5:1 ratio).
+    // preferredMatchImpostorsCount preserves user preference across dynamic lobby caps.
+    const matchImpostorsCount = ref<1 | 2 | 3>(3);
+    const preferredMatchImpostorsCount = ref<1 | 2 | 3>(3);
     const showQuorumAlert = ref(true);
 
     function setMatchImpostorsCount(count: 1 | 2 | 3) {
       matchImpostorsCount.value = count;
+      preferredMatchImpostorsCount.value = count;
+    }
+
+    function applyLobbyCap(maxAllowed: 1 | 2 | 3) {
+      if (preferredMatchImpostorsCount.value <= maxAllowed) {
+        matchImpostorsCount.value = preferredMatchImpostorsCount.value;
+      } else {
+        matchImpostorsCount.value = maxAllowed;
+      }
     }
 
     function setShowQuorumAlert(value: boolean) {
@@ -106,8 +118,10 @@ export const useSettingsStore = defineStore(
       setUiLanguage,
       setHasAutoDetectedLanguage,
       matchImpostorsCount,
+      preferredMatchImpostorsCount,
       showQuorumAlert,
       setMatchImpostorsCount,
+      applyLobbyCap,
       setShowQuorumAlert,
     };
   },
