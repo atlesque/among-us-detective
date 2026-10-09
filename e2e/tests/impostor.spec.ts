@@ -41,7 +41,7 @@ test.describe("Impostor Mode", () => {
     // Close popover
     await page.keyboard.press("Escape");
 
-    // Player card should display the IMP badge
-    await expect(playerCard.locator("[data-test='imp-badge']")).toBeVisible();
+    // Player card should display the selected role
+    await expect(playerCard.locator("text=Phantom")).toBeVisible();
   });
 });

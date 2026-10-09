@@ -61,19 +61,9 @@
         <AppIcon name="dead" class="w-2.5 h-2.5 shrink-0" />
         <span>R{{ member.diedInRound }}</span>
       </span>
-      <!-- Fellow Impostor Indicator Badge -->
-      <span
-        v-if="isFellowImpostor && !member.isDead"
-        class="absolute -top-1.5 -left-1.5 z-30 px-1 py-0.5 bg-rose-600 text-white rounded border border-white/80 shadow-md flex items-center justify-center text-[7px] font-black leading-none select-none imp-badge"
-        :title="t('card.fellowImpostorTitle')"
-        :aria-label="t('card.fellowImpostorTitle')"
-        data-test="imp-badge"
-      >
-        IMP
-      </span>
       <!-- Tasks Finished Indicator Badge -->
       <span
-        v-if="member.isDoneWithTasks && !member.isDead && !isFellowImpostor"
+        v-if="member.isDoneWithTasks && !member.isDead"
         class="absolute -top-1.5 -left-1.5 z-30 w-3.5 h-3.5 bg-emerald-600 text-white rounded-full border border-white/80 shadow-md flex items-center justify-center text-[8px] font-black leading-none select-none"
         :title="t('card.tasksFinishedTitle')"
         :aria-label="t('card.tasksFinishedTitle')"
@@ -390,6 +380,7 @@ const menuPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 })
 
 <script setup lang="ts">
 import type { CrewMember } from '~/stores/crew'
+import { isImpostorRole as checkIsImpostorRole, isCrewRole as checkIsCrewRole } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
 
 const props = defineProps<{
@@ -659,29 +650,58 @@ function closeMenu() {
 }
 
 function selectRole(role: string) {
-  if (impostorStore.isImpostorModeActive && impostorRoles.includes(role)) {
-    if (props.member.role === role) {
-      crewStore.setPlayerRole(props.member.color, null, false)
-      if (props.member.status === 'impostor') {
-        crewStore.setPlayerStatus(props.member.color, 'unknown')
-      }
-    } else {
-      crewStore.setPlayerRole(props.member.color, role, true)
+  if (props.member.role === role) {
+    crewStore.setPlayerRole(props.member.color, null, false)
+    if (impostorStore.isImpostorModeActive) {
+      impostorStore.setFellowImpostorRole(props.member.color, null)
     }
     closeMenu()
     return
   }
 
-  if (props.member.role === role) {
-    crewStore.setPlayerRole(props.member.color, null, false)
+  const isCurrentRoleImp = checkIsImpostorRole(props.member.role)
+  const isNewRoleImp = checkIsImpostorRole(role)
+  const isCurrentRoleCrew = checkIsCrewRole(props.member.role)
+  const isNewRoleCrew = checkIsCrewRole(role)
+
+  let shouldBeConfirmed = false
+
+  // 1. If currently confirmed:
+  if (props.member.roleConfirmed) {
+    // If switching between impostor roles (e.g. Impostor -> Viper), keep confirmed!
+    if (isCurrentRoleImp && isNewRoleImp) {
+      shouldBeConfirmed = true
+    }
+    // If switching between crew roles in hard_clear, keep confirmed!
+    else if (isCurrentRoleCrew && isNewRoleCrew && props.member.status === 'hard_clear') {
+      shouldBeConfirmed = true
+    }
+    // Switching from Impostor to Crew (e.g. Impostor -> Engineer): shouldBeConfirmed remains false!
   } else {
-    crewStore.setPlayerRole(props.member.color, role, false)
+    // 2. If not confirmed, but player is in the impostor column, assigning an impostor role confirms it!
+    if (props.member.status === 'impostor' && isNewRoleImp) {
+      shouldBeConfirmed = true
+    }
+    // If player is in hard_clear, assigning a crew role confirms it!
+    else if (props.member.status === 'hard_clear' && isNewRoleCrew) {
+      shouldBeConfirmed = true
+    }
   }
+
+  // Fellow impostor mode always confirms fellow impostor roles
+  if (impostorStore.isImpostorModeActive && isNewRoleImp) {
+    shouldBeConfirmed = true
+  }
+
+  crewStore.setPlayerRole(props.member.color, role, shouldBeConfirmed)
   closeMenu()
 }
 
 function clearRole() {
   crewStore.setPlayerRole(props.member.color, null, false)
+  if (impostorStore.isImpostorModeActive) {
+    impostorStore.setFellowImpostorRole(props.member.color, null)
+  }
   closeMenu()
 }
 
