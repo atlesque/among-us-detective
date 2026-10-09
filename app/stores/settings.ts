@@ -20,7 +20,8 @@ export const useSettingsStore = defineStore(
     // Default to 3 impostors matching the default 15-player lobby (Innersloth 5:1 ratio).
     // preferredMatchImpostorsCount preserves user preference across dynamic lobby caps.
     const matchImpostorsCount = ref<1 | 2 | 3>(3);
-    const preferredMatchImpostorsCount = ref<1 | 2 | 3>(3);
+    // null until set; settings saved before this field existed seed it from matchImpostorsCount.
+    const preferredMatchImpostorsCount = ref<1 | 2 | 3 | null>(null);
     const showQuorumAlert = ref(true);
 
     function setMatchImpostorsCount(count: 1 | 2 | 3) {
@@ -29,6 +30,9 @@ export const useSettingsStore = defineStore(
     }
 
     function applyLobbyCap(maxAllowed: 1 | 2 | 3) {
+      if (preferredMatchImpostorsCount.value === null) {
+        preferredMatchImpostorsCount.value = matchImpostorsCount.value;
+      }
       if (preferredMatchImpostorsCount.value <= maxAllowed) {
         matchImpostorsCount.value = preferredMatchImpostorsCount.value;
       } else {
