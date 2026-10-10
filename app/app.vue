@@ -10,6 +10,13 @@
         @cancel="dismissPrompt"
       />
     </Transition>
+    <Transition name="fade">
+      <AppUpdatePrompt
+        v-if="isUpdatePromptVisible && !isInstallPromptVisible"
+        @update="applyUpdate"
+        @later="postponeUpdate"
+      />
+    </Transition>
   </div>
 </template>
 
@@ -42,6 +49,30 @@ useHead({
 import { usePwaInstall } from '~/composables/usePwaInstall'
 
 const { isInstallPromptVisible, promptInstall, dismissPrompt } = usePwaInstall()
+
+// A new deploy waits in the background instead of reloading the page on its own,
+// so a running timer or dictation is never cut off mid-match. The player applies it
+// from this prompt; if they postpone, it activates the next time the app is opened.
+const { $pwa } = useNuxtApp()
+const isUpdatePromptVisible = computed(() => !!$pwa?.needRefresh)
+
+function applyUpdate() {
+  // vite-pwa only reloads by itself when the page already had a controlling service
+  // worker at load time, so reload here once the new worker takes over (or shortly after).
+  let reloaded = false
+  const reload = () => {
+    if (reloaded) return
+    reloaded = true
+    window.location.reload()
+  }
+  navigator.serviceWorker?.addEventListener('controllerchange', reload, { once: true })
+  setTimeout(reload, 3000)
+  $pwa?.updateServiceWorker()
+}
+
+function postponeUpdate() {
+  $pwa?.cancelPrompt()
+}
 
 onMounted(() => {
   if (!hasDarkModeBeenSetBefore.value) {
