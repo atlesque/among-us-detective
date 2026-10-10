@@ -359,6 +359,7 @@ import HighlightWithinTextarea from '~/utils/highlight-within-textarea.js'
 import { buildTextHighlighterRules } from '~/utils/textHighlighter'
 import { useImpostorStore } from '~/stores/impostor'
 import { debounce } from '~/utils/debounce'
+import { applyDictationCommands } from '~/utils/dictation'
 
 /* global SpeechRecognition, webkitSpeechRecognition, webkitSpeechGrammarList */
 declare const SpeechRecognition: any
@@ -584,7 +585,7 @@ function initSpeechRecording() {
           finalTranscript += event.results[i][0].transcript
         }
       }
-      const sanitized = finalTranscript.replace(/newline|new line|enter/gi, '\n')
+      const sanitized = applyDictationCommands(finalTranscript)
       if (sanitized) {
         if (recordingTarget.value === 'match') {
           const cur = localGameNotes.value
