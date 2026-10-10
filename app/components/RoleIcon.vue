@@ -17,6 +17,14 @@
       <AppIcon name="skull" class="w-full h-full p-0.5" />
     </div>
 
+    <!-- Tracker has no official image yet, so it uses the map pin icon -->
+    <div
+      v-else-if="role && role.toLowerCase() === 'tracker'"
+      class="w-full h-full flex items-center justify-center text-emerald-500 drop-shadow-sm"
+    >
+      <AppIcon name="pin" class="w-full h-full p-0.5" />
+    </div>
+
     <!-- Empty / unassigned role placeholder -->
     <svg
       v-else

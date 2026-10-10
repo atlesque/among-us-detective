@@ -33,6 +33,21 @@ test.describe("Role confirmation", () => {
     await expect(page.locator("[data-test='crew-column-hard-clear'] [data-test='crew-member-red']")).toBeVisible();
   });
 
+  test("the Tracker crew role can be assigned and confirmed", async ({ page }) => {
+    const member = page.locator("[data-test='crew-member-red']");
+
+    await member.click();
+    await page.getByRole("button", { name: "Tracker" }).click();
+
+    const state = await getPersistedRoleState(page, "red");
+    expect(state.member).toMatchObject({ role: "Tracker", roleConfirmed: false });
+
+    await member.click();
+    await page.getByRole("button", { name: "Confirm role" }).click();
+
+    await expect(page.locator("[data-test='crew-column-hard-clear'] [data-test='crew-member-red']")).toBeVisible();
+  });
+
   test("moving an impostor role to Impostor confirms it, while a crew role is cleared", async ({ page }) => {
     const impostorMember = page.locator("[data-test='crew-member-red']");
     await impostorMember.click();
