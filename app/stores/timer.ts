@@ -22,6 +22,8 @@ export const useTimerStore = defineStore('timer', () => {
   const isTimerFinished = ref(false)
   let timerIntervalId: ReturnType<typeof setInterval> | null = null
   let timerTargetEndMs: number | null = null
+  // True from Start until the countdown is reset, finishes or gets a new duration (stays true while paused)
+  let isTimerInProgress = false
 
   // Formatter: mm:ss
   function formatTime(totalSeconds: number): string {
@@ -112,6 +114,7 @@ export const useTimerStore = defineStore('timer', () => {
   // --- TIMER ACTIONS ---
   function setTimerDuration(seconds: number) {
     pauseTimer()
+    isTimerInProgress = false
     isTimerFinished.value = false
     timerInitialSeconds.value = Math.max(1, Math.min(3600, seconds))
     timerRemainingSeconds.value = timerInitialSeconds.value
@@ -124,11 +127,11 @@ export const useTimerStore = defineStore('timer', () => {
       if (remainingMs > 0) {
         timerRemainingSeconds.value = Math.ceil(remainingMs / 1000)
       } else {
-        timerRemainingSeconds.value = 0
-        pauseTimer()
-        isTimerFinished.value = true
-        playChime()
+        finishTimer()
       }
+    } else if (isTimerInProgress) {
+      // Paused mid-countdown: adjust the time left, keep the starting duration for Reset
+      timerRemainingSeconds.value = Math.max(1, Math.min(3600, timerRemainingSeconds.value + deltaSeconds))
     } else {
       setTimerDuration(timerInitialSeconds.value + deltaSeconds)
     }
@@ -143,6 +146,7 @@ export const useTimerStore = defineStore('timer', () => {
     }
     isTimerFinished.value = false
     isTimerRunning.value = true
+    isTimerInProgress = true
     timerTargetEndMs = Date.now() + (timerRemainingSeconds.value * 1000)
 
     if (timerIntervalId) clearInterval(timerIntervalId)
@@ -152,12 +156,17 @@ export const useTimerStore = defineStore('timer', () => {
       if (remainingMs > 0) {
         timerRemainingSeconds.value = Math.ceil(remainingMs / 1000)
       } else {
-        timerRemainingSeconds.value = 0
-        pauseTimer()
-        isTimerFinished.value = true
-        playChime()
+        finishTimer()
       }
     }, 250)
+  }
+
+  function finishTimer() {
+    timerRemainingSeconds.value = 0
+    pauseTimer()
+    isTimerInProgress = false
+    isTimerFinished.value = true
+    playChime()
   }
 
   function pauseTimer() {
@@ -171,6 +180,7 @@ export const useTimerStore = defineStore('timer', () => {
 
   function resetTimer() {
     pauseTimer()
+    isTimerInProgress = false
     isTimerFinished.value = false
     timerRemainingSeconds.value = timerInitialSeconds.value
   }
