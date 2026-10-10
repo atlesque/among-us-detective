@@ -54,6 +54,7 @@
                   : (timerStore.isTimerRunning
                     ? 'text-indigo-600 dark:text-indigo-300'
                     : 'text-gray-800 dark:text-gray-200')"
+                data-test="timer-display"
               >
                 {{ timerStore.formattedTimer }}
               </div>
@@ -69,6 +70,7 @@
                 :key="delta"
                 type="button"
                 class="px-2 py-1 text-[11px] font-bold rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 transition-colors cursor-pointer select-none active:scale-95"
+                :data-test="`timer-adjust-${delta}`"
                 @click="timerStore.adjustTimer(delta)"
               >
                 {{ delta > 0 ? `+${delta}s` : `${delta}s` }}
@@ -83,6 +85,7 @@
                 :class="timerStore.isTimerRunning
                   ? 'bg-amber-600 hover:bg-amber-500 shadow-amber-900/30'
                   : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-900/30'"
+                data-test="timer-toggle-btn"
                 @click="timerStore.toggleTimer()"
               >
                 <span>{{ timerStore.isTimerRunning ? '⏸' : '▶' }}</span>
@@ -92,6 +95,7 @@
                 type="button"
                 class="py-2 px-3.5 rounded-lg font-bold text-xs sm:text-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 transition-colors flex items-center justify-center gap-1 cursor-pointer active:scale-98"
                 :title="t('timer.reset')"
+                data-test="timer-reset-btn"
                 @click="timerStore.resetTimer()"
               >
                 <span>↺</span>
