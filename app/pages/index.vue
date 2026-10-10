@@ -569,6 +569,11 @@ onMounted(() => {
       return
     }
 
+    // Leave modified key presses (Ctrl/Cmd+S, Ctrl/Cmd+I, Alt+...) to the browser
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+      return
+    }
+
     if (e.code === 'KeyN' && !isSettingsModalOpen.value && !isHelpModalOpen.value && !isAboutModalOpen.value && !isTasksModalOpen.value && !timerStore.isModalOpen) {
       e.preventDefault()
       toggleNotes()
