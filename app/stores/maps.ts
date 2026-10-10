@@ -38,4 +38,20 @@ export const useMapsStore = defineStore("maps", () => {
     resetAllMaps,
     isKnownMap,
   };
+}, {
+  // Only the live map choice is saved. Pin positions are saved per map in the
+  // rounds store, so losing the choice on reload hid them and let Next Round
+  // archive the wrong map.
+  persist: {
+    pick: ["selectedMap"],
+    afterHydrate: ({ store }) => {
+      const hydratedStore = store as typeof store & {
+        selectedMap: string;
+        isKnownMap: (mapId: string | undefined) => boolean;
+      };
+      if (!hydratedStore.isKnownMap(hydratedStore.selectedMap)) {
+        hydratedStore.selectedMap = (allMaps as string[])[0];
+      }
+    },
+  },
 });
