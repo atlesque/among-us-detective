@@ -438,6 +438,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'view fork on GitHub ↗',
     'pwa.installPrompt': 'Would you like to install Among Us Detective as an app for easy access?',
     'pwa.yesPlease': 'Yes please',
+    'pwa.updateReady': 'A new version is ready. Updating reloads the page, so finish your match first.',
+    'pwa.updateNow': 'Update now',
+    'pwa.updateLater': 'Later',
     'pwa.noThanks': 'No thanks',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': 'Tactical Voting HUD',
@@ -940,6 +943,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'ver fork no GitHub ↗',
     'pwa.installPrompt': 'Gostaria de instalar o Among Us Detective como um aplicativo para fácil acesso?',
     'pwa.yesPlease': 'Sim, por favor',
+    'pwa.updateReady': 'Uma nova versão está pronta. Atualizar recarrega a página, então termine sua partida primeiro.',
+    'pwa.updateNow': 'Atualizar agora',
+    'pwa.updateLater': 'Depois',
     'pwa.noThanks': 'Não, obrigado',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': 'HUD Tático de Votação',
@@ -1442,6 +1448,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'ver fork en GitHub ↗',
     'pwa.installPrompt': '¿Deseas instalar Among Us Detective como una aplicación para un acceso rápido?',
     'pwa.yesPlease': 'Sí, por favor',
+    'pwa.updateReady': 'Hay una nueva versión lista. Actualizar recarga la página, así que termina tu partida primero.',
+    'pwa.updateNow': 'Actualizar ahora',
+    'pwa.updateLater': 'Más tarde',
     'pwa.noThanks': 'No, gracias',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': 'HUD Táctico de Votación',
@@ -1944,6 +1953,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'voir le fork sur GitHub ↗',
     'pwa.installPrompt': 'Souhaitez-vous installer Among Us Detective comme une application pour un accès rapide ?',
     'pwa.yesPlease': 'Oui, s\'il vous plaît',
+    'pwa.updateReady': 'Une nouvelle version est prête. La mise à jour recharge la page, terminez donc d\'abord votre partie.',
+    'pwa.updateNow': 'Mettre à jour',
+    'pwa.updateLater': 'Plus tard',
     'pwa.noThanks': 'Non merci',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': 'HUD Tactique de Vote',
@@ -2446,6 +2458,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'Fork auf GitHub ansehen ↗',
     'pwa.installPrompt': 'Möchten Sie Among Us Detective als App für schnellen Zugriff installieren?',
     'pwa.yesPlease': 'Ja, bitte',
+    'pwa.updateReady': 'Eine neue Version ist bereit. Das Update lädt die Seite neu, beende also zuerst dein Spiel.',
+    'pwa.updateNow': 'Jetzt aktualisieren',
+    'pwa.updateLater': 'Später',
     'pwa.noThanks': 'Nein danke',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': 'Taktisches Abstimmungs-HUD',
@@ -2948,6 +2963,9 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'disclaimer.viewForkLink': 'GitHub에서 포크 보기 ↗',
     'pwa.installPrompt': '빠른 접속을 위해 Among Us Detective를 앱으로 설치하시겠습니까?',
     'pwa.yesPlease': '예, 설치합니다',
+    'pwa.updateReady': '새 버전이 준비되었습니다. 업데이트하면 페이지가 새로고침되므로 먼저 게임을 마치세요.',
+    'pwa.updateNow': '지금 업데이트',
+    'pwa.updateLater': '나중에',
     'pwa.noThanks': '아니요',
     // Quorum & Tactical HUD Alerts
     'settings.showQuorumHud': '전술 투표 HUD',
