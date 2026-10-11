@@ -113,6 +113,64 @@ test.describe("Map display and selection", () => {
     });
   });
 
+  test("the selected map is kept after a reload, and Next Round archives it", async ({
+    page,
+  }) => {
+    await activateAllCrew(page);
+    await page.click("[data-test='toggle-map-btn']");
+    await page.locator("[data-test='map-btn-polus']").click();
+    const map = page.locator("[data-test='map-container']");
+    await expect(map).toHaveAttribute("data-map-id", "polus");
+
+    // The base fixture clears localStorage on every load, so carry the saved
+    // state across the reload through sessionStorage.
+    await expect
+      .poll(() => page.evaluate(() => localStorage.getItem("maps")))
+      .toContain("polus");
+    await page.evaluate(() => {
+      sessionStorage.setItem(
+        "map-test-saved-state",
+        JSON.stringify({
+          crew: localStorage.getItem("crew"),
+          maps: localStorage.getItem("maps"),
+        })
+      );
+    });
+    await page.addInitScript(() => {
+      const saved = sessionStorage.getItem("map-test-saved-state");
+      if (!saved) return;
+      const state = JSON.parse(saved);
+      if (state.crew) localStorage.setItem("crew", state.crew);
+      if (state.maps) localStorage.setItem("maps", state.maps);
+      sessionStorage.removeItem("map-test-saved-state");
+    });
+
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.waitForSelector("[data-test='new-game-btn']", { state: "attached" });
+    await page.click("[data-test='toggle-map-btn']");
+    await expect(map).toHaveAttribute("data-map-id", "polus");
+    await expect(page.locator("[data-test='map-btn-polus']")).toHaveClass(/bg-emerald-600/);
+
+    await page.click("[data-test='new-round-btn']");
+    const archivedMap = await page.evaluate(
+      () => JSON.parse(localStorage.getItem("rounds") || "{}").roundHistory?.[0]?.mapId
+    );
+    expect(archivedMap).toBe("polus");
+  });
+
+  test("an unknown saved map falls back to The Skeld", async ({ page }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("maps", JSON.stringify({ selectedMap: "not-a-map" }));
+    });
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.waitForSelector("[data-test='new-game-btn']", { state: "attached" });
+    await page.click("[data-test='toggle-map-btn']");
+    await expect(page.locator("[data-test='map-container']")).toHaveAttribute(
+      "data-map-id",
+      "the-skeld"
+    );
+  });
+
   test("map positions stay with their map and scale with the displayed image", async ({
     page,
   }) => {
