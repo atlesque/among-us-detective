@@ -6,7 +6,7 @@ import { useRoundsStore } from "~/stores/rounds";
 export type ColumnStatus = 'hard_clear' | 'trusted' | 'unknown' | 'suspicious' | 'impostor' | 'dead';
 
 export const IMPOSTOR_ROLES = ['Impostor', 'Shapeshifter', 'Phantom', 'Viper'] as const;
-export const CREW_ROLES = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noisemaker'] as const;
+export const CREW_ROLES = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noisemaker', 'Tracker'] as const;
 
 export type ImpostorRole = (typeof IMPOSTOR_ROLES)[number];
 export type CrewRole = (typeof CREW_ROLES)[number];

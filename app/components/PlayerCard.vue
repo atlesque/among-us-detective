@@ -380,7 +380,7 @@ const menuPosition = ref<{ top: number; left: number }>({ top: 0, left: 0 })
 
 <script setup lang="ts">
 import type { CrewMember } from '~/stores/crew'
-import { isImpostorRole as checkIsImpostorRole, isCrewRole as checkIsCrewRole } from '~/stores/crew'
+import { CREW_ROLES, isImpostorRole as checkIsImpostorRole, isCrewRole as checkIsCrewRole } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
 
 const props = defineProps<{
@@ -481,7 +481,7 @@ const roleTextClasses = computed(() => {
 const isCurrentMenuOpen = computed(() => activeMenuColor.value === props.member.color)
 const menuElement = ref<HTMLElement | null>(null)
 
-const crewRoles = ['Detective', 'Judge', 'Scientist', 'Engineer', 'Noisemaker']
+const crewRoles = [...CREW_ROLES]
 const impostorRoles = ['Impostor', 'Shapeshifter', 'Phantom', 'Viper']
 
 const isImpostorRole = computed(() => {
