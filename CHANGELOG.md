@@ -53,7 +53,7 @@ All notable changes to **Among Us Detective** are documented in this file.
 
 ### Added
 - Complete multilingual localization (i18n) supporting English, Portuguese, Spanish, Korean, French, and German.
-- Dedicated Impostor Operations HUD with fake tasks safety advisor and sabotage planner.
+- Dedicated 3-column deduction board in Impostor Mode with fellow impostor coordination and fake task guidance.
 - Player Tasks Completion tracker and Emergency Meetings counter in player card context menu.
 - 6-column deduction hierarchy: Hard Clear, Trusted, Unknown, Suspicious, Impostor, and Dead.
 - 18 official Among Us bean colors in Match Lobby with LED indicators and presets.
