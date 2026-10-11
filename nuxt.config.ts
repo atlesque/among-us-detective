@@ -91,7 +91,8 @@ export default defineNuxtConfig({
 
   // PWA
   pwa: {
-    registerType: "autoUpdate",
+    // "prompt" so a new deploy never reloads the page mid-match (see AppUpdatePrompt)
+    registerType: "prompt",
     manifest: {
       name: "Among Us Detective",
       short_name: "AUD",
@@ -102,7 +103,8 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: undefined,
       cleanupOutdatedCaches: true,
-      skipWaiting: true,
+      // Leave the new service worker waiting until the player chooses to update
+      skipWaiting: false,
       clientsClaim: true,
       runtimeCaching: [
         {
