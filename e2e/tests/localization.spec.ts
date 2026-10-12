@@ -29,3 +29,19 @@ for (const example of localeExamples) {
     await expect(page.getByText(example.greeting, { exact: true })).toBeVisible();
   });
 }
+
+test("localizes the 404 and donation-complete pages", async ({ page }) => {
+  // The base fixture re-seeds English settings on every load, so override it for direct page visits.
+  await page.addInitScript(() => {
+    const settings = JSON.parse(localStorage.getItem("settings") ?? "{}");
+    localStorage.setItem("settings", JSON.stringify({ ...settings, uiLanguage: "de-DE" }));
+  });
+
+  await page.goto("/this-page-does-not-exist");
+  await expect(page.getByRole("heading", { name: "Seite nicht gefunden" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "sag mir bitte Bescheid." })).toBeVisible();
+
+  await page.goto("/donation-complete");
+  await expect(page.getByRole("heading", { name: "Vielen herzlichen Dank für deine Spende!" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "alexander@atlesque.com" })).toBeVisible();
+});
