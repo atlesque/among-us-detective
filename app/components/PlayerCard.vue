@@ -123,7 +123,7 @@
             @contextmenu.prevent.stop="closeMenu"
           />
           <div
-            class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] max-w-[calc(100vw-16px)] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100vh-20px))] overflow-y-auto"
+            class="fixed bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg shadow-2xl p-2.5 w-[275px] max-w-[calc(100vw-16px)] text-left text-xs text-gray-800 dark:text-gray-100 max-h-[min(480px,calc(100dvh-20px))] overflow-y-auto"
             ref="menuElement"
             :style="menuStyle"
             data-card-popover-menu

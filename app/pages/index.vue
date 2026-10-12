@@ -239,7 +239,7 @@
     </div>
 
     <!-- Modern Bottom Detective Toolbar (Persistent Dock) -->
-    <footer class="fixed bottom-0 left-0 right-0 z-30 h-12 flex items-center justify-between px-1.5 sm:px-4 md:px-6 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
+    <footer class="fixed bottom-0 left-0 right-0 z-30 h-[calc(3rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] flex items-center justify-between px-1.5 sm:px-4 md:px-6 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
       <!-- Left: Investigation Tools (Notes, Map, Tasks, Impostor) -->
       <div class="flex items-center gap-1 sm:gap-2 shrink-0">
         <!-- Notes Button (Prominent & Evident) -->
