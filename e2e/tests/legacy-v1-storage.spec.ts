@@ -36,6 +36,8 @@ test.describe("Settings saved by V1", () => {
       darkMode: JSON.stringify({ isDarkMode: false, hasDarkModeBeenSetBefore: true }),
       returningPlayer: "true",
       acceptedCookies: "true",
+      // Keeps the consent banner from #87 out of the way once both land.
+      analyticsConsent: "denied",
       seenV2Announcement: "true",
     });
     await page.goto("/");
@@ -91,6 +93,8 @@ test.describe("Settings saved by V1", () => {
       settings: JSON.stringify(v2Settings),
       returningPlayer: "true",
       acceptedCookies: "true",
+      // Keeps the consent banner from #87 out of the way once both land.
+      analyticsConsent: "denied",
     });
     await page.goto("/");
     await expect(page.locator("[data-test='new-game-btn']")).toBeVisible();
