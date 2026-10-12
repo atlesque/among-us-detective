@@ -82,9 +82,10 @@
                   <button
                     type="button"
                     class="sm:hidden text-[10px] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white px-1"
+                    :aria-label="t('modal.close')"
                     @click.stop="isNextRoundInfoOpen = false"
                   >
-                    ✕
+                    <span aria-hidden="true">✕</span>
                   </button>
                 </div>
                 <p class="text-[11px] sm:text-xs font-normal leading-tight text-gray-600 dark:text-gray-200">
