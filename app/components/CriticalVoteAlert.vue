@@ -37,7 +37,7 @@
         <button
           type="button"
           class="h-5 px-1.5 rounded text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer border flex items-center gap-1 bg-white/20 hover:bg-white/30 text-white border-white/30 active:scale-95 leading-none"
-          @click="initNewMatch"
+          @click="startNewMatch"
         >
           <AppIcon name="refresh" class="w-3 h-3 shrink-0" />
           <span>{{ t('header.newMatch') }}</span>
@@ -49,15 +49,13 @@
 
 <script setup lang="ts">
 import { isImpostorRole } from '~/stores/crew'
-import { touchMatchActivity } from '~/utils/sessionManager'
 
 const { t } = useI18n()
 const crewStore = useCrewStore()
 const settingsStore = useSettingsStore()
 const roundsStore = useRoundsStore()
-const tasksStore = useTasksStore()
-const notesStore = useNotesStore()
 const impostorStore = useImpostorStore()
+const { startNewMatch } = useNewMatch()
 
 // Total active in-game players who are alive
 const activeAliveCount = computed(() => {
@@ -356,16 +354,6 @@ const textClasses = computed(() => {
   }
 })
 
-function initNewMatch() {
-  roundsStore.startNewMatch()
-  crewStore.resetAllCrew()
-  tasksStore.resetAllTasks()
-  if (settingsStore.resetNotesOnNewGame) notesStore.clearGameNotes()
-  notesStore.clearRoundNotes()
-  impostorStore.setImpostorMode(false)
-  impostorStore.clearFellowImpostors()
-  touchMatchActivity()
-}
 </script>
 
 <style scoped>

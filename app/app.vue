@@ -31,8 +31,8 @@ const { disableAnimations } = storeToRefs(settingsStore)
 const crewStore = useCrewStore()
 const roundsStore = useRoundsStore()
 const notesStore = useNotesStore()
-const tasksStore = useTasksStore()
 const impostorStore = useImpostorStore()
+const { resetMatchState } = useNewMatch()
 
 const { locale } = useI18n()
 
@@ -80,14 +80,7 @@ onMounted(() => {
   }
 
   // Verify match session expiration (2-hour TTL)
-  checkAndExpireMatchSession({
-    crewStore,
-    roundsStore,
-    notesStore,
-    tasksStore,
-    impostorStore,
-    settingsStore,
-  })
+  checkAndExpireMatchSession(resetMatchState)
 
   // Re-check when returning to the tab after being away
   document.addEventListener('visibilitychange', handleVisibilityChange)
@@ -121,14 +114,7 @@ onBeforeUnmount(() => {
 
 function handleVisibilityChange() {
   if (document.visibilityState === 'visible') {
-    checkAndExpireMatchSession({
-      crewStore,
-      roundsStore,
-      notesStore,
-      tasksStore,
-      impostorStore,
-      settingsStore,
-    })
+    checkAndExpireMatchSession(resetMatchState)
   }
 }
 </script>

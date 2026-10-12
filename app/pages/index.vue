@@ -127,7 +127,7 @@
           :disabled="crewStore.activeCrewMembers.length <= 0"
           data-test="new-game-btn"
           title="Game concluded — reset deduction board for a new game (preserves lobby roster)"
-          @click="initNewMatch"
+          @click="startNewMatch"
         >
           <AppIcon name="refresh" class="w-3.5 h-3.5 shrink-0" />
           <div class="flex flex-col text-left leading-tight py-0.5">
@@ -394,6 +394,7 @@ const tasksStore = useTasksStore()
 const roundsStore = useRoundsStore()
 const mapsStore = useMapsStore()
 const impostorStore = useImpostorStore()
+const { startNewMatch } = useNewMatch()
 const timerStore = useTimerStore()
 const { gtag } = useGtag()
 const { t, locale } = useI18n()
@@ -641,19 +642,6 @@ onUnmounted(() => {
   timerStore.cleanup()
 })
 
-function initNewMatch() {
-  roundsStore.startNewMatch()
-  crewStore.resetAllCrew()
-  tasksStore.resetAllTasks()
-  timerStore.resetTimer()
-  timerStore.resetStopwatch()
-  if (settingsStore.resetNotesOnNewGame) notesStore.clearGameNotes()
-  notesStore.clearRoundNotes()
-  impostorStore.setImpostorMode(false)
-  impostorStore.clearFellowImpostors()
-  touchMatchActivity()
-  gtag('event', 'init_new_match', { event_category: 'global_stats' })
-}
 
 function initNewRound() {
   if (roundsStore.isMaxRoundsReached || roundsStore.isViewingHistory) return
