@@ -91,6 +91,6 @@ This document serves as the single source of truth for all architectural decisio
 
 ---
 
-## 2. Community Feedback & Impostor HUD Work in Progress
+## 2. Community Feedback Phase
 
-> 📣 **Current Phase**: **Among Us Detective 2.0** is delivered and stabilized. Work is in progress on a dedicated Impostor HUD and its Sabotage & Alibi Planner. The inverted board, Impostor-focused notes, partner role marking, and fake-task guidance described above are the Impostor Mode tools available today; the dedicated HUD and planner are not implemented yet. Other future enhancements will be prioritized based on player feedback and live-match observation.
+> 📣 **Current Phase**: **Among Us Detective 2.0** is delivered and stabilized. The app delivers the dedicated 3-column Impostor board, partner role marking, fake-task guidance, tactical voting HUD, and the dock stopwatch & timer widget. Future enhancements will be prioritized based on player feedback and live-match observation.

@@ -177,18 +177,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': 'Install',
     'settings.appInstalled': 'Installed',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': 'Impostor Operations HUD',
-    'impostor.subtitle': 'Stealth companion for Impostors — Safe fake tasks, sabotage timing & teammate coordination',
-    'impostor.fellowImpostors': 'Fellow Impostors',
-    'impostor.coordination': 'Coordinate targets and mutual alibis',
-    'impostor.fakeTasks': 'Fake Tasks Guide',
-    'impostor.visualTasksWarning': 'DANGER: Never fake visual tasks with animations turned on!',
-    'impostor.safeTasks': 'Safe Fake Tasks (No Animations)',
-    'impostor.sabotagePlanner': 'Sabotage & Alibi Planner',
-    'impostor.sabotageStrategy': 'Trigger key sabotages and stage your arrival',
-    'impostor.frameTarget': 'Frame Target / Scapegoat',
-    'impostor.selectScapegoat': 'Select a crewmate to divert blame:',
 
     // Colors (Official 18 Among Us colors)
     'color.red': 'Red',
@@ -268,15 +256,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': 'Current Phase: Community Feedback (v2.0)',
     'roadmap.phaseDesc': 'With version 2.0 fully delivered, we are actively gathering feedback from real matches. No new features are locked in stone yet — future plans will be shaped entirely by community input.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': 'Teammates',
-    'impostor.tabFakeTasks': 'Fake Tasks',
-    'impostor.tabSabotage': 'Sabotage',
-    'impostor.tabFrame': 'Frame Target',
-    'impostor.openHud': 'Open Impostor HUD',
-    'impostor.partner': 'Partner ✓',
-    'impostor.addPartner': '+ Add',
-    'impostor.syncToBoard': 'Sync to Board',
 
     // Help & Guides
     'help.title': 'How to use Among Us Detective',
@@ -682,18 +661,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': 'Instalar',
     'settings.appInstalled': 'Instalado',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': 'Central de Operações do Impostor',
-    'impostor.subtitle': 'Assistente tático para Impostores — Fake tasks seguras, sabotagens e coordenação de aliados',
-    'impostor.fellowImpostors': 'Outros Impostores',
-    'impostor.coordination': 'Alinhe alvos e álibis com sua dupla/trio',
-    'impostor.fakeTasks': 'Guia de Fake Tasks',
-    'impostor.visualTasksWarning': 'CUIDADO: Nunca faça fake task visual se as animações estiverem ativadas!',
-    'impostor.safeTasks': 'Fake Tasks Seguras (Sem Animação)',
-    'impostor.sabotagePlanner': 'Planejar Sabotagens & Álibis',
-    'impostor.sabotageStrategy': 'Programe sabotagens para desviar o foco e forjar álibis',
-    'impostor.frameTarget': 'Alvo para Incriminar',
-    'impostor.selectScapegoat': 'Escolha um tripulante para botar a culpa:',
 
     // Colors (18 cores oficiais do Among Us)
     'color.red': 'Vermelho',
@@ -773,15 +740,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': 'Fase Atual: Coleta de Feedbacks da Comunidade (v2.0)',
     'roadmap.phaseDesc': 'Com a versão 2.0 completamente entregue, estamos coletando opiniões e sugestões de partidas reais. Nada está cravado por enquanto — novos planos serão definidos pelo feedback dos jogadores.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': 'Aliados',
-    'impostor.tabFakeTasks': 'Fake Tasks',
-    'impostor.tabSabotage': 'Sabotagem',
-    'impostor.tabFrame': 'Incriminar',
-    'impostor.openHud': 'Abrir HUD Impostor',
-    'impostor.partner': 'Parceiro ✓',
-    'impostor.addPartner': '+ Adicionar',
-    'impostor.syncToBoard': 'Sincronizar no Quadro',
 
     // Help & Guides
     'help.title': 'Como usar o Among Us Detective',
@@ -1187,18 +1145,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': 'Instalar',
     'settings.appInstalled': 'Instalado',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': 'Central de Operaciones del Impostor',
-    'impostor.subtitle': 'Asistente táctico para Impostores — Fake tasks seguras, sabotajes y coordinación con aliados',
-    'impostor.fellowImpostors': 'Compañeros Impostores',
-    'impostor.coordination': 'Coordina bajas y coartadas con tu compañero/trío',
-    'impostor.fakeTasks': 'Guía de Fake Tasks',
-    'impostor.visualTasksWarning': '¡CUIDADO: Nunca hagas fake tasks visuales si las animaciones están activadas!',
-    'impostor.safeTasks': 'Fake Tasks Seguras (Sin Animación)',
-    'impostor.sabotagePlanner': 'Planear Sabotajes y Coartadas',
-    'impostor.sabotageStrategy': 'Programa sabotajes estratégicos y finge tu llegada',
-    'impostor.frameTarget': 'Objetivo para Incriminar',
-    'impostor.selectScapegoat': 'Elige a un tripulante para culparlo:',
 
     // Colors (18 colores oficiales de Among Us)
     'color.red': 'Rojo',
@@ -1278,15 +1224,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': 'Fase Actual: Recopilación de Comentarios de la Comunidad (v2.0)',
     'roadmap.phaseDesc': 'Con la versión 2.0 completamente entregada, estamos recopilando comentarios de partidas reales. Nada está definido por ahora; los planes futuros dependerán de la comunidad.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': 'Aliados',
-    'impostor.tabFakeTasks': 'Fake Tasks',
-    'impostor.tabSabotage': 'Sabotaje',
-    'impostor.tabFrame': 'Incriminar',
-    'impostor.openHud': 'Abrir HUD Impostor',
-    'impostor.partner': 'Compañero ✓',
-    'impostor.addPartner': '+ Añadir',
-    'impostor.syncToBoard': 'Sincronizar en Tablero',
 
     // Help & Guides
     'help.title': 'Cómo usar Among Us Detective',
@@ -1692,18 +1629,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': 'Installer',
     'settings.appInstalled': 'Installée',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': 'Centre d\'Opérations de l\'Imposteur',
-    'impostor.subtitle': 'Assistant tactique pour Imposteurs — Fausses tâches sûres, sabotages et coordination d’alliés',
-    'impostor.fellowImpostors': 'Autres Imposteurs',
-    'impostor.coordination': 'Coordonnez les cibles et alibis mutuels',
-    'impostor.fakeTasks': 'Guide des Fake Tasks',
-    'impostor.visualTasksWarning': 'ATTENTION : Ne faites jamais de fake tasks visuelles si les animations sont activées !',
-    'impostor.safeTasks': 'Fake Tasks Sûres (Sans Animation)',
-    'impostor.sabotagePlanner': 'Planifier Sabotages & Alibis',
-    'impostor.sabotageStrategy': 'Déclenchez des sabotages clés et feignez votre arrivée',
-    'impostor.frameTarget': 'Cible à Incriminer / Bouc Émissaire',
-    'impostor.selectScapegoat': 'Choisissez un innocent sur qui rejeter la faute :',
 
     // Colors (18 couleurs officielles d'Among Us)
     'color.red': 'Rouge',
@@ -1783,15 +1708,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': 'Phase Actuelle : Retours de la Communauté (v2.0)',
     'roadmap.phaseDesc': 'Avec la version 2.0 finalisée, nous recueillons les avis en parties réelles. Rien n’est figé pour le moment — les futures évolutions dépendront des retours des joueurs.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': 'Alliés',
-    'impostor.tabFakeTasks': 'Fausses Tâches',
-    'impostor.tabSabotage': 'Sabotage',
-    'impostor.tabFrame': 'Incriminer',
-    'impostor.openHud': 'Ouvrir le HUD Imposteur',
-    'impostor.partner': 'Partenaire ✓',
-    'impostor.addPartner': '+ Ajouter',
-    'impostor.syncToBoard': 'Synchroniser au Tableau',
 
     // Help & Guides
     'help.title': 'Comment utiliser Among Us Detective',
@@ -2197,18 +2113,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': 'Installieren',
     'settings.appInstalled': 'Installiert',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': 'Impostor-Kommandozentrale',
-    'impostor.subtitle': 'Taktischer Begleiter für Impostoren — Sichere Fake-Tasks, Sabotagen und Partner-Koordination',
-    'impostor.fellowImpostors': 'Mit-Impostoren',
-    'impostor.coordination': 'Ziele und gegenseitige Alibis abstimmen',
-    'impostor.fakeTasks': 'Fake-Task-Guide',
-    'impostor.visualTasksWarning': 'ACHTUNG: Niemals visuelle Aufgaben faken, wenn Animationen aktiv sind!',
-    'impostor.safeTasks': 'Sichere Fake-Tasks (Ohne Animationen)',
-    'impostor.sabotagePlanner': 'Sabotage- & Alibi-Planer',
-    'impostor.sabotageStrategy': 'Kritische Sabotagen auslösen und Ankunft vortäuschen',
-    'impostor.frameTarget': 'Sündenbock zum Beschuldigen',
-    'impostor.selectScapegoat': 'Wähle ein Crew-Mitglied, um die Schuld abzuwälzen:',
 
     // Colors (18 offizielle Among Us Farben)
     'color.red': 'Rot',
@@ -2288,15 +2192,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': 'Aktuelle Phase: Community-Feedback (v2.0)',
     'roadmap.phaseDesc': 'Mit der Veröffentlichung von Version 2.0 sammeln wir aktiv Feedback aus echten Partien. Zukünftige Features werden ausschließlich nach den Wünschen der Community geplant.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': 'Partner',
-    'impostor.tabFakeTasks': 'Fake-Tasks',
-    'impostor.tabSabotage': 'Sabotage',
-    'impostor.tabFrame': 'Beschuldigen',
-    'impostor.openHud': 'Impostor-HUD öffnen',
-    'impostor.partner': 'Partner ✓',
-    'impostor.addPartner': '+ Hinzufügen',
-    'impostor.syncToBoard': 'Auf Tafel synchronisieren',
 
     // Help & Guides
     'help.title': 'So verwendest du Among Us Detective',
@@ -2702,18 +2597,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.install': '설치',
     'settings.appInstalled': '설치됨',
 
-    // Impostor Mode HUD
-    'impostor.modeTitle': '임포스터 작전 본부',
-    'impostor.subtitle': '임포스터를 위한 전술 지원 — 안전한 페이크 미션, 사보타주 및 동료 조율',
-    'impostor.fellowImpostors': '동료 임포스터',
-    'impostor.coordination': '타겟과 상호 알리바이 조율',
-    'impostor.fakeTasks': '페이크 미션(가짜 임무) 가이드',
-    'impostor.visualTasksWarning': '주의: 시각적 확시 미션은 애니메이션 켜짐 상태일 때 절대 하지 마세요!',
-    'impostor.safeTasks': '안전한 페이크 미션 (애니메이션 없음)',
-    'impostor.sabotagePlanner': '사보타주 & 알리바이 계획',
-    'impostor.sabotageStrategy': '치명적인 사보타주를 발동하고 도착 시점을 연출하세요',
-    'impostor.frameTarget': '몰아갈 타겟 (희생양)',
-    'impostor.selectScapegoat': '누명을 씌울 크루원을 선택하세요:',
 
     // Colors (어몽어스 공식 18가지 색상)
     'color.red': '빨강',
@@ -2793,15 +2676,6 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'roadmap.phaseTitle': '현재 단계: 커뮤니티 피드백 수집 (v2.0)',
     'roadmap.phaseDesc': '버전 2.0 정식 출시 이후 실제 게임 플레이 피드백을 수집하고 있습니다. 확정된 추가 기능은 없으며, 모든 향후 계획은 커뮤니티 의견을 바탕으로 결정됩니다.',
 
-    // Impostor HUD Extra Tabs & Actions
-    'impostor.tabTeammates': '팀원',
-    'impostor.tabFakeTasks': '가짜 미션',
-    'impostor.tabSabotage': '사보타주',
-    'impostor.tabFrame': '누명 씌우기',
-    'impostor.openHud': '임포스터 HUD 열기',
-    'impostor.partner': '파트너 ✓',
-    'impostor.addPartner': '+ 추가',
-    'impostor.syncToBoard': '보드에 동기화',
 
     // Help & Guides
     'help.title': 'Among Us Detective 사용 방법',

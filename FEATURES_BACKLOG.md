@@ -80,12 +80,12 @@ This document tracks all implemented architectural enhancements and planned futu
     - Modern segmented step navigation without native browser scrollbars.
     - Generous spacing and visual icon badges across Lobby Setup, Impostor Mode, and Hotkeys panel.
 
-### 🚧 In Progress
-
-- **Dedicated Impostor HUD and Sabotage & Alibi Planner**: Build a standalone tactical HUD around the existing Impostor Mode tools, with planning for Reactor, O2, Lights, and Comms. The dedicated HUD and planner are not available in the app yet.
+16. **[COMPLETED] Feature 16: Stopwatch & Countdown Timer Dock Widget**
+    - Built-in timer on the dock with Among Us presets (Kill Cooldown 10s–30s, Discussion 45s–120s, Sabotages 30s/45s).
+    - Precision stopwatch with 1-click timestamp copying into current round notes.
 
 ---
 
 ### 🔮 Community Feedback Phase (v2.0)
 
-> 📣 **Status**: Among Us Detective 2.0 is delivered and stabilized. Work on the dedicated Impostor HUD and Sabotage & Alibi Planner is in progress; the current app provides the inverted board, Impostor-focused notes, partner role marking, and fake-task guidance. Other future work will be evaluated based on player input and live-match observation.
+> 📣 **Status**: Among Us Detective 2.0 is delivered and stabilized. The app provides the dedicated 3-column Impostor board, partner role marking, fake-task guidance, tactical voting HUD, and the dock timer widget. Future work will be evaluated based on community feedback and player suggestions.

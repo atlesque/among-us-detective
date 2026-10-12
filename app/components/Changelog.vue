@@ -37,7 +37,7 @@ const olderChangelog: ChangelogItem[] = [
     changes: [
       '<b>✨ Added & Modernized:</b>',
       'Multilingual localization (i18n) supporting English, Portuguese, Spanish, Korean, French, and German with browser auto-detection and Settings switcher',
-      'Dedicated Impostor Operations HUD with interactive kill cooldown timer, fake task safety advisor, sabotage planner, and fellow impostor coordination',
+      'Dedicated 3-column deduction board in Impostor Mode with fellow impostor coordination, threat tracking, and fake task guidance',
       'Player Tasks Completion tracker (Done ✓ / In Progress) and Emergency Meetings counter directly in player card context menu',
       'Modern 4-tab visual walkthrough tutorial (Match Setup, Meeting Rounds, Deduction Board, Map & Voice Notes)',
       'Added a responsive Disclaimer page with information about the companion tool and creator credits',
