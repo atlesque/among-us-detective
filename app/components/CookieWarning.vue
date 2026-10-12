@@ -26,15 +26,23 @@
           </p>
         </div>
 
-        <!-- Action Button -->
-        <div class="flex items-center shrink-0 w-full sm:w-auto justify-center sm:justify-end">
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-center sm:justify-end">
           <button
             type="button"
-            class="w-full sm:w-auto px-5 py-1.5 rounded-lg text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 active:scale-95 shadow-sm transition-all cursor-pointer"
-            data-test="cookie-dismiss-btn"
-            @click="acceptCookies"
+            class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs font-bold text-gray-700 dark:text-gray-200 bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 active:scale-95 transition-all cursor-pointer"
+            data-test="cookie-decline-btn"
+            @click="decline"
           >
-            {{ t('cookie.dismiss') || t('cookie.accept') }}
+            {{ t('cookie.decline') }}
+          </button>
+          <button
+            type="button"
+            class="flex-1 sm:flex-none px-5 py-1.5 rounded-lg text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 active:scale-95 shadow-sm transition-all cursor-pointer"
+            data-test="cookie-accept-btn"
+            @click="accept"
+          >
+            {{ t('cookie.accept') }}
           </button>
         </div>
       </div>
@@ -45,25 +53,23 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useI18n } from '~/composables/useI18n'
+import { useAnalyticsConsent } from '~/composables/useAnalyticsConsent'
 
 const { t } = useI18n()
+const { hasChosen, grant, deny } = useAnalyticsConsent()
 const isVisible = ref(false)
 
 onMounted(() => {
-  try {
-    const choice = localStorage.getItem('acceptedCookies')
-    if (!choice) {
-      isVisible.value = true
-    }
-  } catch {
-    isVisible.value = true
-  }
+  isVisible.value = !hasChosen.value
 })
 
-function acceptCookies() {
-  try {
-    localStorage.setItem('acceptedCookies', 'true')
-  } catch {}
+function accept() {
+  grant()
+  isVisible.value = false
+}
+
+function decline() {
+  deny()
   isVisible.value = false
 }
 </script>

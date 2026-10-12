@@ -83,10 +83,13 @@ export default defineNuxtConfig({
 
   spaLoadingTemplate: './spa-loading-template.html',
 
-  // Google Analytics (only enabled in production to prevent local dev network delays)
+  // Google Analytics (only enabled in production to prevent local dev network delays).
+  // Manual init: the script loads only after the player allows analytics
+  // (app/composables/useAnalyticsConsent.ts).
   gtag: {
     id: "G-F1ZVM4FLC6",
     enabled: process.env.NODE_ENV === "production",
+    initMode: "manual",
   },
 
   // PWA

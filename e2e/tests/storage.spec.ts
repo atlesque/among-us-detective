@@ -7,7 +7,7 @@ test("corrupt startup flags do not prevent the board from loading", async ({ pag
     localStorage.clear();
     localStorage.setItem("appInstallationDismissed", "{invalid");
     localStorage.setItem("returningPlayer", "{invalid");
-    localStorage.setItem("acceptedCookies", "true");
+    localStorage.setItem("analyticsConsent", "denied");
   });
   await page.goto("/");
   await expect(page.locator("[data-test='new-game-btn']")).toBeVisible();
@@ -21,7 +21,7 @@ test("restricted startup flag storage still permits loading and dismissing the n
   await page.addInitScript(() => {
     // Block the app's startup flags without interfering with development-only
     // Vue tooling that requires its own storage during module initialization.
-    const blockedKeys = new Set(["appInstallationDismissed", "returningPlayer", "acceptedCookies"]);
+    const blockedKeys = new Set(["appInstallationDismissed", "returningPlayer", "analyticsConsent"]);
     for (const method of ["getItem", "setItem"] as const) {
       const original = Storage.prototype[method];
       Object.defineProperty(Storage.prototype, method, {
@@ -35,7 +35,7 @@ test("restricted startup flag storage still permits loading and dismissing the n
   await page.goto("/");
   await expect(page.locator("[data-test='new-game-btn']")).toBeVisible();
   await expect(page.locator("[data-test='cookie-warning']")).toBeVisible();
-  await page.locator("[data-test='cookie-dismiss-btn']").click();
+  await page.locator("[data-test='cookie-accept-btn']").click();
   await expect(page.locator("[data-test='cookie-warning']")).toBeHidden();
   expect(errors).toEqual([]);
 });

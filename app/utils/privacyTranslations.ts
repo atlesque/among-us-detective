@@ -4,6 +4,8 @@ export interface PrivacySection {
   heading: string
   paragraphs: string[]
   links?: { label: string; href: string }[]
+  /** Shows the Google Analytics allow/decline control in this section */
+  analyticsConsent?: boolean
 }
 
 export interface PrivacyPageCopy {
@@ -11,6 +13,13 @@ export interface PrivacyPageCopy {
   title: string
   intro: string
   sections: PrivacySection[]
+  consent: {
+    granted: string
+    denied: string
+    unset: string
+    allow: string
+    revoke: string
+  }
 }
 
 export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
@@ -27,7 +36,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: 'Usage analytics',
+        analyticsConsent: true,
         paragraphs: [
+          'Google Analytics only loads after you allow it, and you can change your choice at any time.',
           'In production, Google Analytics 4 records page views and selected app actions, such as starting a match or round and opening tools or settings. It also collects standard browser, device, and usage data; identifiers or cookies may be used to measure visits.',
         ],
         links: [{ label: 'Google Analytics privacy information', href: 'https://policies.google.com/privacy' }],
@@ -53,6 +64,13 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: 'Analytics is allowed.',
+      denied: 'Analytics is turned off.',
+      unset: 'You haven’t chosen yet, so analytics is off.',
+      allow: 'Allow analytics',
+      revoke: 'Turn off analytics',
+    },
   },
   'pt-BR': {
     back: 'Voltar ao aplicativo',
@@ -67,7 +85,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: 'Análise de uso',
+        analyticsConsent: true,
         paragraphs: [
+          'O Google Analytics só é carregado depois que você permitir, e você pode mudar sua escolha a qualquer momento.',
           'Em produção, o Google Analytics 4 registra visualizações de páginas e algumas ações no aplicativo, como iniciar uma partida ou rodada e abrir ferramentas ou configurações. Ele também coleta dados usuais de navegador, dispositivo e uso; identificadores ou cookies podem ser usados para medir visitas.',
         ],
         links: [{ label: 'Informações de privacidade do Google Analytics', href: 'https://policies.google.com/privacy' }],
@@ -93,6 +113,13 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: 'A análise está permitida.',
+      denied: 'A análise está desativada.',
+      unset: 'Você ainda não escolheu, então a análise está desativada.',
+      allow: 'Permitir análise',
+      revoke: 'Desativar análise',
+    },
   },
   'es-ES': {
     back: 'Volver a la aplicación',
@@ -107,7 +134,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: 'Analítica de uso',
+        analyticsConsent: true,
         paragraphs: [
+          'Google Analytics solo se carga después de que lo permitas, y puedes cambiar tu elección en cualquier momento.',
           'En producción, Google Analytics 4 registra las visitas a páginas y algunas acciones de la aplicación, como iniciar una partida o ronda y abrir herramientas o ajustes. También recopila datos habituales del navegador, el dispositivo y el uso; puede usar identificadores o cookies para medir las visitas.',
         ],
         links: [{ label: 'Información de privacidad de Google Analytics', href: 'https://policies.google.com/privacy' }],
@@ -133,6 +162,13 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: 'La analítica está permitida.',
+      denied: 'La analítica está desactivada.',
+      unset: 'Aún no has elegido, así que la analítica está desactivada.',
+      allow: 'Permitir analítica',
+      revoke: 'Desactivar analítica',
+    },
   },
   'fr-FR': {
     back: 'Retour à l’application',
@@ -147,7 +183,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: 'Analyse de l’utilisation',
+        analyticsConsent: true,
         paragraphs: [
+          'Google Analytics ne se charge qu’après votre autorisation, et vous pouvez modifier votre choix à tout moment.',
           'En production, Google Analytics 4 enregistre les pages consultées et certaines actions dans l’application, comme le démarrage d’une partie ou d’une manche et l’ouverture d’outils ou des paramètres. Il recueille aussi des données habituelles sur le navigateur, l’appareil et l’utilisation ; des identifiants ou des cookies peuvent servir à mesurer les visites.',
         ],
         links: [{ label: 'Informations sur la confidentialité de Google Analytics', href: 'https://policies.google.com/privacy' }],
@@ -173,6 +211,13 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: 'L’analyse est autorisée.',
+      denied: 'L’analyse est désactivée.',
+      unset: 'Vous n’avez pas encore choisi, l’analyse est donc désactivée.',
+      allow: 'Autoriser l’analyse',
+      revoke: 'Désactiver l’analyse',
+    },
   },
   'de-DE': {
     back: 'Zurück zur App',
@@ -187,7 +232,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: 'Nutzungsanalyse',
+        analyticsConsent: true,
         paragraphs: [
+          'Google Analytics wird erst geladen, nachdem du es erlaubt hast, und du kannst deine Wahl jederzeit ändern.',
           'In der Produktionsumgebung erfasst Google Analytics 4 Seitenaufrufe und ausgewählte Aktionen in der App, etwa das Starten eines Spiels oder einer Runde sowie das Öffnen von Werkzeugen oder Einstellungen. Außerdem werden übliche Browser-, Geräte- und Nutzungsdaten erfasst; Kennungen oder Cookies können zur Messung von Besuchen dienen.',
         ],
         links: [{ label: 'Datenschutzinformationen zu Google Analytics', href: 'https://policies.google.com/privacy' }],
@@ -213,6 +260,13 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: 'Analyse ist erlaubt.',
+      denied: 'Analyse ist ausgeschaltet.',
+      unset: 'Du hast noch nicht gewählt, daher ist die Analyse ausgeschaltet.',
+      allow: 'Analyse erlauben',
+      revoke: 'Analyse ausschalten',
+    },
   },
   'ko-KR': {
     back: '앱으로 돌아가기',
@@ -227,7 +281,9 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
       },
       {
         heading: '사용 분석',
+        analyticsConsent: true,
         paragraphs: [
+          'Google Analytics는 사용자가 허용한 후에만 로드되며, 언제든지 선택을 변경할 수 있습니다.',
           '운영 환경에서 Google Analytics 4는 페이지 조회와 일부 앱 동작을 기록합니다. 여기에는 게임이나 라운드 시작, 도구 또는 설정 열기가 포함됩니다. 일반적인 브라우저, 기기 및 사용 데이터도 수집하며, 방문을 측정하기 위해 식별자나 쿠키를 사용할 수 있습니다.',
         ],
         links: [{ label: 'Google Analytics 개인정보 안내', href: 'https://policies.google.com/privacy' }],
@@ -253,5 +309,12 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         ],
       },
     ],
+    consent: {
+      granted: '분석이 허용되었습니다.',
+      denied: '분석이 꺼져 있습니다.',
+      unset: '아직 선택하지 않아 분석이 꺼져 있습니다.',
+      allow: '분석 허용',
+      revoke: '분석 끄기',
+    },
   },
 }
