@@ -129,5 +129,9 @@ export const useSettingsStore = defineStore(
       setShowQuorumAlert,
     };
   },
-  { persist: true }
+  {
+    // The modal's open state is UI-only; saving it reopened Settings after a reload.
+    // omit also applies on hydrate, so an open state saved by older builds is ignored.
+    persist: { omit: ["settingsModalOpenState"] },
+  }
 );

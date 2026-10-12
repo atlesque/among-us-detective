@@ -178,6 +178,7 @@
             <label class="flex items-center gap-2 pt-1 text-[11px] text-gray-600 dark:text-gray-400 cursor-pointer select-none">
               <input
                 v-model="timerStore.isSoundEnabled"
+                data-test="timer-sound-checkbox"
                 type="checkbox"
                 class="rounded text-indigo-600 focus:ring-indigo-500 w-3.5 h-3.5"
               />
