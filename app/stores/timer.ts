@@ -47,14 +47,51 @@ export const useTimerStore = defineStore('timer', () => {
     return null
   })
 
-  // Web Audio synthesizer chime (offline, zero assets)
-  function playChime() {
-    if (!isSoundEnabled.value || typeof window === 'undefined') return
+  // Web Audio synthesizer chime (offline, zero assets).
+  // One shared AudioContext, created and unlocked on the tap that starts the timer:
+  // iOS Safari keeps a context muted unless it was resumed inside a user gesture,
+  // and the chime itself fires later from an interval.
+  let audioCtx: AudioContext | null = null
+
+  function getAudioContext(): AudioContext | null {
+    if (typeof window === 'undefined') return null
+    if (audioCtx && audioCtx.state !== 'closed') return audioCtx
+    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+    if (!AudioContextClass) return null
     try {
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
-      if (!AudioContextClass) return
-      const ctx = new AudioContextClass()
-      if (ctx.state === 'suspended') {
+      audioCtx = new AudioContextClass()
+    } catch {
+      audioCtx = null
+    }
+    return audioCtx
+  }
+
+  // Call from a user gesture (click / keypress) so the chime can play later
+  function unlockAudio() {
+    if (!isSoundEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx) return
+    try {
+      if (ctx.state !== 'running') {
+        ctx.resume().catch(() => {})
+      }
+      // Older iOS versions only unlock once a sound actually starts during the gesture
+      const source = ctx.createBufferSource()
+      source.buffer = ctx.createBuffer(1, 1, 22050)
+      source.connect(ctx.destination)
+      source.start(0)
+    } catch {
+      // Unlock is best-effort
+    }
+  }
+
+  function playChime() {
+    if (!isSoundEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx) return
+    try {
+      // iOS can suspend or interrupt the context (e.g. after backgrounding); try to wake it
+      if (ctx.state !== 'running') {
         ctx.resume().catch(() => {})
       }
       const now = ctx.currentTime
@@ -69,11 +106,22 @@ export const useTimerStore = defineStore('timer', () => {
 
       osc.connect(gain)
       gain.connect(ctx.destination)
+      osc.onended = () => {
+        osc.disconnect()
+        gain.disconnect()
+      }
       osc.start(now)
       osc.stop(now + 0.55)
     } catch {
       // AudioContext can fail gracefully if not permitted
     }
+  }
+
+  function closeAudio() {
+    if (audioCtx && audioCtx.state !== 'closed') {
+      audioCtx.close().catch(() => {})
+    }
+    audioCtx = null
   }
 
   // --- STOPWATCH ACTIONS ---
@@ -138,6 +186,7 @@ export const useTimerStore = defineStore('timer', () => {
   }
 
   function startTimer(presetSeconds?: number) {
+    unlockAudio()
     if (presetSeconds !== undefined) {
       setTimerDuration(presetSeconds)
     }
@@ -203,6 +252,7 @@ export const useTimerStore = defineStore('timer', () => {
   function cleanup() {
     pauseStopwatch()
     pauseTimer()
+    closeAudio()
   }
 
   return {
@@ -229,6 +279,7 @@ export const useTimerStore = defineStore('timer', () => {
     resetTimer,
     toggleTimer,
     toggleModal,
+    unlockAudio,
     cleanup,
   }
 }, {
