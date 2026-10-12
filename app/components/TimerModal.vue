@@ -234,11 +234,13 @@
             <div class="pt-2 border-t border-gray-200 dark:border-gray-800">
               <button
                 type="button"
-                class="w-full py-1.5 px-3 rounded-lg text-xs font-semibold bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
+                :disabled="roundsStore.isViewingHistory"
+                class="w-full py-1.5 px-3 rounded-lg text-xs font-semibold bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-98"
                 @click="stampIntoNotes"
               >
                 <AppIcon name="notes" class="w-3.5 h-3.5 text-blue-500 shrink-0" />
                 <span v-if="isStamped" class="text-emerald-600 dark:text-emerald-400 font-bold">✓ {{ t('timer.stamped') }}</span>
+                <span v-else-if="roundsStore.isViewingHistory">{{ t('notes.readOnlySnapshot') }}</span>
                 <span v-else>{{ t('timer.stampNotes') }} ({{ timerStore.formattedStopwatch }})</span>
               </button>
             </div>
@@ -255,11 +257,13 @@ import { useTimerStore } from '~/stores/timer'
 
 const timerStore = useTimerStore()
 const notesStore = useNotesStore()
+const roundsStore = useRoundsStore()
 const { t } = useI18n()
 
 const isStamped = ref(false)
 
 function stampIntoNotes() {
+  if (roundsStore.isViewingHistory) return
   const stamp = `[${timerStore.formattedStopwatch}] `
   const current = notesStore.roundNotes ? `${notesStore.roundNotes}\n` : ''
   notesStore.setRoundNotes(`${current}${stamp}`)
