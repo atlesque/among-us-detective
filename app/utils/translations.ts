@@ -519,6 +519,22 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': 'Added to notes!',
     'timer.sabotage30': 'Reactor / O2 (30s)',
     'timer.sabotage45': 'Crash / Airship (45s)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': 'Page not found',
+    'notFound.metaDescription': 'This page does not exist on Among Us Detective.',
+    'notFound.contactPrompt': 'If you think this page should exist,',
+    'notFound.contactLink': 'please let me know.',
+    'notFound.backHome': 'Back home',
+    'donation.title': 'Thank you for donating',
+    'donation.back': 'Back',
+    'donation.heading': 'Thank you very much for donating!',
+    'donation.support': 'Your support really means a lot to me.',
+    'donation.about': "Among Us Detective is a solo, non-profit project by me, Alexander Atlesque. There are no ads, no data selling and no revenue streams. It's all free and unpaid. Yet made with lots of ♥!",
+    'donation.funding': 'Every donation goes directly towards supporting Among Us Detective infrastructure and development. It helps me keep my software licenses up-to-date, keep the website online and keep developing new features in my spare time.',
+    'donation.contact': "If you have any desired features or other feedback, please don't hesitate to contact me through the Feedback form (via the About modal) or directly via email at",
+    'donation.closing': 'May Among Us Detective continue to serve you well. Have a great game! 🙏',
+    'donation.signoff': 'With metta',
   },
 
   'pt-BR': {
@@ -1024,6 +1040,22 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': 'Adicionado às notas!',
     'timer.sabotage30': 'Reator / O2 (30s)',
     'timer.sabotage45': 'Queda / Airship (45s)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': 'Página não encontrada',
+    'notFound.metaDescription': 'Esta página não existe no Among Us Detective.',
+    'notFound.contactPrompt': 'Se você acha que esta página deveria existir,',
+    'notFound.contactLink': 'por favor, me avise.',
+    'notFound.backHome': 'Voltar ao início',
+    'donation.title': 'Obrigado pela doação',
+    'donation.back': 'Voltar',
+    'donation.heading': 'Muito obrigado pela sua doação!',
+    'donation.support': 'Seu apoio significa muito para mim.',
+    'donation.about': 'Among Us Detective é um projeto solo e sem fins lucrativos feito por mim, Alexander Atlesque. Não há anúncios, venda de dados nem fontes de receita. É tudo gratuito e não remunerado. Mas feito com muito ♥!',
+    'donation.funding': 'Cada doação vai diretamente para a infraestrutura e o desenvolvimento do Among Us Detective. Ela me ajuda a manter minhas licenças de software em dia, manter o site no ar e continuar desenvolvendo novos recursos no meu tempo livre.',
+    'donation.contact': 'Se você tiver recursos que gostaria de ver ou qualquer outro feedback, não hesite em entrar em contato pelo formulário de Feedback (no modal Sobre) ou diretamente por e-mail em',
+    'donation.closing': 'Que o Among Us Detective continue sendo útil para você. Tenha uma ótima partida! 🙏',
+    'donation.signoff': 'Com metta',
   },
 
   'es-ES': {
@@ -1529,6 +1561,22 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': '¡Añadido a las notas!',
     'timer.sabotage30': 'Reactor / O2 (30s)',
     'timer.sabotage45': 'Colisión / Airship (45s)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': 'Página no encontrada',
+    'notFound.metaDescription': 'Esta página no existe en Among Us Detective.',
+    'notFound.contactPrompt': 'Si crees que esta página debería existir,',
+    'notFound.contactLink': 'por favor, avísame.',
+    'notFound.backHome': 'Volver al inicio',
+    'donation.title': 'Gracias por tu donación',
+    'donation.back': 'Volver',
+    'donation.heading': '¡Muchísimas gracias por tu donación!',
+    'donation.support': 'Tu apoyo significa mucho para mí.',
+    'donation.about': 'Among Us Detective es un proyecto individual y sin ánimo de lucro creado por mí, Alexander Atlesque. No hay anuncios, ni venta de datos, ni fuentes de ingresos. Todo es gratuito y sin remuneración. ¡Pero hecho con mucho ♥!',
+    'donation.funding': 'Cada donación se destina directamente a la infraestructura y el desarrollo de Among Us Detective. Me ayuda a mantener al día mis licencias de software, mantener el sitio web en línea y seguir desarrollando nuevas funciones en mi tiempo libre.',
+    'donation.contact': 'Si tienes alguna función que te gustaría ver u otros comentarios, no dudes en contactarme a través del formulario de Comentarios (en la ventana Acerca de) o directamente por correo electrónico en',
+    'donation.closing': 'Que Among Us Detective te siga siendo útil. ¡Que tengas una gran partida! 🙏',
+    'donation.signoff': 'Con metta',
   },
 
   'fr-FR': {
@@ -2034,6 +2082,22 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': 'Ajouté aux notes !',
     'timer.sabotage30': 'Réacteur / O2 (30s)',
     'timer.sabotage45': 'Crash / Airship (45s)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': 'Page introuvable',
+    'notFound.metaDescription': "Cette page n'existe pas sur Among Us Detective.",
+    'notFound.contactPrompt': 'Si vous pensez que cette page devrait exister,',
+    'notFound.contactLink': 'merci de me le signaler.',
+    'notFound.backHome': "Retour à l'accueil",
+    'donation.title': 'Merci pour votre don',
+    'donation.back': 'Retour',
+    'donation.heading': 'Merci infiniment pour votre don !',
+    'donation.support': 'Votre soutien compte vraiment beaucoup pour moi.',
+    'donation.about': "Among Us Detective est un projet solo et à but non lucratif que je mène seul, Alexander Atlesque. Il n'y a pas de publicité, pas de vente de données et aucune source de revenus. Tout est gratuit et bénévole. Mais fait avec beaucoup de ♥ !",
+    'donation.funding': "Chaque don sert directement à financer l'infrastructure et le développement d'Among Us Detective. Il m'aide à maintenir mes licences logicielles à jour, à garder le site en ligne et à continuer de développer de nouvelles fonctionnalités pendant mon temps libre.",
+    'donation.contact': "Si vous souhaitez de nouvelles fonctionnalités ou avez d'autres commentaires, n'hésitez pas à me contacter via le formulaire de Commentaires (dans la fenêtre À propos) ou directement par e-mail à",
+    'donation.closing': 'Puisse Among Us Detective continuer à bien vous servir. Bonne partie ! 🙏',
+    'donation.signoff': 'Avec metta',
   },
 
   'de-DE': {
@@ -2539,6 +2603,22 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': 'Zu Notizen hinzugefügt!',
     'timer.sabotage30': 'Reaktor / O2 (30s)',
     'timer.sabotage45': 'Absturz / Airship (45s)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': 'Seite nicht gefunden',
+    'notFound.metaDescription': 'Diese Seite existiert auf Among Us Detective nicht.',
+    'notFound.contactPrompt': 'Wenn du denkst, dass diese Seite existieren sollte,',
+    'notFound.contactLink': 'sag mir bitte Bescheid.',
+    'notFound.backHome': 'Zur Startseite',
+    'donation.title': 'Danke für deine Spende',
+    'donation.back': 'Zurück',
+    'donation.heading': 'Vielen herzlichen Dank für deine Spende!',
+    'donation.support': 'Deine Unterstützung bedeutet mir wirklich viel.',
+    'donation.about': 'Among Us Detective ist ein gemeinnütziges Einzelprojekt von mir, Alexander Atlesque. Es gibt keine Werbung, keinen Datenverkauf und keine Einnahmequellen. Alles ist kostenlos und unbezahlt. Aber mit viel ♥ gemacht!',
+    'donation.funding': 'Jede Spende fließt direkt in die Infrastruktur und Weiterentwicklung von Among Us Detective. Sie hilft mir, meine Softwarelizenzen aktuell zu halten, die Website online zu halten und in meiner Freizeit neue Funktionen zu entwickeln.',
+    'donation.contact': 'Wenn du dir Funktionen wünschst oder anderes Feedback hast, kontaktiere mich gerne über das Feedback-Formular (im Über-Fenster) oder direkt per E-Mail an',
+    'donation.closing': 'Möge Among Us Detective dir weiterhin gute Dienste leisten. Viel Spaß beim Spielen! 🙏',
+    'donation.signoff': 'Mit Metta',
   },
 
   'ko-KR': {
@@ -3044,5 +3124,21 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.stamped': '메모에 추가됨!',
     'timer.sabotage30': '원자로 / 산소 (30초)',
     'timer.sabotage45': '추락 / 에어십 (45초)',
+
+    // 404 & donation-complete pages
+    'notFound.heading': '페이지를 찾을 수 없습니다',
+    'notFound.metaDescription': 'Among Us Detective에 존재하지 않는 페이지입니다.',
+    'notFound.contactPrompt': '이 페이지가 있어야 한다고 생각되면',
+    'notFound.contactLink': '알려 주세요.',
+    'notFound.backHome': '홈으로 돌아가기',
+    'donation.title': '후원해 주셔서 감사합니다',
+    'donation.back': '뒤로',
+    'donation.heading': '후원해 주셔서 정말 감사합니다!',
+    'donation.support': '여러분의 응원은 저에게 정말 큰 의미가 있습니다.',
+    'donation.about': 'Among Us Detective는 저, Alexander Atlesque가 혼자 만드는 비영리 프로젝트입니다. 광고도, 데이터 판매도, 수익원도 없습니다. 모두 무료이며 무보수로 운영됩니다. 하지만 많은 ♥을 담아 만들었습니다!',
+    'donation.funding': '모든 후원금은 Among Us Detective의 인프라와 개발에 직접 사용됩니다. 소프트웨어 라이선스를 갱신하고, 웹사이트를 계속 운영하고, 여가 시간에 새로운 기능을 개발하는 데 도움이 됩니다.',
+    'donation.contact': '원하는 기능이나 다른 의견이 있다면 피드백 양식(정보 창에서 열 수 있음)이나 이메일로 언제든지 연락해 주세요:',
+    'donation.closing': 'Among Us Detective가 앞으로도 계속 도움이 되기를 바랍니다. 즐거운 게임 되세요! 🙏',
+    'donation.signoff': '자애(metta)를 담아',
   },
 };
