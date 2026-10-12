@@ -231,4 +231,9 @@ export const useTimerStore = defineStore('timer', () => {
     toggleModal,
     cleanup,
   }
+}, {
+  // Only the sound on/off choice is saved; running timers and modal state reset on reload.
+  persist: {
+    pick: ['isSoundEnabled'],
+  },
 })
