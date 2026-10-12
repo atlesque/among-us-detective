@@ -100,6 +100,9 @@
             />
             <button
               v-if="searchQuery"
+              type="button"
+              :aria-label="t('tasks.clearSearch')"
+              :title="t('tasks.clearSearch')"
               class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 flex items-center justify-center p-0.5 rounded"
               @click="searchQuery = ''"
             >

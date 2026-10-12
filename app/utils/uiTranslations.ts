@@ -3,6 +3,7 @@ import type { SupportedLocale } from '~/utils/translations'
 export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   'en-US': {
     'modal.close': 'Close',
+    'tasks.clearSearch': 'Clear search',
     'cookie.bannerLabel': 'Storage and telemetry notice',
     'settings.autoLanguage': 'Auto',
     'settings.autoLanguageCurrent': 'Auto: {language}',
@@ -52,6 +53,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   },
   'pt-BR': {
     'modal.close': 'Fechar',
+    'tasks.clearSearch': 'Limpar busca',
     'cookie.bannerLabel': 'Aviso sobre armazenamento e telemetria',
     'settings.autoLanguage': 'Automático',
     'settings.autoLanguageCurrent': 'Automático: {language}',
@@ -101,6 +103,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   },
   'es-ES': {
     'modal.close': 'Cerrar',
+    'tasks.clearSearch': 'Borrar búsqueda',
     'cookie.bannerLabel': 'Aviso sobre almacenamiento y telemetría',
     'settings.autoLanguage': 'Automático',
     'settings.autoLanguageCurrent': 'Automático: {language}',
@@ -150,6 +153,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   },
   'fr-FR': {
     'modal.close': 'Fermer',
+    'tasks.clearSearch': 'Effacer la recherche',
     'cookie.bannerLabel': 'Avis de stockage et de télémétrie',
     'settings.autoLanguage': 'Automatique',
     'settings.autoLanguageCurrent': 'Automatique : {language}',
@@ -199,6 +203,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   },
   'de-DE': {
     'modal.close': 'Schließen',
+    'tasks.clearSearch': 'Suche löschen',
     'cookie.bannerLabel': 'Hinweis zu Speicherung und Telemetrie',
     'settings.autoLanguage': 'Automatisch',
     'settings.autoLanguageCurrent': 'Automatisch: {language}',
@@ -248,6 +253,7 @@ export const uiTranslations: Record<SupportedLocale, Record<string, string>> = {
   },
   'ko-KR': {
     'modal.close': '닫기',
+    'tasks.clearSearch': '검색어 지우기',
     'cookie.bannerLabel': '저장소 및 텔레메트리 안내',
     'settings.autoLanguage': '자동',
     'settings.autoLanguageCurrent': '자동: {language}',
