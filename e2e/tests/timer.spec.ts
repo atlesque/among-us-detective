@@ -37,4 +37,38 @@ test.describe("Timer", () => {
     await page.click("[data-test='timer-reset-btn']");
     await expect(display).toHaveText("00:25");
   });
+
+  test("Chime reuses one audio context unlocked when the timer starts", async ({ page }) => {
+    await page.evaluate(() => {
+      const w = window as any;
+      const Original = w.AudioContext;
+      w.__audio = { contexts: 0, chimes: 0 };
+      w.AudioContext = class extends Original {
+        constructor(...args: any[]) {
+          super(...args);
+          w.__audio.contexts++;
+        }
+        createOscillator() {
+          w.__audio.chimes++;
+          return super.createOscillator();
+        }
+      };
+    });
+
+    const display = page.locator("[data-test='timer-display']");
+    // 25s -> clamped to the 1s minimum
+    await page.click("[data-test='timer-adjust--15']");
+    await page.click("[data-test='timer-adjust--15']");
+    await expect(display).toHaveText("00:01");
+
+    for (const run of [1, 2]) {
+      await page.click("[data-test='timer-toggle-btn']");
+      // The context exists as soon as Start is tapped, before the chime
+      expect(await page.evaluate(() => (window as any).__audio.contexts)).toBe(1);
+      await expect(display).toHaveText("00:00", { timeout: 5000 });
+      await expect.poll(() => page.evaluate(() => (window as any).__audio.chimes)).toBe(run);
+    }
+
+    expect(await page.evaluate(() => (window as any).__audio.contexts)).toBe(1);
+  });
 });

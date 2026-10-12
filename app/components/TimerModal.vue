@@ -179,6 +179,7 @@
               <input
                 v-model="timerStore.isSoundEnabled"
                 type="checkbox"
+                @change="timerStore.unlockAudio()"
                 class="rounded text-indigo-600 focus:ring-indigo-500 w-3.5 h-3.5"
               />
               <span>{{ t('timer.sound') }}</span>
