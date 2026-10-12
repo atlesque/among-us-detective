@@ -554,15 +554,19 @@ onMounted(() => {
     if (e.key === 'Escape' || e.code === 'Escape') {
       if (isNextRoundInfoOpen.value) {
         closeNextRoundInfo()
+        return
       }
       if (isTyping) {
         target.blur()
+        return
       }
       if (timerStore.isModalOpen) {
         timerStore.toggleModal(false)
+        return
       }
       if (notepadRef.value && !notepadRef.value.isMinimized) {
         notepadRef.value.minimize()
+        return
       }
       return
     }
