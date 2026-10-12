@@ -37,6 +37,24 @@
               {{ paragraph }}
             </p>
           </div>
+          <div
+            v-if="section.analyticsConsent"
+            class="mt-4 flex flex-col gap-3 rounded-lg border border-gray-700 bg-gray-950/60 p-3 sm:flex-row sm:items-center sm:justify-between"
+            data-test="privacy-analytics-consent"
+          >
+            <p class="text-sm font-semibold text-gray-200" data-test="privacy-analytics-status">
+              {{ consentStatus }}
+            </p>
+            <button
+              type="button"
+              class="min-h-9 shrink-0 rounded-lg px-4 py-1.5 text-sm font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+              :class="isGranted ? 'bg-gray-800 text-gray-200 hover:bg-gray-700' : 'bg-blue-600 text-white hover:bg-blue-500'"
+              data-test="privacy-analytics-toggle"
+              @click="isGranted ? deny() : grant()"
+            >
+              {{ isGranted ? copy.consent.revoke : copy.consent.allow }}
+            </button>
+          </div>
           <div v-if="section.links?.length" class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
             <a
               v-for="link in section.links"
@@ -59,10 +77,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from '~/composables/useI18n'
+import { useAnalyticsConsent } from '~/composables/useAnalyticsConsent'
 import { privacyTranslations } from '~/utils/privacyTranslations'
 
 const { locale } = useI18n()
 const copy = computed(() => privacyTranslations[locale.value] ?? privacyTranslations['en-US'])
+const { consent, isGranted, grant, deny } = useAnalyticsConsent()
+const consentStatus = computed(() => {
+  if (consent.value === 'granted') return copy.value.consent.granted
+  if (consent.value === 'denied') return copy.value.consent.denied
+  return copy.value.consent.unset
+})
 
 useHead(() => ({
   title: `${copy.value.title} — Among Us Detective`,

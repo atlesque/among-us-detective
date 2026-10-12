@@ -12,7 +12,7 @@ test.describe("Browser Zoom Notice Banner", () => {
     await page.addInitScript(() => {
       localStorage.clear();
       localStorage.setItem("returningPlayer", JSON.stringify(true));
-      localStorage.setItem("acceptedCookies", JSON.stringify(true));
+      localStorage.setItem("analyticsConsent", "denied");
     });
 
     await page.goto("http://localhost:8071/", { waitUntil: "domcontentloaded" });

@@ -247,9 +247,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduces motion and improves performance',
 
     // Cookies & Privacy
-    'cookie.message': 'Game data is saved in your browser. In production, this app sends usage and diagnostic data to Google Analytics and Sentry.',
-    'cookie.accept': 'Got it',
-    'cookie.dismiss': 'Got it',
+    'cookie.message': 'Game data is saved in your browser. May we use Google Analytics to see how the app is used? Error reports are sent to Sentry either way.',
+    'cookie.accept': 'Allow analytics',
+    'cookie.decline': 'No thanks',
+    'cookie.bannerLabel': 'Privacy notice',
     'cookie.disclaimerLink': 'Privacy Policy',
 
     // Roadmap & Feedback Phase
@@ -747,9 +748,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduz travamentos e melhora o desempenho',
 
     // Cookies & Privacy
-    'cookie.message': 'Os dados da partida ficam salvos neste navegador. Em produção, este app envia dados de uso e diagnóstico ao Google Analytics e ao Sentry.',
-    'cookie.accept': 'Entendi',
-    'cookie.dismiss': 'Entendi',
+    'cookie.message': 'Os dados da partida ficam salvos neste navegador. Podemos usar o Google Analytics para ver como o app é usado? Relatórios de erro são enviados ao Sentry de qualquer forma.',
+    'cookie.accept': 'Permitir análise',
+    'cookie.decline': 'Não, obrigado',
+    'cookie.bannerLabel': 'Aviso de privacidade',
     'cookie.disclaimerLink': 'Política de Privacidade',
 
     // Roadmap & Feedback Phase
@@ -1247,9 +1249,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduce el retraso y mejora el rendimiento',
 
     // Cookies & Privacy
-    'cookie.message': 'Los datos de la partida se guardan en tu navegador. En producción, esta aplicación envía datos de uso y diagnóstico a Google Analytics y Sentry.',
-    'cookie.accept': 'Entendido',
-    'cookie.dismiss': 'Entendido',
+    'cookie.message': 'Los datos de la partida se guardan en tu navegador. ¿Podemos usar Google Analytics para ver cómo se usa la aplicación? Los informes de errores se envían a Sentry en cualquier caso.',
+    'cookie.accept': 'Permitir analítica',
+    'cookie.decline': 'No, gracias',
+    'cookie.bannerLabel': 'Aviso de privacidad',
     'cookie.disclaimerLink': 'Política de privacidad',
 
     // Roadmap & Feedback Phase
@@ -1747,9 +1750,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Réduit les ralentissements et améliore les performances',
 
     // Cookies & Privacy
-    'cookie.message': 'Les données de partie sont enregistrées dans votre navigateur. En production, cette application envoie des données d’utilisation et de diagnostic à Google Analytics et Sentry.',
-    'cookie.accept': 'Compris',
-    'cookie.dismiss': 'Compris',
+    'cookie.message': 'Les données de partie sont enregistrées dans votre navigateur. Pouvons-nous utiliser Google Analytics pour voir comment l’application est utilisée ? Les rapports d’erreur sont envoyés à Sentry dans tous les cas.',
+    'cookie.accept': 'Autoriser l’analyse',
+    'cookie.decline': 'Non merci',
+    'cookie.bannerLabel': 'Avis de confidentialité',
     'cookie.disclaimerLink': 'Politique de confidentialité',
 
     // Roadmap & Feedback Phase
@@ -2247,9 +2251,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': 'Reduziert Ruckler und verbessert die Leistung',
 
     // Cookies & Privacy
-    'cookie.message': 'Spieldaten werden in deinem Browser gespeichert. In der Produktionsumgebung sendet diese App Nutzungs- und Diagnosedaten an Google Analytics und Sentry.',
-    'cookie.accept': 'Verstanden',
-    'cookie.dismiss': 'Verstanden',
+    'cookie.message': 'Spieldaten werden in deinem Browser gespeichert. Dürfen wir Google Analytics nutzen, um zu sehen, wie die App verwendet wird? Fehlerberichte werden in jedem Fall an Sentry gesendet.',
+    'cookie.accept': 'Analyse erlauben',
+    'cookie.decline': 'Nein danke',
+    'cookie.bannerLabel': 'Datenschutzhinweis',
     'cookie.disclaimerLink': 'Datenschutzerklärung',
 
     // Roadmap & Feedback Phase
@@ -2747,9 +2752,10 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'settings.disableAnimationsSub': '버벅임을 줄이고 성능을 향상시킵니다',
 
     // Cookies & Privacy
-    'cookie.message': '게임 데이터는 브라우저에 저장됩니다. 운영 환경에서는 이 앱이 사용 및 진단 데이터를 Google Analytics와 Sentry로 전송합니다.',
-    'cookie.accept': '확인',
-    'cookie.dismiss': '확인',
+    'cookie.message': '게임 데이터는 브라우저에 저장됩니다. 앱 사용 방식을 파악하기 위해 Google Analytics를 사용해도 될까요? 오류 보고서는 어느 경우든 Sentry로 전송됩니다.',
+    'cookie.accept': '분석 허용',
+    'cookie.decline': '괜찮습니다',
+    'cookie.bannerLabel': '개인정보 안내',
     'cookie.disclaimerLink': '개인정보 처리방침',
 
     // Roadmap & Feedback Phase
