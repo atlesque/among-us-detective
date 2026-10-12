@@ -50,24 +50,13 @@ export function isMatchSessionExpired(): boolean {
   return elapsed > MATCH_CACHE_TTL_MS
 }
 
-export function checkAndExpireMatchSession(stores: {
-  crewStore: any
-  roundsStore: any
-  notesStore: any
-  tasksStore: any
-  impostorStore: any
-  settingsStore?: any
-}): boolean {
+/**
+ * Resets the match through `resetMatchState` when the session has been idle
+ * longer than MATCH_CACHE_TTL_MS. Returns true when it expired.
+ */
+export function checkAndExpireMatchSession(resetMatchState: () => void): boolean {
   if (isMatchSessionExpired()) {
-    stores.roundsStore?.startNewMatch?.()
-    stores.crewStore?.resetAllCrew?.()
-    stores.notesStore?.clearRoundNotes?.()
-    if (stores.settingsStore?.resetNotesOnNewGame !== false) {
-      stores.notesStore?.clearGameNotes?.()
-    }
-    stores.tasksStore?.resetAllTasks?.()
-    stores.impostorStore?.clearFellowImpostors?.()
-    stores.impostorStore?.setImpostorMode?.(false)
+    resetMatchState()
     touchMatchActivity(true)
     return true
   }
