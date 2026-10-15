@@ -17,7 +17,6 @@
       <AppIcon name="skull" class="w-full h-full p-0.5" />
     </div>
 
-
     <!-- Empty / unassigned role placeholder -->
     <svg
       v-else
