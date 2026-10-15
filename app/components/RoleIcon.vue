@@ -17,13 +17,6 @@
       <AppIcon name="skull" class="w-full h-full p-0.5" />
     </div>
 
-    <!-- Tracker has no official image yet, so it uses the map pin icon -->
-    <div
-      v-else-if="role && role.toLowerCase() === 'tracker'"
-      class="w-full h-full flex items-center justify-center text-emerald-500 drop-shadow-sm"
-    >
-      <AppIcon name="pin" class="w-full h-full p-0.5" />
-    </div>
 
     <!-- Empty / unassigned role placeholder -->
     <svg
@@ -84,6 +77,7 @@ const roleImages: Record<string, string> = {
   scientist: '/images/roles/scientist.png',
   engineer: '/images/roles/engineer.png',
   noisemaker: '/images/roles/noisemaker.png',
+  tracker: '/images/roles/tracker.png',
   impostor: '/images/roles/impostor.png',
   shapeshifter: '/images/roles/shapeshifter.png',
   phantom: '/images/roles/phantom.png',
