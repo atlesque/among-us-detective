@@ -102,14 +102,14 @@
               : 'bg-gray-200/60 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border border-gray-300/50 dark:border-gray-700/30 cursor-not-allowed'"
             :disabled="crewStore.activeCrewMembers.length <= 0 || roundsStore.isViewingHistory || roundsStore.isMaxRoundsReached"
             data-test="new-round-btn"
-            :title="roundsStore.isMaxRoundsReached ? t('header.maxRoundsReached') : t('header.nextRoundHint')"
+            :title="roundsStore.isMaxRoundsReached ? t('header.maxRoundsReached', { max: MAX_ROUNDS }) : t('header.nextRoundHint')"
             @click="initNewRound"
           >
             <AppIcon name="bell" class="w-4 h-4 shrink-0" />
             <div class="flex flex-col text-left leading-tight py-0.5">
               <div class="flex items-center gap-1">
                 <span class="leading-tight">{{ t('header.nextRound') }}</span>
-                <span v-if="roundsStore.isMaxRoundsReached" class="text-[9px] text-amber-300 font-semibold">({{ t('header.maxR10') }})</span>
+                <span v-if="roundsStore.isMaxRoundsReached" class="text-[9px] text-amber-300 font-semibold">({{ t('header.maxRoundBadge', { max: MAX_ROUNDS }) }})</span>
               </div>
               <span class="text-[8px] sm:text-[9px] font-normal opacity-75 block mt-0.5 leading-tight">{{ t('header.meetingEnded') }}</span>
             </div>
@@ -387,6 +387,7 @@
 import type { CrewMember } from '~/stores/crew'
 import { useImpostorStore } from '~/stores/impostor'
 import { useTimerStore } from '~/stores/timer'
+import { MAX_ROUNDS } from '~/stores/rounds'
 import { touchMatchActivity } from '~/utils/sessionManager'
 import { activeMenuColor } from '~/components/PlayerCard.vue'
 

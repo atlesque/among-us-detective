@@ -117,4 +117,21 @@ test.describe("Next round info hint", () => {
     await page.keyboard.press("Escape");
     await expect(popover).toBeHidden();
   });
+
+  test("New round locks at the round limit with a translated tooltip and badge", async ({
+    page,
+  }) => {
+    await activateAllCrew(page);
+    const newRoundBtn = page.locator("[data-test='new-round-btn']");
+    for (let i = 0; i < 9; i++) {
+      await newRoundBtn.click();
+    }
+
+    await expect(newRoundBtn).toBeDisabled();
+    await expect(newRoundBtn).toHaveAttribute(
+      "title",
+      "Maximum rounds reached (10 rounds)"
+    );
+    await expect(newRoundBtn).toContainText("(Max R10)");
+  });
 });
