@@ -60,8 +60,9 @@ test.describe("Settings saved by V1", () => {
       showPlayerNames: true,
       resetNotesOnNewGame: false,
       isImproveMapContrastEnabled: false,
-      settingsModalOpenState: false,
     });
+    // V1 saved the modal as open; V2 neither reopens nor persists it.
+    expect(settings).not.toHaveProperty("settingsModalOpenState");
     expect(settings).not.toHaveProperty("showImposterCheckbox");
     expect(settings).not.toHaveProperty("showTasksCheckbox");
     expect(settings).not.toHaveProperty("showMeetingsCount");
