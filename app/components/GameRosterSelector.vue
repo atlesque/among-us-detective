@@ -175,7 +175,11 @@
           <div
             v-for="color in allColors"
             :key="color"
-            class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer select-none"
+            class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            role="button"
+            tabindex="0"
+            :aria-pressed="isMemberActive(color)"
+            :aria-label="`${tColor(color)}: ${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')}${isPlayerColor(color) ? ` (${t('card.me')})` : ''}`"
             :class="[
               rosterBeanSizeClasses,
               isMemberActive(color)
@@ -185,6 +189,8 @@
             ]"
             :title="`${tColor(color)} (${isMemberActive(color) ? t('roster.playing') : t('roster.notInGame')})${isPlayerColor(color) ? ` - ${t('card.me')}` : ''}`"
             @click="toggleActive(color)"
+            @keydown.enter.prevent="toggleActive(color)"
+            @keydown.space.prevent="toggleActive(color)"
             @contextmenu.prevent="setAsMyPlayer(color)"
           >
             <!-- Bean Avatar -->
