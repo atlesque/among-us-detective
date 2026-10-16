@@ -46,7 +46,7 @@ test.describe("Browser Zoom Notice Banner", () => {
     await expect(page.locator("[role='dialog']")).not.toBeVisible();
 
     // Dismiss banner
-    const dismissBtn = banner.locator("button[title='Dismiss notice']");
+    const dismissBtn = banner.getByRole("button", { name: "Close" });
     await dismissBtn.click();
     await expect(banner).not.toBeVisible();
 

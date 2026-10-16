@@ -329,6 +329,7 @@
                   type="button"
                   class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
                   :title="t('card.decrementMeetings')"
+                  :aria-label="t('card.decrementMeetings')"
                   @click="decrementMeetings"
                 >
                   -
@@ -338,6 +339,7 @@
                   type="button"
                   class="w-4 h-4 flex items-center justify-center rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 text-[10px] font-bold leading-none"
                   :title="t('card.incrementMeetings')"
+                  :aria-label="t('card.incrementMeetings')"
                   @click="incrementMeetings"
                 >
                   +
