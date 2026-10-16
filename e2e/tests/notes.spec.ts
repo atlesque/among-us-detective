@@ -94,6 +94,30 @@ test.describe("Notes", () => {
     await expect(page.locator("#round-notes")).not.toBeVisible();
   });
 
+  test("Escape while typing blurs the notes but keeps the notepad open; a second Escape minimises it", async ({ page }) => {
+    await openNotes(page);
+    await page.click("#round-notes");
+    await page.keyboard.type("Red sus");
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#round-notes")).toBeVisible();
+    await expect(page.locator("#round-notes")).not.toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#round-notes")).not.toBeVisible();
+  });
+
+  test("Escape during IME composition keeps focus in the notes", async ({ page }) => {
+    await openNotes(page);
+    await page.click("#round-notes");
+    await page.locator("#round-notes").dispatchEvent("keydown", {
+      key: "Escape",
+      code: "Escape",
+      isComposing: true,
+      bubbles: true,
+    });
+    await expect(page.locator("#round-notes")).toBeFocused();
+    await expect(page.locator("#round-notes")).toBeVisible();
+  });
+
   test("Hiding round notes via settings hides the round notes section", async ({
     page,
   }) => {

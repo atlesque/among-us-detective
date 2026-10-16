@@ -556,16 +556,14 @@ onMounted(() => {
     const isTyping = !!target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
 
     if (e.key === 'Escape' || e.code === 'Escape') {
+      // Escape during IME composition only cancels the suggestion
+      if (e.isComposing) return
+      // Modals handle Escape themselves (Modal.vue), so it never reaches here while one is open
       if (isNextRoundInfoOpen.value) {
         closeNextRoundInfo()
-      }
-      if (isTyping) {
+      } else if (isTyping) {
         target.blur()
-      }
-      if (timerStore.isModalOpen) {
-        timerStore.toggleModal(false)
-      }
-      if (notepadRef.value && !notepadRef.value.isMinimized) {
+      } else if (notepadRef.value && !notepadRef.value.isMinimized) {
         notepadRef.value.minimize()
       }
       return
