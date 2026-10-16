@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="fixed bottom-20 right-3 sm:bottom-20 sm:right-6 z-50 p-3.5 sm:p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-gray-100 shadow-2xl max-w-[calc(100vw-24px)] sm:max-w-sm transition-all"
+    class="fixed bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] right-[calc(0.75rem+env(safe-area-inset-right,0px))] sm:right-[calc(1.5rem+env(safe-area-inset-right,0px))] z-50 p-3.5 sm:p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-2xl text-gray-900 dark:text-gray-100 shadow-2xl max-w-[calc(100vw-24px)] sm:max-w-sm transition-all"
     data-test="pwa-update-prompt"
     role="dialog"
     aria-labelledby="pwa-update-title"
