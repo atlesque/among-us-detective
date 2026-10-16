@@ -44,10 +44,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Google Analytics privacy information', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: 'Errors, performance, logs, and replay',
+        heading: 'Errors, performance, and logs',
         paragraphs: [
-          'In production, Sentry is configured in the browser and on the server to receive error reports and performance traces; log sending is enabled in its configuration. Performance tracing is configured to sample 100% of transactions. Session Replay is configured to sample 10% of browser sessions and 100% of sessions with an error.',
-          'Both Sentry configurations enable automatic personal data collection. Error and tracing reports may therefore include IP addresses and other automatically available user or request details. Replays may record page interactions and content according to Sentry’s replay settings.',
+          'In production, Sentry is configured in the browser to receive error reports and performance traces; log sending is enabled in its configuration. Performance tracing is configured to sample 10% of transactions. Session Replay is turned off, so your screen and page interactions are not recorded.',
+          'Sentry is configured not to send personal data, so reports do not include your IP address or other user details. They may still include technical details such as your browser, device, the page address, and the error message.',
         ],
         links: [{ label: 'Sentry privacy information', href: 'https://sentry.io/privacy/' }],
       },
@@ -93,10 +93,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Informações de privacidade do Google Analytics', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: 'Erros, desempenho, registros e reprodução de sessão',
+        heading: 'Erros, desempenho e registros',
         paragraphs: [
-          'Em produção, o Sentry está configurado no navegador e no servidor para receber relatórios de erros e rastreamentos de desempenho; o envio de registros está habilitado na configuração. O rastreamento de desempenho está configurado para incluir 100% das transações. A reprodução de sessão está configurada para incluir 10% das sessões do navegador e 100% das sessões com um erro.',
-          'As duas configurações do Sentry permitem a coleta automática de dados pessoais. Por isso, relatórios de erros e rastreamentos podem incluir endereços IP e outros dados de usuário ou solicitação disponíveis automaticamente. As reproduções podem registrar interações e conteúdo da página conforme as configurações do Sentry.',
+          'Em produção, o Sentry está configurado no navegador para receber relatórios de erros e rastreamentos de desempenho; o envio de registros está habilitado na configuração. O rastreamento de desempenho está configurado para incluir 10% das transações. A reprodução de sessão está desativada, então sua tela e suas interações com a página não são gravadas.',
+          'O Sentry está configurado para não enviar dados pessoais, então os relatórios não incluem seu endereço IP nem outros dados de usuário. Eles ainda podem incluir detalhes técnicos, como seu navegador, dispositivo, o endereço da página e a mensagem de erro.',
         ],
         links: [{ label: 'Informações de privacidade do Sentry', href: 'https://sentry.io/privacy/' }],
       },
@@ -142,10 +142,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Información de privacidad de Google Analytics', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: 'Errores, rendimiento, registros y reproducción',
+        heading: 'Errores, rendimiento y registros',
         paragraphs: [
-          'En producción, Sentry está configurado en el navegador y en el servidor para recibir informes de errores y trazas de rendimiento; el envío de registros está habilitado en su configuración. El rastreo de rendimiento está configurado para muestrear el 100 % de las transacciones. La reproducción de sesiones está configurada para muestrear el 10 % de las sesiones del navegador y el 100 % de las sesiones con un error.',
-          'Ambas configuraciones de Sentry permiten la recopilación automática de datos personales. Por ello, los informes de errores y las trazas pueden incluir direcciones IP y otros datos de usuario o de solicitud disponibles automáticamente. Las reproducciones pueden registrar interacciones y contenido de la página según los ajustes de Sentry.',
+          'En producción, Sentry está configurado en el navegador para recibir informes de errores y trazas de rendimiento; el envío de registros está habilitado en su configuración. El rastreo de rendimiento está configurado para muestrear el 10 % de las transacciones. La reproducción de sesiones está desactivada, así que tu pantalla y tus interacciones con la página no se graban.',
+          'Sentry está configurado para no enviar datos personales, así que los informes no incluyen tu dirección IP ni otros datos de usuario. Aun así, pueden incluir detalles técnicos como tu navegador, tu dispositivo, la dirección de la página y el mensaje de error.',
         ],
         links: [{ label: 'Información de privacidad de Sentry', href: 'https://sentry.io/privacy/' }],
       },
@@ -191,10 +191,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Informations sur la confidentialité de Google Analytics', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: 'Erreurs, performances, journaux et relecture',
+        heading: 'Erreurs, performances et journaux',
         paragraphs: [
-          'En production, Sentry est configuré dans le navigateur et sur le serveur pour recevoir les rapports d’erreur et les traces de performance ; l’envoi des journaux est activé dans sa configuration. Le traçage des performances est configuré pour échantillonner 100 % des transactions. La relecture de session est configurée pour échantillonner 10 % des sessions du navigateur et 100 % des sessions avec une erreur.',
-          'Les deux configurations Sentry autorisent la collecte automatique de données personnelles. Les rapports d’erreur et les traces peuvent donc contenir des adresses IP et d’autres informations utilisateur ou de requête disponibles automatiquement. Les relectures peuvent enregistrer des interactions et du contenu de page selon les paramètres de relecture de Sentry.',
+          'En production, Sentry est configuré dans le navigateur pour recevoir les rapports d’erreur et les traces de performance ; l’envoi des journaux est activé dans sa configuration. Le traçage des performances est configuré pour échantillonner 10 % des transactions. La relecture de session est désactivée : votre écran et vos interactions avec la page ne sont pas enregistrés.',
+          'Sentry est configuré pour ne pas envoyer de données personnelles : les rapports ne contiennent ni votre adresse IP ni d’autres informations utilisateur. Ils peuvent tout de même contenir des détails techniques comme votre navigateur, votre appareil, l’adresse de la page et le message d’erreur.',
         ],
         links: [{ label: 'Informations sur la confidentialité de Sentry', href: 'https://sentry.io/privacy/' }],
       },
@@ -240,10 +240,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Datenschutzinformationen zu Google Analytics', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: 'Fehler, Leistung, Protokolle und Wiedergaben',
+        heading: 'Fehler, Leistung und Protokolle',
         paragraphs: [
-          'In der Produktionsumgebung ist Sentry im Browser und auf dem Server so konfiguriert, dass Fehlerberichte und Leistungstraces empfangen werden; das Senden von Protokollen ist in der Konfiguration aktiviert. Das Performance-Tracing ist so konfiguriert, dass 100 % der Transaktionen erfasst werden. Session Replay ist so konfiguriert, dass 10 % der Browser-Sitzungen und 100 % der Sitzungen mit einem Fehler erfasst werden.',
-          'Beide Sentry-Konfigurationen erlauben die automatische Erfassung personenbezogener Daten. Fehlerberichte und Traces können daher IP-Adressen und andere automatisch verfügbare Benutzer- oder Anfrageinformationen enthalten. Wiedergaben können gemäß den Replay-Einstellungen von Sentry Seiteninteraktionen und Inhalte aufzeichnen.',
+          'In der Produktionsumgebung ist Sentry im Browser so konfiguriert, dass Fehlerberichte und Leistungstraces empfangen werden; das Senden von Protokollen ist in der Konfiguration aktiviert. Das Performance-Tracing ist so konfiguriert, dass 10 % der Transaktionen erfasst werden. Session Replay ist deaktiviert, dein Bildschirm und deine Interaktionen mit der Seite werden also nicht aufgezeichnet.',
+          'Sentry ist so konfiguriert, dass keine personenbezogenen Daten gesendet werden. Berichte enthalten daher weder deine IP-Adresse noch andere Benutzerangaben. Sie können aber technische Details wie deinen Browser, dein Gerät, die Seitenadresse und die Fehlermeldung enthalten.',
         ],
         links: [{ label: 'Datenschutzinformationen zu Sentry', href: 'https://sentry.io/privacy/' }],
       },
@@ -289,10 +289,10 @@ export const privacyTranslations: Record<SupportedLocale, PrivacyPageCopy> = {
         links: [{ label: 'Google Analytics 개인정보 안내', href: 'https://policies.google.com/privacy' }],
       },
       {
-        heading: '오류, 성능, 로그 및 세션 재생',
+        heading: '오류, 성능 및 로그',
         paragraphs: [
-          '운영 환경에서 Sentry는 브라우저와 서버에서 오류 보고서와 성능 추적 정보를 받도록 설정되어 있으며, 로그 전송도 설정에서 활성화되어 있습니다. 성능 추적은 트랜잭션의 100%를 샘플링하도록 설정되어 있습니다. 세션 재생은 브라우저 세션의 10%, 오류가 발생한 세션의 100%를 샘플링하도록 설정되어 있습니다.',
-          '두 Sentry 설정 모두 개인 정보의 자동 수집을 허용합니다. 따라서 오류 보고서와 추적 정보에 IP 주소 및 자동으로 수집 가능한 기타 사용자 또는 요청 정보가 포함될 수 있습니다. 세션 재생에는 Sentry 재생 설정에 따라 페이지 상호작용과 콘텐츠가 기록될 수 있습니다.',
+          '운영 환경에서 Sentry는 브라우저에서 오류 보고서와 성능 추적 정보를 받도록 설정되어 있으며, 로그 전송도 설정에서 활성화되어 있습니다. 성능 추적은 트랜잭션의 10%를 샘플링하도록 설정되어 있습니다. 세션 재생은 꺼져 있으므로 화면과 페이지 상호작용은 기록되지 않습니다.',
+          'Sentry는 개인 정보를 보내지 않도록 설정되어 있으므로 보고서에는 IP 주소나 기타 사용자 정보가 포함되지 않습니다. 다만 브라우저, 기기, 페이지 주소, 오류 메시지와 같은 기술 정보는 포함될 수 있습니다.',
         ],
         links: [{ label: 'Sentry 개인정보 안내', href: 'https://sentry.io/privacy/' }],
       },
