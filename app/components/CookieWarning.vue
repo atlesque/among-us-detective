@@ -5,7 +5,7 @@
       role="region"
       :aria-label="t('cookie.bannerLabel')"
       aria-live="polite"
-      class="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-800 shadow-2xl transition-all duration-300"
+      class="fixed bottom-0 left-0 right-0 z-50 p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(1rem+env(safe-area-inset-bottom,0px))] bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-800 shadow-2xl transition-all duration-300"
       data-test="cookie-warning"
     >
       <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs">

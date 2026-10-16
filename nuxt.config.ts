@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     head: {
       title: "Among Us Detective",
       charset: "utf-8",
-      viewport: "width=device-width,initial-scale=1.0",
+      viewport: "width=device-width,initial-scale=1.0,viewport-fit=cover",
       meta: [
         { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
         {

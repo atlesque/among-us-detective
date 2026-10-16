@@ -8,6 +8,10 @@ body {
 
 // Use body to overwrite the CSS reset
 body {
+  // With viewport-fit=cover, keep content clear of the notch in landscape
+  box-sizing: border-box;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
   @apply bg-slate-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased;
 
   button,

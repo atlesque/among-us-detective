@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col p-2 pb-20 sm:pb-24 lg:p-8 lg:pb-24 transition-colors duration-300 min-h-screen text-gray-900 dark:text-gray-100 w-full max-w-full overflow-x-hidden"
+    class="flex flex-col p-2 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(6rem+env(safe-area-inset-bottom,0px))] lg:p-8 lg:pb-[calc(6rem+env(safe-area-inset-bottom,0px))] transition-colors duration-300 min-h-screen text-gray-900 dark:text-gray-100 w-full max-w-full overflow-x-hidden"
     :class="impostorStore.isImpostorModeActive
       ? 'bg-gradient-to-b from-rose-100 via-slate-100 to-slate-100 dark:from-rose-950/40 dark:via-gray-950 dark:to-gray-950'
       : 'bg-gradient-to-b from-slate-200 via-slate-100 to-slate-100 dark:from-gray-900/40 dark:via-gray-950 dark:to-gray-950'"
@@ -240,7 +240,7 @@
     </div>
 
     <!-- Modern Bottom Detective Toolbar (Persistent Dock) -->
-    <footer class="fixed bottom-0 left-0 right-0 z-30 h-[calc(3rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] flex items-center justify-between px-1.5 sm:px-4 md:px-6 bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
+    <footer class="fixed bottom-0 left-0 right-0 z-30 h-[calc(3rem+env(safe-area-inset-bottom,0px))] pb-[env(safe-area-inset-bottom,0px)] flex items-center justify-between pl-[calc(0.375rem+env(safe-area-inset-left,0px))] pr-[calc(0.375rem+env(safe-area-inset-right,0px))] sm:pl-[calc(1rem+env(safe-area-inset-left,0px))] sm:pr-[calc(1rem+env(safe-area-inset-right,0px))] md:pl-[calc(1.5rem+env(safe-area-inset-left,0px))] md:pr-[calc(1.5rem+env(safe-area-inset-right,0px))] bg-white/95 dark:bg-black/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800/80 shadow-2xl max-w-full overflow-x-hidden">
       <!-- Left: Investigation Tools (Notes, Map, Tasks, Impostor) -->
       <div class="flex items-center gap-1 sm:gap-2 shrink-0">
         <!-- Notes Button (Prominent & Evident) -->
