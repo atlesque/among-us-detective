@@ -41,6 +41,7 @@ test.describe("Role confirmation", () => {
 
     const state = await getPersistedRoleState(page, "red");
     expect(state.member).toMatchObject({ role: "Tracker", roleConfirmed: false });
+    await expect(member.locator("img[alt='Tracker']")).toHaveAttribute("src", "/images/roles/tracker.png");
 
     await member.click();
     await page.getByRole("button", { name: "Confirm role" }).click();

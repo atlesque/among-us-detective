@@ -172,10 +172,13 @@
         <div
           class="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 pt-1.5 sm:pt-2 mt-1 sm:mt-1.5 border-t border-gray-200 dark:border-gray-800"
         >
-          <div
+          <button
             v-for="color in allColors"
             :key="color"
-            class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer select-none"
+            type="button"
+            class="roster-bean relative flex flex-col items-center justify-center p-0.5 sm:p-1 rounded transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            :aria-pressed="isMemberActive(color)"
+            :aria-label="`${getRosterDisplayName(color)}${isPlayerColor(color) ? ` (${t('card.me')})` : ''}`"
             :class="[
               rosterBeanSizeClasses,
               isMemberActive(color)
@@ -188,7 +191,7 @@
             @contextmenu.prevent="setAsMyPlayer(color)"
           >
             <!-- Bean Avatar -->
-            <div :class="rosterAvatarSizeClasses" class="flex items-center justify-center pointer-events-none">
+            <span :class="rosterAvatarSizeClasses" class="flex items-center justify-center pointer-events-none">
               <CrewIcon
                 :color="color"
                 :is-dead="false"
@@ -196,10 +199,10 @@
                 :show-player-name="false"
                 class="w-full h-full"
               />
-            </div>
+            </span>
 
             <!-- Dot / Me indicator -->
-            <div class="mt-0.5 flex items-center justify-center">
+            <span class="mt-0.5 flex items-center justify-center">
               <span
                 v-if="isPlayerColor(color)"
                 class="text-[6px] sm:text-[8px] font-black px-0.5 sm:px-1 rounded bg-yellow-400 text-black leading-tight"
@@ -211,7 +214,7 @@
                 class="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full transition-colors"
                 :class="isMemberActive(color) ? 'bg-emerald-500 shadow-[0_0_4px_#10b981]' : 'bg-gray-400 dark:bg-gray-600'"
               />
-            </div>
+            </span>
 
             <span
               class="mt-0.5 w-full text-center text-[6.5px] xs:text-[7px] sm:text-[8px] font-bold capitalize leading-[8px] sm:leading-[9px] truncate px-0.5 tracking-tight transition-colors"
@@ -223,7 +226,7 @@
             >
               {{ getRosterDisplayName(color) }}
             </span>
-          </div>
+          </button>
         </div>
       </div>
     </Transition>

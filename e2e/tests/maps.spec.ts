@@ -1,5 +1,6 @@
 import { expect, test } from "../fixtures/base";
 import { activateAllCrew } from "../helpers/crew";
+import { waitForMapImage } from "../helpers/maps";
 
 test.describe("Map display and selection", () => {
   test("Map is hidden by default; Show map button is visible", async ({
@@ -181,6 +182,7 @@ test.describe("Map display and selection", () => {
     const player = page.locator("[data-test='map-player-blue']");
     await expect(map).toHaveAttribute("data-map-id", "the-skeld");
     await expect(player).toHaveAttribute("data-moveable-ready", "true");
+    await waitForMapImage(page);
     await player.evaluate((element) => element.scrollIntoView({ block: "center" }));
 
     const defaultX = Number(await player.getAttribute("data-position-x"));
@@ -224,6 +226,7 @@ test.describe("Map display and selection", () => {
       .poll(async () => Number(await player.getAttribute("data-position-x")))
       .toBeCloseTo(defaultX, 5);
     await page.locator("[data-test='reset-map-positions-btn']").click();
+    await page.locator("[data-test='reset-map-positions-confirm-btn']").click();
 
     await page.locator("[data-test='map-btn-the-skeld']").click();
     await expect(map).toHaveAttribute("data-map-id", "the-skeld");
@@ -246,6 +249,7 @@ test.describe("Map display and selection", () => {
 
     const player = page.locator("[data-test='map-player-blue']");
     await expect(player).toHaveAttribute("data-moveable-ready", "true");
+    await waitForMapImage(page);
     await player.evaluate((element) => element.scrollIntoView({ block: "center" }));
     const playerBox = await player.boundingBox();
     if (!playerBox) throw new Error("Blue map marker is not visible");
