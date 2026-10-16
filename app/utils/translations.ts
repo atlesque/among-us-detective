@@ -498,6 +498,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': 'Chime when finished',
     'timer.stampNotes': 'Add timestamp to notes',
     'timer.stamped': 'Added to notes!',
+    'timer.stampUnavailableHistory': 'Not available while viewing history',
     'timer.sabotage30': 'Reactor / O2 (30s)',
     'timer.sabotage45': 'Crash / Airship (45s)',
 
@@ -1000,6 +1001,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': 'Tocar aviso ao terminar',
     'timer.stampNotes': 'Adicionar tempo nas notas',
     'timer.stamped': 'Adicionado às notas!',
+    'timer.stampUnavailableHistory': 'Indisponível ao ver o histórico',
     'timer.sabotage30': 'Reator / O2 (30s)',
     'timer.sabotage45': 'Queda / Airship (45s)',
 
@@ -1502,6 +1504,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': 'Sonar aviso al terminar',
     'timer.stampNotes': 'Añadir marca de tiempo a las notas',
     'timer.stamped': '¡Añadido a las notas!',
+    'timer.stampUnavailableHistory': 'No disponible al ver el historial',
     'timer.sabotage30': 'Reactor / O2 (30s)',
     'timer.sabotage45': 'Colisión / Airship (45s)',
 
@@ -2004,6 +2007,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': 'Sonnerie à la fin',
     'timer.stampNotes': 'Ajouter l\'horodatage aux notes',
     'timer.stamped': 'Ajouté aux notes !',
+    'timer.stampUnavailableHistory': 'Indisponible pendant la consultation de l\'historique',
     'timer.sabotage30': 'Réacteur / O2 (30s)',
     'timer.sabotage45': 'Crash / Airship (45s)',
 
@@ -2506,6 +2510,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': 'Signalton bei Ablauf',
     'timer.stampNotes': 'Zeitstempel in Notizen einfügen',
     'timer.stamped': 'Zu Notizen hinzugefügt!',
+    'timer.stampUnavailableHistory': 'Beim Ansehen des Verlaufs nicht verfügbar',
     'timer.sabotage30': 'Reaktor / O2 (30s)',
     'timer.sabotage45': 'Absturz / Airship (45s)',
 
@@ -3008,6 +3013,7 @@ export const translations: Record<SupportedLocale, Record<string, string>> = {
     'timer.sound': '완료 시 알림음 재생',
     'timer.stampNotes': '메모에 타임스탬프 추가',
     'timer.stamped': '메모에 추가됨!',
+    'timer.stampUnavailableHistory': '기록을 보는 동안에는 사용할 수 없음',
     'timer.sabotage30': '원자로 / 산소 (30초)',
     'timer.sabotage45': '추락 / 에어십 (45초)',
 

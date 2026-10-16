@@ -1,4 +1,6 @@
 import { expect, test } from "../fixtures/base";
+import { activateAllCrew } from "../helpers/crew";
+import { closeModal, openNotes } from "../helpers/modals";
 
 function toSeconds(mmss: string): number {
   const [mins, secs] = mmss.trim().split(":").map(Number);
@@ -70,5 +72,38 @@ test.describe("Timer", () => {
     }
 
     expect(await page.evaluate(() => (window as any).__audio.contexts)).toBe(1);
+  });
+});
+
+test.describe("Timer during round history", () => {
+  test("Stamping the stopwatch is disabled and leaves live notes untouched", async ({ page }) => {
+    const roundNotes = page.locator("#round-notes");
+    await expect(roundNotes).toBeVisible();
+
+    // Finish round 1 and write live notes for round 2
+    await roundNotes.fill("Round 1 facts");
+    await activateAllCrew(page);
+    await page.click("[data-test='new-round-btn']");
+    await openNotes(page);
+    await roundNotes.fill("Round 2 live notes");
+    await roundNotes.blur();
+
+    // View the round 1 snapshot
+    await page.locator("button:has-text('R1')").first().click();
+    await expect(roundNotes).toHaveValue("Round 1 facts");
+
+    // The stamp button is disabled while viewing history
+    await page.click("[data-test='timer-btn']");
+    await page.click("[data-test='timer-stopwatch-tab']");
+    const stampBtn = page.locator("[data-test='timer-stamp-btn']");
+    await expect(stampBtn).toBeDisabled();
+    await expect(stampBtn).toHaveText("Not available while viewing history");
+    await closeModal(page);
+
+    // Back on the live round, its notes are unchanged
+    await page.locator("button:has-text('Live')").first().click();
+    await expect(roundNotes).toHaveValue("Round 2 live notes");
+    const liveNotes = await page.evaluate(() => JSON.parse(localStorage.getItem("notes") ?? "{}").roundNotes);
+    expect(liveNotes).toBe("Round 2 live notes");
   });
 });
