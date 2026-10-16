@@ -3,6 +3,7 @@
     <button
       class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       :disabled="disabled"
+      :aria-pressed="selectedMap === 'the-skeld'"
       :class="selectedMap === 'the-skeld'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"
@@ -14,6 +15,7 @@
     <button
       class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       :disabled="disabled"
+      :aria-pressed="selectedMap === 'mira-hq'"
       :class="selectedMap === 'mira-hq'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"
@@ -25,6 +27,7 @@
     <button
       class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       :disabled="disabled"
+      :aria-pressed="selectedMap === 'polus'"
       :class="selectedMap === 'polus'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"
@@ -36,6 +39,7 @@
     <button
       class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       :disabled="disabled"
+      :aria-pressed="selectedMap === 'the-airship'"
       :class="selectedMap === 'the-airship'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"
@@ -47,6 +51,7 @@
     <button
       class="px-2.5 py-1 text-xs font-semibold rounded-lg transition-all disabled:opacity-60 disabled:cursor-not-allowed"
       :disabled="disabled"
+      :aria-pressed="selectedMap === 'the-fungle'"
       :class="selectedMap === 'the-fungle'
         ? 'bg-emerald-600 text-white shadow-sm border border-emerald-500'
         : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-700/60'"

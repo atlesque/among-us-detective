@@ -1,5 +1,6 @@
 import { expect, test } from "../fixtures/base";
 import { activateAllCrew } from "../helpers/crew";
+import { waitForMapImage } from "../helpers/maps";
 import { openNotes } from "../helpers/modals";
 
 test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Debounce", () => {
@@ -15,6 +16,7 @@ test.describe("M1 Stress Test Suite: Map Pin Dragging & Detective Notepad Deboun
         await page.click("[data-test='toggle-map-btn']");
         await expect(mapContainer).toBeVisible();
       }
+      await waitForMapImage(page);
     });
 
     test("1. Rapid pointer movement updates inline style at 60fps and only commits to store on dragEnd", async ({

@@ -102,14 +102,14 @@
               : 'bg-gray-200/60 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 border border-gray-300/50 dark:border-gray-700/30 cursor-not-allowed'"
             :disabled="crewStore.activeCrewMembers.length <= 0 || roundsStore.isViewingHistory || roundsStore.isMaxRoundsReached"
             data-test="new-round-btn"
-            :title="roundsStore.isMaxRoundsReached ? 'Maximum rounds reached (10 rounds)' : t('header.nextRoundHint')"
+            :title="roundsStore.isMaxRoundsReached ? t('header.maxRoundsReached') : t('header.nextRoundHint')"
             @click="initNewRound"
           >
             <AppIcon name="bell" class="w-4 h-4 shrink-0" />
             <div class="flex flex-col text-left leading-tight py-0.5">
               <div class="flex items-center gap-1">
                 <span class="leading-tight">{{ t('header.nextRound') }}</span>
-                <span v-if="roundsStore.isMaxRoundsReached" class="text-[9px] text-amber-300 font-semibold">(Max R10)</span>
+                <span v-if="roundsStore.isMaxRoundsReached" class="text-[9px] text-amber-300 font-semibold">({{ t('header.maxR10') }})</span>
               </div>
               <span class="text-[8px] sm:text-[9px] font-normal opacity-75 block mt-0.5 leading-tight">{{ t('header.meetingEnded') }}</span>
             </div>
@@ -176,7 +176,8 @@
         <button
           type="button"
           class="shrink-0 p-1 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200 rounded text-xs font-bold leading-none flex items-center justify-center cursor-pointer"
-          title="Dismiss notice"
+          :title="t('modal.close')"
+          :aria-label="t('modal.close')"
           @click="dismissZoomNotice"
         >
           <AppIcon name="close" class="w-3.5 h-3.5" />
@@ -258,6 +259,7 @@
         <!-- Map Toggle Button -->
         <button
           type="button"
+          :aria-expanded="mapsStore.isMapVisible"
           class="h-8 px-1.5 sm:px-2.5 text-xs font-semibold rounded-lg border transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 cursor-pointer"
           :class="mapsStore.isMapVisible
             ? 'bg-indigo-600/30 text-indigo-600 dark:text-indigo-300 border-indigo-500/50 hover:bg-indigo-600/40'
@@ -318,6 +320,7 @@
         <!-- Impostor Mode Direct Toggle Button -->
         <button
           type="button"
+          :aria-pressed="impostorStore.isImpostorModeActive"
           class="h-8 px-2 sm:px-2.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 shadow-sm cursor-pointer"
           :class="impostorStore.isImpostorModeActive
             ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-950/70 border border-rose-400 ring-2 ring-rose-500/80'
