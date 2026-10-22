@@ -29,10 +29,8 @@
 const V2_URL = 'https://v2.amongusdetective.com'
 
 const emit = defineEmits<{ close: [] }>()
-const { gtag } = useGtag()
 
 function handleTryV2() {
-  gtag('event', 'click_try_v2', { event_category: 'global_stats' })
   emit('close')
 }
 </script>

@@ -37,6 +37,8 @@ export default defineNuxtConfig({
           content: "Tool to help track innocents and suspects in Among Us.",
         },
       ],
+      // Shared opt-in analytics consent banner (loads Cloudflare Web Analytics only after "Allow").
+      script: [{ src: "https://tools.atlesque.dev/consent.js", defer: true }],
       link: [
         {
           rel: "apple-touch-icon",
@@ -65,16 +67,10 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@vite-pwa/nuxt",
     "@sentry/nuxt/module",
-    "nuxt-gtag",
   ],
 
   // Global CSS
   css: ["~/assets/scss/styles.scss"],
-
-  // Google Analytics
-  gtag: {
-    id: "G-F1ZVM4FLC6",
-  },
 
   // PWA
   pwa: {

@@ -123,7 +123,6 @@
     <AboutModal v-if="isAboutModalOpen" @close="toggleAboutModal" />
     <SettingsModal v-if="isSettingsModalOpen" @close="toggleSettingsModal" />
     <TasksModal v-if="isTasksModalOpen" @close="toggleTasksModal" />
-    <CookieWarning />
   </div>
 </template>
 
@@ -134,7 +133,6 @@ const crewStore = useCrewStore()
 const settingsStore = useSettingsStore()
 const notesStore = useNotesStore()
 const tasksStore = useTasksStore()
-const { gtag } = useGtag()
 
 const { isDarkMode } = storeToRefs(useDarkModeStore())
 
@@ -177,50 +175,29 @@ function initNewGame() {
   tasksStore.resetAllTasks()
   if (settingsStore.resetNotesOnNewGame) gameNotes.value = ''
   roundNotes.value = ''
-  gtag('event', 'init_new_game', { event_category: 'global_stats' })
 }
 
 function initNewRound() {
   crewStore.resetActiveCrew()
   tasksStore.resetAllTasks()
   roundNotes.value = ''
-  gtag('event', 'init_new_round', { event_category: 'global_stats' })
 }
 
 function handleChangePlayerColor(selectedColor: string) {
   crewStore.setPlayerColor(selectedColor)
   initNewGame()
-  gtag('event', `change_player_color_${selectedColor}`, { event_category: 'player_stats' })
 }
 
 function handleCrewChanged({ type, value }: { type: string; value: CrewMember[] }) {
   if (type === 'inactive') {
     crewStore.setInactiveCrewMembers(value)
   } else if (type === 'innocent') {
-    const newMember = value.find(
-      m => !crewStore.crewMembersProtectedByPlayer.some(p => p.color === m.color),
-    )
-    if (newMember) {
-      gtag('event', `marked_as_innocent_${newMember.color}`, { event_category: 'player_stats' })
-    }
     crewStore.setProtectedCrewMembers(value)
   } else if (type === 'unknown') {
     crewStore.setUnknownCrewMembers(value)
   } else if (type === 'suspect') {
-    const newMember = value.find(
-      m => !crewStore.crewMembersSuspectedByPlayer.some(s => s.color === m.color),
-    )
-    if (newMember) {
-      gtag('event', `marked_as_suspect_${newMember.color}`, { event_category: 'player_stats' })
-    }
     crewStore.setSuspectedCrewMembers(value)
   } else if (type === 'dead') {
-    const newMember = value.find(
-      m => !crewStore.deadCrewMembers.some(d => d.color === m.color),
-    )
-    if (newMember) {
-      gtag('event', `marked_as_dead_${newMember.color}`, { event_category: 'global_stats' })
-    }
     crewStore.setDeadCrewMembers(value)
   }
 }
@@ -246,8 +223,7 @@ function handleTogglePlayerPicker(isOpen: boolean) {
 function toggleHelpModal() {
   const newValue = !isHelpModalOpen.value
   isHelpModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_help', { event_category: 'global_stats' })
-  else showV2AnnouncementIfUnseen()
+  if (!newValue) showV2AnnouncementIfUnseen()
 }
 
 // Shown once, and only after the help modal is out of the way
@@ -255,7 +231,6 @@ function showV2AnnouncementIfUnseen() {
   if (isHelpModalOpen.value) return
   if (JSON.parse(localStorage.getItem('seenV2Announcement') ?? 'false') === true) return
   isV2AnnouncementOpen.value = true
-  gtag('event', 'show_v2_announcement', { event_category: 'global_stats' })
 }
 
 function closeV2Announcement() {
@@ -266,24 +241,20 @@ function closeV2Announcement() {
 function toggleAboutModal() {
   const newValue = !isAboutModalOpen.value
   isAboutModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_changelog', { event_category: 'global_stats' })
 }
 
 function toggleSettingsModal() {
   const newValue = !isSettingsModalOpen.value
   isSettingsModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_settings', { event_category: 'global_stats' })
 }
 
 function toggleNotesModal() {
   const newValue = !isNotesModalOpen.value
   isNotesModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_notes', { event_category: 'global_stats' })
 }
 
 function toggleTasksModal() {
   const newValue = !isTasksModalOpen.value
   isTasksModalOpen.value = newValue
-  if (newValue) gtag('event', 'open_fake_tasks', { event_category: 'global_stats' })
 }
 </script>

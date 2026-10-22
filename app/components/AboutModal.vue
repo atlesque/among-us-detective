@@ -43,10 +43,14 @@
           <div class="flex justify-between mt-6 text-xs leading-5 text-theme-gray-dark">
             <span class="mb-0 text-xs">
               Made with ❤ by <a href="https://atlesque.com">Atlesque</a>
+              · <a href="https://tools.atlesque.dev/privacy">Privacy</a>
             </span>
             <div class="flex flex-col text-xs">
               <button class="mb-2 font-bold" @click="isFeedbackScreenOpen = true">
                 Give feedback
+              </button>
+              <button type="button" class="mb-2 font-bold" data-privacy-settings>
+                Privacy settings
               </button>
               <DonationButton show-link class="ml-auto" />
             </div>

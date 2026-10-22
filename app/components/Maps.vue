@@ -80,14 +80,12 @@
 const mapsStore = useMapsStore()
 const notesStore = useNotesStore()
 const settingsStore = useSettingsStore()
-const { gtag } = useGtag()
 
 const isMapVisible = ref(false)
 const areSensorsVisible = ref(false)
 
 function selectMap(newMap: string) {
   mapsStore.setSelectedMap(newMap)
-  gtag('event', `change_map_${newMap}`, { event_category: 'global_stats' })
 }
 
 onMounted(() => {

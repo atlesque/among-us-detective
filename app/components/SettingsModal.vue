@@ -167,7 +167,6 @@ const emit = defineEmits<{ close: [] }>();
 const settingsStore = useSettingsStore();
 const darkModeStore = useDarkModeStore();
 const crewStore = useCrewStore();
-const { gtag } = useGtag();
 
 const isEditingPlayerNames = ref(false);
 
@@ -186,17 +185,11 @@ function handleCloseEvent() {
 function toggleColorNames() {
   const newValue = !settingsStore.showColorNames;
   settingsStore.setShowColorNames(newValue);
-  gtag("event", newValue ? "show_color_names" : "hide_color_names", {
-    event_category: "global_stats",
-  });
 }
 
 function toggleDarkMode() {
   const newValue = !darkModeStore.isDarkMode;
   darkModeStore.setDarkMode(newValue);
-  gtag("event", newValue ? "dark_mode_enabled" : "light_mode_enabled", {
-    event_category: "global_stats",
-  });
 }
 </script>
 
