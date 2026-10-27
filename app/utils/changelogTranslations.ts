@@ -15,11 +15,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'en-US': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — Timer, privacy choices and a week of fixes',
+        changes: [
+          '<b>⏱️ Timer and stopwatch:</b> A dock timer with Among Us presets for kill cooldown, discussion and sabotages, plus a stopwatch you can stamp into your notes. Press S to open it.',
+          '<b>🍪 You choose about analytics:</b> Google Analytics only loads after you allow it. You can change your choice any time on the privacy page, which now also describes error reporting accurately.',
+          '<b>💾 Remembers more:</b> Your selected map and all settings are kept between visits, and settings from the previous version of the app carry over.',
+          '<b>🔄 No surprise reloads:</b> When a new version is available, the app asks before updating instead of reloading during a match.',
+          '<b>🛰️ Tracker role:</b> Added the official Tracker role icon.',
+          '<b>♿ Accessibility and phones:</b> The roster and dialogs work with the keyboard, and buttons and docks stay clear of notches and home bars.',
+          '<b>🐛 Fixes:</b> Shortcuts no longer react to Ctrl, Cmd or Alt combinations, Escape behaves correctly while typing, saying “enter” in dictation only matches the whole word, and more pages are translated.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — Critical vote alerts and match impostor settings',
         changes: [
           '<b>🚨 Critical vote alerts:</b> Real-time reminders during meetings when the crew is at risk of a double kill, at match point, or when skipping vote is mathematically safe.',
           '<b>👾 Match impostor selector:</b> Quickly set the number of impostors for the match (1, 2, or 3) directly in the lobby bar, dynamically capped by lobby size.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — Light mode',
+        changes: [
+          '<b>☀️ Light mode:</b> Every board and popover, the Detective Notes panel and all dialogs now support light mode, with better contrast for color names and secondary colors.',
         ],
       },
       {
@@ -53,11 +73,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'pt-BR': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — Timer, escolhas de privacidade e uma semana de correções',
+        changes: [
+          '<b>⏱️ Timer e cronômetro:</b> Um timer no dock com predefinições do Among Us para recarga de kill, discussão e sabotagens, além de um cronômetro que você pode registrar nas suas notas. Pressione S para abrir.',
+          '<b>🍪 Você decide sobre as análises:</b> O Google Analytics só carrega depois que você permitir. Você pode mudar sua escolha a qualquer momento na página de privacidade, que agora também descreve corretamente o relatório de erros.',
+          '<b>💾 Lembra mais coisas:</b> O mapa selecionado e todas as configurações são mantidos entre visitas, e as configurações da versão anterior do app são aproveitadas.',
+          '<b>🔄 Sem recarregamentos inesperados:</b> Quando há uma nova versão, o app pergunta antes de atualizar em vez de recarregar durante a partida.',
+          '<b>🛰️ Função Rastreador:</b> Adicionado o ícone oficial da função Rastreador.',
+          '<b>♿ Acessibilidade e celulares:</b> A escalação e as janelas funcionam pelo teclado, e botões e o dock ficam longe de entalhes e barras de início.',
+          '<b>🐛 Correções:</b> Os atalhos não reagem mais a combinações com Ctrl, Cmd ou Alt, o Esc funciona corretamente ao digitar, dizer “enter” no ditado só reconhece a palavra inteira e mais páginas foram traduzidas.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — Alertas de votação crítica e ajuste de impostores',
         changes: [
           '<b>🚨 Alertas de votação crítica:</b> Avisos em tempo real durante reuniões quando a tripulação corre risco de double kill, em ponto decisivo ou quando pular o voto é seguro.',
           '<b>👾 Seletor de impostores:</b> Escolha rápida da quantidade de impostores na partida (1, 2 ou 3) direto na barra do lobby, limitado dinamicamente pelo tamanho do lobby.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — Modo claro',
+        changes: [
+          '<b>☀️ Modo claro:</b> Todos os quadros, popovers, o Bloco do Detetive e as janelas agora têm modo claro, com melhor contraste para nomes de cores e cores secundárias.',
         ],
       },
       {
@@ -91,11 +131,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'es-ES': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — Temporizador, opciones de privacidad y una semana de correcciones',
+        changes: [
+          '<b>⏱️ Temporizador y cronómetro:</b> Un temporizador en la barra inferior con ajustes de Among Us para el tiempo de recarga de kill, la discusión y los sabotajes, y un cronómetro que puedes anotar en tus notas. Pulsa S para abrirlo.',
+          '<b>🍪 Tú decides sobre las analíticas:</b> Google Analytics solo se carga después de que lo permitas. Puedes cambiar tu elección en cualquier momento en la página de privacidad, que ahora también describe con precisión el informe de errores.',
+          '<b>💾 Recuerda más:</b> El mapa seleccionado y todos los ajustes se conservan entre visitas, y los ajustes de la versión anterior de la app se mantienen.',
+          '<b>🔄 Sin recargas inesperadas:</b> Cuando hay una nueva versión, la app pregunta antes de actualizar en lugar de recargarse durante la partida.',
+          '<b>🛰️ Rol de Rastreador:</b> Se añadió el icono oficial del rol Rastreador.',
+          '<b>♿ Accesibilidad y móviles:</b> La sala y los diálogos funcionan con el teclado, y los botones y la barra inferior no quedan bajo la muesca ni la barra de inicio.',
+          '<b>🐛 Correcciones:</b> Los atajos ya no reaccionan a combinaciones con Ctrl, Cmd o Alt, Escape funciona bien mientras escribes, decir “enter” en el dictado solo reconoce la palabra completa y hay más páginas traducidas.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — Alertas de votación crítica y ajustes de impostores',
         changes: [
-          '<b>🚨 Alertas de votação crítica:</b> Avisos em tempo real durante reuniões quando a tripulação corre risco de double kill, em ponto decisivo ou quando saltar voto es seguro.',
+          '<b>🚨 Alertas de votación crítica:</b> Avisos en tiempo real durante las reuniones cuando la tripulación corre riesgo de double kill, está en punto de partido o cuando saltar la votación es seguro.',
           '<b>👾 Selector de impostores:</b> Selecciona rápidamente la cantidad de impostores (1, 2 o 3) directamente en la barra de la sala, limitado por el tamaño del lobby.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — Modo claro',
+        changes: [
+          '<b>☀️ Modo claro:</b> Todos los tableros, ventanas emergentes, el Bloc de Notas del Detective y los diálogos ahora tienen modo claro, con mejor contraste para los nombres de colores y los colores secundarios.',
         ],
       },
       {
@@ -129,11 +189,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'fr-FR': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — Minuteur, choix de confidentialité et une semaine de corrections',
+        changes: [
+          '<b>⏱️ Minuteur et chronomètre :</b> Un minuteur dans la barre du bas avec des préréglages Among Us pour le temps de recharge du kill, la discussion et les sabotages, et un chronomètre que vous pouvez noter dans vos notes. Appuyez sur S pour l\'ouvrir.',
+          '<b>🍪 Vous choisissez pour les statistiques :</b> Google Analytics ne se charge qu\'après votre accord. Vous pouvez changer d\'avis à tout moment sur la page de confidentialité, qui décrit aussi désormais correctement le suivi des erreurs.',
+          '<b>💾 Garde plus de choses en mémoire :</b> La carte choisie et tous les paramètres sont conservés d\'une visite à l\'autre, et les paramètres de l\'ancienne version de l\'app sont repris.',
+          '<b>🔄 Plus de rechargements surprises :</b> Quand une nouvelle version est disponible, l\'app demande avant de se mettre à jour au lieu de se recharger en pleine partie.',
+          '<b>🛰️ Rôle Traqueur :</b> Ajout de l\'icône officielle du rôle Traqueur.',
+          '<b>♿ Accessibilité et mobiles :</b> Le salon et les fenêtres s\'utilisent au clavier, et les boutons et la barre du bas restent à l\'écart des encoches et barres d\'accueil.',
+          '<b>🐛 Corrections :</b> Les raccourcis ne réagissent plus aux combinaisons avec Ctrl, Cmd ou Alt, Échap fonctionne correctement pendant la saisie, dire « enter » en dictée ne reconnaît que le mot entier, et davantage de pages sont traduites.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — Alertes de vote critique et paramètres d\'imposteurs',
         changes: [
           '<b>🚨 Alertes de vote critique :</b> Rappels en temps réel pendant les réunions signalant le danger de double kill, balle de match ou quand passer le vote est sûr.',
           '<b>👾 Sélecteur d\'imposteurs :</b> Choisissez rapidement le nombre d\'imposteurs (1, 2 ou 3) directement dans la barre du salon, limité selon la taille du lobby.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — Mode clair',
+        changes: [
+          '<b>☀️ Mode clair :</b> Tous les tableaux, les fenêtres contextuelles, le Carnet de Détective et les dialogues prennent désormais en charge le mode clair, avec un meilleur contraste pour les noms de couleurs et les couleurs secondaires.',
         ],
       },
       {
@@ -167,11 +247,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'de-DE': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — Timer, Datenschutz-Auswahl und eine Woche voller Korrekturen',
+        changes: [
+          '<b>⏱️ Timer und Stoppuhr:</b> Ein Timer in der unteren Leiste mit Among-Us-Vorgaben für Kill-Cooldown, Diskussion und Sabotagen sowie eine Stoppuhr, deren Zeit du in deine Notizen übernehmen kannst. Mit S öffnen.',
+          '<b>🍪 Du entscheidest über Analysen:</b> Google Analytics wird erst geladen, wenn du es erlaubst. Du kannst deine Wahl jederzeit auf der Datenschutzseite ändern, die jetzt auch die Fehlerberichte korrekt beschreibt.',
+          '<b>💾 Merkt sich mehr:</b> Die gewählte Karte und alle Einstellungen bleiben zwischen Besuchen erhalten, und Einstellungen aus der vorherigen App-Version werden übernommen.',
+          '<b>🔄 Keine überraschenden Neuladungen:</b> Wenn eine neue Version verfügbar ist, fragt die App vor dem Update, statt mitten im Match neu zu laden.',
+          '<b>🛰️ Fährtenleser-Rolle:</b> Das offizielle Symbol der Fährtenleser-Rolle wurde hinzugefügt.',
+          '<b>♿ Barrierefreiheit und Smartphones:</b> Lobby und Dialoge lassen sich per Tastatur bedienen, und Buttons und die untere Leiste bleiben frei von Notch und Home-Leiste.',
+          '<b>🐛 Korrekturen:</b> Tastenkürzel reagieren nicht mehr auf Kombinationen mit Strg, Cmd oder Alt, Escape funktioniert beim Tippen richtig, „enter“ beim Diktieren erkennt nur das ganze Wort, und weitere Seiten sind übersetzt.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — Kritische Abstimmungswarnungen und Impostor-Einstellungen',
         changes: [
           '<b>🚨 Kritische Abstimmungswarnungen:</b> Echtzeit-Warnungen bei Meetings bei Gefahr eines Double Kills, bei Matchbällen oder wenn Überspringen sicher ist.',
           '<b>👾 Match-Impostor-Auswahl:</b> Schnelle Auswahl der Impostor-Anzahl (1, 2 oder 3) direkt in der Lobby-Leiste, dynamisch begrenzt durch die Lobby-Größe.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — Heller Modus',
+        changes: [
+          '<b>☀️ Heller Modus:</b> Alle Boards, Popover, die Detektiv-Notizen und alle Dialoge unterstützen jetzt den hellen Modus, mit besserem Kontrast für Farbnamen und Sekundärfarben.',
         ],
       },
       {
@@ -205,11 +305,31 @@ export const changelogTranslations: Record<SupportedLocale, LocalizedChangelogCo
   'ko-KR': {
     entries: [
       {
+        date: '2026-10-28',
+        title: 'v2.5 — 타이머, 개인정보 선택 및 일주일간의 수정',
+        changes: [
+          '<b>⏱️ 타이머와 스톱워치:</b> 킬 쿨다운, 토론, 사보타주용 어몽어스 프리셋이 있는 하단 독 타이머와 메모에 기록할 수 있는 스톱워치가 추가되었습니다. S 키로 엽니다.',
+          '<b>🍪 분석 여부는 직접 선택:</b> Google Analytics는 허용한 뒤에만 로드됩니다. 개인정보 페이지에서 언제든지 선택을 바꿀 수 있으며, 이 페이지는 이제 오류 보고도 정확하게 설명합니다.',
+          '<b>💾 더 많이 기억:</b> 선택한 맵과 모든 설정이 방문 사이에 유지되며, 이전 버전 앱의 설정도 이어집니다.',
+          '<b>🔄 예기치 않은 새로고침 없음:</b> 새 버전이 나오면 매치 중에 새로고침하지 않고 업데이트 전에 먼저 묻습니다.',
+          '<b>🛰️ 추적자 역할:</b> 공식 추적자 역할 아이콘이 추가되었습니다.',
+          '<b>♿ 접근성과 모바일:</b> 로스터와 대화 상자를 키보드로 사용할 수 있으며, 버튼과 하단 독이 노치와 홈 바에 가려지지 않습니다.',
+          '<b>🐛 수정 사항:</b> 단축키가 Ctrl, Cmd, Alt 조합에 더 이상 반응하지 않고, 입력 중 Esc가 올바르게 동작하며, 받아쓰기에서 “enter”는 단어 전체만 인식하고, 더 많은 페이지가 번역되었습니다.',
+        ],
+      },
+      {
         date: '2026-10-04',
         title: 'v2.4 — 전술 투표 경고 및 매치 임포스터 설정',
         changes: [
           '<b>🚨 전술 투표 경고:</b> 더블킬 위험, 매치 포인트 또는 스킵이 수학적으로 안전한 순간을 회의 중 실시간으로 안내합니다.',
           '<b>👾 매치 임포스터 선택:</b> 로비 바에서 매치 임포스터 수(1, 2 또는 3명)를 빠르게 설정할 수 있으며, 로비 인원에 따라 동적으로 제한됩니다.',
+        ],
+      },
+      {
+        date: '2026-09-23',
+        title: 'v2.3 — 라이트 모드',
+        changes: [
+          '<b>☀️ 라이트 모드:</b> 모든 보드, 팝오버, 탐정 메모장과 대화 상자가 라이트 모드를 지원하며, 색상 이름과 보조 색상의 대비가 개선되었습니다.',
         ],
       },
       {
