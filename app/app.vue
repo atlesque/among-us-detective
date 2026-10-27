@@ -53,8 +53,11 @@ const { isInstallPromptVisible, promptInstall, dismissPrompt } = usePwaInstall()
 // A new deploy waits in the background instead of reloading the page on its own,
 // so a running timer or dictation is never cut off mid-match. The player applies it
 // from this prompt; if they postpone, it activates the next time the app is opened.
-const { $pwa } = useNuxtApp()
-const isUpdatePromptVisible = computed(() => !!$pwa?.needRefresh)
+// Right after V2 replaces V1, the page is already V2 but V1's worker still controls
+// it, so V2's worker waits and would ask to "update" to what is already showing.
+// Skip that prompt; V2's worker takes over once the app is closed.
+const { $pwa, $servedByV1Worker } = useNuxtApp()
+const isUpdatePromptVisible = computed(() => !!$pwa?.needRefresh && !$servedByV1Worker)
 
 function applyUpdate() {
   // vite-pwa only reloads by itself when the page already had a controlling service
