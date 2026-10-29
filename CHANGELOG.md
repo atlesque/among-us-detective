@@ -3,6 +3,29 @@ All notable changes to **Among Us Detective** are documented in this file.
 
 ---
 
+## [2.5.0] - 2026-10-28 (Timer, Privacy Choices & Launch Fixes)
+
+### Added
+- **Timer & Stopwatch** (#74): Dock timer with Among Us presets (kill cooldown, discussion, sabotages) and a stopwatch that can be stamped into notes. Shortcut `S`.
+- **Analytics consent** (#87): Google Analytics loads only after the player allows it; the choice can be changed on the privacy page.
+- **Tracker role icon** (#82, #99).
+
+### Improved
+- The selected map and all settings persist between visits (#81, #90); V1 settings carry over and V1-only keys are cleaned up (#91).
+- The PWA asks before updating instead of reloading mid-match (#83).
+- New Match resets everything through one shared path (vote alert, top bar, 2-hour expiry) (#89).
+- Keyboard access for the lobby roster and modals, unique modal ids, focus trap (#86, #98, #103).
+- Safe-area insets on notched phones and dynamic viewport height (#97, #106).
+- Translated 404 and donation pages and the max-rounds tooltip (#88, #94, #102); PWA manifest metadata (#92).
+- Privacy page describes the actual Sentry setup (10% tracing, no replays, no PII), names the controller and hosting, and lists your rights (#107).
+
+### Fixed
+- Shortcuts ignore Ctrl/Cmd/Alt combinations (#80); Escape is ignored during IME composition and no longer blurs and minimizes at once (#95, #104).
+- Dictation "enter" only matches the whole word (#78).
+- Adjusting a paused timer changes the remaining time (#79); timer chime on iOS and leaked audio contexts (#93); stopwatch stamping is disabled while reviewing past rounds (#96, #105).
+
+---
+
 ## [2.4.0] - 2026-10-04 (Critical Vote Quorum HUD & Match Quorum Controls)
 
 ### Added & Improved
@@ -44,7 +67,7 @@ All notable changes to **Among Us Detective** are documented in this file.
 ### Added
 - **Performance Mode**: Added "Disable animations" toggle in Settings to eliminate all CSS transitions and keyframes for a lightweight experience on lower-end devices.
 - **Help Modal Overhaul**: Expanded modal width to ~700px with segmented navigation, improved card spacing, and refreshed guides.
-- **Keyboard Shortcuts**: Added hotkeys (`N` for Notes, `M` for Map, `T` for Tasks, `I` for Impostor HUD, `L` for Roster, `Esc` to close).
+- **Keyboard Shortcuts**: Added hotkeys (`N` for Notes, `M` for Map, `T` for Tasks, `I` for Impostor Mode, `L` for Roster, `Esc` to close).
 - **Authorship & Credits**: Clarified original authorship conceived and credited by Alexander Atlesque and modernization fork by Marcos Binder.
 
 ---

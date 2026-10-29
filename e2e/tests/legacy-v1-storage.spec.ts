@@ -75,6 +75,18 @@ test.describe("Settings saved by V1", () => {
     expect(await readSettings(page)).toMatchObject({ showPlayerNames: true });
   });
 
+  test("a V1 visitor who never changed a setting still gets the V2 help once", async ({ page }) => {
+    // V1 writes only this flag until a setting is changed or its V2 notice dismissed.
+    await seedOnce(page, { returningPlayer: "true" });
+    await page.goto("/");
+    await expect(page.locator("[data-test='help-next-btn']")).toBeVisible();
+    await page.click("[role='dialog'] [data-test='modal-close']");
+
+    await page.reload();
+    await expect(page.locator("[data-test='new-game-btn']")).toBeVisible();
+    await expect(page.locator("[data-test='help-next-btn']")).toHaveCount(0);
+  });
+
   test("settings saved by V2 are left untouched", async ({ page }) => {
     const v2Settings = {
       highlightColorNames: false,

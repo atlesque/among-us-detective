@@ -36,6 +36,18 @@ const DROPPED_V1_SETTINGS = [
 // Keys only V1 ever wrote. 'vuex' is the settings blob of the pre-Nuxt V1.
 const V1_ONLY_KEYS = ['seenV2Announcement', 'vuex']
 
+// Keys only V2 writes. V1 marks every visitor with 'returningPlayer' on their
+// first visit, so a 'returningPlayer' without any of these was left by V1, even
+// when that player never changed a setting.
+const V2_ONLY_KEYS = [
+  'among_us_detective_last_match_activity',
+  'analyticsConsent',
+  'crew',
+  'impostor',
+  'rounds',
+  'timer',
+]
+
 function readJsonObject(storage: Storage, key: string): Record<string, unknown> | null {
   const raw = storage.getItem(key)
   if (!raw) return null
@@ -55,7 +67,10 @@ export function migrateLegacyV1Storage(storage: Storage): void {
     settings !== null &&
     Object.keys(settings).length > 0 &&
     Object.keys(settings).every((key) => V1_SETTINGS_KEYS.has(key))
-  const hasV1Keys = V1_ONLY_KEYS.some((key) => storage.getItem(key) !== null)
+  const hasV1Keys =
+    V1_ONLY_KEYS.some((key) => storage.getItem(key) !== null) ||
+    (storage.getItem('returningPlayer') !== null &&
+      !V2_ONLY_KEYS.some((key) => storage.getItem(key) !== null))
 
   if (settings && hasV1Settings) {
     for (const key of DROPPED_V1_SETTINGS) delete settings[key]

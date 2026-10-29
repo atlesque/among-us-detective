@@ -1,5 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { version as packageVersion } from "./package.json";
+
 declare const process: any;
+
+const appVersion: string = process.env.APP_VERSION || packageVersion;
+
+// Link previews (og:url, og:image) must name the domain this build is served
+// from. V2 is served from v2.amongusdetective.com until it replaces V1 on the
+// main domain, which happens when feature/v2 is merged into master. Cloudflare
+// Pages sets CF_PAGES_BRANCH during the build, so the master build switches to
+// the main domain on its own. SITE_URL overrides both.
+const MAIN_SITE_URL = "https://amongusdetective.com";
+const V2_SITE_URL = "https://v2.amongusdetective.com";
+const siteUrl: string = (
+  process.env.SITE_URL ||
+  (process.env.CF_PAGES_BRANCH === "master" ? MAIN_SITE_URL : V2_SITE_URL)
+).replace(/\/+$/, "");
 
 export default defineNuxtConfig({
   devtools: {
@@ -32,11 +48,10 @@ export default defineNuxtConfig({
           content: "among us, detective, innocents, suspects, tracker",
         },
         { property: "og:title", content: "Among Us Detective" },
-        { property: "og:url", content: "https://v2.amongusdetective.com" },
+        { property: "og:url", content: siteUrl },
         {
           property: "og:image",
-          content:
-            "https://v2.amongusdetective.com/og-image/among-us-detective-logo.jpg",
+          content: `${siteUrl}/og-image/among-us-detective-logo.jpg`,
         },
         { property: "og:type", content: "website" },
         {
@@ -145,14 +160,22 @@ export default defineNuxtConfig({
   // Sentry (only enabled in production to prevent dev startup delay)
   sentry: {
     org: "atlesque-media-vof",
-    project: "among-us-detective",
+    project: process.env.SENTRY_PROJECT || "among-us-detective",
+    authToken: process.env.SENTRY_AUTH_TOKEN,
     telemetry: false,
     enabled: process.env.NODE_ENV === "production",
+    release: { name: `among-us-detective@${appVersion}` },
+    // Source maps are only built when they can be uploaded. The module then
+    // builds them "hidden" and deletes the .map files after the upload, so
+    // they never ship with the site. Without a token, no maps are built.
+    sourcemaps: {
+      disable: !process.env.SENTRY_AUTH_TOKEN,
+    },
   },
 
   runtimeConfig: {
     public: {
-      appVersion: process.env.APP_VERSION ?? "0.1.21",
+      appVersion,
       sentry: {
         dsn: process.env.NUXT_PUBLIC_SENTRY_DSN,
       },
@@ -192,9 +215,5 @@ export default defineNuxtConfig({
         },
       },
     },
-  },
-
-  sourcemap: {
-    client: "hidden",
   },
 });
