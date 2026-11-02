@@ -429,7 +429,8 @@ function toggleMapVisibility() {
   }
 }
 
-const isHelpModalOpen = ref(false)
+// Shared so the consent banner and install prompt wait until the help guide is closed
+const isHelpModalOpen = useState('isHelpModalOpen', () => false)
 const isAboutModalOpen = ref(false)
 const isTasksModalOpen = ref(false)
 const isNextRoundInfoOpen = ref(false)

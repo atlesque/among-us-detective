@@ -14,6 +14,8 @@ test.beforeEach(async ({ page }) => {
 test("declining analytics is remembered", async ({ page }) => {
   await page.goto("/");
   await page.waitForSelector("[data-test='new-game-btn']");
+  // Seeded as a V1 player, so the V2 help guide opens first and the banner waits for it
+  await page.click("[role='dialog'] button[aria-label='Close']");
   const banner = page.locator("[data-test='cookie-warning']");
   await expect(banner).toBeVisible();
   await page.locator("[data-test='cookie-decline-btn']").click();
@@ -28,6 +30,8 @@ test("declining analytics is remembered", async ({ page }) => {
 test("the privacy page can change the analytics choice", async ({ page }) => {
   await page.goto("/");
   await page.waitForSelector("[data-test='new-game-btn']");
+  // Seeded as a V1 player, so the V2 help guide opens first and the banner waits for it
+  await page.click("[role='dialog'] button[aria-label='Close']");
   await page.locator("[data-test='cookie-accept-btn']").click();
   expect(await page.evaluate(() => localStorage.getItem("analyticsConsent"))).toBe("granted");
 

@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade">
     <aside
-      v-if="isVisible"
+      v-if="isVisible && !isHelpModalOpen"
       role="region"
       :aria-label="t('cookie.bannerLabel')"
       aria-live="polite"
@@ -58,6 +58,8 @@ import { useAnalyticsConsent } from '~/composables/useAnalyticsConsent'
 const { t } = useI18n()
 const { hasChosen, grant, deny } = useAnalyticsConsent()
 const isVisible = ref(false)
+// Wait for the first-visit help guide, so the banner never covers its buttons
+const isHelpModalOpen = useState('isHelpModalOpen', () => false)
 
 onMounted(() => {
   isVisible.value = !hasChosen.value
