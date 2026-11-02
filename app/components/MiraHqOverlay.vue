@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768" class="max-w-full">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 768" class="max-w-full pointer-events-none">
     <defs>
       <filter id="A" x="772.3" y="432.461" width="54.401" height="57.079" filterUnits="userSpaceOnUse">
         <feOffset />

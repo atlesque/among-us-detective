@@ -1,17 +1,20 @@
 /*
  * highlight-within-textarea
  *
- * @author        Will Boyd
- * @github        https://github.com/lonekorean/highlight-within-textarea
- * Current fork:  https://github.com/Blaked84/highlight-within-textarea
+ * Cleaned up for pixel-perfect box-model alignment
  */
 
 .hwt-container {
-  display: inline-block;
+  display: block;
   position: relative;
-  // overflow: hidden !important;
-  -webkit-text-size-adjust: none !important;
   width: 100%;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  -webkit-text-size-adjust: none !important;
+}
+
+.dark-mode .hwt-container {
+  background-color: rgba(17, 24, 39, 0.85);
 }
 
 .hwt-backdrop {
@@ -23,14 +26,18 @@
   padding-right: 99px !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  pointer-events: none !important;
 }
 
 .hwt-highlights {
-  width: auto !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
   height: auto !important;
-  border-color: transparent !important;
+  min-height: 100% !important;
+  border: 1px solid transparent !important;
   white-space: pre-wrap !important;
   word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
   color: transparent !important;
   overflow: hidden !important;
 }
@@ -39,44 +46,74 @@
   display: block !important;
   position: relative !important;
   margin: 0;
-  padding: 0;
-  border-radius: 0;
-  font: inherit;
+  width: 100%;
+  background: transparent !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
 
 .hwt-content {
-  border: 1px solid;
-  background: none transparent !important;
-  @apply p-4;
-  @apply block;
-  @apply w-full;
-  @apply text-sm;
-  @apply leading-5;
-  @screen lg {
-    @apply text-base;
-    @apply leading-normal;
-  }
-  appearance: none;
-  border-color: #d2d6dc;
-  border-width: 1px;
-  border-radius: 0.375rem;
-  padding-top: 0.5rem;
-  padding-right: 0.75rem;
-  padding-bottom: 0.5rem;
-  padding-left: 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
-    border-color: #a4cafe;
-  }
+  box-sizing: border-box !important;
 }
 
 .hwt-content mark {
-  padding: 0 !important;
-  color: inherit;
+  padding: 0 1px !important;
+  margin: 0 !important;
+  border-radius: 3px;
+  color: transparent !important;
+  font: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.dark .hwt-content mark,
+.dark-mode .hwt-content mark {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Default / Light Mode: pastel highlighter tints for clear readability with dark text */
+.hwt-mark-red { background-color: rgba(254, 202, 202, 0.85) !important; border-bottom: 2px solid #ef4444; }
+.hwt-mark-blue { background-color: rgba(191, 219, 254, 0.85) !important; border-bottom: 2px solid #3b82f6; }
+.hwt-mark-green { background-color: rgba(187, 247, 208, 0.85) !important; border-bottom: 2px solid #22c55e; }
+.hwt-mark-pink { background-color: rgba(251, 207, 232, 0.85) !important; border-bottom: 2px solid #ec4899; }
+.hwt-mark-orange { background-color: rgba(254, 215, 170, 0.85) !important; border-bottom: 2px solid #f97316; }
+.hwt-mark-yellow { background-color: rgba(254, 240, 138, 0.95) !important; border-bottom: 2px solid #eab308; }
+.hwt-mark-black { background-color: rgba(203, 213, 225, 0.7) !important; border-bottom: 2px solid #475569; }
+.hwt-mark-white { background-color: rgba(241, 245, 249, 0.9) !important; border-bottom: 2px solid #94a3b8; }
+.hwt-mark-purple { background-color: rgba(233, 213, 255, 0.85) !important; border-bottom: 2px solid #a855f7; }
+.hwt-mark-brown { background-color: rgba(214, 211, 209, 0.85) !important; border-bottom: 2px solid #78716c; }
+.hwt-mark-cyan { background-color: rgba(165, 243, 252, 0.85) !important; border-bottom: 2px solid #06b6d4; }
+.hwt-mark-lime { background-color: rgba(217, 249, 157, 0.85) !important; border-bottom: 2px solid #84cc16; }
+.hwt-mark-maroon { background-color: rgba(254, 205, 211, 0.85) !important; border-bottom: 2px solid #e11d48; }
+.hwt-mark-rose { background-color: rgba(255, 228, 230, 0.85) !important; border-bottom: 2px solid #f43f5e; }
+.hwt-mark-banana { background-color: rgba(254, 249, 195, 0.95) !important; border-bottom: 2px solid #facc15; }
+.hwt-mark-gray { background-color: rgba(226, 232, 240, 0.85) !important; border-bottom: 2px solid #64748b; }
+.hwt-mark-tan { background-color: rgba(231, 229, 228, 0.85) !important; border-bottom: 2px solid #a8a29e; }
+.hwt-mark-coral { background-color: rgba(254, 215, 215, 0.85) !important; border-bottom: 2px solid #f87171; }
+
+/* Dark Mode: deep vibrant Among Us palette for white text */
+.dark-mode {
+  .hwt-mark-red { background-color: rgba(198, 17, 17, 0.85) !important; border-bottom: none; }
+  .hwt-mark-blue { background-color: rgba(19, 46, 210, 0.85) !important; border-bottom: none; }
+  .hwt-mark-green { background-color: rgba(17, 128, 45, 0.85) !important; border-bottom: none; }
+  .hwt-mark-pink { background-color: rgba(238, 84, 187, 0.85) !important; border-bottom: none; }
+  .hwt-mark-orange { background-color: rgba(240, 125, 13, 0.85) !important; border-bottom: none; }
+  .hwt-mark-yellow { background-color: rgba(246, 246, 87, 0.85) !important; border-bottom: none; }
+  .hwt-mark-black { background-color: rgba(63, 71, 78, 0.9) !important; border-bottom: none; }
+  .hwt-mark-white { background-color: rgba(215, 225, 241, 0.85) !important; border-bottom: none; }
+  .hwt-mark-purple { background-color: rgba(107, 47, 188, 0.85) !important; border-bottom: none; }
+  .hwt-mark-brown { background-color: rgba(113, 73, 30, 0.9) !important; border-bottom: none; }
+  .hwt-mark-cyan { background-color: rgba(56, 255, 221, 0.85) !important; border-bottom: none; }
+  .hwt-mark-lime { background-color: rgba(80, 240, 57, 0.85) !important; border-bottom: none; }
+  .hwt-mark-maroon { background-color: rgba(95, 29, 46, 0.9) !important; border-bottom: none; }
+  .hwt-mark-rose { background-color: rgba(236, 192, 211, 0.85) !important; border-bottom: none; }
+  .hwt-mark-banana { background-color: rgba(240, 231, 168, 0.85) !important; border-bottom: none; }
+  .hwt-mark-gray { background-color: rgba(117, 133, 147, 0.85) !important; border-bottom: none; }
+  .hwt-mark-tan { background-color: rgba(145, 136, 119, 0.9) !important; border-bottom: none; }
+  .hwt-mark-coral { background-color: rgba(215, 100, 100, 0.85) !important; border-bottom: none; }
 }

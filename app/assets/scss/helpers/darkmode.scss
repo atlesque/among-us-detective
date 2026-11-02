@@ -1,5 +1,5 @@
 .dark-mode {
-  @apply bg-black;
+  @apply bg-gray-950;
   @apply text-theme-gray-extra-light;
 
   textarea {
@@ -20,19 +20,6 @@
     }
   }
 
-  .crew-stats {
-    tr {
-      @apply bg-gray-800;
-    }
-  }
-
-  .pool--inactive {
-    @apply bg-gray-800;
-  }
-
-  .cookie-warning {
-    @apply text-black;
-  }
 
   .crew-icon {
     &.is-player {

@@ -9,6 +9,10 @@ export async function activateAllCrew(page: Page): Promise<void> {
   await page.click("[data-test='activate-all-btn']");
 }
 
+export async function clearAllCrew(page: Page): Promise<void> {
+  await page.click("[data-test='clear-all-btn']");
+}
+
 /**
  * Drag a crew member icon from one container to another.
  * Uses Playwright's built-in dragTo which fires proper pointer/mouse events

@@ -1,13 +1,15 @@
 {
   "name": "among-us-detective",
-  "version": "0.1.21",
+  "version": "2.5.0",
   "private": true,
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt generate",
     "build:ssr": "nuxt build",
     "preview": "nuxt preview",
+    "typecheck": "vue-tsc --noEmit",
     "lint": "eslint .",
+    "check:locale-parity": "node scripts/check-locale-parity.cjs",
     "e2e": "playwright test"
   },
   "dependencies": {

@@ -1,22 +1,26 @@
 <template>
   <section class="max-w-2xl p-8 mx-auto">
-    <NuxtLink to="/" class="block mb-8">&lt; Back</NuxtLink>
+    <NuxtLink to="/" class="block mb-8">&lt; {{ t('donation.back') }}</NuxtLink>
     <h1 class="p-2 mb-4 font-bold rounded bg-theme-blue-light text-theme-blue-dark">
-      Thank you very much for donating!
+      {{ t('donation.heading') }}
     </h1>
-    <p>Your support really means a lot to me.</p>
-    <p>Among Us Detective is a solo, non-profit project by me, Alexander Atlesque. There are no ads, no data selling and no revenue streams. It's all free and unpaid. Yet made with lots of ♥!</p>
-    <p>Every donation goes directly towards supporting Among Us Detective infrastructure and development. It helps me keep my software licenses up-to-date, keep the website online and keep developing new features in my spare time.</p>
+    <p>{{ t('donation.support') }}</p>
+    <p>{{ t('donation.about') }}</p>
+    <p>{{ t('donation.funding') }}</p>
     <p>
-      If you have any desired features or other feedback, please don't hesitate to contact me
-      through the Feedback form (via the About modal) or directly via email at
+      {{ t('donation.contact') }}
       <a href="mailto:alexander@atlesque.com">alexander@atlesque.com</a>
     </p>
-    <p>May Among Us Detective continue to serve you well. Have a great game! 🙏</p>
-    <p>With metta</p>
+    <p>{{ t('donation.closing') }}</p>
+    <p>{{ t('donation.signoff') }}</p>
     <p>-Alex</p>
   </section>
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n()
+
+useHead(() => ({
+  title: t('donation.title'),
+}))
 </script>

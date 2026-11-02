@@ -1,20 +1,22 @@
 import { test as base, Page } from "@playwright/test";
 
 const DEFAULT_SETTINGS_STATE = JSON.stringify({
-  showColorNames: false,
-  showImposterCheckbox: true,
-  showTasksCheckbox: true,
-  showMeetingsCount: true,
+  highlightColorNames: false,
+  highlightNotesColors: true,
   showPlayerNames: false,
+  showColorNames: true,
   settingsModalOpenState: false,
   resetNotesOnNewGame: true,
   showRoundNotes: true,
   canTrackOwnColor: true,
   isImproveMapContrastEnabled: true,
+  uiLanguage: 'en-US',
+  hasAutoDetectedLanguage: true,
+  matchImpostorsCount: 3,
 });
 
 const DEFAULT_DARKMODE_STATE = JSON.stringify({
-  isDarkMode: false,
+  isDarkMode: true,
   hasDarkModeBeenSetBefore: false,
 });
 
@@ -42,10 +44,8 @@ export const test = base.extend({
         localStorage.clear();
         // Prevent the help modal auto-opening for "new" visitors
         localStorage.setItem("returningPlayer", JSON.stringify(true));
-        // Prevent the one-time V2 announcement from auto-opening
-        localStorage.setItem("seenV2Announcement", JSON.stringify(true));
         // Prevent the cookie warning banner
-        localStorage.setItem("acceptedCookies", JSON.stringify(true));
+        localStorage.setItem("analyticsConsent", "denied");
         // Seed persisted Pinia stores so all tests start from known state
         localStorage.setItem("settings", settingsState);
         localStorage.setItem("darkMode", darkModeState);
@@ -56,7 +56,7 @@ export const test = base.extend({
       }
     );
 
-    await page.goto("/");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
     await page.waitForSelector("[data-test='new-game-btn']", {
       state: "attached",
     });
@@ -68,7 +68,7 @@ export { expect } from "@playwright/test";
 
 /** Helper: navigate to home and wait for app readiness (for tests that navigate away). */
 export async function goHome(page: Page): Promise<void> {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await page.waitForSelector("[data-test='new-game-btn']", {
     state: "attached",
   });

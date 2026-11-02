@@ -1,7 +1,7 @@
 import { expect, test } from "../fixtures/base";
 import { openHelp } from "../helpers/modals";
 
-const TOTAL_STEPS = 17;
+const TOTAL_STEPS = 5;
 
 test.describe("Help guide", () => {
   test("Help modal opens when Help button is clicked", async ({ page }) => {
@@ -66,5 +66,16 @@ test.describe("Help guide", () => {
     await openHelp(page);
     await page.click("[role='dialog'] button[aria-label='Close']");
     await expect(page.locator("[role='dialog']")).not.toBeVisible();
+  });
+
+  test("Can navigate directly via tabs", async ({ page }) => {
+    await openHelp(page);
+    await page.click("[data-test='help-tab-rounds']");
+    await expect(page.locator("[data-test='help-view-rounds']")).toBeVisible();
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("2/5");
+    await page.click("[data-test='help-tab-tools']");
+    await expect(page.locator("[data-test='help-view-tools']")).toBeVisible();
+    await expect(page.locator("[data-test='help-step-counter']")).toHaveText("5/5");
+    await expect(page.locator("[data-test='help-close-btn']")).toBeVisible();
   });
 });
