@@ -5,14 +5,14 @@
     </NuxtLayout>
     <Transition name="fade">
       <AppInstallationPrompt
-        v-if="isInstallPromptVisible"
+        v-if="isInstallPromptReady"
         @confirm="promptInstall"
         @cancel="dismissPrompt"
       />
     </Transition>
     <Transition name="fade">
       <AppUpdatePrompt
-        v-if="isUpdatePromptVisible && !isInstallPromptVisible"
+        v-if="isUpdatePromptVisible && !isInstallPromptReady"
         @update="applyUpdate"
         @later="postponeUpdate"
       />
@@ -49,6 +49,14 @@ useHead({
 import { usePwaInstall } from '~/composables/usePwaInstall'
 
 const { isInstallPromptVisible, promptInstall, dismissPrompt } = usePwaInstall()
+
+// On a first visit, show one thing at a time: the help guide, then the analytics
+// choice, then the install prompt.
+const isHelpModalOpen = useState('isHelpModalOpen', () => false)
+const { hasChosen: hasChosenAnalytics } = useAnalyticsConsent()
+const isInstallPromptReady = computed(
+  () => isInstallPromptVisible.value && !isHelpModalOpen.value && hasChosenAnalytics.value,
+)
 
 // A new deploy waits in the background instead of reloading the page on its own,
 // so a running timer or dictation is never cut off mid-match. The player applies it
