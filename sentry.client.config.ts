@@ -35,4 +35,13 @@ Sentry.init({
 
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
+
+  // A chunk that failed to load after a deploy makes the page reload itself
+  // (app/plugins/chunk-error-reload.client.ts), which fixes it, so don't
+  // report it. If the reload doesn't help, the flag isn't set the second time
+  // and the error is reported as usual.
+  beforeSend(event) {
+    if (window.__audChunkReloadPending) return null;
+    return event;
+  },
 });

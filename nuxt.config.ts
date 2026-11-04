@@ -96,6 +96,24 @@ export default defineNuxtConfig({
             "return this.split(String(s)).reduce(function(a,part,i,all){return i===0?part:a+(typeof r==='function'?r(s):String(r))+part},'')" +
             "},writable:true,configurable:true})})();",
         },
+        // Reload once if the entry script, or a file it imports, fails to
+        // load. That happens when stale HTML (an old tab, a tab Safari
+        // restores, a cached page) asks for files a newer deploy removed, and
+        // Safari reports it as "Importing a module script failed" (Sentry
+        // AMONG-US-DETECTIVE-3H). The app can't catch this itself because
+        // none of its code ran. Files that fail later, after the app started,
+        // are handled by app/plugins/chunk-error-reload.client.ts, which
+        // shares the session key so the two never reload more than once
+        // every 30 seconds between them.
+        {
+          tagPosition: "head",
+          innerHTML:
+            "window.addEventListener('error',function(e){var t=e.target;" +
+            "if(!t||t.tagName!=='SCRIPT'||(t.src||'').indexOf('/_nuxt/')<0)return;" +
+            "try{var k='aud:chunk-error-reload',l=Number(sessionStorage.getItem(k))||0;" +
+            "if(Date.now()-l<30000)return;sessionStorage.setItem(k,String(Date.now()))}catch(x){return}" +
+            "location.reload()},true);",
+        },
       ],
       bodyAttrs: {
         class: "bg-slate-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 antialiased",
